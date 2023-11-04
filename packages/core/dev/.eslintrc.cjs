@@ -1,11 +1,13 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:tailwindcss/recommended',
     'plugin:solid/typescript',
   ],
-  plugins: ['@typescript-eslint', 'import', 'prettier', 'solid'],
+  plugins: ['@typescript-eslint', 'import', 'prettier', 'tailwindcss', 'solid'],
   ignorePatterns: ['dist', 'node_modules'],
   rules: {
     'no-console': 'warn',
@@ -17,15 +19,6 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
-    '@typescript-eslint/ban-types': [
-      'error',
-      {
-        types: {
-          Function: false,
-        },
-        extendDefaults: true,
-      },
-    ],
     'prettier/prettier': [
       'error',
       {
@@ -34,6 +27,11 @@ module.exports = {
         semi: false,
       },
     ],
+    'tailwindcss/classnames-order': 'error',
+    'tailwindcss/enforces-negative-arbitrary-values': 'error',
+    'tailwindcss/enforces-shorthand': 'error',
+    'tailwindcss/migration-from-tailwind-2': 'error',
+    'tailwindcss/no-custom-classname': 'error',
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/newline-after-import': 'error',

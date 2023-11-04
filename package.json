@@ -1,65 +1,28 @@
 {
-  "name": "@corvu/core",
-  "version": "0.0.1",
-  "description": "Unstyled, accessible Solid primitives",
+  "name": "@corvu/monorepo",
+  "version": "0.1.0",
+  "description": "Unstyled, accessible and customizable primitives for SolidJS",
   "author": {
-    "name": "Jasmin",
+    "name": "Jasmin Noetzli",
     "email": "code@jasi.dev",
     "url": "https://github.com/GiyoMoon"
   },
   "license": "MIT",
-  "homepage": "https://github.com/corvudev/corvu#readme",
-  "bugs": {
-    "url": "https://github.com/corvudev/corvu/issues",
-    "email": "code@jasi.dev"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/corvudev/corvu.git"
-  },
-  "keywords": [
-    "solid",
-    "headless",
-    "accessible",
-    "primitives"
-  ],
-  "files": [
-    "dist"
-  ],
-  "private": false,
-  "sideEffects": false,
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "solid": "./dist/index.jsx",
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.cjs"
-  },
+  "homepage": "https://corvu.dev",
+  "private": true,
   "scripts": {
-    "dev": "vite dev",
-    "build": "pnpm lint && tsup",
-    "lint": "eslint --max-warnings=0 ./src"
-  },
-  "peerDependencies": {
-    "solid-js": "^1.8"
+    "dev:core": "npm-run-all --parallel dev:core-dev watch:core",
+    "dev:core-dev": "pnpm -r --filter @corvu/core-dev run dev",
+    "build": "npm-run-all --parallel build:*",
+    "build:core": "pnpm -r --filter @corvu/core run build",
+    "build:tailwind": "pnpm -r --filter @corvu/tailwind run build",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:core": "pnpm -r --filter @corvu/core run lint",
+    "lint:core-dev": "pnpm -r --filter @corvu/core-dev run lint",
+    "lint:tailwind": "pnpm -r --filter @corvu/tailwind run lint",
+    "watch:core": "pnpm -r --filter @corvu/core run watch"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "eslint": "^8.52.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-solid": "^0.13.0",
-    "prettier": "^3.0.3",
-    "solid-js": "^1.8.3",
-    "tsup": "^7.2.0",
-    "tsup-preset-solid": "^2.1.0",
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0",
-    "vite-plugin-solid": "^2.7.2",
-    "vite-tsconfig-paths": "^4.2.1"
+    "npm-run-all": "^4.1.5"
   }
 }

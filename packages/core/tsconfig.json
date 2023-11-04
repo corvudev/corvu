@@ -20,8 +20,14 @@
     "skipLibCheck": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "@primitives/*": [
+        "./src/primitives/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ]
     }
   },
   "exclude": [

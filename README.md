@@ -4,6 +4,6 @@
 <br />
 <div align="center">
  <strong>
-  Unstyled, accessible primitives for SolidJS
+  Unstyled, accessible and customizable primitives for SolidJS
  </strong>
 </div>

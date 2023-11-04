@@ -8,7 +8,7 @@ function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
   return {
     target: 'esnext',
     platform: 'browser',
-    format: format,
+    format,
     clean: true,
     dts: format === 'esm' && !jsx,
     entry: { index: 'src/index.tsx' },

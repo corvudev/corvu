@@ -1,0 +1,70 @@
+{
+  "name": "@corvu/tailwind",
+  "version": "0.1.0",
+  "description": "Tailwind plugin for corvu, the unstyled, accessible and customizable primitive library for SolidJS",
+  "author": {
+    "name": "Jasmin Noetzli",
+    "email": "code@jasi.dev",
+    "url": "https://github.com/GiyoMoon"
+  },
+  "license": "MIT",
+  "homepage": "https://corvu.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/corvudev/corvu"
+  },
+  "bugs": {
+    "url": "https://github.com/corvudev/corvu/issues",
+    "email": "code@jasi.dev"
+  },
+  "keywords": [
+    "solid",
+    "solidjs",
+    "headless",
+    "accessible",
+    "customizable",
+    "primitives",
+    "tailwind",
+    "tailwindcss"
+  ],
+  "files": [
+    "dist"
+  ],
+  "private": false,
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "node": "./dist/index.cjs",
+      "browser": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "pnpm lint && tsup",
+    "lint": "eslint --max-warnings=0 ."
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "esbuild-plugin-solid": "^0.5.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3",
+    "tailwindcss": "^3.3.5",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}
