@@ -1,6 +1,6 @@
+import { Dialog } from '@corvu/core'
 import clsx from 'clsx'
 import { createSignal, type VoidComponent } from 'solid-js'
-import { Dialog } from '../../core/dist'
 
 const DialogDev: VoidComponent = () => {
   return (

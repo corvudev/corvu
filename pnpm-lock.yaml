@@ -63,6 +63,9 @@ importers:
 
   packages/dev:
     dependencies:
+      '@corvu/core':
+        specifier: workspace:*
+        version: link:../core
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
