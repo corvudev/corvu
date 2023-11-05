@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { createSignal, type VoidComponent } from 'solid-js'
-import { Dialog } from '../../dist'
+import { Dialog } from '../../core/dist'
 
 const DialogDev: VoidComponent = () => {
   return (
@@ -117,7 +117,7 @@ const Children: VoidComponent = () => {
         <>
           <p class="text-sm">
             State from parent:{' '}
-            <span class="font-mono">{open() ? 'open' : 'closed'}</span>
+            <span class="font-mono">{open ? 'open' : 'closed'}</span>
           </p>
           <Dialog.Trigger class="rounded bg-white px-3 py-2 text-sm text-purple-600 shadow transition-colors hover:bg-gray-100">
             Open

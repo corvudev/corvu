@@ -7,7 +7,7 @@ module.exports = {
     'plugin:solid/typescript',
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier', 'solid'],
-  ignorePatterns: ['dist', 'node_modules', 'dev'],
+  ignorePatterns: ['dist', 'node_modules'],
   rules: {
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': [

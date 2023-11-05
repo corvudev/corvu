@@ -11,17 +11,17 @@
   "homepage": "https://corvu.dev",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/*"
   ],
   "scripts": {
-    "dev:core": "npm-run-all --parallel dev:core-dev watch:core",
-    "dev:core-dev": "pnpm -r --filter @corvu/core-dev run dev",
+    "dev:core": "npm-run-all --parallel dev:dev watch:core",
+    "dev:dev": "pnpm -r --filter @corvu/dev run dev",
     "build": "npm-run-all --parallel build:*",
     "build:core": "pnpm -r --filter @corvu/core run build",
     "build:tailwind": "pnpm -r --filter @corvu/tailwind run build",
     "lint": "npm-run-all --parallel lint:*",
     "lint:core": "pnpm -r --filter @corvu/core run lint",
-    "lint:core-dev": "pnpm -r --filter @corvu/core-dev run lint",
+    "lint:dev": "pnpm -r --filter @corvu/dev run lint",
     "lint:tailwind": "pnpm -r --filter @corvu/tailwind run lint",
     "watch:core": "pnpm -r --filter @corvu/core run watch",
     "changeset": "changeset"
