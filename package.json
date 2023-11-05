@@ -16,14 +16,18 @@
   "scripts": {
     "dev:core": "npm-run-all --parallel dev:dev watch:core",
     "dev:dev": "pnpm -r --filter @corvu/dev run dev",
-    "build": "npm-run-all --parallel build:*",
+    "dev:web": "pnpm -r --filter @corvu/web run dev",
+    "build": "npm-run-all --parallel build:core build:tailwind && pnpm build:web",
     "build:core": "pnpm -r --filter @corvu/core run build",
     "build:tailwind": "pnpm -r --filter @corvu/tailwind run build",
+    "build:web": "pnpm -r --filter @corvu/web run build",
     "lint": "npm-run-all --parallel lint:*",
     "lint:core": "pnpm -r --filter @corvu/core run lint",
     "lint:dev": "pnpm -r --filter @corvu/dev run lint",
     "lint:tailwind": "pnpm -r --filter @corvu/tailwind run lint",
+    "lint:web": "pnpm -r --filter @corvu/web run lint",
     "watch:core": "pnpm -r --filter @corvu/core run watch",
+    "preview:web": "pnpm -r --filter @corvu/web run preview",
     "changeset": "changeset"
   },
   "devDependencies": {
