@@ -1,6 +1,6 @@
 {
   "name": "@corvu/core-dev",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "corvu development environment",
   "author": {
     "name": "Jasmin Noetzli",
@@ -23,7 +23,7 @@
     "@corvu/tailwind": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "^5.0.1",

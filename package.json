@@ -1,6 +1,6 @@
 {
   "name": "@corvu/monorepo",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Unstyled, accessible and customizable primitives for SolidJS",
   "author": {
     "name": "Jasmin Noetzli",
@@ -10,6 +10,9 @@
   "license": "MIT",
   "homepage": "https://corvu.dev",
   "private": true,
+  "workspaces": [
+    "packages/**"
+  ],
   "scripts": {
     "dev:core": "npm-run-all --parallel dev:core-dev watch:core",
     "dev:core-dev": "pnpm -r --filter @corvu/core-dev run dev",
@@ -20,9 +23,12 @@
     "lint:core": "pnpm -r --filter @corvu/core run lint",
     "lint:core-dev": "pnpm -r --filter @corvu/core-dev run lint",
     "lint:tailwind": "pnpm -r --filter @corvu/tailwind run lint",
-    "watch:core": "pnpm -r --filter @corvu/core run watch"
+    "watch:core": "pnpm -r --filter @corvu/core run watch",
+    "changeset": "changeset"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
     "npm-run-all": "^4.1.5"
   }
 }
