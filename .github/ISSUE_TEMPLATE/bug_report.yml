@@ -1,0 +1,61 @@
+name: '🐛 Bug report'
+description: Create a report to help improve corvu
+title: "[Bug]: "
+labels: ["bug (unverified)"]
+assignees:
+  - GiyoMoon
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug to corvu :pray::purple_heart:
+
+        Before submitting a new bug/issue, please make sure to search for existing issues to avoid submitting duplicates:
+
+        - [open issues](https://github.com/corvudev/corvu/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated)
+        - [closed issues](https://github.com/corvudev/corvu/issues?q=is%3Aissue+is%3Aclosed+sort%3Aupdated+)
+        - [corvu discussions](https://github.com/corvudev/corvu/discussions)
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug description
+      description: Please provide a clear description of what the bug is.
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Reproduction Link
+      description: |
+        Provide a link to a live example, or a repository that can reproduce the bug. We can analyze and fix the bug much faster if you provide a clear and minimal example. Please read these tips for providing a minimal example: https://stackoverflow.com/help/mcve.
+
+        You can use [Stackblitz](https://stackblitz.com/) to create a sharable reproduction. [Here](https://stackblitz.com/edit/corvu?file=src%2FApp.tsx) is a template with `solid` and `corvu` already set up which you can use. A public GitHub repository also works.
+      placeholder: |
+        https://stackblitz.com/edit/... or a public GitHub repository
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps
+      description: Describe how we can reproduce the bug with the provided link.
+      placeholder: |
+        1. Click on ...
+        2. Open the console
+        3. See the error message
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Provide a clear description of what you expected to happen.
+      placeholder: |
+        I expected ... but ... is happening instead.
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the bug here.
