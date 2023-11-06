@@ -22,8 +22,12 @@ export type DialogRootProps = {
   closeOnEscape?: boolean
   /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
   closeOnOutsideInteract?: boolean
+  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
+  noPointerEvents: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll?: boolean
+  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
+  preventScrollbarShift: boolean
   /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
   forceMount?: boolean
   /** Whether the dialog should trap focus or not. */
@@ -34,6 +38,9 @@ export type DialogRootProps = {
   initialFocusEl?: HTMLElement
   /** The element to receive focus when the dialog closes. */
   finalFocusEl?: HTMLElement
+  dialogId?: string
+  labelId?: string
+  descriptionId?: string
   children: JSX.Element | ((context: DialogRootChildrenProps) => JSX.Element)
 }
 
@@ -48,8 +55,12 @@ export type DialogRootChildrenProps = {
   closeOnEscape: boolean
   /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
   closeOnOutsideInteract: boolean
+  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
+  noPointerEvents: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll: boolean
+  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
+  preventScrollbarShift: boolean
   /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
   forceMount: boolean
   /** Whether the dialog should trap focus or not. */
@@ -80,10 +91,16 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       closeOnEscape: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       closeOnOutsideInteract: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
+      noPointerEvents: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      preventScrollbarShift: () =>
+        props.modal ?? DEFAULT_MODAL ? true : false,
       forceMount: false,
       trapFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       restoreFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      dialogId: createUniqueId(),
+      labelId: createUniqueId(),
+      descriptionId: createUniqueId(),
     },
     props,
   )
@@ -106,10 +123,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     element: overlayRef,
   })
 
-  const dialogId = createUniqueId()
-  const labelId = createUniqueId()
-  const descriptionId = createUniqueId()
-
   const childrenProps: DialogRootChildrenProps = {
     get role() {
       return defaultedProps.role
@@ -126,8 +139,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get closeOnOutsideInteract() {
       return access(defaultedProps.closeOnOutsideInteract)
     },
+    get noPointerEvents() {
+      return access(defaultedProps.noPointerEvents)
+    },
     get preventScroll() {
       return access(defaultedProps.preventScroll)
+    },
+    get preventScrollbarShift() {
+      return access(defaultedProps.preventScrollbarShift)
     },
     get forceMount() {
       return defaultedProps.forceMount
@@ -150,9 +169,15 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get overlayPresent() {
       return overlayPresent()
     },
-    dialogId,
-    labelId,
-    descriptionId,
+    get dialogId() {
+      return defaultedProps.dialogId
+    },
+    get labelId() {
+      return defaultedProps.labelId
+    },
+    get descriptionId() {
+      return defaultedProps.descriptionId
+    },
   }
 
   const memoizedChildren = createOnce(() => defaultedProps.children)
@@ -174,7 +199,10 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         closeOnEscape: () => access(defaultedProps.closeOnEscape),
         closeOnOutsideInteract: () =>
           access(defaultedProps.closeOnOutsideInteract),
+        noPointerEvents: () => access(defaultedProps.noPointerEvents),
         preventScroll: () => access(defaultedProps.preventScroll),
+        preventScrollbarShift: () =>
+          access(defaultedProps.preventScrollbarShift),
         forceMount: () => defaultedProps.forceMount,
         trapFocus: () => access(defaultedProps.trapFocus),
         restoreFocus: () => access(defaultedProps.restoreFocus),
@@ -182,9 +210,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         finalFocusEl: () => defaultedProps.finalFocusEl,
         contentPresent,
         overlayPresent,
-        dialogId,
-        labelId,
-        descriptionId,
+        dialogId: () => defaultedProps.dialogId,
+        labelId: () => defaultedProps.labelId,
+        descriptionId: () => defaultedProps.descriptionId,
         onOpenChange: setOpen,
         contentRef,
         setContentRef,

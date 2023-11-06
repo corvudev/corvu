@@ -33,7 +33,9 @@ const DialogContent = <
     modal,
     closeOnEscape,
     closeOnOutsideInteract,
+    noPointerEvents,
     preventScroll,
+    preventScrollbarShift,
     forceMount,
     trapFocus,
     restoreFocus,
@@ -55,7 +57,8 @@ const DialogContent = <
   ])
 
   createDisableScroll({
-    isDisabled: () => !open() || !modal() || !preventScroll(),
+    isDisabled: () => !contentPresent() || !preventScroll(),
+    disablePreventScrollbarShift: () => !preventScrollbarShift(),
   })
 
   createFocusTrap({
@@ -67,16 +70,15 @@ const DialogContent = <
   })
 
   return (
-    <Dismissible
-      element={contentRef}
-      onDismiss={() => onOpenChange(false)}
-      disableDismissOnEscape={() => !open() || !closeOnEscape()}
-      disableDismissOnOutsideInteract={() =>
-        !open() || !closeOnOutsideInteract()
-      }
-    >
-      {(props) => (
-        <Show when={some(open, forceMount, contentPresent)}>
+    <Show when={some(open, forceMount, contentPresent)}>
+      <Dismissible
+        element={contentRef}
+        onDismiss={() => onOpenChange(false)}
+        disableDismissOnEscape={() => !closeOnEscape()}
+        disableDismissOnOutsideInteract={() => !closeOnOutsideInteract()}
+        disableNoPointerEvents={() => !noPointerEvents()}
+      >
+        {(props) => (
           <Polymorphic
             ref={mergeRefs(setContentRef, localProps.ref)}
             as={localProps.as ?? DEFAULT_DIALOG_CONTENT_ELEMENT}
@@ -98,9 +100,9 @@ const DialogContent = <
             }
             {...otherProps}
           />
-        </Show>
-      )}
-    </Dismissible>
+        )}
+      </Dismissible>
+    </Show>
   )
 }
 

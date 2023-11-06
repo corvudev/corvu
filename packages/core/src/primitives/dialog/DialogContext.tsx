@@ -12,8 +12,12 @@ export type DialogContextValue = {
   closeOnEscape: Accessor<boolean>
   /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
   closeOnOutsideInteract: Accessor<boolean>
+  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
+  noPointerEvents: Accessor<boolean>
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll: Accessor<boolean>
+  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
+  preventScrollbarShift: Accessor<boolean>
   /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
   forceMount: Accessor<boolean>
   /** Whether the dialog should trap focus or not. */
@@ -28,9 +32,9 @@ export type DialogContextValue = {
   contentPresent: Accessor<boolean>
   /** Whether the dialog overlay is present. This differes from `open` as it tracks pending animations. */
   overlayPresent: Accessor<boolean>
-  dialogId: string
-  labelId: string
-  descriptionId: string
+  dialogId: Accessor<string>
+  labelId: Accessor<string>
+  descriptionId: Accessor<string>
 }
 
 type InternalContextValue = DialogContextValue & {

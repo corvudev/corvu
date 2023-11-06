@@ -2,7 +2,7 @@ import { access } from '@lib/utils'
 import { createEffect, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
-const createDisablePointerEvents = (props: {
+const createNoPointerEvents = (props: {
   isDisabled?: MaybeAccessor<boolean>
   ownerDocument?: MaybeAccessor<Document | null>
 }) => {
@@ -26,4 +26,4 @@ const createDisablePointerEvents = (props: {
   })
 }
 
-export default createDisablePointerEvents
+export default createNoPointerEvents
