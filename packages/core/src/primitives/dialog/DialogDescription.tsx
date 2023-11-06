@@ -4,7 +4,7 @@ import { useDialogContext } from '@primitives/dialog/DialogContext'
 import { splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 
-const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p' as ValidComponent
+const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
 
 export type DialogDescriptionProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
@@ -21,7 +21,9 @@ const DialogDescription = <
 
   return (
     <Polymorphic
-      as={localProps.as ?? DEFAULT_DIALOG_DESCRIPTION_ELEMENT}
+      as={
+        localProps.as ?? (DEFAULT_DIALOG_DESCRIPTION_ELEMENT as ValidComponent)
+      }
       id={descriptionId}
       {...otherProps}
     />

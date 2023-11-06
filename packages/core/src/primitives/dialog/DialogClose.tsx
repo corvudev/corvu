@@ -5,7 +5,7 @@ import { splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent, JSX } from 'solid-js'
 
-const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button' as ValidComponent
+const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
 
 export type DialogCloseProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
@@ -33,7 +33,7 @@ const DialogClose = <
 
   return (
     <Polymorphic
-      as={localProps.as ?? DEFAULT_DIALOG_CLOSE_ELEMENT}
+      as={localProps.as ?? (DEFAULT_DIALOG_CLOSE_ELEMENT as ValidComponent)}
       onClick={onClick}
       type="button"
       role="button"

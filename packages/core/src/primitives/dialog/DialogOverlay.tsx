@@ -5,7 +5,7 @@ import { Show, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent } from 'solid-js'
 
-const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div' as ValidComponent
+const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 
 export type DialogOverlayProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
@@ -28,7 +28,7 @@ const DialogOverlay = <
   return (
     <Show when={some(open, forceMount, overlayPresent)}>
       <Polymorphic
-        as={localProps.as ?? DEFAULT_DIALOG_OVERLAY_ELEMENT}
+        as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
         ref={mergeRefs(setOverlayRef, localProps.ref)}
         aria-hidden="true"
         data-open={dataIf(open())}

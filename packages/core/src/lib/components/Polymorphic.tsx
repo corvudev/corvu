@@ -19,12 +19,15 @@ export type PolymorphicAttributes<T extends ValidComponent> = {
   children?: JSX.Element
 }
 
-export type PolymorphicProps<T extends ValidComponent> = OverrideComponentProps<
-  T,
-  PolymorphicAttributes<T>
->
+export type PolymorphicProps<
+  T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
+> = OverrideComponentProps<T, PolymorphicAttributes<T>>
 
-const Polymorphic = <T extends ValidComponent>(props: PolymorphicProps<T>) => {
+const Polymorphic = <
+  T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
+>(
+  props: PolymorphicProps<T>,
+) => {
   const [localProps, otherProps] = splitProps(props, [
     'as',
     'asChild',

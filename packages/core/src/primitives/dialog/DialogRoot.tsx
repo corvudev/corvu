@@ -23,11 +23,11 @@ export type DialogRootProps = {
   /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
   closeOnOutsideInteract?: boolean
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
-  noPointerEvents: boolean
+  noPointerEvents?: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll?: boolean
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
-  preventScrollbarShift: boolean
+  preventScrollbarShift?: boolean
   /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
   forceMount?: boolean
   /** Whether the dialog should trap focus or not. */

@@ -6,7 +6,7 @@ import { splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 import type { JSX } from 'solid-js/jsx-runtime'
 
-const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button' as ValidComponent
+const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
 
 export type DialogTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
@@ -32,7 +32,7 @@ const DialogTrigger = <
 
   return (
     <Polymorphic
-      as={localProps.as ?? DEFAULT_DIALOG_TRIGGER_ELEMENT}
+      as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
       onClick={onClick}
       type="button"
       role="button"

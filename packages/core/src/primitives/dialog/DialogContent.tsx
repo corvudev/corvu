@@ -8,7 +8,7 @@ import { Show, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
-const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div' as ValidComponent
+const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
 
 export type DialogContentProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
@@ -81,7 +81,10 @@ const DialogContent = <
         {(props) => (
           <Polymorphic
             ref={mergeRefs(setContentRef, localProps.ref)}
-            as={localProps.as ?? DEFAULT_DIALOG_CONTENT_ELEMENT}
+            as={
+              localProps.as ??
+              (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
+            }
             role={role()}
             id={dialogId}
             aria-labelledby={labelId}
