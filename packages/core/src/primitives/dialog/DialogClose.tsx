@@ -21,14 +21,14 @@ const DialogClose = <
 >(
   props: DialogCloseProps<T>,
 ) => {
-  const { onOpenChange } = useDialogContext()
+  const { setOpen } = useDialogContext()
 
   const [localProps, otherProps] = splitProps(props, ['as', 'onClick'])
 
   const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
     event,
   ) => {
-    !callEventHandler(localProps.onClick, event) && onOpenChange(false)
+    !callEventHandler(localProps.onClick, event) && setOpen(false)
   }
 
   return (

@@ -49,6 +49,8 @@ export type DialogRootChildrenProps = {
   role: 'dialog' | 'alertdialog'
   /** Whether the dialog is open or not. */
   open: boolean
+  /** Change the open state of the dialog */
+  setOpen: Setter<boolean>
   /** Whether the dialog should be rendered as a modal or not. */
   modal: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
@@ -130,6 +132,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get open() {
       return open()
     },
+    setOpen,
     get modal() {
       return defaultedProps.modal
     },
@@ -213,7 +216,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         dialogId: () => defaultedProps.dialogId,
         labelId: () => defaultedProps.labelId,
         descriptionId: () => defaultedProps.descriptionId,
-        onOpenChange: setOpen,
+        setOpen,
         contentRef,
         setContentRef,
         setOverlayRef,

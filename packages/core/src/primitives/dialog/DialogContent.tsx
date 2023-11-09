@@ -29,7 +29,7 @@ const DialogContent = <
   const {
     role,
     open,
-    onOpenChange,
+    setOpen,
     modal,
     closeOnEscape,
     closeOnOutsideInteract,
@@ -73,7 +73,7 @@ const DialogContent = <
     <Show when={some(open, forceMount, contentPresent)}>
       <Dismissible
         element={contentRef}
-        onDismiss={() => onOpenChange(false)}
+        onDismiss={() => setOpen(false)}
         disableDismissOnEscape={() => !closeOnEscape()}
         disableDismissOnOutsideInteract={() => !closeOnOutsideInteract()}
         disableNoPointerEvents={() => !noPointerEvents()}

@@ -22,12 +22,12 @@ const DialogTrigger = <
 >(
   props: DialogTriggerProps<T>,
 ) => {
-  const { open, onOpenChange, dialogId } = useDialogContext()
+  const { open, setOpen, dialogId } = useDialogContext()
 
   const [localProps, otherProps] = splitProps(props, ['as', 'onClick'])
 
   const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (e) => {
-    !callEventHandler(localProps.onClick, e) && onOpenChange((open) => !open)
+    !callEventHandler(localProps.onClick, e) && setOpen((open) => !open)
   }
 
   return (

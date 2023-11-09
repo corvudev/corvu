@@ -6,6 +6,8 @@ export type DialogContextValue = {
   role: Accessor<'dialog' | 'alertdialog'>
   /** Whether the dialog is open or not. */
   open: Accessor<boolean>
+  /** Change the open state of the dialog */
+  setOpen: Setter<boolean>
   /** Whether the dialog should be rendered as a modal or not. */
   modal: Accessor<boolean>
   /** Whether the dialog should close when the user presses the `Escape` key. */
@@ -38,8 +40,6 @@ export type DialogContextValue = {
 }
 
 type InternalContextValue = DialogContextValue & {
-  /** Callback fired when the open state changes. */
-  onOpenChange: Setter<boolean>
   /** Dialog content ref */
   contentRef: Accessor<HTMLElement | null>
   /** Callback fired when the dialog content ref changes */
