@@ -89,15 +89,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       role: 'dialog' as const,
       initialOpen: false,
       modal: true,
-      closeOnEscape: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      closeOnEscape: true,
       closeOnOutsideInteract: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
       noPointerEvents: () => (props.modal ?? DEFAULT_MODAL ? true : false),
-      preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
-      preventScrollbarShift: () =>
-        props.modal ?? DEFAULT_MODAL ? true : false,
-      trapFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
-      restoreFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      preventScroll: true,
+      preventScrollbarShift: true,
+      trapFocus: true,
+      restoreFocus: true,
       dialogId: createUniqueId(),
       labelId: createUniqueId(),
       descriptionId: createUniqueId(),
@@ -135,7 +134,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       return defaultedProps.modal
     },
     get closeOnEscape() {
-      return access(defaultedProps.closeOnEscape)
+      return defaultedProps.closeOnEscape
     },
     get closeOnOutsideInteract() {
       return access(defaultedProps.closeOnOutsideInteract)
@@ -144,16 +143,16 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       return access(defaultedProps.noPointerEvents)
     },
     get preventScroll() {
-      return access(defaultedProps.preventScroll)
+      return defaultedProps.preventScroll
     },
     get preventScrollbarShift() {
-      return access(defaultedProps.preventScrollbarShift)
+      return defaultedProps.preventScrollbarShift
     },
     get trapFocus() {
-      return access(defaultedProps.trapFocus)
+      return defaultedProps.trapFocus
     },
     get restoreFocus() {
-      return access(defaultedProps.restoreFocus)
+      return defaultedProps.restoreFocus
     },
     get initialFocusEl() {
       return defaultedProps.initialFocusEl
@@ -194,15 +193,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         role: () => defaultedProps.role,
         open,
         modal: () => defaultedProps.modal,
-        closeOnEscape: () => access(defaultedProps.closeOnEscape),
+        closeOnEscape: () => defaultedProps.closeOnEscape,
         closeOnOutsideInteract: () =>
           access(defaultedProps.closeOnOutsideInteract),
         noPointerEvents: () => access(defaultedProps.noPointerEvents),
-        preventScroll: () => access(defaultedProps.preventScroll),
-        preventScrollbarShift: () =>
-          access(defaultedProps.preventScrollbarShift),
-        trapFocus: () => access(defaultedProps.trapFocus),
-        restoreFocus: () => access(defaultedProps.restoreFocus),
+        preventScroll: () => defaultedProps.preventScroll,
+        preventScrollbarShift: () => defaultedProps.preventScrollbarShift,
+        trapFocus: () => defaultedProps.trapFocus,
+        restoreFocus: () => defaultedProps.restoreFocus,
         initialFocusEl: () => defaultedProps.initialFocusEl,
         finalFocusEl: () => defaultedProps.finalFocusEl,
         contentPresent,
