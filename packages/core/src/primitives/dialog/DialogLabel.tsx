@@ -22,7 +22,8 @@ const DialogLabel = <
   return (
     <Polymorphic
       as={localProps.as ?? (DEFAULT_DIALOG_LABEL_ELEMENT as ValidComponent)}
-      id={labelId}
+      id={labelId()}
+      data-corvu-dialog-label
       {...otherProps}
     />
   )

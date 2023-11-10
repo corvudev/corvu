@@ -38,10 +38,13 @@ export type DialogRootProps = {
   initialFocusEl?: HTMLElement
   /** The element to receive focus when the dialog closes. */
   finalFocusEl?: HTMLElement
+  /** The `id` attribute of the dialog element. */
   dialogId?: string
+  /** The `id` attribute of the dialog label element. */
   labelId?: string
+  /** The `id` attribute of the dialog description element. */
   descriptionId?: string
-  children: JSX.Element | ((context: DialogRootChildrenProps) => JSX.Element)
+  children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }
 
 export type DialogRootChildrenProps = {

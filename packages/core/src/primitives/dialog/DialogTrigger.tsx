@@ -41,6 +41,7 @@ const DialogTrigger = <
       aria-controls={dialogId}
       data-open={dataIf(open())}
       data-closed={dataIf(!open())}
+      data-corvu-dialog-trigger
       {...otherProps}
     />
   )

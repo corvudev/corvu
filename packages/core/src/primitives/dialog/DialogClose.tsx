@@ -38,6 +38,7 @@ const DialogClose = <
       type="button"
       role="button"
       aria-label="close"
+      data-corvu-dialog-close
       {...otherProps}
     />
   )

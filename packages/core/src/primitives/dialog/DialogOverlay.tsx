@@ -33,6 +33,7 @@ const DialogOverlay = <
         aria-hidden="true"
         data-open={dataIf(open())}
         data-closed={dataIf(!open())}
+        data-corvu-dialog-overlay
         tabIndex="-1"
         {...otherProps}
       />
