@@ -9,7 +9,7 @@ import Description, {
 } from '@primitives/dialog/DialogDescription'
 import Label, { DialogLabelProps } from '@primitives/dialog/DialogLabel'
 import Overlay, { DialogOverlayProps } from '@primitives/dialog/DialogOverlay'
-import Portal from '@primitives/dialog/DialogPortal'
+import Portal, { DialogPortalProps } from '@primitives/dialog/DialogPortal'
 import Root, {
   DialogRootChildrenProps,
   DialogRootProps,
@@ -21,6 +21,7 @@ export type {
   DialogRootChildrenProps as RootChildrenProps,
   DialogRootProps as RootProps,
   DialogTriggerProps as TriggerProps,
+  DialogPortalProps as PortalProps,
   DialogOverlayProps as OverlayProps,
   DialogContentProps as ContentProps,
   DialogLabelProps as LabelProps,

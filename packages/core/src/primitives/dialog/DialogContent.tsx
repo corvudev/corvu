@@ -17,6 +17,8 @@ export type DialogContentProps<
   PolymorphicAttributes<T> & {
     ref?: (element: HTMLElement) => void
     onPointerDown?: JSX.EventHandlerUnion<HTMLDivElement, PointerEvent>
+    /** Whether the dialog portal should be forced to render. Useful for custom transition and animations. */
+    forceMount?: boolean
     style?: JSX.CSSProperties
   }
 >
@@ -36,7 +38,6 @@ const DialogContent = <
     noPointerEvents,
     preventScroll,
     preventScrollbarShift,
-    forceMount,
     trapFocus,
     restoreFocus,
     initialFocusEl,
@@ -53,6 +54,7 @@ const DialogContent = <
     'as',
     'ref',
     'onPointerDown',
+    'forceMount',
     'style',
   ])
 
@@ -70,7 +72,7 @@ const DialogContent = <
   })
 
   return (
-    <Show when={some(open, forceMount, contentPresent)}>
+    <Show when={some(open, () => localProps.forceMount, contentPresent)}>
       <Dismissible
         element={contentRef}
         onDismiss={() => setOpen(false)}

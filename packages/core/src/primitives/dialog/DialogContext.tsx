@@ -20,8 +20,6 @@ export type DialogContextValue = {
   preventScroll: Accessor<boolean>
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
   preventScrollbarShift: Accessor<boolean>
-  /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
-  forceMount: Accessor<boolean>
   /** Whether the dialog should trap focus or not. */
   trapFocus: Accessor<boolean>
   /** Whether the dialog should restore focus to the previous active element when it closes. */

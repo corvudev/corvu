@@ -13,6 +13,8 @@ export type DialogOverlayProps<
   T,
   PolymorphicAttributes<T> & {
     ref?: (element: HTMLElement) => void
+    /** Whether the dialog portal should be forced to render. Useful for custom transition and animations. */
+    forceMount?: boolean
   }
 >
 
@@ -21,12 +23,16 @@ const DialogOverlay = <
 >(
   props: DialogOverlayProps<T>,
 ) => {
-  const { open, forceMount, overlayPresent, setOverlayRef } = useDialogContext()
+  const { open, overlayPresent, setOverlayRef } = useDialogContext()
 
-  const [localProps, otherProps] = splitProps(props, ['as', 'ref'])
+  const [localProps, otherProps] = splitProps(props, [
+    'as',
+    'ref',
+    'forceMount',
+  ])
 
   return (
-    <Show when={some(open, forceMount, overlayPresent)}>
+    <Show when={some(open, () => localProps.forceMount, overlayPresent)}>
       <Polymorphic
         as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
         ref={mergeRefs(setOverlayRef, localProps.ref)}

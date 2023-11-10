@@ -28,8 +28,6 @@ export type DialogRootProps = {
   preventScroll?: boolean
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
   preventScrollbarShift?: boolean
-  /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
-  forceMount?: boolean
   /** Whether the dialog should trap focus or not. */
   trapFocus?: boolean
   /** Whether the dialog should restore focus to the previous active element when it closes. */
@@ -66,8 +64,6 @@ export type DialogRootChildrenProps = {
   preventScroll: boolean
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
   preventScrollbarShift: boolean
-  /** Whether the dialog should be forced to render. Useful for custom transition and animations. */
-  forceMount: boolean
   /** Whether the dialog should trap focus or not. */
   trapFocus: boolean
   /** Whether the dialog should restore focus to the previous active element when it closes. */
@@ -100,7 +96,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       preventScrollbarShift: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
-      forceMount: false,
       trapFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       restoreFocus: () => (props.modal ?? DEFAULT_MODAL ? true : false),
       dialogId: createUniqueId(),
@@ -154,9 +149,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get preventScrollbarShift() {
       return access(defaultedProps.preventScrollbarShift)
     },
-    get forceMount() {
-      return defaultedProps.forceMount
-    },
     get trapFocus() {
       return access(defaultedProps.trapFocus)
     },
@@ -209,7 +201,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         preventScroll: () => access(defaultedProps.preventScroll),
         preventScrollbarShift: () =>
           access(defaultedProps.preventScrollbarShift),
-        forceMount: () => defaultedProps.forceMount,
         trapFocus: () => access(defaultedProps.trapFocus),
         restoreFocus: () => access(defaultedProps.restoreFocus),
         initialFocusEl: () => defaultedProps.initialFocusEl,
