@@ -86,9 +86,9 @@ const DialogContent = <
               (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
             }
             role={role()}
-            id={dialogId}
-            aria-labelledby={labelId}
-            aria-describedby={descriptionId}
+            id={dialogId()}
+            aria-labelledby={labelId()}
+            aria-describedby={descriptionId()}
             aria-modal={modal() ? 'true' : 'false'}
             data-open={dataIf(open())}
             data-closed={dataIf(!open())}

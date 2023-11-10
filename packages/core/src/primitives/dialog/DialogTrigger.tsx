@@ -38,7 +38,7 @@ const DialogTrigger = <
       role="button"
       aria-haspopup="dialog"
       aria-expanded={open() ? 'true' : 'false'}
-      aria-controls={dialogId}
+      aria-controls={dialogId()}
       data-open={dataIf(open())}
       data-closed={dataIf(!open())}
       data-corvu-dialog-trigger
