@@ -1,4 +1,5 @@
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { callEventHandler } from '@lib/utils'
 import { useDialogContext } from '@primitives/dialog/DialogContext'
 import { splitProps } from 'solid-js'
@@ -32,11 +33,9 @@ const DialogClose = <
   }
 
   return (
-    <Polymorphic
+    <PolymorphicButton
       as={localProps.as ?? (DEFAULT_DIALOG_CLOSE_ELEMENT as ValidComponent)}
       onClick={onClick}
-      type="button"
-      role="button"
       aria-label="close"
       data-corvu-dialog-close
       {...otherProps}

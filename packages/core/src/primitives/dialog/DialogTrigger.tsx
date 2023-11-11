@@ -1,4 +1,5 @@
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { OverrideComponentProps } from '@lib/types'
 import { callEventHandler, dataIf } from '@lib/utils'
 import { useDialogContext } from '@primitives/dialog/DialogContext'
@@ -31,11 +32,9 @@ const DialogTrigger = <
   }
 
   return (
-    <Polymorphic
+    <PolymorphicButton
       as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
       onClick={onClick}
-      type="button"
-      role="button"
       aria-haspopup="dialog"
       aria-expanded={open() ? 'true' : 'false'}
       aria-controls={dialogId()}

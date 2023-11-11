@@ -7,16 +7,16 @@ import type { MaybeAccessor } from '@lib/types'
 export type CreateDismissableProps = {
   element: Accessor<HTMLElement | null>
   onDismiss(reason: 'escape' | 'pointerDownOutside'): void
-  disableDismissOnEscape?: MaybeAccessor<boolean>
+  disableDismissOnEscapeKeyDown?: MaybeAccessor<boolean>
   disableDismissOnOutsideInteract?: MaybeAccessor<boolean>
-  disableNoPointerEvents?: MaybeAccessor<boolean>
+  disableNoOutsidePointerEvents?: MaybeAccessor<boolean>
   onEscapeKeyDown?(event: KeyboardEvent): void
   onPointerDownOutside?(event: MouseEvent): void
 }
 
 const createDismissible = (props: CreateDismissableProps) => {
   createEscapeKeyDown({
-    isDisabled: props.disableDismissOnEscape,
+    isDisabled: props.disableDismissOnEscapeKeyDown,
     onEscapeKeyDown: (event) => {
       props.onEscapeKeyDown?.(event)
       if (!event.defaultPrevented) {
@@ -43,7 +43,7 @@ const createDismissible = (props: CreateDismissableProps) => {
   })
 
   createNoPointerEvents({
-    isDisabled: props.disableNoPointerEvents,
+    isDisabled: props.disableNoOutsidePointerEvents,
   })
 }
 

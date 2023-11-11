@@ -11,11 +11,11 @@ export type DialogContextValue = {
   /** Whether the dialog should be rendered as a modal or not. */
   modal: Accessor<boolean>
   /** Whether the dialog should close when the user presses the `Escape` key. */
-  closeOnEscape: Accessor<boolean>
-  /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
+  closeOnEscapeKeyDown: Accessor<boolean>
+  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />` */
   closeOnOutsideInteract: Accessor<boolean>
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
-  noPointerEvents: Accessor<boolean>
+  noOutsidePointerEvents: Accessor<boolean>
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll: Accessor<boolean>
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */

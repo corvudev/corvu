@@ -19,11 +19,11 @@ export type DialogRootProps = {
   /** Whether the dialog should be rendered as a modal or not. */
   modal?: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
-  closeOnEscape?: boolean
-  /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
+  closeOnEscapeKeyDown?: boolean
+  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />` */
   closeOnOutsideInteract?: boolean
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
-  noPointerEvents?: boolean
+  noOutsidePointerEvents?: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll?: boolean
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
@@ -55,11 +55,11 @@ export type DialogRootChildrenProps = {
   /** Whether the dialog should be rendered as a modal or not. */
   modal: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
-  closeOnEscape: boolean
-  /** Whether the dialog should close when the user interacts with the `<Dialog.Overlay />` component. */
+  closeOnEscapeKeyDown: boolean
+  /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
   closeOnOutsideInteract: boolean
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
-  noPointerEvents: boolean
+  noOutsidePointerEvents: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
   preventScroll: boolean
   /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
@@ -89,10 +89,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       role: 'dialog' as const,
       initialOpen: false,
       modal: true,
-      closeOnEscape: true,
+      closeOnEscapeKeyDown: true,
       closeOnOutsideInteract: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
-      noPointerEvents: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      noOutsidePointerEvents: () =>
+        props.modal ?? DEFAULT_MODAL ? true : false,
       preventScroll: true,
       preventScrollbarShift: true,
       trapFocus: true,
@@ -133,14 +134,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get modal() {
       return defaultedProps.modal
     },
-    get closeOnEscape() {
-      return defaultedProps.closeOnEscape
+    get closeOnEscapeKeyDown() {
+      return defaultedProps.closeOnEscapeKeyDown
     },
     get closeOnOutsideInteract() {
       return access(defaultedProps.closeOnOutsideInteract)
     },
-    get noPointerEvents() {
-      return access(defaultedProps.noPointerEvents)
+    get noOutsidePointerEvents() {
+      return access(defaultedProps.noOutsidePointerEvents)
     },
     get preventScroll() {
       return defaultedProps.preventScroll
@@ -193,10 +194,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         role: () => defaultedProps.role,
         open,
         modal: () => defaultedProps.modal,
-        closeOnEscape: () => defaultedProps.closeOnEscape,
+        closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
         closeOnOutsideInteract: () =>
           access(defaultedProps.closeOnOutsideInteract),
-        noPointerEvents: () => access(defaultedProps.noPointerEvents),
+        noOutsidePointerEvents: () =>
+          access(defaultedProps.noOutsidePointerEvents),
         preventScroll: () => defaultedProps.preventScroll,
         preventScrollbarShift: () => defaultedProps.preventScrollbarShift,
         trapFocus: () => defaultedProps.trapFocus,

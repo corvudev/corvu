@@ -33,9 +33,9 @@ const DialogContent = <
     open,
     setOpen,
     modal,
-    closeOnEscape,
+    closeOnEscapeKeyDown,
     closeOnOutsideInteract,
-    noPointerEvents,
+    noOutsidePointerEvents,
     preventScroll,
     preventScrollbarShift,
     trapFocus,
@@ -76,9 +76,9 @@ const DialogContent = <
       <Dismissible
         element={contentRef}
         onDismiss={() => setOpen(false)}
-        disableDismissOnEscape={() => !closeOnEscape()}
+        disableDismissOnEscapeKeyDown={() => !closeOnEscapeKeyDown()}
         disableDismissOnOutsideInteract={() => !closeOnOutsideInteract()}
-        disableNoPointerEvents={() => !noPointerEvents()}
+        disableNoOutsidePointerEvents={() => !noOutsidePointerEvents()}
       >
         {(props) => (
           <Polymorphic
