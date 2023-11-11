@@ -1,5 +1,5 @@
 import { MaybeAccessor } from '@lib/types'
-import { access } from '@lib/utils'
+import { access, sleep } from '@lib/utils'
 import { createSignal, type Accessor, createEffect, onCleanup } from 'solid-js'
 
 const focusableElementSelector =
@@ -112,7 +112,7 @@ const createFocusTrap = (props: {
     if (finalFocusElement) {
       finalFocusElement.focus()
     } else {
-      originalFocusedElement?.focus()
+      sleep(0).then(() => originalFocusedElement?.focus())
     }
   }
 }

@@ -1,5 +1,6 @@
 import { isFunction } from '@lib/assertions'
 import createControllableSignal from '@lib/create/controllableSignal'
+import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
 import { access } from '@lib/utils'
@@ -121,6 +122,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
   const { present: overlayPresent } = createPresence({
     present: open,
     element: overlayRef,
+  })
+
+  createFocusTrap({
+    element: contentRef,
+    initialFocusElement: () => defaultedProps.initialFocusEl ?? null,
+    isDisabled: () => !open() || !defaultedProps.trapFocus,
+    restoreFocus: () => defaultedProps.restoreFocus,
+    finalFocusElement: () => defaultedProps.finalFocusEl ?? null,
   })
 
   const childrenProps: DialogRootChildrenProps = {

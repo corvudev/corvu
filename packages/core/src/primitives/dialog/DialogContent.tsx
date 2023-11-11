@@ -1,7 +1,6 @@
 import Dismissible from '@lib/components/Dismissible'
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
-import createFocusTrap from '@lib/create/focusTrap'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useDialogContext } from '@primitives/dialog/DialogContext'
 import { Show, splitProps } from 'solid-js'
@@ -38,10 +37,6 @@ const DialogContent = <
     noOutsidePointerEvents,
     preventScroll,
     preventScrollbarShift,
-    trapFocus,
-    restoreFocus,
-    initialFocusEl,
-    finalFocusEl,
     contentPresent,
     dialogId,
     labelId,
@@ -61,14 +56,6 @@ const DialogContent = <
   createDisableScroll({
     isDisabled: () => !contentPresent() || !preventScroll(),
     disablePreventScrollbarShift: () => !preventScrollbarShift(),
-  })
-
-  createFocusTrap({
-    element: contentRef,
-    initialFocusElement: () => initialFocusEl?.() ?? null,
-    isDisabled: () => !open() || !trapFocus(),
-    restoreFocus,
-    finalFocusElement: () => finalFocusEl?.() ?? null,
   })
 
   return (

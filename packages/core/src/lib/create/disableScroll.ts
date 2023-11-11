@@ -16,7 +16,7 @@ const createDisableScroll = (props: {
 
     if (!access(props.isDisabled)) {
       originalOverflow = body.style.overflow
-      originalPaddingRight = window.getComputedStyle(body).paddingRight
+      originalPaddingRight = body.style.paddingRight
       const originalWidth = body.offsetWidth
 
       body.style.overflow = 'hidden'
