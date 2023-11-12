@@ -1,9 +1,19 @@
 import { MaybeAccessor } from '@lib/types'
 import { access, sleep } from '@lib/utils'
-import { createSignal, type Accessor, createEffect, onCleanup } from 'solid-js'
+import {
+  createSignal,
+  type Accessor,
+  createEffect,
+  onCleanup,
+  untrack,
+} from 'solid-js'
 
 const focusableElementSelector =
   'a[href]:not([tabindex="-1"]), button:not([tabindex="-1"]), input:not([tabindex="-1"]), textarea:not([tabindex="-1"]), select:not([tabindex="-1"]), details:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'
+
+const EVENT_INITIAL_FOCUS = 'focusTrap.initialFocus'
+const EVENT_FINAL_FOCUS = 'focusTrap.finalFocus'
+const EVENT_OPTIONS = { bubbles: false, cancelable: true }
 
 const createFocusTrap = (props: {
   element: Accessor<HTMLElement | null>
@@ -11,62 +21,63 @@ const createFocusTrap = (props: {
   isDisabled?: MaybeAccessor<boolean>
   restoreFocus?: MaybeAccessor<boolean>
   finalFocusElement?: MaybeAccessor<HTMLElement | null>
+  onInitialFocus?: (event: Event) => void
+  onFinalFocus?: (event: Event) => void
 }) => {
   const [firstFocusElement, setFirstFocusElement] =
     createSignal<HTMLElement | null>(null)
   const [lastFocusElement, setLastFocusElement] =
     createSignal<HTMLElement | null>(null)
 
-  let initialFocusRun = false
-
   let originalFocusedElement: HTMLElement | null = null
 
   createEffect(() => {
-    const elementRef = props.element()
-    if (!elementRef || access(props.isDisabled)) {
-      restoreFocus()
-      return
+    const container = props.element()
+    if (container && !access(props.isDisabled)) {
+      const [_firstFocusElement, _lastFocusElement] = untrack(() => {
+        scanElements(container)
+
+        const _firstFocusElement = firstFocusElement()
+        const _lastFocusElement = lastFocusElement()
+
+        if (_firstFocusElement) {
+          _firstFocusElement.addEventListener(
+            'keydown',
+            onFirstFocusElementKeyDown,
+          )
+        }
+        if (_lastFocusElement) {
+          _lastFocusElement.addEventListener(
+            'keydown',
+            onLastFocusElementKeyDown,
+          )
+        }
+
+        return [_firstFocusElement, _lastFocusElement]
+      })
+
+      onCleanup(() => {
+        restoreFocus(container)
+
+        if (_firstFocusElement) {
+          _firstFocusElement.removeEventListener(
+            'keydown',
+            onFirstFocusElementKeyDown,
+          )
+        }
+        if (_lastFocusElement) {
+          _lastFocusElement.removeEventListener(
+            'keydown',
+            onLastFocusElementKeyDown,
+          )
+        }
+      })
     }
-
-    scanElements()
-
-    const firstFocusElementRef = firstFocusElement()
-    const lastFocusElementRef = lastFocusElement()
-
-    if (firstFocusElementRef) {
-      firstFocusElementRef.addEventListener(
-        'keydown',
-        onFirstFocusElementKeyDown,
-      )
-    }
-    if (lastFocusElementRef) {
-      lastFocusElementRef.addEventListener('keydown', onLastFocusElementKeyDown)
-    }
-
-    onCleanup(() => {
-      if (firstFocusElementRef) {
-        firstFocusElementRef.removeEventListener(
-          'keydown',
-          onFirstFocusElementKeyDown,
-        )
-      }
-      if (lastFocusElementRef) {
-        lastFocusElementRef.removeEventListener(
-          'keydown',
-          onLastFocusElementKeyDown,
-        )
-      }
-    })
   })
 
-  const scanElements = () => {
-    const element = props.element()
-    if (!element) {
-      return []
-    }
-
+  const scanElements = (container: HTMLElement) => {
     const focusableElements = Array.from(
-      element.querySelectorAll(focusableElementSelector),
+      container.querySelectorAll(focusableElementSelector),
     )
 
     setFirstFocusElement((focusableElements[0] as HTMLElement) ?? null)
@@ -74,16 +85,27 @@ const createFocusTrap = (props: {
       (focusableElements[focusableElements.length - 1] as HTMLElement) ?? null,
     )
 
-    if (!initialFocusRun) {
-      initialFocusRun = true
-      originalFocusedElement = document.activeElement as HTMLElement | null
-      const initialFocusElement = access(props.initialFocusElement)
+    originalFocusedElement = document.activeElement as HTMLElement | null
+    const initialFocusElement = access(props.initialFocusElement)
+    const _firstFocusElement = firstFocusElement()
+    const onInitialFocus = props.onInitialFocus
 
-      if (initialFocusElement) {
-        initialFocusElement.focus()
-      } else {
-        firstFocusElement()?.focus()
-      }
+    let event: CustomEvent | undefined
+    if ((initialFocusElement || _firstFocusElement) && onInitialFocus) {
+      event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
+      container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+      container.dispatchEvent(event)
+      container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+    }
+
+    if (event?.defaultPrevented) {
+      return
+    }
+
+    if (initialFocusElement) {
+      initialFocusElement.focus()
+    } else {
+      firstFocusElement()?.focus()
     }
 
     return focusableElements
@@ -103,17 +125,34 @@ const createFocusTrap = (props: {
     }
   }
 
-  const restoreFocus = () => {
+  const restoreFocus = (container: HTMLElement) => {
     const restoreFocus = access(props.restoreFocus)
     if (!restoreFocus) return
 
     const finalFocusElement = access(props.finalFocusElement)
 
-    if (finalFocusElement) {
-      finalFocusElement.focus()
-    } else {
-      sleep(0).then(() => originalFocusedElement?.focus())
+    if (!finalFocusElement && !originalFocusedElement) {
+      return
     }
+
+    let event: CustomEvent | undefined
+    const onFinalFocus = props.onFinalFocus
+    if (onFinalFocus) {
+      event = new CustomEvent(EVENT_FINAL_FOCUS, EVENT_OPTIONS)
+      container.addEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
+      container.dispatchEvent(event)
+      container.removeEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
+    }
+
+    if (event?.defaultPrevented) {
+      return
+    }
+
+    sleep(0).then(() =>
+      finalFocusElement
+        ? finalFocusElement.focus()
+        : originalFocusedElement?.focus(),
+    )
   }
 }
 

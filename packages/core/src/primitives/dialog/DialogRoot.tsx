@@ -21,8 +21,12 @@ export type DialogRootProps = {
   modal?: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown?: boolean
+  /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
+  onEscapeKeyDown?(event: KeyboardEvent): void
   /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />` */
-  closeOnOutsideInteract?: boolean
+  closeOnOutsidePointerDown?: boolean
+  /** Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`. */
+  onOutsidePointerDown?(event: MouseEvent): void
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents?: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
@@ -35,8 +39,12 @@ export type DialogRootProps = {
   restoreFocus?: boolean
   /** The element to receive focus when the dialog opens. */
   initialFocusEl?: HTMLElement
+  /** Callback fired when focus moved into the dialog. Can be prevented by calling `event.preventDefault`. */
+  onInitialFocus?(event: Event): void
   /** The element to receive focus when the dialog closes. */
   finalFocusEl?: HTMLElement
+  /** Callback fired when focus moved out of the dialog. Can be prevented by calling `event.preventDefault`. */
+  onFinalFocus?(event: Event): void
   /** The `id` attribute of the dialog element. */
   dialogId?: string
   /** The `id` attribute of the dialog label element. */
@@ -58,7 +66,7 @@ export type DialogRootChildrenProps = {
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: boolean
   /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
-  closeOnOutsideInteract: boolean
+  closeOnOutsidePointerDown: boolean
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: boolean
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
@@ -91,12 +99,13 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       initialOpen: false,
       modal: true,
       closeOnEscapeKeyDown: true,
-      closeOnOutsideInteract: () =>
+      closeOnOutsidePointerDown: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
       noOutsidePointerEvents: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
-      preventScroll: true,
-      preventScrollbarShift: true,
+      preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      preventScrollbarShift: () =>
+        props.modal ?? DEFAULT_MODAL ? true : false,
       trapFocus: true,
       restoreFocus: true,
       dialogId: createUniqueId(),
@@ -130,6 +139,8 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     isDisabled: () => !open() || !defaultedProps.trapFocus,
     restoreFocus: () => defaultedProps.restoreFocus,
     finalFocusElement: () => defaultedProps.finalFocusEl ?? null,
+    onFinalFocus: defaultedProps.onFinalFocus,
+    onInitialFocus: defaultedProps.onInitialFocus,
   })
 
   const childrenProps: DialogRootChildrenProps = {
@@ -146,17 +157,17 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get closeOnEscapeKeyDown() {
       return defaultedProps.closeOnEscapeKeyDown
     },
-    get closeOnOutsideInteract() {
-      return access(defaultedProps.closeOnOutsideInteract)
+    get closeOnOutsidePointerDown() {
+      return access(defaultedProps.closeOnOutsidePointerDown)
     },
     get noOutsidePointerEvents() {
       return access(defaultedProps.noOutsidePointerEvents)
     },
     get preventScroll() {
-      return defaultedProps.preventScroll
+      return access(defaultedProps.preventScroll)
     },
     get preventScrollbarShift() {
-      return defaultedProps.preventScrollbarShift
+      return access(defaultedProps.preventScrollbarShift)
     },
     get trapFocus() {
       return defaultedProps.trapFocus
@@ -204,12 +215,17 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         open,
         modal: () => defaultedProps.modal,
         closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-        closeOnOutsideInteract: () =>
-          access(defaultedProps.closeOnOutsideInteract),
+        // eslint-disable-next-line solid/reactivity
+        onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
+        closeOnOutsidePointerDown: () =>
+          access(defaultedProps.closeOnOutsidePointerDown),
+        // eslint-disable-next-line solid/reactivity
+        onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
         noOutsidePointerEvents: () =>
           access(defaultedProps.noOutsidePointerEvents),
-        preventScroll: () => defaultedProps.preventScroll,
-        preventScrollbarShift: () => defaultedProps.preventScrollbarShift,
+        preventScroll: () => access(defaultedProps.preventScroll),
+        preventScrollbarShift: () =>
+          access(defaultedProps.preventScrollbarShift),
         trapFocus: () => defaultedProps.trapFocus,
         restoreFocus: () => defaultedProps.restoreFocus,
         initialFocusEl: () => defaultedProps.initialFocusEl,

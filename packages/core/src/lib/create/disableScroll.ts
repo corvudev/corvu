@@ -23,6 +23,8 @@ const createDisableScroll = (props: {
 
       const scrollBarWidth = body.offsetWidth - originalWidth
 
+      body.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`)
+
       if (!access(props.disablePreventScrollbarShift) && scrollBarWidth > 0) {
         body.style.paddingRight = `calc(${
           window.getComputedStyle(body).paddingRight
@@ -33,6 +35,7 @@ const createDisableScroll = (props: {
     onCleanup(() => {
       body.style.overflow = originalOverflow ?? ''
       body.style.paddingRight = originalPaddingRight ?? ''
+      body.style.removeProperty('--scrollbar-width')
       if (body.style.length === 0) {
         body.removeAttribute('style')
       }

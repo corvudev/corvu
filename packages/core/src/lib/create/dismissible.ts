@@ -8,10 +8,10 @@ export type CreateDismissableProps = {
   element: Accessor<HTMLElement | null>
   onDismiss(reason: 'escape' | 'pointerDownOutside'): void
   disableDismissOnEscapeKeyDown?: MaybeAccessor<boolean>
-  disableDismissOnOutsideInteract?: MaybeAccessor<boolean>
+  disableDismissOnOutsidePointerDown?: MaybeAccessor<boolean>
   disableNoOutsidePointerEvents?: MaybeAccessor<boolean>
   onEscapeKeyDown?(event: KeyboardEvent): void
-  onPointerDownOutside?(event: MouseEvent): void
+  onOutsidePointerDown?(event: MouseEvent): void
 }
 
 const createDismissible = (props: CreateDismissableProps) => {
@@ -26,9 +26,9 @@ const createDismissible = (props: CreateDismissableProps) => {
   })
 
   createOutsidePointerDown({
-    isDisabled: props.disableDismissOnOutsideInteract,
+    isDisabled: props.disableDismissOnOutsidePointerDown,
     onPointerDown: (event) => {
-      props.onPointerDownOutside?.(event)
+      props.onOutsidePointerDown?.(event)
       if (!event.defaultPrevented) {
         const ctrlLeftClick = event.button === 0 && event.ctrlKey === true
         // Don't dismiss if event is a right-click

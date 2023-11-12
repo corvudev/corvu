@@ -13,7 +13,7 @@ export type DialogContextValue = {
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: Accessor<boolean>
   /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />` */
-  closeOnOutsideInteract: Accessor<boolean>
+  closeOnOutsidePointerDown: Accessor<boolean>
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: Accessor<boolean>
   /** Whether the dialog should prevent scrolling on the `<body>` element. */
@@ -44,6 +44,10 @@ type InternalContextValue = DialogContextValue & {
   setContentRef(element: HTMLElement): void
   /** Callback fired when the dialog overlay ref changes */
   setOverlayRef(element: HTMLElement): void
+  /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
+  onEscapeKeyDown?(event: KeyboardEvent): void
+  /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
+  onOutsidePointerDown?(event: MouseEvent): void
 }
 
 export const DialogContext = createContext<InternalContextValue>()

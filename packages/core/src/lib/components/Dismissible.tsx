@@ -46,8 +46,8 @@ const RootDismissible: Component<
 > = (props) => {
   const [localProps, otherProps] = splitProps(props, [
     'children',
-    'disableDismissOnEscape',
-    'disableDismissOnOutsideInteract',
+    'disableDismissOnEscapeKeyDown',
+    'disableDismissOnOutsidePointerDown',
     'onDismiss',
   ])
 
@@ -65,10 +65,10 @@ const RootDismissible: Component<
   const isLastLayer = () => layers()[layers().length - 1] === layerId
 
   createDismissible({
-    disableDismissOnEscape: () =>
-      access(localProps.disableDismissOnEscape) || !isLastLayer(),
-    disableDismissOnOutsideInteract: () =>
-      access(localProps.disableDismissOnOutsideInteract) || !isLastLayer(),
+    disableDismissOnEscapeKeyDown: () =>
+      access(localProps.disableDismissOnEscapeKeyDown) || !isLastLayer(),
+    disableDismissOnOutsidePointerDown: () =>
+      access(localProps.disableDismissOnOutsidePointerDown) || !isLastLayer(),
     onDismiss: (reason) => {
       onLayerDismiss(layerId)
       localProps.onDismiss?.(reason)
@@ -111,8 +111,8 @@ const ChildDismissible: Component<
 > = (props) => {
   const [localProps, otherProps] = splitProps(props, [
     'children',
-    'disableDismissOnEscape',
-    'disableDismissOnOutsideInteract',
+    'disableDismissOnEscapeKeyDown',
+    'disableDismissOnOutsidePointerDown',
     'onDismiss',
     'layers',
     'onLayerShow',
@@ -132,10 +132,10 @@ const ChildDismissible: Component<
   })
 
   createDismissible({
-    disableDismissOnEscape: () =>
-      access(localProps.disableDismissOnEscape) || !isLastLayer(),
-    disableDismissOnOutsideInteract: () =>
-      access(localProps.disableDismissOnOutsideInteract) || !isLastLayer(),
+    disableDismissOnEscapeKeyDown: () =>
+      access(localProps.disableDismissOnEscapeKeyDown) || !isLastLayer(),
+    disableDismissOnOutsidePointerDown: () =>
+      access(localProps.disableDismissOnOutsidePointerDown) || !isLastLayer(),
     onDismiss: (reason) => {
       localProps.onLayerDismiss(layerId)
       localProps.onDismiss?.(reason)
