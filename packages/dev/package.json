@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@corvu/tailwind": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
@@ -31,7 +31,7 @@
     "eslint-plugin-solid": "^0.13.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "postcss": "^8.4.31",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "tailwindcss": "^3.3.5",
     "tailwindcss-animate": "^1.0.7",
     "vite": "^4.5.0",

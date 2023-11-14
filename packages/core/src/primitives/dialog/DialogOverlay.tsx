@@ -13,7 +13,7 @@ export type DialogOverlayProps<
   T,
   PolymorphicAttributes<T> & {
     ref?: (element: HTMLElement) => void
-    /** Whether the dialog portal should be forced to render. Useful for custom transition and animations. */
+    /** Whether the dialog overlay should be forced to render. Useful for custom transition and animations. */
     forceMount?: boolean
   }
 >

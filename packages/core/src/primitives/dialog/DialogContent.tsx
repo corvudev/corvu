@@ -16,7 +16,7 @@ export type DialogContentProps<
   PolymorphicAttributes<T> & {
     ref?: (element: HTMLElement) => void
     onPointerDown?: JSX.EventHandlerUnion<HTMLDivElement, PointerEvent>
-    /** Whether the dialog portal should be forced to render. Useful for custom transition and animations. */
+    /** Whether the dialog content should be forced to render. Useful for custom transition and animations. */
     forceMount?: boolean
     style?: JSX.CSSProperties
   }

@@ -11,7 +11,7 @@ export type OverrideComponentProps<
   O
 >
 
-type OverrideProps<T, P> = Omit<T, keyof P> & P
+export type OverrideProps<T, P> = Omit<T, keyof P> & P
 
 export type MaybeAccessor<T> = T | (() => T)
 
