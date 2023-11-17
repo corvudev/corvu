@@ -1,6 +1,6 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { some, mergeRefs, dataIf } from '@lib/utils'
-import { useDialogContext } from '@primitives/dialog/DialogContext'
+import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
 import { Show, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent } from 'solid-js'
@@ -12,18 +12,25 @@ export type DialogOverlayProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    ref?: (element: HTMLElement) => void
-    /** Whether the dialog overlay should be forced to render. Useful for custom transition and animations. */
+    /** Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries. */
     forceMount?: boolean
+    /** @hidden */
+    ref?: (element: HTMLElement) => void
   }
 >
 
+/** Component which can be used to create a faded background. Can be animated.
+ *
+ * @data `data-corvu-dialog-overlay` - Present on every dialog overlay element.
+ * @data `data-open` - Present when the dialog is open.
+ * @data `data-closed` - Present when the dialog is closed.
+ */
 const DialogOverlay = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
 >(
   props: DialogOverlayProps<T>,
 ) => {
-  const { open, overlayPresent, setOverlayRef } = useDialogContext()
+  const { open, overlayPresent, setOverlayRef } = useInternalDialogContext()
 
   const [localProps, otherProps] = splitProps(props, [
     'as',

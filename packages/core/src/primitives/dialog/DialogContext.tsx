@@ -32,26 +32,37 @@ export type DialogContextValue = {
   contentPresent: Accessor<boolean>
   /** Whether the dialog overlay is present. This differes from `open` as it tracks pending animations. */
   overlayPresent: Accessor<boolean>
+  /** The `id` attribute of the dialog element. */
   dialogId: Accessor<string>
+  /** The `id` attribute of the dialog label element. */
   labelId: Accessor<string>
+  /** The `id` attribute of the dialog description element. */
   descriptionId: Accessor<string>
 }
 
 type InternalContextValue = DialogContextValue & {
-  /** Dialog content ref */
   contentRef: Accessor<HTMLElement | null>
-  /** Callback fired when the dialog content ref changes */
   setContentRef(element: HTMLElement): void
-  /** Callback fired when the dialog overlay ref changes */
   setOverlayRef(element: HTMLElement): void
-  /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
   onOutsidePointerDown?(event: MouseEvent): void
 }
 
-export const DialogContext = createContext<InternalContextValue>()
+export const InternalDialogContext = createContext<InternalContextValue>()
 
+export const useInternalDialogContext = () => {
+  const context = useContext(InternalDialogContext)
+  if (!context) {
+    throw new Error(
+      '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+    )
+  }
+  return context
+}
+
+export const DialogContext = createContext<DialogContextValue>()
+
+/** Context which exposes various properties to interact with the dialog. */
 export const useDialogContext = () => {
   const context = useContext(DialogContext)
   if (!context) {

@@ -2,7 +2,7 @@ import Dismissible from '@lib/components/Dismissible'
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
 import { mergeRefs, some, dataIf } from '@lib/utils'
-import { useDialogContext } from '@primitives/dialog/DialogContext'
+import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
 import { Show, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
@@ -14,14 +14,23 @@ export type DialogContentProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    ref?: (element: HTMLElement) => void
-    onPointerDown?: JSX.EventHandlerUnion<HTMLDivElement, PointerEvent>
-    /** Whether the dialog content should be forced to render. Useful for custom transition and animations. */
+    /** Whether the dialog content should be forced to render. Useful when using third-party animation libraries. */
     forceMount?: boolean
+    /** @hidden */
+    ref?: (element: HTMLElement) => void
+    /** @hidden */
+    onPointerDown?: JSX.EventHandlerUnion<HTMLDivElement, PointerEvent>
+    /** @hidden */
     style?: JSX.CSSProperties
   }
 >
 
+/** Component which can be used to create a faded background. Can be animated.
+ *
+ * @data `data-corvu-dialog-content` - Present on every dialog content element.
+ * @data `data-open` - Present when the dialog is open.
+ * @data `data-closed` - Present when the dialog is closed.
+ */
 const DialogContent = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
 >(
@@ -45,7 +54,7 @@ const DialogContent = <
     descriptionId,
     contentRef,
     setContentRef,
-  } = useDialogContext()
+  } = useInternalDialogContext()
 
   const [localProps, otherProps] = splitProps(props, [
     'as',

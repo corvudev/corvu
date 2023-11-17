@@ -4,38 +4,63 @@ import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
 import { access } from '@lib/utils'
-import { DialogContext } from '@primitives/dialog/DialogContext'
+import {
+  DialogContext,
+  InternalDialogContext,
+} from '@primitives/dialog/DialogContext'
 import { mergeProps, createUniqueId, createSignal, untrack } from 'solid-js'
 import type { Component, JSX, Setter } from 'solid-js'
 
 export type DialogRootProps = {
-  /** The `role` attribute of the dialog element. */
+  /** The `role` attribute of the dialog element.
+   * @defaultValue 'dialog'
+   */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not. */
+  /** Whether the dialog is open or not
+   * @defaultValue `false`
+   */
   open?: boolean
   /** Callback fired when the open state changes. */
   onOpenChange?: Setter<boolean>
-  /** Whether the dialog is open initially or not. */
+  /** Whether the dialog is open initially or not.
+   * @defaultValue `false`
+   */
   initialOpen?: boolean
-  /** Whether the dialog should be rendered as a modal or not. */
+  /** Whether the dialog should be rendered as a modal or not.
+   * @defaultValue `true`
+   */
   modal?: boolean
-  /** Whether the dialog should close when the user presses the `Escape` key. */
+  /** Whether the dialog should close when the user presses the `Escape` key.
+   * @defaultValue `true`
+   */
   closeOnEscapeKeyDown?: boolean
   /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />` */
+  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
+   */
   closeOnOutsidePointerDown?: boolean
   /** Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`. */
   onOutsidePointerDown?(event: MouseEvent): void
-  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
+  /** Whether pointer events outside of `<Dialog.Content />` should be disabled.
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
+   */
   noOutsidePointerEvents?: boolean
-  /** Whether the dialog should prevent scrolling on the `<body>` element. */
+  /** Whether the dialog should prevent scrolling on the `<body>` element.
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
+   */
   preventScroll?: boolean
-  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
+  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
+   */
   preventScrollbarShift?: boolean
-  /** Whether the dialog should trap focus or not. */
+  /** Whether the dialog should trap focus or not.
+   * @defaultValue `true`
+   */
   trapFocus?: boolean
-  /** Whether the dialog should restore focus to the previous active element when it closes. */
+  /** Whether the dialog should restore focus to the previous active element when it closes.
+   * @defaultValue `true`
+   */
   restoreFocus?: boolean
   /** The element to receive focus when the dialog opens. */
   initialFocusEl?: HTMLElement
@@ -45,15 +70,22 @@ export type DialogRootProps = {
   finalFocusEl?: HTMLElement
   /** Callback fired when focus moved out of the dialog. Can be prevented by calling `event.preventDefault`. */
   onFinalFocus?(event: Event): void
-  /** The `id` attribute of the dialog element. */
+  /** The `id` attribute of the dialog element.
+   * @defaultValue A `unique` id.
+   */
   dialogId?: string
-  /** The `id` attribute of the dialog label element. */
+  /** The `id` attribute of the dialog label element.
+   * @defaultValue A `unique` id.
+   */
   labelId?: string
-  /** The `id` attribute of the dialog description element. */
+  /** The `id` attribute of the dialog description element.
+   * @defaultValue A `unique` id.
+   */
   descriptionId?: string
   children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }
 
+/** Props which are passed to the Root component children function. */
 export type DialogRootChildrenProps = {
   /** The `role` attribute of the dialog element. */
   role: 'dialog' | 'alertdialog'
@@ -85,13 +117,17 @@ export type DialogRootChildrenProps = {
   contentPresent: boolean
   /** Whether the dialog overlay is present. This differes from `open` as it tracks pending animations. */
   overlayPresent: boolean
+  /** The `id` attribute of the dialog description element. */
   dialogId: string
+  /** The `id` attribute of the dialog label element. */
   labelId: string
+  /** The `id` attribute of the dialog description element. */
   descriptionId: string
 }
 
 const DEFAULT_MODAL = true
 
+/** Context wrapper for the dialog. Is required for every dialog you create. */
 const DialogRoot: Component<DialogRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
@@ -213,14 +249,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       value={{
         role: () => defaultedProps.role,
         open,
+        setOpen,
         modal: () => defaultedProps.modal,
         closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-        // eslint-disable-next-line solid/reactivity
-        onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
         closeOnOutsidePointerDown: () =>
           access(defaultedProps.closeOnOutsidePointerDown),
-        // eslint-disable-next-line solid/reactivity
-        onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
         noOutsidePointerEvents: () =>
           access(defaultedProps.noOutsidePointerEvents),
         preventScroll: () => access(defaultedProps.preventScroll),
@@ -235,13 +268,42 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         dialogId: () => defaultedProps.dialogId,
         labelId: () => defaultedProps.labelId,
         descriptionId: () => defaultedProps.descriptionId,
-        setOpen,
-        contentRef,
-        setContentRef,
-        setOverlayRef,
       }}
     >
-      {untrack(() => resolveChildren())}
+      <InternalDialogContext.Provider
+        value={{
+          role: () => defaultedProps.role,
+          open,
+          setOpen,
+          modal: () => defaultedProps.modal,
+          closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
+          // eslint-disable-next-line solid/reactivity
+          onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
+          closeOnOutsidePointerDown: () =>
+            access(defaultedProps.closeOnOutsidePointerDown),
+          // eslint-disable-next-line solid/reactivity
+          onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
+          noOutsidePointerEvents: () =>
+            access(defaultedProps.noOutsidePointerEvents),
+          preventScroll: () => access(defaultedProps.preventScroll),
+          preventScrollbarShift: () =>
+            access(defaultedProps.preventScrollbarShift),
+          trapFocus: () => defaultedProps.trapFocus,
+          restoreFocus: () => defaultedProps.restoreFocus,
+          initialFocusEl: () => defaultedProps.initialFocusEl,
+          finalFocusEl: () => defaultedProps.finalFocusEl,
+          contentPresent,
+          overlayPresent,
+          dialogId: () => defaultedProps.dialogId,
+          labelId: () => defaultedProps.labelId,
+          descriptionId: () => defaultedProps.descriptionId,
+          contentRef,
+          setContentRef,
+          setOverlayRef,
+        }}
+      >
+        {untrack(() => resolveChildren())}
+      </InternalDialogContext.Provider>
     </DialogContext.Provider>
   )
 }

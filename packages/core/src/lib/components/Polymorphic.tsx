@@ -14,8 +14,11 @@ import { Dynamic, DynamicProps } from 'solid-js/web'
 const DEFAULT_POLYMORPHIC_ELEMENT = 'div'
 
 export type PolymorphicAttributes<T extends ValidComponent> = {
+  /** Component to render the polymorphic component as. */
   as?: T
+  /** Whether to render the polymorphic component as the first `<As />` component found in its children. */
   asChild?: boolean
+  /** @hidden */
   children?: JSX.Element
 }
 

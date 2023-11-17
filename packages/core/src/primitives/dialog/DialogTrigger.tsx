@@ -2,7 +2,7 @@ import { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { OverrideComponentProps } from '@lib/types'
 import { callEventHandler, dataIf } from '@lib/utils'
-import { useDialogContext } from '@primitives/dialog/DialogContext'
+import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
 import { splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 import type { JSX } from 'solid-js/jsx-runtime'
@@ -14,16 +14,23 @@ export type DialogTriggerProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
+    /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
   }
 >
 
+/** Button which changes the open state when clicked
+ *
+ * @data `data-corvu-dialog-trigger` - Present on every dialog trigger element.
+ * @data `data-open` - Present when the dialog is open.
+ * @data `data-closed` - Present when the dialog is closed.
+ */
 const DialogTrigger = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
 >(
   props: DialogTriggerProps<T>,
 ) => {
-  const { open, setOpen, dialogId } = useDialogContext()
+  const { open, setOpen, dialogId } = useInternalDialogContext()
 
   const [localProps, otherProps] = splitProps(props, ['as', 'onClick'])
 
