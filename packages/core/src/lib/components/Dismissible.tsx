@@ -14,6 +14,7 @@ import {
   Show,
   untrack,
   createMemo,
+  onMount,
 } from 'solid-js'
 import type { Accessor, Component, JSX } from 'solid-js'
 
@@ -120,16 +121,18 @@ const ChildDismissible: Component<
   ])
 
   const layerId = createUniqueId()
-  // eslint-disable-next-line solid/reactivity
-  localProps.onLayerShow(layerId)
 
-  const isLastLayer = () => {
-    return localProps.layers()[localProps.layers().length - 1] === layerId
-  }
+  onMount(() => {
+    localProps.onLayerShow(layerId)
+  })
 
   onCleanup(() => {
     localProps.onLayerDismiss(layerId)
   })
+
+  const isLastLayer = () => {
+    return localProps.layers()[localProps.layers().length - 1] === layerId
+  }
 
   createDismissible({
     disableDismissOnEscapeKeyDown: () =>
