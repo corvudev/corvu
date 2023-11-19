@@ -4,11 +4,9 @@ import type { MaybeAccessor } from '@lib/types'
 
 const createNoPointerEvents = (props: {
   isDisabled?: MaybeAccessor<boolean>
-  ownerDocument?: MaybeAccessor<Document | null>
 }) => {
   createEffect(() => {
-    const ownerDocument = access(props.ownerDocument) ?? document
-    const { body } = ownerDocument
+    const { body } = document
 
     let originalPointerEvents: string | undefined
 

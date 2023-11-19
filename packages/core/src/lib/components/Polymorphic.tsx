@@ -8,6 +8,7 @@ import {
   For,
   Show,
   ResolvedJSXElement,
+  createMemo,
 } from 'solid-js'
 import { Dynamic, DynamicProps } from 'solid-js/web'
 
@@ -37,52 +38,55 @@ const Polymorphic = <
     'children',
   ])
 
-  // eslint-disable-next-line solid/reactivity
-  if (!localProps.asChild) {
-    // eslint-disable-next-line solid/components-return-once
+  const resolvedChildren = children(() => localProps.children)
+
+  const asComponent = createMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return resolvedChildren.toArray().find(isAsComponent) as any
+  })
+
+  const restChildren = createMemo(() => {
+    const _asComponent = asComponent()
+
     return (
-      <Dynamic
-        component={localProps.as ?? DEFAULT_POLYMORPHIC_ELEMENT}
-        {...otherProps}
-      >
-        {localProps.children}
-      </Dynamic>
-    )
-  }
-
-  const resolvedChildren = children(() => localProps.children).toArray()
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const asComponent = resolvedChildren.find(isAsComponent) as any
-
-  if (!asComponent) {
-    throw new Error(
-      '[@corvu/core]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
-    )
-  }
-
-  const restChildren = () => {
-    return (
-      <For each={resolvedChildren}>
+      <For each={resolvedChildren.toArray()}>
         {(child) => (
-          <Show when={child === asComponent} fallback={child}>
-            {asComponent.props.children}
+          <Show when={child === _asComponent} fallback={child}>
+            {_asComponent.props.children}
           </Show>
         )}
       </For>
     )
-  }
+  })
 
-  if (asComponent) {
-    const asProps = asComponent.props as DynamicProps<T>
+  const resolvedPolymorphic = createMemo(() => {
+    if (!localProps.asChild) {
+      return (
+        <Dynamic
+          component={localProps.as ?? DEFAULT_POLYMORPHIC_ELEMENT}
+          {...otherProps}
+        >
+          {resolvedChildren()}
+        </Dynamic>
+      )
+    }
+
+    if (!asComponent()) {
+      throw new Error(
+        '[@corvu/core]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
+      )
+    }
+
+    const asProps = asComponent().props as DynamicProps<T>
 
     const combinedProps = combineProps([otherProps, asProps], {
       reverseEventHandlers: true,
     })
 
-    // eslint-disable-next-line solid/components-return-once
     return <Dynamic {...combinedProps}>{restChildren()}</Dynamic>
-  }
+  })
+
+  return resolvedPolymorphic as unknown as JSX.Element
 }
 
 const AS_COMPONENT_SYMBOL = Symbol('CorvuAsComponent')
@@ -92,7 +96,7 @@ type MaybeAsComponentType = {
   props: DynamicProps<ValidComponent>
 }
 
-export function As<T extends ValidComponent>(props: DynamicProps<T>) {
+export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
   return {
     [AS_COMPONENT_SYMBOL]: true,
     props,

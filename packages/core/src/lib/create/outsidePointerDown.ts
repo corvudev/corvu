@@ -5,19 +5,16 @@ import type { MaybeAccessor } from '@lib/types'
 const createOutsidePointerDown = (props: {
   onPointerDown: (event: PointerEvent) => void
   isDisabled?: MaybeAccessor<boolean>
-  ownerDocument?: MaybeAccessor<Document | null>
   element: Accessor<HTMLElement | null>
 }) => {
   createEffect(() => {
     if (access(props.isDisabled)) {
       return
     }
-
-    const ownerDocument = access(props.ownerDocument) ?? document
-    ownerDocument.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('pointerdown', handlePointerDown)
 
     onCleanup(() => {
-      ownerDocument.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('pointerdown', handlePointerDown)
     })
   })
 

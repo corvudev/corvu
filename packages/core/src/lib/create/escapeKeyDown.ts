@@ -5,18 +5,16 @@ import type { MaybeAccessor } from '@lib/types'
 const createEscapeKeyDown = (props: {
   onEscapeKeyDown: (event: KeyboardEvent) => void
   isDisabled?: MaybeAccessor<boolean>
-  ownerDocument?: MaybeAccessor<Document | null>
 }) => {
   createEffect(() => {
     if (access(props.isDisabled)) {
       return
     }
 
-    const ownerDocument = access(props.ownerDocument) ?? document
-    ownerDocument.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown)
 
     onCleanup(() => {
-      ownerDocument.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keydown', handleKeyDown)
     })
   })
 

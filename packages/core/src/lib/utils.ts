@@ -2,6 +2,14 @@ import { isFunction } from '@lib/assertions'
 import { MaybeAccessor, MaybeAccessorValue } from '@lib/types'
 import type { Accessor, JSX } from 'solid-js'
 
+/**!
+ * Part of this code is inspired by solid-primitives
+ * MIT License, Copyright (c) Solid Core Team
+ *
+ * Credits to the Solid Core Team:
+ * https://github.com/solidjs-community/solid-primitives
+ */
+
 const callEventHandler = <T, E extends Event>(
   eventHandler: JSX.EventHandlerUnion<T, E> | undefined,
   event: E & { currentTarget: T; target: Element },
