@@ -10,6 +10,7 @@
   "license": "MIT",
   "homepage": "https://corvu.dev",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

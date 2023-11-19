@@ -31,20 +31,13 @@
   "private": false,
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "solid": "./dist/index.jsx",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "node": "./dist/index.cjs",
-      "browser": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      }
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
@@ -68,8 +61,7 @@
     "eslint-plugin-solid": "^0.13.0",
     "prettier": "^3.1.0",
     "solid-js": "^1.8.5",
-    "tsup": "^7.3.0",
-    "tsup-preset-solid": "^2.1.0",
+    "tsup": "^8.0.0",
     "typescript": "^5.2.2"
   }
 }
