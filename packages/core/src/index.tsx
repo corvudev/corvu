@@ -6,5 +6,12 @@ export { default as createFocusTrap } from '@lib/create/focusTrap'
 export { default as createOnce } from '@lib/create/once'
 export { default as createPresence } from '@lib/create/presence'
 
-export type { PolymorphicAttributes } from '@lib/components/Polymorphic'
-export type { OverrideComponentProps, OverrideProps } from '@lib/types'
+export type {
+  PolymorphicAttributes,
+  PolymorphicProps,
+} from '@lib/components/Polymorphic'
+export type {
+  MaybeAccessor,
+  OverrideComponentProps,
+  OverrideProps,
+} from '@lib/types'
