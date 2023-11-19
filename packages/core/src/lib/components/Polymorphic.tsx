@@ -27,6 +27,7 @@ export type PolymorphicProps<
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
 > = OverrideComponentProps<T, PolymorphicAttributes<T>>
 
+/** Component, which either renders as the component provided in the `as` prop or, if `asChild` is set to `true`, as the first `<As />` component found in its children */
 const Polymorphic = <
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
 >(
@@ -91,11 +92,12 @@ const Polymorphic = <
 
 const AS_COMPONENT_SYMBOL = Symbol('CorvuAsComponent')
 
-type MaybeAsComponentType = {
-  [AS_COMPONENT_SYMBOL]: boolean
+type MaybeAsComponent = {
+  [AS_COMPONENT_SYMBOL]?: true
   props: DynamicProps<ValidComponent>
 }
 
+/** Dynamic component which the parent <Polymorphic> component should render as. */
 export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
   return {
     [AS_COMPONENT_SYMBOL]: true,
@@ -106,7 +108,7 @@ export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
 const isAsComponent = (children: ResolvedJSXElement) => {
   return (
     children &&
-    (children as unknown as MaybeAsComponentType)[AS_COMPONENT_SYMBOL] === true
+    (children as unknown as MaybeAsComponent)[AS_COMPONENT_SYMBOL] === true
   )
 }
 

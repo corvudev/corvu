@@ -4,6 +4,7 @@ import { createSignal, untrack } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 import type { Accessor, Setter } from 'solid-js'
 
+/** Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop. */
 const createControllableSignal = <T>(props: {
   value?: Accessor<T | undefined>
   defaultValue: MaybeAccessor<T>

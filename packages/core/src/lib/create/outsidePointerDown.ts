@@ -1,14 +1,21 @@
 import { access } from '@lib/utils'
-import { Accessor, createEffect, onCleanup } from 'solid-js'
+import { Accessor, createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
 const createOutsidePointerDown = (props: {
   onPointerDown: (event: PointerEvent) => void
-  isDisabled?: MaybeAccessor<boolean>
+  enabled?: MaybeAccessor<boolean>
   element: Accessor<HTMLElement | null>
 }) => {
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+    },
+    props,
+  )
+
   createEffect(() => {
-    if (access(props.isDisabled)) {
+    if (!access(defaultedProps.enabled)) {
       return
     }
     document.addEventListener('pointerdown', handlePointerDown)
@@ -19,9 +26,9 @@ const createOutsidePointerDown = (props: {
   })
 
   const handlePointerDown = (event: PointerEvent) => {
-    const element = props.element()
+    const element = defaultedProps.element()
     if (element && !element.contains(event.target as Node)) {
-      props.onPointerDown(event)
+      defaultedProps.onPointerDown(event)
     }
   }
 }

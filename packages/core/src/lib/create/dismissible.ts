@@ -1,6 +1,7 @@
 import createEscapeKeyDown from '@lib/create/escapeKeyDown'
 import createNoPointerEvents from '@lib/create/noPointerEvents'
 import createOutsidePointerDown from '@lib/create/outsidePointerDown'
+import { access } from '@lib/utils'
 import { type Accessor } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
@@ -16,7 +17,7 @@ export type CreateDismissableProps = {
 
 const createDismissible = (props: CreateDismissableProps) => {
   createEscapeKeyDown({
-    isDisabled: props.disableDismissOnEscapeKeyDown,
+    enabled: () => !access(props.disableDismissOnEscapeKeyDown),
     onEscapeKeyDown: (event) => {
       props.onEscapeKeyDown?.(event)
       if (!event.defaultPrevented) {
@@ -26,7 +27,7 @@ const createDismissible = (props: CreateDismissableProps) => {
   })
 
   createOutsidePointerDown({
-    isDisabled: props.disableDismissOnOutsidePointerDown,
+    enabled: () => !access(props.disableDismissOnOutsidePointerDown),
     onPointerDown: (event) => {
       props.onOutsidePointerDown?.(event)
       if (!event.defaultPrevented) {
@@ -43,7 +44,7 @@ const createDismissible = (props: CreateDismissableProps) => {
   })
 
   createNoPointerEvents({
-    isDisabled: props.disableNoOutsidePointerEvents,
+    enabled: () => !access(props.disableNoOutsidePointerEvents),
   })
 }
 

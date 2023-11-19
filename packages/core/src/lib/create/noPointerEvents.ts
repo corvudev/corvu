@@ -1,16 +1,21 @@
 import { access } from '@lib/utils'
-import { createEffect, onCleanup } from 'solid-js'
+import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
-const createNoPointerEvents = (props: {
-  isDisabled?: MaybeAccessor<boolean>
-}) => {
+const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+    },
+    props,
+  )
+
   createEffect(() => {
     const { body } = document
 
     let originalPointerEvents: string | undefined
 
-    if (!access(props.isDisabled)) {
+    if (access(defaultedProps.enabled)) {
       originalPointerEvents = body.style.pointerEvents
       body.style.pointerEvents = 'none'
     }

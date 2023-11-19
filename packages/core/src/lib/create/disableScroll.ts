@@ -1,18 +1,29 @@
 import { access } from '@lib/utils'
-import { createEffect, onCleanup } from 'solid-js'
+import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
+/** Disable scrolling of the body element.
+ *
+ * Adds padding to the body element to avoid shifting because of the scrollbar disappearing. Also adds the `--scrollbar-width` CSS variable to the body, indicating the width of the scrollbar which disappeared. Useful for styling fixed elements which are affected by the scrollbar width.
+ */
 const createDisableScroll = (props: {
-  isDisabled?: MaybeAccessor<boolean>
+  enabled?: MaybeAccessor<boolean>
   disablePreventScrollbarShift?: MaybeAccessor<boolean>
 }) => {
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+    },
+    props,
+  )
+
   createEffect(() => {
     const { body } = document
 
     let originalOverflow: string | undefined
     let originalPaddingRight: string | undefined
 
-    if (!access(props.isDisabled)) {
+    if (access(defaultedProps.enabled)) {
       originalOverflow = body.style.overflow
       originalPaddingRight = body.style.paddingRight
       const originalWidth = body.offsetWidth
@@ -21,9 +32,14 @@ const createDisableScroll = (props: {
 
       const scrollBarWidth = body.offsetWidth - originalWidth
 
-      body.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`)
+      if (scrollBarWidth > 0) {
+        body.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`)
+      }
 
-      if (!access(props.disablePreventScrollbarShift) && scrollBarWidth > 0) {
+      if (
+        !access(defaultedProps.disablePreventScrollbarShift) &&
+        scrollBarWidth > 0
+      ) {
         body.style.paddingRight = `calc(${
           window.getComputedStyle(body).paddingRight
         } + ${scrollBarWidth}px)`

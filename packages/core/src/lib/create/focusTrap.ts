@@ -6,6 +6,7 @@ import {
   createEffect,
   onCleanup,
   untrack,
+  mergeProps,
 } from 'solid-js'
 
 const focusableElementSelector =
@@ -15,15 +16,39 @@ const EVENT_INITIAL_FOCUS = 'focusTrap.initialFocus'
 const EVENT_FINAL_FOCUS = 'focusTrap.finalFocus'
 const EVENT_OPTIONS = { bubbles: false, cancelable: true }
 
+/** Traps focus inside the given element */
 const createFocusTrap = (props: {
+  /** Element to trap focus in. */
   element: Accessor<HTMLElement | null>
+  /** If the focus trap is enabled.
+   * @defaultValue `true`
+   */
+  enabled?: MaybeAccessor<boolean>
+  /** The element to receive focus when the focus trap is activated.
+   * @defaultValue The first focusable element inside `element`
+   */
   initialFocusElement?: MaybeAccessor<HTMLElement | null>
-  isDisabled?: MaybeAccessor<boolean>
+  /** If the focus should be restored to the element the focus was on initially when the focus trap is deactivated.
+   * @defaultValue `true`
+   */
   restoreFocus?: MaybeAccessor<boolean>
+  /** The element to receive focus when the focus trap is deactivated (`enabled` = `false`).
+   * @defaultValue The element the focus was on initially
+   */
   finalFocusElement?: MaybeAccessor<HTMLElement | null>
+  /** Callback fired when focus moves inside the focus trap. Can be prevented by calling `event.preventDefault`. */
   onInitialFocus?: (event: Event) => void
+  /** Callback fired when focus moves outside the focus trap. Can be prevented by calling `event.preventDefault`. */
   onFinalFocus?: (event: Event) => void
 }) => {
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+      restoreFocus: true,
+    },
+    props,
+  )
+
   const [firstFocusElement, setFirstFocusElement] =
     createSignal<HTMLElement | null>(null)
   const [lastFocusElement, setLastFocusElement] =
@@ -32,8 +57,8 @@ const createFocusTrap = (props: {
   let originalFocusedElement: HTMLElement | null = null
 
   createEffect(() => {
-    const container = props.element()
-    if (container && !access(props.isDisabled)) {
+    const container = defaultedProps.element()
+    if (container && access(defaultedProps.enabled)) {
       const [_firstFocusElement, _lastFocusElement] = untrack(() => {
         scanElements(container)
 
@@ -86,9 +111,9 @@ const createFocusTrap = (props: {
     )
 
     originalFocusedElement = document.activeElement as HTMLElement | null
-    const initialFocusElement = access(props.initialFocusElement)
+    const initialFocusElement = access(defaultedProps.initialFocusElement)
     const _firstFocusElement = firstFocusElement()
-    const onInitialFocus = props.onInitialFocus
+    const onInitialFocus = defaultedProps.onInitialFocus
 
     let event: CustomEvent | undefined
     if ((initialFocusElement || _firstFocusElement) && onInitialFocus) {
@@ -126,17 +151,17 @@ const createFocusTrap = (props: {
   }
 
   const restoreFocus = (container: HTMLElement) => {
-    const restoreFocus = access(props.restoreFocus)
+    const restoreFocus = access(defaultedProps.restoreFocus)
     if (!restoreFocus) return
 
-    const finalFocusElement = access(props.finalFocusElement)
+    const finalFocusElement = access(defaultedProps.finalFocusElement)
 
     if (!finalFocusElement && !originalFocusedElement) {
       return
     }
 
     let event: CustomEvent | undefined
-    const onFinalFocus = props.onFinalFocus
+    const onFinalFocus = defaultedProps.onFinalFocus
     if (onFinalFocus) {
       event = new CustomEvent(EVENT_FINAL_FOCUS, EVENT_OPTIONS)
       container.addEventListener(EVENT_FINAL_FOCUS, onFinalFocus)

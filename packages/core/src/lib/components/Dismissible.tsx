@@ -26,11 +26,11 @@ type DismissibleContextValue = {
 
 const DismissibleContext = createContext<DismissibleContextValue>()
 
-const Dismissible: Component<
-  CreateDismissableProps & {
-    children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
-  }
-> = (props) => {
+type DismissibleProps = CreateDismissableProps & {
+  children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
+}
+
+const Dismissible: Component<DismissibleProps> = (props) => {
   const upperContext = useContext(DismissibleContext)
 
   return (
@@ -40,11 +40,7 @@ const Dismissible: Component<
   )
 }
 
-const RootDismissible: Component<
-  CreateDismissableProps & {
-    children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
-  }
-> = (props) => {
+const RootDismissible: Component<DismissibleProps> = (props) => {
   const [localProps, otherProps] = splitProps(props, [
     'children',
     'disableDismissOnEscapeKeyDown',
@@ -105,10 +101,7 @@ const RootDismissible: Component<
 }
 
 const ChildDismissible: Component<
-  CreateDismissableProps &
-    DismissibleContextValue & {
-      children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
-    }
+  DismissibleProps & DismissibleContextValue
 > = (props) => {
   const [localProps, otherProps] = splitProps(props, [
     'children',

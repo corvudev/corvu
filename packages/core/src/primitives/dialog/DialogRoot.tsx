@@ -64,11 +64,11 @@ export type DialogRootProps = {
   restoreFocus?: boolean
   /** The element to receive focus when the dialog opens. */
   initialFocusEl?: HTMLElement
-  /** Callback fired when focus moved into the dialog. Can be prevented by calling `event.preventDefault`. */
+  /** Callback fired when focus moves into the dialog. Can be prevented by calling `event.preventDefault`. */
   onInitialFocus?(event: Event): void
   /** The element to receive focus when the dialog closes. */
   finalFocusEl?: HTMLElement
-  /** Callback fired when focus moved out of the dialog. Can be prevented by calling `event.preventDefault`. */
+  /** Callback fired when focus moves out of the dialog. Can be prevented by calling `event.preventDefault`. */
   onFinalFocus?(event: Event): void
   /** The `id` attribute of the dialog element.
    * @defaultValue A `unique` id.
@@ -171,8 +171,8 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
 
   createFocusTrap({
     element: contentRef,
+    enabled: () => open() && defaultedProps.trapFocus,
     initialFocusElement: () => defaultedProps.initialFocusEl ?? null,
-    isDisabled: () => !open() || !defaultedProps.trapFocus,
     restoreFocus: () => defaultedProps.restoreFocus,
     finalFocusElement: () => defaultedProps.finalFocusEl ?? null,
     onFinalFocus: defaultedProps.onFinalFocus,

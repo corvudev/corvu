@@ -65,7 +65,7 @@ const DialogContent = <
   ])
 
   createDisableScroll({
-    isDisabled: () => !contentPresent() || !preventScroll(),
+    enabled: () => contentPresent() && preventScroll(),
     disablePreventScrollbarShift: () => !preventScrollbarShift(),
   })
 

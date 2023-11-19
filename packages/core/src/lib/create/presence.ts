@@ -7,8 +7,11 @@ import {
 } from 'solid-js'
 import type { Accessor } from 'solid-js'
 
+/** Creates a presence which is aware of animations and waits for them before hiding. */
 const createPresence = (props: {
+  /** Whether the presence is present or not. */
   present: Accessor<boolean>
+  /** The element which animations should be tracked. */
   element: Accessor<HTMLElement | null>
 }) => {
   const refStyles = createMemo(() => {
