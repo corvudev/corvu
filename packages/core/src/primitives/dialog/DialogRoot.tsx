@@ -161,7 +161,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
 
   const [open, setOpen] = createControllableSignal({
     value: () => defaultedProps.open,
-    defaultValue: () => defaultedProps.initialOpen,
+    defaultValue: defaultedProps.initialOpen,
     onChange: defaultedProps.onOpenChange,
   })
 

@@ -2,12 +2,14 @@ import { access } from '@lib/utils'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
-/** Disable scrolling of the body element.
+/** Disables scrolling of the body element.
  *
- * Adds padding to the body element to avoid shifting because of the scrollbar disappearing. Also adds the `--scrollbar-width` CSS variable to the body, indicating the width of the scrollbar which disappeared. Useful for styling fixed elements which are affected by the scrollbar width.
+ * Adds padding to the body element to avoid layout shift because of the scrollbar disappearing. Also adds the `--scrollbar-width` CSS variable to the body, indicating the width of the scrollbar which disappeared. Useful for styling fixed elements which are affected by the scrollbar width.
  */
 const createDisableScroll = (props: {
+  /** Whether scrolling of the body element should be disabled. */
   enabled?: MaybeAccessor<boolean>
+  /** Disable adding padding to the body element to avoid layout shift. */
   disablePreventScrollbarShift?: MaybeAccessor<boolean>
 }) => {
   const defaultedProps = mergeProps(

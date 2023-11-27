@@ -1,17 +1,18 @@
 import { isFunction } from '@lib/assertions'
-import { access } from '@lib/utils'
 import { createSignal, untrack } from 'solid-js'
-import type { MaybeAccessor } from '@lib/types'
 import type { Accessor, Setter } from 'solid-js'
 
 /** Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop. */
 const createControllableSignal = <T>(props: {
+  /** Optionally provide your own state to use. */
   value?: Accessor<T | undefined>
-  defaultValue: MaybeAccessor<T>
+  /** Default value of the signal. */
+  defaultValue: T
+  /** Callback fired when the value changes. */
   onChange?: Setter<T>
 }) => {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
-    access(props.defaultValue) as T,
+    props.defaultValue,
   )
 
   const isControlled = () => props.value?.() !== undefined
