@@ -1,5 +1,6 @@
-import { createContext, useContext } from 'solid-js'
-import type { Accessor, Setter } from 'solid-js'
+import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
+import { ContextValue } from '@primitives/dialog'
+import { createContext, type Accessor, type Setter, useContext } from 'solid-js'
 
 export type DialogContextValue = {
   /** The `role` attribute of the dialog element. */
@@ -48,26 +49,62 @@ type InternalContextValue = DialogContextValue & {
   onOutsidePointerDown?(event: MouseEvent): void
 }
 
-export const InternalDialogContext = createContext<InternalContextValue>()
+const InternalDialogContext = createContext<InternalContextValue>()
 
-export const useInternalDialogContext = () => {
-  const context = useContext(InternalDialogContext)
+export const createInternalDialogContext = (contextId?: string) => {
+  if (!contextId) return InternalDialogContext
+
+  const context = createKeyedContext<InternalContextValue>(
+    `internal-${contextId}`,
+  )
+  return context
+}
+
+export const useInternalDialogContext = (contextId?: string) => {
+  if (!contextId) {
+    const context = useContext(InternalDialogContext)
+    if (!context) {
+      throw new Error(
+        '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+      )
+    }
+    return context
+  }
+
+  const context = useKeyedContext<InternalContextValue>(`internal-${contextId}`)
   if (!context) {
     throw new Error(
-      '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+      `[@corvu/core]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
     )
   }
   return context
 }
 
-export const DialogContext = createContext<DialogContextValue>()
+const DialogContext = createContext<ContextValue>()
 
-/** Context which exposes various properties to interact with the dialog. */
-export const useDialogContext = () => {
-  const context = useContext(DialogContext)
+export const createDialogContext = (contextId?: string) => {
+  if (!contextId) return DialogContext
+
+  const context = createKeyedContext<ContextValue>(contextId)
+  return context
+}
+
+/** Context which exposes various properties to interact with the dialog. Optionally provide a contextId to access a keyed context. */
+export const useDialogContext = (contextId?: string) => {
+  if (!contextId) {
+    const context = useContext(DialogContext)
+    if (!context) {
+      throw new Error(
+        '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+      )
+    }
+    return context
+  }
+
+  const context = useKeyedContext<ContextValue>(contextId)
   if (!context) {
     throw new Error(
-      '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+      `[@corvu/core]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
     )
   }
   return context

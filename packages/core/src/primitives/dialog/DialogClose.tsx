@@ -2,7 +2,7 @@ import { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { callEventHandler } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { splitProps } from 'solid-js'
+import { createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent, JSX } from 'solid-js'
 
@@ -13,6 +13,8 @@ export type DialogCloseProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
+    /** The `id` of the dialog context to use. */
+    contextId?: string
     /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
   }
@@ -27,14 +29,20 @@ const DialogClose = <
 >(
   props: DialogCloseProps<T>,
 ) => {
-  const { setOpen } = useInternalDialogContext()
+  const [localProps, otherProps] = splitProps(props, [
+    'as',
+    'contextId',
+    'onClick',
+  ])
 
-  const [localProps, otherProps] = splitProps(props, ['as', 'onClick'])
+  const context = createMemo(() =>
+    useInternalDialogContext(localProps.contextId),
+  )
 
   const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
     event,
   ) => {
-    !callEventHandler(localProps.onClick, event) && setOpen(false)
+    !callEventHandler(localProps.onClick, event) && context().setOpen(false)
   }
 
   return (

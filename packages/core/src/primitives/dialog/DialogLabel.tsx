@@ -1,6 +1,6 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { splitProps } from 'solid-js'
+import { createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent } from 'solid-js'
 
@@ -8,7 +8,13 @@ const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
 
 export type DialogLabelProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
-> = OverrideComponentProps<T, PolymorphicAttributes<T>>
+> = OverrideComponentProps<
+  T,
+  PolymorphicAttributes<T> & {
+    /** The `id` of the dialog context to use. */
+    contextId?: string
+  }
+>
 
 /** Label element to announce the dialog to accessibility tools.
  *
@@ -19,14 +25,16 @@ const DialogLabel = <
 >(
   props: DialogLabelProps<T>,
 ) => {
-  const { labelId } = useInternalDialogContext()
+  const [localProps, otherProps] = splitProps(props, ['as', 'contextId'])
 
-  const [localProps, otherProps] = splitProps(props, ['as'])
+  const context = createMemo(() =>
+    useInternalDialogContext(localProps.contextId),
+  )
 
   return (
     <Polymorphic
       as={localProps.as ?? (DEFAULT_DIALOG_LABEL_ELEMENT as ValidComponent)}
-      id={labelId()}
+      id={context().labelId()}
       data-corvu-dialog-label
       {...otherProps}
     />

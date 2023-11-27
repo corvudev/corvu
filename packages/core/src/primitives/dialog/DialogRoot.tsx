@@ -5,10 +5,16 @@ import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
 import { access } from '@lib/utils'
 import {
-  DialogContext,
-  InternalDialogContext,
+  createDialogContext,
+  createInternalDialogContext,
 } from '@primitives/dialog/DialogContext'
-import { mergeProps, createUniqueId, createSignal, untrack } from 'solid-js'
+import {
+  mergeProps,
+  createUniqueId,
+  createSignal,
+  untrack,
+  createMemo,
+} from 'solid-js'
 import type { Component, JSX, Setter } from 'solid-js'
 
 export type DialogRootProps = {
@@ -82,6 +88,8 @@ export type DialogRootProps = {
    * @defaultValue A `unique` id.
    */
   descriptionId?: string
+  /** The `id` of the dialog context. Useful if you have nested dialogs and want to create components that belong to a dialog higher up in the tree. */
+  contextId?: string
   children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }
 
@@ -244,45 +252,22 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     return children
   }
 
-  return (
-    <DialogContext.Provider
-      value={{
-        role: () => defaultedProps.role,
-        open,
-        setOpen,
-        modal: () => defaultedProps.modal,
-        closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-        closeOnOutsidePointerDown: () =>
-          access(defaultedProps.closeOnOutsidePointerDown),
-        noOutsidePointerEvents: () =>
-          access(defaultedProps.noOutsidePointerEvents),
-        preventScroll: () => access(defaultedProps.preventScroll),
-        preventScrollbarShift: () =>
-          access(defaultedProps.preventScrollbarShift),
-        trapFocus: () => defaultedProps.trapFocus,
-        restoreFocus: () => defaultedProps.restoreFocus,
-        initialFocusEl: () => defaultedProps.initialFocusEl,
-        finalFocusEl: () => defaultedProps.finalFocusEl,
-        contentPresent,
-        overlayPresent,
-        dialogId: () => defaultedProps.dialogId,
-        labelId: () => defaultedProps.labelId,
-        descriptionId: () => defaultedProps.descriptionId,
-      }}
-    >
-      <InternalDialogContext.Provider
+  const memoizedDialogRoot = createMemo(() => {
+    const DialogContext = createDialogContext(defaultedProps.contextId)
+    const InternalDialogContext = createInternalDialogContext(
+      defaultedProps.contextId,
+    )
+
+    return untrack(() => (
+      <DialogContext.Provider
         value={{
           role: () => defaultedProps.role,
           open,
           setOpen,
           modal: () => defaultedProps.modal,
           closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-          // eslint-disable-next-line solid/reactivity
-          onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
           closeOnOutsidePointerDown: () =>
             access(defaultedProps.closeOnOutsidePointerDown),
-          // eslint-disable-next-line solid/reactivity
-          onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
           noOutsidePointerEvents: () =>
             access(defaultedProps.noOutsidePointerEvents),
           preventScroll: () => access(defaultedProps.preventScroll),
@@ -297,15 +282,47 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           dialogId: () => defaultedProps.dialogId,
           labelId: () => defaultedProps.labelId,
           descriptionId: () => defaultedProps.descriptionId,
-          contentRef,
-          setContentRef,
-          setOverlayRef,
         }}
       >
-        {untrack(() => resolveChildren())}
-      </InternalDialogContext.Provider>
-    </DialogContext.Provider>
-  )
+        <InternalDialogContext.Provider
+          value={{
+            role: () => defaultedProps.role,
+            open,
+            setOpen,
+            modal: () => defaultedProps.modal,
+            closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
+            // eslint-disable-next-line solid/reactivity
+            onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
+            closeOnOutsidePointerDown: () =>
+              access(defaultedProps.closeOnOutsidePointerDown),
+            // eslint-disable-next-line solid/reactivity
+            onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
+            noOutsidePointerEvents: () =>
+              access(defaultedProps.noOutsidePointerEvents),
+            preventScroll: () => access(defaultedProps.preventScroll),
+            preventScrollbarShift: () =>
+              access(defaultedProps.preventScrollbarShift),
+            trapFocus: () => defaultedProps.trapFocus,
+            restoreFocus: () => defaultedProps.restoreFocus,
+            initialFocusEl: () => defaultedProps.initialFocusEl,
+            finalFocusEl: () => defaultedProps.finalFocusEl,
+            contentPresent,
+            overlayPresent,
+            dialogId: () => defaultedProps.dialogId,
+            labelId: () => defaultedProps.labelId,
+            descriptionId: () => defaultedProps.descriptionId,
+            contentRef,
+            setContentRef,
+            setOverlayRef,
+          }}
+        >
+          {untrack(() => resolveChildren())}
+        </InternalDialogContext.Provider>
+      </DialogContext.Provider>
+    ))
+  })
+
+  return memoizedDialogRoot as unknown as JSX.Element
 }
 
 export default DialogRoot

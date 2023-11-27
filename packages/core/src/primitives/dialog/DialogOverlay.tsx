@@ -1,7 +1,7 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { Show, splitProps } from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent } from 'solid-js'
 
@@ -14,6 +14,8 @@ export type DialogOverlayProps<
   PolymorphicAttributes<T> & {
     /** Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries. */
     forceMount?: boolean
+    /** The `id` of the dialog context to use. */
+    contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void
   }
@@ -30,22 +32,31 @@ const DialogOverlay = <
 >(
   props: DialogOverlayProps<T>,
 ) => {
-  const { open, overlayPresent, setOverlayRef } = useInternalDialogContext()
-
   const [localProps, otherProps] = splitProps(props, [
     'as',
-    'ref',
     'forceMount',
+    'contextId',
+    'ref',
   ])
 
+  const context = createMemo(() =>
+    useInternalDialogContext(localProps.contextId),
+  )
+
   return (
-    <Show when={some(open, () => localProps.forceMount, overlayPresent)}>
+    <Show
+      when={some(
+        context().open,
+        () => localProps.forceMount,
+        context().overlayPresent,
+      )}
+    >
       <Polymorphic
         as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
-        ref={mergeRefs(setOverlayRef, localProps.ref)}
+        ref={mergeRefs(context().setOverlayRef, localProps.ref)}
         aria-hidden="true"
-        data-open={dataIf(open())}
-        data-closed={dataIf(!open())}
+        data-open={dataIf(context().open())}
+        data-closed={dataIf(!context().open())}
         data-corvu-dialog-overlay
         tabIndex="-1"
         {...otherProps}

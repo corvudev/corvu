@@ -1,14 +1,20 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { splitProps } from 'solid-js'
+import { createMemo, splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 
 const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
 
 export type DialogDescriptionProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
-> = OverrideComponentProps<T, PolymorphicAttributes<T>>
+> = OverrideComponentProps<
+  T,
+  PolymorphicAttributes<T> & {
+    /** The `id` of the dialog context to use. */
+    contextId?: string
+  }
+>
 
 /** Description element to announce the dialog to accessibility tools.
  *
@@ -19,16 +25,18 @@ const DialogDescription = <
 >(
   props: DialogDescriptionProps<T>,
 ) => {
-  const { descriptionId } = useInternalDialogContext()
+  const [localProps, otherProps] = splitProps(props, ['as', 'contextId'])
 
-  const [localProps, otherProps] = splitProps(props, ['as'])
+  const context = createMemo(() =>
+    useInternalDialogContext(localProps.contextId),
+  )
 
   return (
     <Polymorphic
       as={
         localProps.as ?? (DEFAULT_DIALOG_DESCRIPTION_ELEMENT as ValidComponent)
       }
-      id={descriptionId()}
+      id={context().descriptionId()}
       data-corvu-dialog-description
       {...otherProps}
     />

@@ -3,7 +3,7 @@ import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { Show, splitProps } from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -16,6 +16,8 @@ export type DialogContentProps<
   PolymorphicAttributes<T> & {
     /** Whether the dialog content should be forced to render. Useful when using third-party animation libraries. */
     forceMount?: boolean
+    /** The `id` of the dialog context to use. */
+    contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
@@ -36,64 +38,59 @@ const DialogContent = <
 >(
   props: DialogContentProps<T>,
 ) => {
-  const {
-    role,
-    open,
-    setOpen,
-    modal,
-    closeOnEscapeKeyDown,
-    onEscapeKeyDown,
-    closeOnOutsidePointerDown,
-    noOutsidePointerEvents,
-    onOutsidePointerDown,
-    preventScroll,
-    preventScrollbarShift,
-    contentPresent,
-    dialogId,
-    labelId,
-    descriptionId,
-    contentRef,
-    setContentRef,
-  } = useInternalDialogContext()
-
   const [localProps, otherProps] = splitProps(props, [
     'as',
+    'forceMount',
+    'contextId',
     'ref',
     'onPointerDown',
-    'forceMount',
     'style',
   ])
 
+  const context = createMemo(() =>
+    useInternalDialogContext(localProps.contextId),
+  )
+
   createDisableScroll({
-    enabled: () => contentPresent() && preventScroll(),
-    disablePreventScrollbarShift: () => !preventScrollbarShift(),
+    enabled: () => context().contentPresent() && context().preventScroll(),
+    disablePreventScrollbarShift: () => !context().preventScrollbarShift(),
   })
 
   return (
-    <Show when={some(open, () => localProps.forceMount, contentPresent)}>
+    <Show
+      when={some(
+        context().open,
+        () => localProps.forceMount,
+        context().contentPresent,
+      )}
+    >
       <Dismissible
-        element={contentRef}
-        onDismiss={() => setOpen(false)}
-        disableDismissOnEscapeKeyDown={() => !closeOnEscapeKeyDown()}
-        disableDismissOnOutsidePointerDown={() => !closeOnOutsidePointerDown()}
-        disableNoOutsidePointerEvents={() => !noOutsidePointerEvents()}
-        onEscapeKeyDown={onEscapeKeyDown}
-        onOutsidePointerDown={onOutsidePointerDown}
+        element={context().contentRef}
+        onDismiss={() => context().setOpen(false)}
+        disableDismissOnEscapeKeyDown={() => !context().closeOnEscapeKeyDown()}
+        disableDismissOnOutsidePointerDown={() =>
+          !context().closeOnOutsidePointerDown()
+        }
+        disableNoOutsidePointerEvents={() =>
+          !context().noOutsidePointerEvents()
+        }
+        onEscapeKeyDown={context().onEscapeKeyDown}
+        onOutsidePointerDown={context().onOutsidePointerDown}
       >
         {(props) => (
           <Polymorphic
-            ref={mergeRefs(setContentRef, localProps.ref)}
+            ref={mergeRefs(context().setContentRef, localProps.ref)}
             as={
               localProps.as ??
               (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
             }
-            role={role()}
-            id={dialogId()}
-            aria-labelledby={labelId()}
-            aria-describedby={descriptionId()}
-            aria-modal={modal() ? 'true' : 'false'}
-            data-open={dataIf(open())}
-            data-closed={dataIf(!open())}
+            role={context().role()}
+            id={context().dialogId()}
+            aria-labelledby={context().labelId()}
+            aria-describedby={context().descriptionId()}
+            aria-modal={context().modal() ? 'true' : 'false'}
+            data-open={dataIf(context().open())}
+            data-closed={dataIf(!context().open())}
             data-corvu-dialog-content
             tabIndex="-1"
             style={
