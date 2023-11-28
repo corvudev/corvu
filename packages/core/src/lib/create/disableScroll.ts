@@ -24,34 +24,36 @@ const createDisableScroll = (props: {
 
     let originalOverflow: string | undefined
     let originalPaddingRight: string | undefined
+    let scrollbarWidth: number | undefined
 
     if (access(defaultedProps.enabled)) {
       originalOverflow = body.style.overflow
       originalPaddingRight = body.style.paddingRight
+
       const originalWidth = body.offsetWidth
-
       body.style.overflow = 'hidden'
+      scrollbarWidth = body.offsetWidth - originalWidth
 
-      const scrollBarWidth = body.offsetWidth - originalWidth
-
-      if (scrollBarWidth > 0) {
-        body.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`)
+      if (scrollbarWidth > 0) {
+        body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
       }
 
       if (
         !access(defaultedProps.disablePreventScrollbarShift) &&
-        scrollBarWidth > 0
+        scrollbarWidth > 0
       ) {
         body.style.paddingRight = `calc(${
           window.getComputedStyle(body).paddingRight
-        } + ${scrollBarWidth}px)`
+        } + ${scrollbarWidth}px)`
       }
     }
 
     onCleanup(() => {
       body.style.overflow = originalOverflow ?? ''
-      body.style.paddingRight = originalPaddingRight ?? ''
-      body.style.removeProperty('--scrollbar-width')
+      if (scrollbarWidth && scrollbarWidth > 0) {
+        body.style.paddingRight = originalPaddingRight ?? ''
+        body.style.removeProperty('--scrollbar-width')
+      }
       if (body.style.length === 0) {
         body.removeAttribute('style')
       }
