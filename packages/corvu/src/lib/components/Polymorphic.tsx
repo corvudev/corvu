@@ -84,6 +84,8 @@ const Polymorphic = <
       reverseEventHandlers: true,
     })
 
+    // TODO: Fix type error
+    // @ts-expect-error: Typescript v5.3 broke this. Works in <=v5.2
     return <Dynamic {...combinedProps}>{restChildren()}</Dynamic>
   })
 
