@@ -2,14 +2,8 @@ import type { ComponentProps, ValidComponent } from 'solid-js'
 
 export type OverrideComponentProps<
   T extends ValidComponent,
-  O,
-  P = ComponentProps<T>,
-> = OverrideProps<
-  {
-    [K in keyof P]: P[K]
-  },
-  O
->
+  Props,
+> = OverrideProps<ComponentProps<T>, Props>
 
 export type OverrideProps<T, P> = Omit<T, keyof P> & P
 

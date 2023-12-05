@@ -13,15 +13,17 @@ const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
   createEffect(() => {
     const { body } = document
 
-    let originalPointerEvents: string | undefined
+    if (!access(defaultedProps.enabled)) return
 
-    if (access(defaultedProps.enabled)) {
-      originalPointerEvents = body.style.pointerEvents
-      body.style.pointerEvents = 'none'
-    }
+    const originalPointerEvents = body.style.pointerEvents
+    const originalUserSelect = body.style.userSelect
+
+    body.style.pointerEvents = 'none'
+    body.style.userSelect = 'none'
 
     onCleanup(() => {
-      body.style.pointerEvents = originalPointerEvents ?? ''
+      body.style.pointerEvents = originalPointerEvents
+      body.style.userSelect = originalUserSelect
       if (body.style.length === 0) {
         body.removeAttribute('style')
       }

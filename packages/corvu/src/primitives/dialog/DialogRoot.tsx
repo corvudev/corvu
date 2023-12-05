@@ -22,12 +22,12 @@ export type DialogRootProps = {
    * @defaultValue 'dialog'
    */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not
+  /** Whether the dialog is open or not.
    * @defaultValue `false`
    */
   open?: boolean
   /** Callback fired when the open state changes. */
-  onOpenChange?: Setter<boolean>
+  onOpenChange?(open: boolean): void
   /** Whether the dialog is open initially or not.
    * @defaultValue `false`
    */
@@ -42,7 +42,7 @@ export type DialogRootProps = {
   closeOnEscapeKeyDown?: boolean
   /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`
+  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   closeOnOutsidePointerDown?: boolean
@@ -56,7 +56,7 @@ export type DialogRootProps = {
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   preventScroll?: boolean
-  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing
+  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   preventScrollbarShift?: boolean
@@ -99,7 +99,7 @@ export type DialogRootChildrenProps = {
   role: 'dialog' | 'alertdialog'
   /** Whether the dialog is open or not. */
   open: boolean
-  /** Change the open state of the dialog */
+  /** Change the open state of the dialog. */
   setOpen: Setter<boolean>
   /** Whether the dialog should be rendered as a modal or not. */
   modal: boolean
@@ -278,7 +278,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           initialFocusEl: () => defaultedProps.initialFocusEl,
           finalFocusEl: () => defaultedProps.finalFocusEl,
           contentPresent,
+          contentRef,
           overlayPresent,
+          overlayRef,
           dialogId: () => defaultedProps.dialogId,
           labelId: () => defaultedProps.labelId,
           descriptionId: () => defaultedProps.descriptionId,
@@ -307,11 +309,12 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             initialFocusEl: () => defaultedProps.initialFocusEl,
             finalFocusEl: () => defaultedProps.finalFocusEl,
             contentPresent,
+            contentRef,
             overlayPresent,
+            overlayRef,
             dialogId: () => defaultedProps.dialogId,
             labelId: () => defaultedProps.labelId,
             descriptionId: () => defaultedProps.descriptionId,
-            contentRef,
             setContentRef,
             setOverlayRef,
           }}

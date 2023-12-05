@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Dialog } from 'corvu'
+import Dialog from 'corvu/dialog'
 import { createSignal, type VoidComponent } from 'solid-js'
 
 const DialogDev: VoidComponent = () => {
@@ -113,11 +113,11 @@ const Context: VoidComponent = () => {
 const Children: VoidComponent = () => {
   return (
     <Dialog.Root>
-      {({ open }) => (
+      {(props) => (
         <>
           <p class="text-sm">
             State from parent:{' '}
-            <span class="font-mono">{open ? 'open' : 'closed'}</span>
+            <span class="font-mono">{props.open ? 'open' : 'closed'}</span>
           </p>
           <Dialog.Trigger class="rounded bg-white px-3 py-2 text-sm text-purple-600 shadow transition-colors hover:bg-gray-100">
             Open

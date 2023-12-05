@@ -1,6 +1,6 @@
 import { isFunction } from '@lib/assertions'
 import { createSignal, untrack } from 'solid-js'
-import type { Accessor, Setter } from 'solid-js'
+import type { Accessor } from 'solid-js'
 
 /** Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop. */
 const createControllableSignal = <T>(props: {
@@ -9,7 +9,7 @@ const createControllableSignal = <T>(props: {
   /** Default value of the signal. */
   defaultValue: T
   /** Callback fired when the value changes. */
-  onChange?: Setter<T>
+  onChange?(value: T): void
 }) => {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
     props.defaultValue,

@@ -3,7 +3,7 @@ import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { Show, createMemo, splitProps } from 'solid-js'
+import { Show, children, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -19,15 +19,15 @@ export type DialogContentProps<
     /** The `id` of the dialog context to use. */
     contextId?: string
     /** @hidden */
-    ref?: (element: HTMLElement) => void
+    children?: JSX.Element
     /** @hidden */
-    onPointerDown?: JSX.EventHandlerUnion<HTMLDivElement, PointerEvent>
+    ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
   }
 >
 
-/** Component which can be used to create a faded background. Can be animated.
+/** Content of the dialog. Can be animated.
  *
  * @data `data-corvu-dialog-content` - Present on every dialog content element.
  * @data `data-open` - Present when the dialog is open.
@@ -42,8 +42,8 @@ const DialogContent = <
     'as',
     'forceMount',
     'contextId',
+    'children',
     'ref',
-    'onPointerDown',
     'style',
   ])
 
@@ -55,6 +55,8 @@ const DialogContent = <
     enabled: () => context().contentPresent() && context().preventScroll(),
     disablePreventScrollbarShift: () => !context().preventScrollbarShift(),
   })
+
+  const resolvedChildren = children(() => localProps.children)
 
   return (
     <Show
@@ -102,7 +104,9 @@ const DialogContent = <
                 : localProps.style
             }
             {...otherProps}
-          />
+          >
+            {resolvedChildren()}
+          </Polymorphic>
         )}
       </Dismissible>
     </Show>

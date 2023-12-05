@@ -21,7 +21,7 @@ export type DialogTriggerProps<
   }
 >
 
-/** Button which changes the open state when clicked
+/** Button which changes the open state when clicked.
  *
  * @data `data-corvu-dialog-trigger` - Present on every dialog trigger element.
  * @data `data-open` - Present when the dialog is open.

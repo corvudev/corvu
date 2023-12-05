@@ -1,7 +1,7 @@
 import Close, { DialogCloseProps } from '@primitives/dialog/DialogClose'
 import Content, { DialogContentProps } from '@primitives/dialog/DialogContent'
 import {
-  useDialogContext,
+  useDialogContext as useContext,
   DialogContextValue,
 } from '@primitives/dialog/DialogContext'
 import Description, {
@@ -30,7 +30,19 @@ export type {
 }
 
 export {
-  useDialogContext as useContext,
+  useContext,
+  Root,
+  Trigger,
+  Portal,
+  Overlay,
+  Content,
+  Label,
+  Description,
+  Close,
+}
+
+export default {
+  useContext,
   Root,
   Trigger,
   Portal,

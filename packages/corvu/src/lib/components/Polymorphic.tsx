@@ -27,7 +27,7 @@ export type PolymorphicProps<
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
 > = OverrideComponentProps<T, PolymorphicAttributes<T>>
 
-/** Component, which either renders as the component provided in the `as` prop or, if `asChild` is set to `true`, as the first `<As />` component found in its children */
+/** Component, which either renders as the component provided in the `as` prop or, if `asChild` is set to `true`, as the first `<As />` component found in its children. */
 const Polymorphic = <
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
 >(

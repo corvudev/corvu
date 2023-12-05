@@ -1,9 +1,9 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { Show, createMemo, splitProps } from 'solid-js'
+import { Show, children, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
-import type { ValidComponent } from 'solid-js'
+import type { JSX, ValidComponent } from 'solid-js'
 
 const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 
@@ -17,7 +17,11 @@ export type DialogOverlayProps<
     /** The `id` of the dialog context to use. */
     contextId?: string
     /** @hidden */
+    children?: JSX.Element
+    /** @hidden */
     ref?: (element: HTMLElement) => void
+    /** @hidden */
+    style?: JSX.CSSProperties
   }
 >
 
@@ -36,12 +40,16 @@ const DialogOverlay = <
     'as',
     'forceMount',
     'contextId',
+    'children',
     'ref',
+    'style',
   ])
 
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
+
+  const resolvedChildren = children(() => localProps.children)
 
   return (
     <Show
@@ -59,8 +67,14 @@ const DialogOverlay = <
         data-closed={dataIf(!context().open())}
         data-corvu-dialog-overlay
         tabIndex="-1"
+        style={{
+          'pointer-events': 'auto',
+          ...localProps.style,
+        }}
         {...otherProps}
-      />
+      >
+        {resolvedChildren()}
+      </Polymorphic>
     </Show>
   )
 }

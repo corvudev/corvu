@@ -22,36 +22,32 @@ const createDisableScroll = (props: {
   createEffect(() => {
     const { body } = document
 
-    let originalOverflow: string | undefined
-    let originalPaddingRight: string | undefined
-    let scrollbarWidth: number | undefined
+    if (!access(defaultedProps.enabled)) return
 
-    if (access(defaultedProps.enabled)) {
-      originalOverflow = body.style.overflow
-      originalPaddingRight = body.style.paddingRight
+    const originalOverflow = body.style.overflow
+    const originalPaddingRight = body.style.paddingRight
 
-      const originalWidth = body.offsetWidth
-      body.style.overflow = 'hidden'
-      scrollbarWidth = body.offsetWidth - originalWidth
+    const originalWidth = body.offsetWidth
+    body.style.overflow = 'hidden'
+    const scrollbarWidth = body.offsetWidth - originalWidth
 
-      if (scrollbarWidth > 0) {
-        body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
-      }
+    if (scrollbarWidth > 0) {
+      body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
+    }
 
-      if (
-        !access(defaultedProps.disablePreventScrollbarShift) &&
-        scrollbarWidth > 0
-      ) {
-        body.style.paddingRight = `calc(${
-          window.getComputedStyle(body).paddingRight
-        } + ${scrollbarWidth}px)`
-      }
+    if (
+      !access(defaultedProps.disablePreventScrollbarShift) &&
+      scrollbarWidth > 0
+    ) {
+      body.style.paddingRight = `calc(${
+        window.getComputedStyle(body).paddingRight
+      } + ${scrollbarWidth}px)`
     }
 
     onCleanup(() => {
-      body.style.overflow = originalOverflow ?? ''
+      body.style.overflow = originalOverflow
       if (scrollbarWidth && scrollbarWidth > 0) {
-        body.style.paddingRight = originalPaddingRight ?? ''
+        body.style.paddingRight = originalPaddingRight
         body.style.removeProperty('--scrollbar-width')
       }
       if (body.style.length === 0) {

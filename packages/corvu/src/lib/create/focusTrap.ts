@@ -16,7 +16,7 @@ const EVENT_INITIAL_FOCUS = 'focusTrap.initialFocus'
 const EVENT_FINAL_FOCUS = 'focusTrap.finalFocus'
 const EVENT_OPTIONS = { bubbles: false, cancelable: true }
 
-/** Traps focus inside the given element */
+/** Traps focus inside the given element. */
 const createFocusTrap = (props: {
   /** Element to trap focus in. */
   element: Accessor<HTMLElement | null>

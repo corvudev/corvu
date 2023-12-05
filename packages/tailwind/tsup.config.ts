@@ -10,7 +10,7 @@ function generateConfig(format: 'esm' | 'cjs'): Options {
     dts: format === 'esm',
     entry: { index: 'src/index.ts' },
     outDir: 'dist/',
-    treeshake: { preset: 'safest' },
+    treeshake: { preset: 'smallest' },
     replaceNodeEnv: true,
     esbuildOptions(options) {
       options.chunkNames = '[name]/[hash]'

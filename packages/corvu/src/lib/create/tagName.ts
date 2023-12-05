@@ -1,11 +1,7 @@
-import { Accessor, createEffect, createSignal } from 'solid-js'
+import { Accessor, createMemo } from 'solid-js'
 
 const createTagName = (ref: Accessor<HTMLElement | null>, fallback: string) => {
-  const [tagName, setTagName] = createSignal(fallback)
-
-  createEffect(() => {
-    setTagName(ref()?.tagName.toLowerCase() || fallback)
-  })
+  const tagName = createMemo(() => ref()?.tagName.toLowerCase() || fallback)
 
   return tagName
 }

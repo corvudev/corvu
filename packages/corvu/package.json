@@ -38,6 +38,11 @@
       "types": "./dist/index.d.ts",
       "solid": "./dist/index.jsx",
       "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/primitives/*/index.d.ts",
+      "solid": "./dist/primitives/*/index.jsx",
+      "default": "./dist/primitives/*/index.js"
     }
   },
   "scripts": {
