@@ -1,7 +1,7 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { createMemo, splitProps } from 'solid-js'
+import { createEffect, createMemo, onCleanup, splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 
 const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
@@ -30,6 +30,11 @@ const DialogDescription = <
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
+
+  createEffect(() => {
+    context().registerDescriptionId()
+    onCleanup(() => context().unregisterDescriptionId())
+  })
 
   return (
     <Polymorphic

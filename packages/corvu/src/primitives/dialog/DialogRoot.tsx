@@ -3,6 +3,7 @@ import createControllableSignal from '@lib/create/controllableSignal'
 import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
+import createRegister from '@lib/create/register'
 import { access } from '@lib/utils'
 import {
   createDialogContext,
@@ -127,10 +128,10 @@ export type DialogRootChildrenProps = {
   overlayPresent: boolean
   /** The `id` attribute of the dialog description element. */
   dialogId: string
-  /** The `id` attribute of the dialog label element. */
-  labelId: string
-  /** The `id` attribute of the dialog description element. */
-  descriptionId: string
+  /** The `id` attribute of the dialog label element. Is undefined if no `Dialog.Label` is present. */
+  labelId: string | undefined
+  /** The `id` attribute of the dialog description element. Is undefined if no `Dialog.Description` is present. */
+  descriptionId: string | undefined
 }
 
 const DEFAULT_MODAL = true
@@ -153,8 +154,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       trapFocus: true,
       restoreFocus: true,
       dialogId: createUniqueId(),
-      labelId: createUniqueId(),
-      descriptionId: createUniqueId(),
     },
     props,
   )
@@ -164,6 +163,12 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     defaultValue: defaultedProps.initialOpen,
     onChange: defaultedProps.onOpenChange,
   })
+
+  const [labelId, registerLabelId, unregisterLabelId] = createRegister(
+    () => defaultedProps.labelId ?? createUniqueId(),
+  )
+  const [descriptionId, registerDescriptionId, unregisterDescriptionId] =
+    createRegister(() => defaultedProps.descriptionId ?? createUniqueId())
 
   const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
   const [overlayRef, setOverlayRef] = createSignal<HTMLElement | null>(null)
@@ -235,10 +240,10 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       return defaultedProps.dialogId
     },
     get labelId() {
-      return defaultedProps.labelId
+      return labelId()
     },
     get descriptionId() {
-      return defaultedProps.descriptionId
+      return descriptionId()
     },
   }
 
@@ -282,8 +287,8 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           overlayPresent,
           overlayRef,
           dialogId: () => defaultedProps.dialogId,
-          labelId: () => defaultedProps.labelId,
-          descriptionId: () => defaultedProps.descriptionId,
+          labelId,
+          descriptionId,
         }}
       >
         <InternalDialogContext.Provider
@@ -311,8 +316,12 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             overlayPresent,
             overlayRef,
             dialogId: () => defaultedProps.dialogId,
-            labelId: () => defaultedProps.labelId,
-            descriptionId: () => defaultedProps.descriptionId,
+            labelId,
+            registerLabelId,
+            unregisterLabelId,
+            descriptionId,
+            registerDescriptionId,
+            unregisterDescriptionId,
             setContentRef,
             setOverlayRef,
           }}

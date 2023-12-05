@@ -38,10 +38,10 @@ export type DialogContextValue = {
   overlayRef: Accessor<HTMLElement | null>
   /** The `id` attribute of the dialog element. */
   dialogId: Accessor<string>
-  /** The `id` attribute of the dialog label element. */
-  labelId: Accessor<string>
-  /** The `id` attribute of the dialog description element. */
-  descriptionId: Accessor<string>
+  /** The `id` attribute of the dialog label element. Is undefined if no `Dialog.Label` is present. */
+  labelId: Accessor<string | undefined>
+  /** The `id` attribute of the dialog description element. Is undefined if no `Dialog.Description` is present. */
+  descriptionId: Accessor<string | undefined>
 }
 
 const DialogContext = createContext<DialogContextValue>()
@@ -79,6 +79,10 @@ export type InternalDialogContextValue = DialogContextValue & {
   setOverlayRef(element: HTMLElement): void
   onEscapeKeyDown?(event: KeyboardEvent): void
   onOutsidePointerDown?(event: MouseEvent): void
+  registerLabelId(): void
+  unregisterLabelId(): void
+  registerDescriptionId(): void
+  unregisterDescriptionId(): void
 }
 
 const InternalDialogContext = createContext<InternalDialogContextValue>()

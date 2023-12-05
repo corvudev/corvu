@@ -1,6 +1,6 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { createMemo, splitProps } from 'solid-js'
+import { createEffect, createMemo, onCleanup, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { ValidComponent } from 'solid-js'
 
@@ -30,6 +30,11 @@ const DialogLabel = <
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
+
+  createEffect(() => {
+    context().registerLabelId()
+    onCleanup(() => context().unregisterLabelId())
+  })
 
   return (
     <Polymorphic
