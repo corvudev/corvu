@@ -41,7 +41,7 @@ jobs:
           pnpm install
       - name: Build workspace dependencies
         run: |
-          pnpm build:core
+          pnpm build:corvu
           pnpm build:tailwind
       - name: Lint
         run: |

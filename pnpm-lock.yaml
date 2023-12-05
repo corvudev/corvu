@@ -18,7 +18,7 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
 
-  packages/core:
+  packages/corvu:
     dependencies:
       '@solid-primitives/props':
         specifier: ^3.1.8
@@ -60,12 +60,12 @@ importers:
 
   packages/dev:
     dependencies:
-      '@corvu/core':
-        specifier: workspace:*
-        version: link:../core
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
+      corvu:
+        specifier: workspace:*
+        version: link:../corvu
       solid-js:
         specifier: ^1.8.5
         version: 1.8.5

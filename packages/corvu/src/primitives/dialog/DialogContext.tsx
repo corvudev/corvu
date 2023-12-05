@@ -65,7 +65,7 @@ export const useInternalDialogContext = (contextId?: string) => {
     const context = useContext(InternalDialogContext)
     if (!context) {
       throw new Error(
-        '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+        '[corvu]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
       )
     }
     return context
@@ -74,7 +74,7 @@ export const useInternalDialogContext = (contextId?: string) => {
   const context = useKeyedContext<InternalContextValue>(`internal-${contextId}`)
   if (!context) {
     throw new Error(
-      `[@corvu/core]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
+      `[corvu]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
     )
   }
   return context
@@ -95,7 +95,7 @@ export const useDialogContext = (contextId?: string) => {
     const context = useContext(DialogContext)
     if (!context) {
       throw new Error(
-        '[@corvu/core]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
+        '[corvu]: Dialog context not found. Make sure to wrap Dialog components in <Dialog.Root>',
       )
     }
     return context
@@ -104,7 +104,7 @@ export const useDialogContext = (contextId?: string) => {
   const context = useKeyedContext<ContextValue>(contextId)
   if (!context) {
     throw new Error(
-      `[@corvu/core]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
+      `[corvu]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
     )
   }
   return context

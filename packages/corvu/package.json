@@ -1,5 +1,5 @@
 {
-  "name": "@corvu/core",
+  "name": "corvu",
   "version": "0.0.0",
   "description": "Unstyled, accessible and customizable primitives for SolidJS",
   "author": {

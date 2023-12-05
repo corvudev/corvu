@@ -17,7 +17,7 @@
     "lint": "eslint --max-warnings=0 ."
   },
   "dependencies": {
-    "@corvu/core": "workspace:*",
+    "corvu": "workspace:*",
     "clsx": "^2.0.0",
     "solid-js": "^1.8.5"
   },

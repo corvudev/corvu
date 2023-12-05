@@ -74,7 +74,7 @@ const Polymorphic = <
 
     if (!asComponent()) {
       throw new Error(
-        '[@corvu/core]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
+        '[corvu]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
       )
     }
 
