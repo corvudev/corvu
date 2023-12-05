@@ -293,11 +293,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             setOpen,
             modal: () => defaultedProps.modal,
             closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-            // eslint-disable-next-line solid/reactivity
             onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
             closeOnOutsidePointerDown: () =>
               access(defaultedProps.closeOnOutsidePointerDown),
-            // eslint-disable-next-line solid/reactivity
             onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
             noOutsidePointerEvents: () =>
               access(defaultedProps.noOutsidePointerEvents),

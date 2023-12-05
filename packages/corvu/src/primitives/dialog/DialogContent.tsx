@@ -99,6 +99,7 @@ const DialogContent = <
               props.isLastLayer
                 ? {
                     'pointer-events': 'auto',
+                    'user-select': 'text',
                     ...localProps.style,
                   }
                 : localProps.style

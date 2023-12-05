@@ -74,8 +74,7 @@ export const useDialogContext = (contextId?: string) => {
   return context
 }
 
-type InternalDialogContextValue = DialogContextValue & {
-  contentRef: Accessor<HTMLElement | null>
+export type InternalDialogContextValue = DialogContextValue & {
   setContentRef(element: HTMLElement): void
   setOverlayRef(element: HTMLElement): void
   onEscapeKeyDown?(event: KeyboardEvent): void
