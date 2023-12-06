@@ -1,22 +1,8 @@
 {
   "name": "corvu",
   "version": "0.0.0",
+  "private": false,
   "description": "Unstyled, accessible and customizable primitives for SolidJS",
-  "author": {
-    "name": "Jasmin Noetzli",
-    "email": "code@jasi.dev",
-    "url": "https://github.com/GiyoMoon"
-  },
-  "license": "MIT",
-  "homepage": "https://corvu.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/corvudev/corvu"
-  },
-  "bugs": {
-    "url": "https://github.com/corvudev/corvu/issues",
-    "email": "code@jasi.dev"
-  },
   "keywords": [
     "solid",
     "solidjs",
@@ -25,14 +11,23 @@
     "customizable",
     "primitives"
   ],
-  "files": [
-    "dist"
-  ],
-  "private": false,
+  "homepage": "https://corvu.dev",
+  "bugs": {
+    "url": "https://github.com/corvudev/corvu/issues",
+    "email": "code@jasi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/corvudev/corvu"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jasmin Noetzli",
+    "email": "code@jasi.dev",
+    "url": "https://github.com/GiyoMoon"
+  },
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -45,16 +40,18 @@
       "default": "./dist/primitives/*/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm lint && tsup",
-    "watch": "tsup --watch",
-    "lint": "eslint --max-warnings=0 ."
+    "lint": "eslint --max-warnings=0 .",
+    "watch": "tsup --watch"
   },
   "dependencies": {
     "@solid-primitives/props": "^3.1.8"
-  },
-  "peerDependencies": {
-    "solid-js": "^1.8"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.13.2",
@@ -68,5 +65,8 @@
     "solid-js": "^1.8.7",
     "tsup": "^8.0.1",
     "typescript": "^5.3.2"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.8"
   }
 }
