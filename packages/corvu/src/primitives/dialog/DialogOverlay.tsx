@@ -65,7 +65,7 @@ const DialogOverlay = <
         aria-hidden="true"
         data-open={dataIf(context().open())}
         data-closed={dataIf(!context().open())}
-        data-corvu-dialog-overlay
+        data-corvu-dialog-overlay=""
         tabIndex="-1"
         style={{
           'pointer-events': 'auto',

@@ -93,7 +93,7 @@ const DialogContent = <
             aria-modal={context().modal() ? 'true' : 'false'}
             data-open={dataIf(context().open())}
             data-closed={dataIf(!context().open())}
-            data-corvu-dialog-content
+            data-corvu-dialog-content=""
             tabIndex="-1"
             style={
               props.isLastLayer

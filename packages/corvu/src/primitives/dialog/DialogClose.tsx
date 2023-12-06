@@ -50,7 +50,7 @@ const DialogClose = <
       as={localProps.as ?? (DEFAULT_DIALOG_CLOSE_ELEMENT as ValidComponent)}
       onClick={onClick}
       aria-label="close"
-      data-corvu-dialog-close
+      data-corvu-dialog-close=""
       {...otherProps}
     />
   )

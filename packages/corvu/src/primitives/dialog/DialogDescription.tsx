@@ -42,7 +42,7 @@ const DialogDescription = <
         localProps.as ?? (DEFAULT_DIALOG_DESCRIPTION_ELEMENT as ValidComponent)
       }
       id={context().descriptionId()}
-      data-corvu-dialog-description
+      data-corvu-dialog-description=""
       {...otherProps}
     />
   )
