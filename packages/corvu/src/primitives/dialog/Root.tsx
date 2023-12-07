@@ -8,7 +8,7 @@ import { access } from '@lib/utils'
 import {
   createDialogContext,
   createInternalDialogContext,
-} from '@primitives/dialog/DialogContext'
+} from '@primitives/dialog/Context'
 import {
   mergeProps,
   createUniqueId,

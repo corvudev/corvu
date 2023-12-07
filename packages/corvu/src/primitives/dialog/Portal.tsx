@@ -1,6 +1,6 @@
 import { OverrideComponentProps } from '@lib/types'
 import { some } from '@lib/utils'
-import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
 import { JSX, Show, children, createMemo, splitProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
 

@@ -1,6 +1,6 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { OverrideComponentProps } from '@lib/types'
-import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
 import { createEffect, createMemo, onCleanup, splitProps } from 'solid-js'
 import type { ValidComponent } from 'solid-js'
 
