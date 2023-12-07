@@ -6,16 +6,16 @@ import {
   Portal,
   Trigger,
 } from '@primitives/dialog'
-import Content from '@primitives/drawer/DrawerContent'
+import Content from '@primitives/drawer/Content'
 import {
   useDrawerContext as useContext,
   DrawerContextValue,
-} from '@primitives/drawer/DrawerContext'
+} from '@primitives/drawer/Context'
 import Root, {
   DefaultBreakpoint,
   DrawerRootChildrenProps,
   DrawerRootProps,
-} from '@primitives/drawer/DrawerRoot'
+} from '@primitives/drawer/Root'
 
 export type {
   DrawerContextValue as ContextValue,

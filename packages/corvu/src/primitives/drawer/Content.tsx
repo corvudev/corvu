@@ -5,11 +5,9 @@ import {
   getScrollableParents,
 } from '@lib/drawer'
 import { dataIf } from '@lib/utils'
-import DialogContent, {
-  DialogContentProps,
-} from '@primitives/dialog/DialogContent'
-import { useInternalDialogContext } from '@primitives/dialog/DialogContext'
-import { useInternalDrawerContext } from '@primitives/drawer/DrawerContext'
+import DialogContent, { DialogContentProps } from '@primitives/dialog/Content'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
+import { useInternalDrawerContext } from '@primitives/drawer/Context'
 import {
   batch,
   createEffect,

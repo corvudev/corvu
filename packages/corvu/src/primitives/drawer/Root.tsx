@@ -5,15 +5,15 @@ import { resolveSnapPoint } from '@lib/drawer'
 import {
   InternalDialogContextValue,
   useInternalDialogContext,
-} from '@primitives/dialog/DialogContext'
+} from '@primitives/dialog/Context'
 import DialogRoot, {
   DialogRootChildrenProps,
   DialogRootProps,
-} from '@primitives/dialog/DialogRoot'
+} from '@primitives/dialog/Root'
 import {
   createDrawerContext,
   createInternalDrawerContext,
-} from '@primitives/drawer/DrawerContext'
+} from '@primitives/drawer/Context'
 import { createWritableMemo } from '@solid-primitives/memo'
 import {
   Component,
