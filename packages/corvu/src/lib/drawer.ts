@@ -166,7 +166,7 @@ export const shouldDrag = (
         break
     }
 
-    if (currentElement.dataset.corvuDialogContent) return true
+    if (currentElement.dataset.corvuDialogContent === '') return true
 
     currentElement = currentElement.parentElement
   }
@@ -190,7 +190,7 @@ export const getScrollableParents = (element: HTMLElement) => {
     ) {
       scrollableParents.push(currentElement)
     }
-    if (currentElement.dataset.corvuDialogContent) {
+    if (currentElement.dataset.corvuDialogContent === '') {
       return scrollableParents
     }
 
