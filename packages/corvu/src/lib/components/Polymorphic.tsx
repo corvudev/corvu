@@ -42,8 +42,9 @@ const Polymorphic = <
   const resolvedChildren = children(() => localProps.children)
 
   const asComponent = createMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return resolvedChildren.toArray().find(isAsComponent) as any
+    return resolvedChildren.toArray().find(isAsComponent) as
+      | AsComponent
+      | undefined
   })
 
   const restChildren = createMemo(() => {
@@ -53,7 +54,7 @@ const Polymorphic = <
       <For each={resolvedChildren.toArray()}>
         {(child) => (
           <Show when={child === _asComponent} fallback={child}>
-            {_asComponent.props.children}
+            {_asComponent?.props.children}
           </Show>
         )}
       </For>
@@ -72,13 +73,15 @@ const Polymorphic = <
       )
     }
 
-    if (!asComponent()) {
+    const _asComponent = asComponent()
+
+    if (!_asComponent) {
       throw new Error(
         '[corvu]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
       )
     }
 
-    const asProps = asComponent().props as DynamicProps<T>
+    const asProps = _asComponent.props as DynamicProps<T>
 
     const combinedProps = combineProps([otherProps, asProps], {
       reverseEventHandlers: true,
@@ -94,8 +97,8 @@ const Polymorphic = <
 
 const AS_COMPONENT_SYMBOL = Symbol('CorvuAsComponent')
 
-type MaybeAsComponent = {
-  [AS_COMPONENT_SYMBOL]?: true
+type AsComponent = {
+  [AS_COMPONENT_SYMBOL]: true
   props: DynamicProps<ValidComponent>
 }
 
@@ -109,8 +112,8 @@ export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
 
 const isAsComponent = (children: ResolvedJSXElement) => {
   return (
-    children &&
-    (children as unknown as MaybeAsComponent)[AS_COMPONENT_SYMBOL] === true
+    !!children &&
+    (children as unknown as AsComponent)[AS_COMPONENT_SYMBOL] === true
   )
 }
 

@@ -1,7 +1,7 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, children, createMemo, splitProps } from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -16,8 +16,6 @@ export type DialogOverlayProps<
     forceMount?: boolean
     /** The `id` of the dialog context to use. */
     contextId?: string
-    /** @hidden */
-    children?: JSX.Element
     /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
@@ -40,7 +38,6 @@ const DialogOverlay = <
     'as',
     'forceMount',
     'contextId',
-    'children',
     'ref',
     'style',
   ])
@@ -48,8 +45,6 @@ const DialogOverlay = <
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
-
-  const resolvedChildren = children(() => localProps.children)
 
   return (
     <Show
@@ -72,9 +67,7 @@ const DialogOverlay = <
           ...localProps.style,
         }}
         {...otherProps}
-      >
-        {resolvedChildren()}
-      </Polymorphic>
+      />
     </Show>
   )
 }

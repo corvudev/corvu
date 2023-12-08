@@ -3,7 +3,7 @@ import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, children, createMemo, splitProps } from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -18,8 +18,6 @@ export type DialogContentProps<
     forceMount?: boolean
     /** The `id` of the dialog context to use. */
     contextId?: string
-    /** @hidden */
-    children?: JSX.Element
     /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
@@ -42,7 +40,6 @@ const DialogContent = <
     'as',
     'forceMount',
     'contextId',
-    'children',
     'ref',
     'style',
   ])
@@ -55,8 +52,6 @@ const DialogContent = <
     enabled: () => context().contentPresent() && context().preventScroll(),
     disablePreventScrollbarShift: () => !context().preventScrollbarShift(),
   })
-
-  const resolvedChildren = children(() => localProps.children)
 
   return (
     <Show
@@ -105,9 +100,7 @@ const DialogContent = <
                 : localProps.style
             }
             {...otherProps}
-          >
-            {resolvedChildren()}
-          </Polymorphic>
+          />
         )}
       </Dismissible>
     </Show>

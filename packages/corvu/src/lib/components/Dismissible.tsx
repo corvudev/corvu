@@ -153,7 +153,7 @@ const ChildDismissible: Component<
     return children
   }
 
-  return <>{untrack(() => resolveChildren())}</>
+  return untrack(() => resolveChildren())
 }
 
 export default Dismissible

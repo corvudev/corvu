@@ -1,7 +1,7 @@
 import { OverrideComponentProps } from '@lib/types'
 import { some } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { JSX, Show, children, createMemo, splitProps } from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
 
 export type DialogPortalProps = OverrideComponentProps<
@@ -11,8 +11,6 @@ export type DialogPortalProps = OverrideComponentProps<
     forceMount?: boolean
     /** The `id` of the dialog context to use. */
     contextId?: string
-    /** @hidden */
-    children?: JSX.Element
   }
 >
 
@@ -21,14 +19,11 @@ const DialogPortal = (props: DialogPortalProps) => {
   const [localProps, otherProps] = splitProps(props, [
     'forceMount',
     'contextId',
-    'children',
   ])
 
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
-
-  const resolvedChildren = children(() => localProps.children)
 
   return (
     <Show
@@ -39,7 +34,7 @@ const DialogPortal = (props: DialogPortalProps) => {
         context().overlayPresent,
       )}
     >
-      <Portal {...otherProps}>{resolvedChildren()}</Portal>
+      <Portal {...otherProps} />
     </Show>
   )
 }

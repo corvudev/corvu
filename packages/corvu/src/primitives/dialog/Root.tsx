@@ -263,7 +263,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       defaultedProps.contextId,
     )
 
-    return untrack(() => (
+    return (
       <DialogContext.Provider
         value={{
           role: () => defaultedProps.role,
@@ -329,7 +329,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           {untrack(() => resolveChildren())}
         </InternalDialogContext.Provider>
       </DialogContext.Provider>
-    ))
+    )
   })
 
   return memoizedDialogRoot as unknown as JSX.Element
