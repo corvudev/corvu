@@ -1,3 +1,4 @@
+import createOnceRoot from '@lib/create/onceRoot'
 import { OverrideComponentProps } from '@lib/types'
 import { some } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
@@ -19,11 +20,14 @@ const DialogPortal = (props: DialogPortalProps) => {
   const [localProps, otherProps] = splitProps(props, [
     'forceMount',
     'contextId',
+    'children',
   ])
 
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
+
+  const memoizedChildren = createOnceRoot(() => localProps.children)
 
   return (
     <Show
@@ -34,7 +38,7 @@ const DialogPortal = (props: DialogPortalProps) => {
         context().overlayPresent,
       )}
     >
-      <Portal {...otherProps} />
+      <Portal {...otherProps}>{memoizedChildren()()}</Portal>
     </Show>
   )
 }

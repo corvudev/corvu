@@ -1,4 +1,5 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import createOnceRoot from '@lib/create/onceRoot'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
 import { Show, createMemo, splitProps } from 'solid-js'
@@ -38,6 +39,7 @@ const DialogOverlay = <
     'as',
     'forceMount',
     'contextId',
+    'children',
     'ref',
     'style',
   ])
@@ -45,6 +47,8 @@ const DialogOverlay = <
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
+
+  const memoizedChildren = createOnceRoot(() => localProps.children)
 
   return (
     <Show
@@ -67,7 +71,9 @@ const DialogOverlay = <
           ...localProps.style,
         }}
         {...otherProps}
-      />
+      >
+        {memoizedChildren()()}
+      </Polymorphic>
     </Show>
   )
 }

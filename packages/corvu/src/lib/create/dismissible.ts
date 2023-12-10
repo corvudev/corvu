@@ -1,35 +1,43 @@
 import createEscapeKeyDown from '@lib/create/escapeKeyDown'
 import createNoPointerEvents from '@lib/create/noPointerEvents'
 import createOutsidePointerDown from '@lib/create/outsidePointerDown'
-import { access } from '@lib/utils'
-import { type Accessor } from 'solid-js'
+import { mergeProps, type Accessor } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
 export type CreateDismissableProps = {
   element: Accessor<HTMLElement | null>
-  onDismiss(reason: 'escape' | 'pointerDownOutside'): void
-  disableDismissOnEscapeKeyDown?: MaybeAccessor<boolean>
-  disableDismissOnOutsidePointerDown?: MaybeAccessor<boolean>
-  disableNoOutsidePointerEvents?: MaybeAccessor<boolean>
+  onDismiss(reason: 'escapeKey' | 'pointerDownOutside'): void
+  dismissOnEscapeKeyDown?: MaybeAccessor<boolean>
+  dismissOnOutsidePointerDown?: MaybeAccessor<boolean>
+  noOutsidePointerEvents?: MaybeAccessor<boolean>
   onEscapeKeyDown?(event: KeyboardEvent): void
   onOutsidePointerDown?(event: MouseEvent): void
 }
 
 const createDismissible = (props: CreateDismissableProps) => {
+  const defaultedProps = mergeProps(
+    {
+      dismissOnEscapeKeyDown: true,
+      dismissOnOutsidePointerDown: true,
+      noOutsidePointerEvents: true,
+    },
+    props,
+  )
+
   createEscapeKeyDown({
-    enabled: () => !access(props.disableDismissOnEscapeKeyDown),
+    enabled: defaultedProps.dismissOnEscapeKeyDown,
     onEscapeKeyDown: (event) => {
-      props.onEscapeKeyDown?.(event)
+      defaultedProps.onEscapeKeyDown?.(event)
       if (!event.defaultPrevented) {
-        props.onDismiss('escape')
+        defaultedProps.onDismiss('escapeKey')
       }
     },
   })
 
   createOutsidePointerDown({
-    enabled: () => !access(props.disableDismissOnOutsidePointerDown),
+    enabled: defaultedProps.dismissOnOutsidePointerDown,
     onPointerDown: (event) => {
-      props.onOutsidePointerDown?.(event)
+      defaultedProps.onOutsidePointerDown?.(event)
       if (!event.defaultPrevented) {
         const ctrlLeftClick = event.button === 0 && event.ctrlKey === true
         // Don't dismiss if event is a right-click
@@ -37,14 +45,14 @@ const createDismissible = (props: CreateDismissableProps) => {
 
         if (isRightClick) return
 
-        props.onDismiss('pointerDownOutside')
+        defaultedProps.onDismiss('pointerDownOutside')
       }
     },
-    element: props.element,
+    element: defaultedProps.element,
   })
 
   createNoPointerEvents({
-    enabled: () => !access(props.disableNoOutsidePointerEvents),
+    enabled: defaultedProps.noOutsidePointerEvents,
   })
 }
 

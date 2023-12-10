@@ -1,9 +1,10 @@
 import Dismissible from '@lib/components/Dismissible'
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
+import createOnce from '@lib/create/once'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, splitProps } from 'solid-js'
+import { Show, createMemo, createRoot, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -40,6 +41,7 @@ const DialogContent = <
     'as',
     'forceMount',
     'contextId',
+    'children',
     'ref',
     'style',
   ])
@@ -50,27 +52,20 @@ const DialogContent = <
 
   createDisableScroll({
     enabled: () => context().contentPresent() && context().preventScroll(),
-    disablePreventScrollbarShift: () => !context().preventScrollbarShift(),
+    preventScrollbarShift: context().preventScrollbarShift,
   })
 
-  return (
-    <Show
-      when={some(
-        context().open,
-        () => localProps.forceMount,
-        context().contentPresent,
-      )}
-    >
+  const memoizedChildren = createOnce(() => localProps.children)
+
+  const content = createRoot((_dispose) => {
+    return (
       <Dismissible
         element={context().contentRef}
+        enabled={context().open()}
         onDismiss={() => context().setOpen(false)}
-        disableDismissOnEscapeKeyDown={() => !context().closeOnEscapeKeyDown()}
-        disableDismissOnOutsidePointerDown={() =>
-          !context().closeOnOutsidePointerDown()
-        }
-        disableNoOutsidePointerEvents={() =>
-          !context().noOutsidePointerEvents()
-        }
+        dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+        dismissOnOutsidePointerDown={context().closeOnOutsidePointerDown}
+        noOutsidePointerEvents={context().noOutsidePointerEvents}
         onEscapeKeyDown={context().onEscapeKeyDown}
         onOutsidePointerDown={context().onOutsidePointerDown}
       >
@@ -100,9 +95,23 @@ const DialogContent = <
                 : localProps.style
             }
             {...otherProps}
-          />
+          >
+            {memoizedChildren()()}
+          </Polymorphic>
         )}
       </Dismissible>
+    )
+  })
+
+  return (
+    <Show
+      when={some(
+        context().open,
+        () => localProps.forceMount,
+        context().contentPresent,
+      )}
+    >
+      {content}
     </Show>
   )
 }

@@ -10,11 +10,11 @@ import {
   splitProps,
   createUniqueId,
   createSignal,
-  onCleanup,
   Show,
   untrack,
   createMemo,
-  onMount,
+  createEffect,
+  mergeProps,
 } from 'solid-js'
 import type { Accessor, Component, JSX } from 'solid-js'
 
@@ -27,6 +27,7 @@ type DismissibleContextValue = {
 const DismissibleContext = createContext<DismissibleContextValue>()
 
 type DismissibleProps = CreateDismissableProps & {
+  enabled: boolean
   children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
 }
 
@@ -41,10 +42,22 @@ const Dismissible: Component<DismissibleProps> = (props) => {
 }
 
 const RootDismissible: Component<DismissibleProps> = (props) => {
-  const [localProps, otherProps] = splitProps(props, [
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+      dismissOnEscapeKeyDown: true,
+      dismissOnOutsidePointerDown: true,
+      noOutsidePointerEvents: true,
+    },
+    props,
+  )
+
+  const [localProps, otherProps] = splitProps(defaultedProps, [
+    'enabled',
     'children',
-    'disableDismissOnEscapeKeyDown',
-    'disableDismissOnOutsidePointerDown',
+    'dismissOnEscapeKeyDown',
+    'dismissOnOutsidePointerDown',
+    'noOutsidePointerEvents',
     'onDismiss',
   ])
 
@@ -59,15 +72,22 @@ const RootDismissible: Component<DismissibleProps> = (props) => {
     setLayers((layers) => layers.filter((layer) => layer !== layerId))
   }
 
-  const isLastLayer = () => layers()[layers().length - 1] === layerId
+  const isLastLayer = () => {
+    return layers()[layers().length - 1] === layerId
+  }
 
   createDismissible({
-    disableDismissOnEscapeKeyDown: () =>
-      access(localProps.disableDismissOnEscapeKeyDown) || !isLastLayer(),
-    disableDismissOnOutsidePointerDown: () =>
-      access(localProps.disableDismissOnOutsidePointerDown) || !isLastLayer(),
+    dismissOnEscapeKeyDown: () =>
+      access(localProps.dismissOnEscapeKeyDown) &&
+      isLastLayer() &&
+      localProps.enabled,
+    dismissOnOutsidePointerDown: () =>
+      access(localProps.dismissOnOutsidePointerDown) &&
+      isLastLayer() &&
+      localProps.enabled,
+    noOutsidePointerEvents: () =>
+      access(localProps.noOutsidePointerEvents) && localProps.enabled,
     onDismiss: (reason) => {
-      onLayerDismiss(layerId)
       localProps.onDismiss?.(reason)
     },
     ...otherProps,
@@ -103,10 +123,22 @@ const RootDismissible: Component<DismissibleProps> = (props) => {
 const ChildDismissible: Component<
   DismissibleProps & DismissibleContextValue
 > = (props) => {
-  const [localProps, otherProps] = splitProps(props, [
+  const defaultedProps = mergeProps(
+    {
+      enabled: true,
+      dismissOnEscapeKeyDown: true,
+      dismissOnOutsidePointerDown: true,
+      noOutsidePointerEvents: true,
+    },
+    props,
+  )
+
+  const [localProps, otherProps] = splitProps(defaultedProps, [
+    'enabled',
     'children',
-    'disableDismissOnEscapeKeyDown',
-    'disableDismissOnOutsidePointerDown',
+    'dismissOnEscapeKeyDown',
+    'dismissOnOutsidePointerDown',
+    'noOutsidePointerEvents',
     'onDismiss',
     'layers',
     'onLayerShow',
@@ -115,12 +147,12 @@ const ChildDismissible: Component<
 
   const layerId = createUniqueId()
 
-  onMount(() => {
-    localProps.onLayerShow(layerId)
-  })
-
-  onCleanup(() => {
-    localProps.onLayerDismiss(layerId)
+  createEffect(() => {
+    if (localProps.enabled) {
+      localProps.onLayerShow(layerId)
+    } else {
+      localProps.onLayerDismiss(layerId)
+    }
   })
 
   const isLastLayer = () => {
@@ -128,12 +160,12 @@ const ChildDismissible: Component<
   }
 
   createDismissible({
-    disableDismissOnEscapeKeyDown: () =>
-      access(localProps.disableDismissOnEscapeKeyDown) || !isLastLayer(),
-    disableDismissOnOutsidePointerDown: () =>
-      access(localProps.disableDismissOnOutsidePointerDown) || !isLastLayer(),
+    dismissOnEscapeKeyDown: () =>
+      access(localProps.dismissOnEscapeKeyDown) && isLastLayer(),
+    dismissOnOutsidePointerDown: () =>
+      access(localProps.dismissOnOutsidePointerDown) && isLastLayer(),
+    noOutsidePointerEvents: () => access(localProps.noOutsidePointerEvents),
     onDismiss: (reason) => {
-      localProps.onLayerDismiss(layerId)
       localProps.onDismiss?.(reason)
     },
     ...otherProps,

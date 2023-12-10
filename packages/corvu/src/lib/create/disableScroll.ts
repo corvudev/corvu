@@ -9,12 +9,13 @@ import type { MaybeAccessor } from '@lib/types'
 const createDisableScroll = (props: {
   /** Whether scrolling of the body element should be disabled. */
   enabled?: MaybeAccessor<boolean>
-  /** Disable adding padding to the body element to avoid layout shift. */
-  disablePreventScrollbarShift?: MaybeAccessor<boolean>
+  /** Whether padding should be added to the body element to avoid layout shift. */
+  preventScrollbarShift?: MaybeAccessor<boolean>
 }) => {
   const defaultedProps = mergeProps(
     {
       enabled: true,
+      preventScrollbarShift: true,
     },
     props,
   )
@@ -35,10 +36,7 @@ const createDisableScroll = (props: {
       body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
     }
 
-    if (
-      !access(defaultedProps.disablePreventScrollbarShift) &&
-      scrollbarWidth > 0
-    ) {
+    if (access(defaultedProps.preventScrollbarShift) && scrollbarWidth > 0) {
       body.style.paddingRight = `calc(${
         window.getComputedStyle(body).paddingRight
       } + ${scrollbarWidth}px)`
