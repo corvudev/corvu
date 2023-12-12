@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/banner.png" width=600 alt="corvu banner" />
+  <img src="https://raw.githubusercontent.com/corvudev/corvu/a0042004f32d82bd48a1fb0af99dea6d692f2c2c/assets/banner.png" width=600 alt="corvu banner" />
 </div>
 <br />
 <div align="center">
