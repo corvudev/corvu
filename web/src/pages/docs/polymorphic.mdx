@@ -1,0 +1,48 @@
+---
+layout: '@layouts/Docs.astro'
+title: Polymorphic components
+description: Unstyled, accessible and customizable primitives for SolidJS.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+
+# Polymorphic component
+
+All primitive components which render a DOM element, are polymorphic. This means that you can modify the element or the component they should render as. Corvu gives you two ways to accomplish this:
+
+## The `as` prop
+This property accepts any `ValidComponent` (a string or a Solid component) and tells the primitive component to render it instead of the default one. For example, here's how to render a dialog label as a "p" element instead of the default "h2":
+
+<Code code={`
+<Dialog.Label as="p">My Dialog</Dialog.Label>
+`} lang="tsx" />
+
+Or with a Solid component:
+
+<Code code={`
+const MyCustomLabel = (props) => <p>{props.children}</p>
+
+<Dialog.Label as={MyCustomLabel}>My Dialog</Dialog.Label>
+`} lang="tsx" />
+
+Props not belonging to the primitive component will be passed to the component you defined.
+
+## The `asChild` prop
+The only case where you will have issues with the approach above is when your Solid component accepts an `as` property. Because we use this property already for our polymorphic component. For this case, you'll have to use the `asChild` property.
+
+By defining this property, you tell the polymorphic component to render as the first `<As />` component it finds in its children. This allows you to use the `as` property for your component.
+
+<Code code={`
+import { Dynamic } from 'solid-js/web'
+import { As } from 'corvu'
+
+const MyCustomLabel = (props) => (
+  <Dynamic component={props.as}>{props.children}</Dynamic>
+)
+
+<Dialog.Label asChild>
+  <As component={MyCustomLabel}>My Dialog</As>
+</Dialog.Label>
+`} lang="tsx" />
+
+> 💡 You might have seen react libraries accomplish the same without the need for an additional `<As />` component. Unfortunately, this isn't possible in SolidJS because children are generally just DOM elements.

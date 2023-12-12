@@ -1,0 +1,76 @@
+---
+layout: '@layouts/Docs.astro'
+title: Styling corvu primitives
+description: A look at the different ways to style SolidJS corvu primitives.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+
+# Styling
+
+Corvu leaves the styling up to you. You can use TailwindCSS, any CSS-in-JS library or just plain old CSS to style primitives.
+
+## Data attributes
+
+Components that can be in different states, e.g. `open` or `closed` for a dialog, provide data attributes to style them accordingly.
+
+Here is an example of how to style a dialog based on its open state:
+
+<Code code={`
+.dialog_content[data-open] {
+  /* styles to apply when open */
+}
+.dialog_content[data-closed] {
+  /* styles to apply when closed */
+}
+`} lang="css" />
+
+Don't forget to add the `dialog_content` class to your Dialog content component:
+
+<Code code={`
+<Dialog.Content class="dialog_content">...</Dialog.Content>
+`} lang="tsx" />
+
+Additionally, every corvu component has a data attribute for you to use. A dialog content element would render like this:
+
+<Code code={`
+<div data-corvu-dialog-content data-open>...</div>
+`} lang="html" />
+
+You can use it to style all components of the same kind at once:
+
+<Code code={`
+[data-corvu-dialog-content] {
+  /* styles to apply to the dialog content */
+}
+[data-corvu-dialog-content][data-open] {
+  /* styles to apply when open */
+}
+[data-corvu-dialog-content][data-closed] {
+  /* styles to apply when closed */
+}
+`} lang="css" />
+
+## TailwindCSS plugin
+
+Corvu has a plugin for TailwindCSS which makes it easy to style components based on their current state using modifiers:
+
+<Code code={`
+<Dialog.Content
+  class="corvu-open:animate-in corvu-closed:animate-out"
+>
+  ...
+</Dialog.Content>
+`} lang="tsx" />
+
+**Available modifiers**
+
+Here's a list of all modifiers corvu provides and their corresponding data attributes:
+- `corvu-open` -> `&[data-open]`
+- `corvu-closed` -> `&[data-closed]`
+- `corvu-transitioning` -> `&[data-transitioning]`
+
+Check out the [Installation](/docs/installation#tailwindcss-plugin) page on how to install and configure the plugin.
+
+## Animation
+Corvu has built-in support for CSS animations and waits for any pending animation to finish before removing an element from the DOM. This means you can use CSS animations to animate the appearance and disappearance of primitives. Every unmountable component also provides a `forceMount` property which forces it to stay mounted in the DOM even when it is not visible. This is useful when using third-party animation libraries.

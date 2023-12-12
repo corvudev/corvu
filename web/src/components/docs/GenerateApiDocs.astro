@@ -1,0 +1,31 @@
+---
+import ApiReference from '@components/docs/ApiReference.astro'
+import {
+  getComponent,
+  getUtility,
+  type ApiReference as ApiReferenceType,
+} from '@lib/getTypes'
+
+interface Props {
+  primitive?: 'Dialog'
+  utility:
+    | 'createControllableSignal'
+    | 'createDisableScroll'
+    | 'createFocusTrap'
+    | 'keyedContext'
+    | 'createPresence'
+    | 'Polymorphic'
+}
+
+const { primitive, utility } = Astro.props
+
+let apiReferences: ApiReferenceType[]
+
+if (primitive) {
+  apiReferences = getComponent(primitive)
+} else {
+  apiReferences = getUtility(utility!)
+}
+---
+
+{apiReferences.map((apiReference) => <ApiReference {...apiReference} />)}

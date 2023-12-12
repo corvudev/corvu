@@ -1,0 +1,224 @@
+---
+layout: '@layouts/Docs.astro'
+title: Corvu Drawer
+description: A drawer component for SolidJS.
+image: /banner.png
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/drawer/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/drawer/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import CssTsx from '@examples/primitives/drawer/basic/css/index?raw'
+import CssStyle from '@examples/primitives/drawer/basic/css/index.css?raw'
+import SnappointsExample from '@examples/primitives/drawer/snappoints/index'
+import SnappointsTailwindTsx from '@examples/primitives/drawer/snappoints/index?raw'
+import BreakpointsExample from '@examples/primitives/drawer/breakpoints/index'
+import BreakpointsTailwindTsx from '@examples/primitives/drawer/breakpoints/index?raw'
+import ScrollableExample from '@examples/primitives/drawer/scrollable/index'
+import ScrollableTailwindTsx from '@examples/primitives/drawer/scrollable/index?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Drawer
+
+A drawer is a draggable dialog that is attached to any side of the viewport. It uses the [Dialog](/docs/primitives/dialog) primitive under the hood and adds dragging logic on top of it.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Attach to any side (top, right, bottom, left)',
+  'Works with CSS transitions',
+  'Custom snap- and breakpoints',
+  'Handles scrollable content',
+  'Customizable damping and velocity settings',
+]} />
+
+## Usage
+<Code code={`
+import Drawer from 'corvu/drawer'
+// Or
+// import { Root, Trigger, ... } from 'corvu/drawer'
+`} lang="tsx" copyButton />
+
+### Anatomy
+<Code code={`
+<Drawer.Root>
+  <Drawer.Trigger />
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <Drawer.Close />
+      <Drawer.Label />
+      <Drawer.Description />
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+`} lang="tsx" copyButton />
+
+Every component besides the `Root` and `Content` components are just re-exports from the Dialog primitive. You can find more information about them [here](/docs/primitives/dialog).
+
+### Animating the drawer
+The drawer content gets the `data-transitioning` data attribute applied when it is transitioning. Transitioning means that the drawer is either opening, closing or moving to a snap point after the user stops dragging.
+
+Animation is done by applying CSS transition properties when the drawer is in this `transitioning` state. You can use any transition timing function, duration and delay you want. The drawer will automatically apply the `data-transitioning` attribute to the `Content` component for the duration of the transition and remove it when it is done.
+
+A plain CSS example would look like this:
+
+<Code code={`
+[data-corvu-dialog-content][data-transitioning] {
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  transition-duration: 500ms;
+}
+`} lang="css" copyButton />
+
+Corvu's tailwind plugin also provides a `corvu-transitioning` modifier that you can use:
+
+<Code code={`
+<Drawer.Content
+  class="
+    corvu-transitioning:transition-transform
+    corvu-transitioning:duration-500
+  "
+>
+</Drawer.Content>
+`} lang="tsx" copyButton />
+
+You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children function and use it to animate the background for example:
+
+<Code code={`
+<Drawer.Root>
+  {(props) => (
+    <Drawer.Overlay
+      class="fixed inset-0 z-40 corvu-peer-transitioning:transition-colors corvu-peer-transitioning:duration-500 corvu-peer-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+      style={{
+        'background-color': \`rgb(0 0 0 / \${
+          0.5 * props.openPercentage
+        })\`,
+      }}
+    />
+  )}
+</Drawer.Root>
+`} lang="tsx" copyButton />
+
+### Snap- and breakpoints
+The drawer root accepts a `snapPoints` array to customize the points to snap to. Valid values are either percentages or pixel values. The drawer will snap to the closest snap point when the user stops dragging (With the `velocityFunction` in mind. See the [API Reference](#api-reference) for more information)
+
+<Code code={`
+<Drawer.Root snapPoints={[0, 0.5, 1]}>
+  ...
+</Drawer.Root>
+`} lang="tsx" copyButton />
+
+Here, the drawer additionally snaps to 50% of its height.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <SnappointsExample client:load />
+  <RawCode slot="tailwindTsx" code={SnappointsTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+Per default, the drawer will snap to the closest snap point. You can change this behavior by providing custom `breakPoints` to the root component:
+
+<Code code={`
+<Drawer.Root breakPoints={[0.75]}>
+  ...
+</Drawer.Root>
+`} lang="tsx" copyButton />
+
+Here, the drawer will close when the user drags below 75% of the drawer's height.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <BreakpointsExample client:load />
+  <RawCode slot="tailwindTsx" code={BreakpointsTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Scrollable elements
+Scrollable elements work out of the box. The drawer will check if the user is dragging on a scrollable element and handle dragging properly.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <ScrollableExample client:load />
+  <RawCode slot="tailwindTsx" code={ScrollableTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+## Accessibility
+Adheres to the [Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal) and [Alert Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
+
+## API reference
+
+Only components which are specific to the drawer are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog#api-reference).
+
+The dialog context is re-exported as `Drawer.useDialogContext` and the root children function also accepts all props of the dialog root children function, which are documented [here](/docs/primitives/dialog#Dialog.RootChildrenProps).
+
+<GenerateApiDocs primitive="Drawer" />

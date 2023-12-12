@@ -1,0 +1,48 @@
+---
+layout: '@layouts/Docs.astro'
+title: Corvu introduction
+description: An overview of corvu and its features.
+image: /banner.png
+---
+import Link from '@components/docs/Link.astro'
+
+# Introduction
+
+Corvu is a collection of open source primitives for <Link href="https://solidjs.com" text="SolidJS" newTab /> that are accessible, unstyled, and aim to be highly customizable while providing a delightful developer experience.
+
+> 🚧 Corvu is still under heavy development and in its very early stages🐣. Please be aware of that while using it. New primitives will be available soon. Stay tuned!
+
+## Features
+### Unstyled
+Primitives do not provide any styling, allowing you to bring your own and style them according to your preferences or style guidelines. You can use TailwindCSS, any CSS-in-JS library or plain old CSS to style it. We provide a small [TailwindCSS plugin](/docs/styling#tailwindcss-plugin) which makes it easy to style components based on their current state. Read more in [Styling](/docs/styling).
+
+### Unopinionated
+Corvu allows you to customize almost every aspect of all primitives while providing great defaults. There is an API section for every primitive describing all the available props and their default values. Read more in [State](/docs/state).
+
+Corvu also provides a set of [utilities](/docs/utilities) like `createFocusTrap`, `createPresence` and `<Polymorphic>` that can be used to build your own accessible primitives.
+
+### Accessible
+
+All primitives have been developed with accessibility in mind. They strictly adhere to the <Link href="https://www.w3.org/WAI/standards-guidelines/aria/" text="WAI-ARIA" newTab /> guidelines and take care of all the complex stuff like aria attributes, focus management and keyboard interactions. The documentation describes the accessibility features implemented for each primitive and how to change them according to your needs.
+
+### SSR
+Corvu provides a `solid` export for SSR and works out of the box with <Link href="https://start.solidjs.com/" text="SolidStart" newTab/>.
+
+## Community
+If you have any questions, feature requests or just want to write a kind message, feel free to head over to the <Link href="https://github.com/corvudev/corvu/discussions" text="discussions tab" newTab /> on the GitHub repository. We are always happy to help and love to hear from you.
+
+## Inspiration & Credits
+We love open source and collaborative work. While developing corvu, we were inspired by many other open source projects and authors and we thank them for their work.
+
+Some of the projects that have inspired corvu, in no particular order:
+
+- Melt UI - <Link href="https://melt-ui.com" text="https://melt-ui.com" newTab />
+- Kobalte - <Link href="https://kobalte.dev" text="https://kobalte.dev" newTab />
+- Radix - <Link href="https://radix-ui.com" text="https://radix-ui.com" newTab />
+- Zag - <Link href="https://zagjs.com" text="https://zagjs.com" newTab />
+- Skeleton - <Link href="https://skeleton.dev" text="https://skeleton.dev" newTab />
+
+### Additional thanks
+- <Link href="https://x.com/fabiospampinato" text="Fabio Spampinato" newTab /> for helping me understand the nitty-gritty parts of SolidJS
+- <Link href="https://github.com/solidjs-community/solid-primitives" text="Solid Primitives" newTab /> for awesome, high-quality reactivity primitives which make working with SolidJS a breeze
+- <Link href="https://x.com/RyanCarniato" text="Ryan Carniato" newTab /> for his highly educational Friday streams

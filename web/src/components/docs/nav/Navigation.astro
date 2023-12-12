@@ -1,0 +1,35 @@
+---
+import NavLink from '@components/docs/nav/NavLink.astro'
+import SectionNavLink from '@components/docs/nav/SectionNavLink.astro'
+---
+
+<nav>
+  <p class="ml-4 pb-2 text-sm font-medium opacity-80">Overview</p>
+  <div>
+    <NavLink name="Introduction" href="/docs" />
+    <NavLink name="Installation" href="/docs/installation" />
+  </div>
+  <p class="ml-4 mt-6 pb-2 text-sm font-medium opacity-80">Usage</p>
+  <div>
+    <NavLink name="State" href="/docs/state" />
+    <NavLink name="Styling" href="/docs/styling" />
+    <NavLink name="Polymorphic" href="/docs/polymorphic" />
+  </div>
+  <SectionNavLink name="Primitives" href="/docs/primitives" />
+  <div>
+    <NavLink name="Dialog" href="/docs/primitives/dialog" />
+    <NavLink name="Drawer" href="/docs/primitives/drawer" />
+  </div>
+  <SectionNavLink name="Utilities" href="/docs/utilities" />
+  <div>
+    <NavLink
+      name="controllableSignal"
+      href="/docs/utilities/controllable-signal"
+    />
+    <NavLink name="disableScroll" href="/docs/utilities/disable-scroll" />
+    <NavLink name="focusTrap" href="/docs/utilities/focus-trap" />
+    <NavLink name="keyedContext" href="/docs/utilities/keyed-context" />
+    <NavLink name="presence" href="/docs/utilities/presence" />
+    <NavLink name="<Polymorphic>" href="/docs/utilities/polymorphic" />
+  </div>
+</nav>

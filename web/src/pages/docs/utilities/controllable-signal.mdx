@@ -1,0 +1,40 @@
+---
+layout: '@layouts/Docs.astro'
+title: Controllable Signal
+description: Unstyled, accessible and customizable primitives for SolidJS.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Controllable Signal
+
+When you're building an unopinionated component, you might want to give the user the option to control its state. For example, a `Dialog` component might have an `open` state which the user can take control of. The `createControllableSignal` utility allows you to pass an optional signal which will be used as the state instead of the internally managed signal.
+
+## Usage
+<Code code={`
+import { createControllableSignal } from 'corvu'
+`} lang="tsx" copyButton />
+<Code code={`
+const Dialog: Component<{
+  open?: boolean
+  onOpenChange?: Setter<boolean>
+  initialOpen?: boolean
+}> = (props) => {
+  const [open, setOpen] = createControllableSignal({
+    value: () => props.open,
+    defaultValue: () => props.initialOpen,
+    onChange: props.onOpenChange,
+  })
+
+  return (
+    <Show when={open()}>
+      <div>Dialog</div>
+    </Show>
+  )
+}
+`} lang="tsx" copyButton />
+
+## API reference
+
+<GenerateApiDocs utility="createControllableSignal" />

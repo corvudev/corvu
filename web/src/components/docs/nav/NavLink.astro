@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: string
+  href: string
+}
+
+const { name, href } = Astro.props
+
+const isActive = href === Astro.url.pathname.replace(/\/$/, '')
+---
+
+<a
+  href={href}
+  class:list={[
+    'block rounded-lg px-4 py-2 transition-colors duration-75',
+    {
+      'hover:bg-corvu-600': !isActive,
+      'bg-corvu-1000 ring-4 ring-corvu-600': isActive,
+    },
+  ]}
+>
+  {name}
+</a>
