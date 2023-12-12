@@ -1,4 +1,5 @@
 import {
+  useContext as useDialogContext,
   Close,
   Description,
   Label,
@@ -26,6 +27,7 @@ export type {
 export {
   DefaultBreakpoint,
   useContext,
+  useDialogContext,
   Root,
   Trigger,
   Portal,
@@ -39,6 +41,7 @@ export {
 export default {
   DefaultBreakpoint,
   useContext,
+  useDialogContext,
   Root,
   Trigger,
   Portal,
