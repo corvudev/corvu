@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 
-const dataStates = ['open', 'closed']
+const dataStates = ['open', 'closed', 'transitioning']
 
 export type PluginOptions = {
   prefix?: string
