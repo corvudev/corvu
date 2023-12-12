@@ -71,7 +71,7 @@ export type DrawerRootProps = {
    */
   handleScrollableElements?: boolean
   /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer.
-   * @defaultValue 50
+   * @defaultValue 25
    */
   scrollThreshold?: number
   children:
@@ -129,7 +129,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       velocityCacheReset: 200,
       allowSkippingSnapPoints: true,
       handleScrollableElements: true,
-      scrollThreshold: 50,
+      scrollThreshold: 25,
     },
     props,
   )

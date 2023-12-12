@@ -250,25 +250,29 @@ const DrawerContent = <
     pointerDownPos = null
     dragStartPos = null
 
+    if (drawerContext().handleScrollableElements()) {
+      if (drawerContext().isDragging()) {
+        targetedScrollableElements.forEach(
+          (targetedScrollableElement, index) => {
+            targetedScrollableElement.style.overflow =
+              originalScrollOverflows[index] ?? ''
+            if (targetedScrollableElement.style.length === 0) {
+              targetedScrollableElement.removeAttribute('style')
+            }
+          },
+        )
+      }
+      targetedScrollableElements.length = 0
+      originalScrollOverflows.length = 0
+      originalScrollOffsets.length = 0
+    }
+
     if (!drawerContext().isDragging()) return
 
     batch(() => {
       drawerContext().setIsTransitioning(true)
       drawerContext().setIsDragging(false)
     })
-
-    if (drawerContext().handleScrollableElements()) {
-      targetedScrollableElements.forEach((targetedScrollableElement, index) => {
-        targetedScrollableElement.style.overflow =
-          originalScrollOverflows[index] ?? ''
-        if (targetedScrollableElement.style.length === 0) {
-          targetedScrollableElement.removeAttribute('style')
-        }
-      })
-
-      targetedScrollableElements.length = 0
-      originalScrollOverflows.length = 0
-    }
 
     const now = new Date()
     const velocity = drawerContext().velocityFunction(
