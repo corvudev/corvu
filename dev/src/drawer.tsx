@@ -29,7 +29,7 @@ const Uncontrolled: VoidComponent<{
   side: 'top' | 'right' | 'bottom' | 'left'
 }> = (props) => {
   return (
-    <Drawer.Root side={props.side} snapPoints={[0, 1]}>
+    <Drawer.Root side={props.side}>
       {(props) => (
         <>
           <Drawer.Trigger class="rounded bg-white px-3 py-2 text-sm text-purple-600 shadow transition-colors hover:bg-gray-100">

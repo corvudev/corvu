@@ -269,11 +269,6 @@ const DrawerContent = <
 
     if (!drawerContext().isDragging()) return
 
-    batch(() => {
-      drawerContext().setIsTransitioning(true)
-      drawerContext().setIsDragging(false)
-    })
-
     const now = new Date()
     const velocity = drawerContext().velocityFunction(
       -(cachedTranslate - drawerContext().translate()),
@@ -288,6 +283,11 @@ const DrawerContent = <
       translateWithVelocity,
       drawerContext().allowSkippingSnapPoints(),
     )
+
+    batch(() => {
+      drawerContext().setIsTransitioning(true)
+      drawerContext().setIsDragging(false)
+    })
 
     batch(() => {
       drawerContext().setActiveSnapPoint(closestSnapPoint.value)
