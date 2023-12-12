@@ -9,8 +9,8 @@ import type { Accessor } from 'solid-js'
 
 /** Creates a presence which is aware of animations and waits for them before hiding. */
 const createPresence = (props: {
-  /** Whether the presence is present or not. */
-  present: Accessor<boolean>
+  /** Whether the presence is showing or not. */
+  show: Accessor<boolean>
   /** The element which animations should be tracked. */
   element: Accessor<HTMLElement | null>
 }) => {
@@ -23,20 +23,20 @@ const createPresence = (props: {
   const [presentState, setPresentState] = createSignal<
     'present' | 'hiding' | 'hidden'
     // eslint-disable-next-line solid/reactivity
-  >(props.present() ? 'present' : 'hidden')
+  >(props.show() ? 'present' : 'hidden')
 
   let animationName = ''
 
-  createEffect((prevPresent) => {
-    const isPresent = props.present()
+  createEffect((prevShow) => {
+    const show = props.show()
 
     untrack(() => {
-      if (prevPresent === isPresent) return isPresent
+      if (prevShow === show) return show
 
       const prevAnimationName = animationName
       const currentAnimationName = getAnimationName()
 
-      if (isPresent) {
+      if (show) {
         setPresentState('present')
       } else if (
         currentAnimationName === 'none' ||
@@ -46,7 +46,7 @@ const createPresence = (props: {
       } else {
         const isAnimating = prevAnimationName !== currentAnimationName
 
-        if (prevPresent && isAnimating) {
+        if (prevShow && isAnimating) {
           setPresentState('hiding')
         } else {
           setPresentState('hidden')
@@ -54,7 +54,7 @@ const createPresence = (props: {
       }
     })
 
-    return isPresent
+    return show
   })
 
   createEffect(() => {
@@ -106,7 +106,7 @@ const createPresence = (props: {
 
   return {
     present: () => presentState() === 'present' || presentState() === 'hiding',
-    presentState,
+    state: presentState,
   }
 }
 

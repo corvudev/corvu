@@ -174,11 +174,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
   const [overlayRef, setOverlayRef] = createSignal<HTMLElement | null>(null)
 
   const { present: contentPresent } = createPresence({
-    present: open,
+    show: open,
     element: contentRef,
   })
   const { present: overlayPresent } = createPresence({
-    present: open,
+    show: open,
     element: overlayRef,
   })
 
