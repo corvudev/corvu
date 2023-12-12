@@ -1,0 +1,44 @@
+---
+layout: '@layouts/Docs.astro'
+title: Presence
+description: Unstyled, accessible and customizable primitives for SolidJS.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Presence
+
+A presence is used to create animation-aware components which wait for any animation to finish before removing the element from the DOM. You can see it in action in the [Dialog](/docs/primitives/dialog) primitive.
+
+The `createPresence` utility returns a boolean called `present` which indicates if the element should be present in the DOM or not.
+
+The `state` variable can be used to get the current state of the presence. Valid states are `present`, `hiding` or `hidden`.
+
+## Usage
+<Code code={`
+import { createPresence } from 'corvu'
+`} lang="tsx" copyButton />
+<Code code={`
+const DialogContent: Component<{
+  open?: boolean
+}> = (props) => {
+  const [dialogRef, setDialogRef] = createSignal<HTMLElement | null>(null)
+
+  const { present } = createPresence({
+    show: () => props.open,
+    element: dialogRef,
+  })
+
+  return (
+    <Show when={present()}>
+      <div ref={setDialogRef}>Dialog</div>
+    </Show>
+  )
+}
+`} lang="tsx" copyButton />
+
+
+## API reference
+
+<GenerateApiDocs utility="createPresence" />

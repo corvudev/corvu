@@ -1,0 +1,57 @@
+---
+layout: '@layouts/Docs.astro'
+title: Keyed Context
+description: Unstyled, accessible and customizable primitives for SolidJS.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Keyed Context
+
+Corvu provides functions to create and access contexts with a key. Have a look at the [Keyed Context](/docs/state#keyed-context) section in the state guide for an example use case.
+
+## Usage
+
+Import the utility functions:
+<Code code={`
+import { createKeyedContext, useKeyedContext } from 'corvu'
+`} lang="tsx" copyButton />
+
+Use it in your components:
+<Code code={`
+type ContextType = {
+  open: Accessor<boolean>
+}
+
+const Dialog: Component<{
+  contextId: string
+}> = (props) => {
+  const [open, setOpen] = createSignal(false)
+
+  const DialogContext = createKeyedContext<ContextType>(props.contextId)
+
+  return (
+    <DialogContext.Provider value={{ open }}>
+      {props.children}
+    </DialogContext.Provider>
+  )
+}
+
+const DialogContent: Component<{
+  contextId: string
+}> = (props) => {
+  const { open } = useKeyedContext<ContextType>(props.contextId)
+
+  return (
+    <Show when={props.open}>
+      <div>Dialog</div>
+    </Show>
+  )
+}
+`} lang="tsx" copyButton />
+
+
+## API reference
+
+<GenerateApiDocs utility="keyedContext" />

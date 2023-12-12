@@ -1,0 +1,139 @@
+[data-corvu-dialog-trigger] {
+  border-radius: 0.5rem;
+  background-color: rgb(230 226 253);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  color: rgb(24 15 35);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 100ms;
+  animation-duration: 100ms;
+}
+
+[data-corvu-dialog-trigger]:hover {
+  background-color: rgb(212 203 251);
+}
+
+[data-corvu-dialog-trigger]:active {
+  transform: translate(0px, 0.125rem);
+}
+
+[data-corvu-dialog-overlay] {
+  position: fixed;
+  inset: 0px;
+  z-index: 50;
+  background-color: rgb(12 8 18 / 0.6);
+}
+
+[data-corvu-dialog-content] {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 50;
+  min-width: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 0.5rem;
+  border-width: 2px;
+  border-color: rgb(168 136 241);
+  background-color: rgb(12 8 18);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  animation-duration: 200ms;
+}
+
+[data-corvu-dialog-content][data-open] {
+  animation-name: enter;
+  animation-duration: 150ms;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  ;
+  --tw-enter-translate-y: initial --tw-enter-opacity: 0;
+  --tw-enter-scale: .95;
+  --tw-enter-translate-x: -50%;
+  --tw-enter-translate-y: -60%;
+}
+
+[data-corvu-dialog-content][data-closed] {
+  animation-name: exit;
+  animation-duration: 150ms;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+  --tw-exit-opacity: 0;
+  --tw-exit-scale: .95;
+  --tw-exit-translate-x: -50%;
+  --tw-exit-translate-y: -60%;
+}
+
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0))
+  }
+}
+
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0))
+  }
+}
+
+[data-corvu-dialog-label] {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+[data-corvu-dialog-description] {
+  margin-top: 0.5rem;
+}
+
+textarea {
+  margin-top: 0.75rem;
+  width: 100%;
+  border-radius: 0.25rem;
+  border-width: 2px;
+  border-color: rgb(154 109 233);
+  background-color: rgb(24 15 35);
+}
+
+textarea:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button_wrapper {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+[data-corvu-dialog-close] {
+  border-radius: 0.375rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: rgb(24 15 35)
+}
+
+.cancel_button {
+  background-color: rgb(212 203 251);
+}
+
+.submit_button {
+  background-color: rgb(168 136 241);
+}

@@ -1,3 +1,4 @@
 node_modules
 dist
 .vscode
+web/src/assets/api.json

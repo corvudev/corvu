@@ -1,0 +1,128 @@
+---
+layout: '@layouts/Docs.astro'
+title: Corvu Dialog
+description: A Dialog component for SolidJS.
+image: /banner.png
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/dialog/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/dialog/basic/tailwind/index?raw'
+import NestedExample from '@examples/primitives/dialog/nested/tailwind/index'
+import NestedTailwindTsx from '@examples/primitives/dialog/nested/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import CssTsx from '@examples/primitives/dialog/basic/css/index?raw'
+import CssStyle from '@examples/primitives/dialog/basic/css/index.css?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Dialog
+
+A window overlaid on either the primary window or another dialog window.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Supports modal and non-modal modes',
+  'Customizable focus management',
+  'Waits for pending animations before removing the dialog from the DOM',
+  'Pressing the escape key and interacting outside closes the dialog',
+  'Supports nested dialogs'
+]} />
+
+## Usage
+<Code code={`
+import Dialog from 'corvu/dialog'
+// Or
+// import { Root, Trigger, ... } from 'corvu/dialog'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+<Dialog.Root>
+  <Dialog.Trigger />
+  <Dialog.Portal>
+    <Dialog.Overlay />
+    <Dialog.Content>
+      <Dialog.Close />
+      <Dialog.Label />
+      <Dialog.Description />
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
+`} lang="tsx" copyButton />
+
+### Scrolling
+By default, corvu disables scrolling on the body element  while the dialog is open. It will also add additional padding to the body to prevent the page from jumping when the scrollbar disappears. There is also a CSS variable called `--scrollbar-width` which is present when the scrollbar is hidden. You can use this to prevent any fixed element from jumping:
+
+<Code code={`
+<header
+  class="fixed top-0 inset-x-0 z-50"
+  style={{
+    'padding-right': 'var(--scrollbar-width, 0)',
+  }}
+>
+  Header
+</header>
+`} lang="tsx" copyButton />
+
+### Nested dialogs
+Feel free to nest dialogs however you want. Corvu is aware of nested dialogs and only dismisses the top-most dialog when you press the escape key or click outside the dialog.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} heading={false} client:load>
+  <NestedExample client:load />
+  <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+## Accessibility
+Adheres to the [Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal) and [Alert Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
+
+## API reference
+
+<GenerateApiDocs primitive="Dialog" />

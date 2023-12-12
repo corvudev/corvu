@@ -1,0 +1,70 @@
+---
+layout: '@layouts/Docs.astro'
+title: Focus Trap
+description: Unstyled, accessible and customizable primitives for SolidJS.
+image: /banner.png
+---
+import Code from '@components/docs/code/Code.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+
+# Focus Trap
+
+Traps focus inside a given DOM element. Has many options to customize the behavior like if the focus should be restored when the trap is disabled and it provides callback functions for the `onInitialFocus` and `onFinalFocus` events which are preventable.
+
+**Default behavior**
+
+The first focusable element within the focus trap element will be focused initially. When the trap is disabled, the focus will be restored to the element that was focused before the trap was enabled.
+
+## Usage
+<Code code={`
+import { createFocusTrap } from 'corvu'
+`} lang="tsx" copyButton />
+<Code code={`
+const DialogContent: Component<{
+  open: boolean
+}> = (props) => {
+  const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
+
+  createFocusTrap({
+    element: contentRef,
+    enabled: () => props.open
+  })
+
+  return (
+    <Show when={props.open}>
+      <div ref={setContentRef}>Dialog</div>
+    </Show>
+  )
+}
+`} lang="tsx" copyButton />
+
+### Custom initial focus element
+This example shows how to customize the initial focus element so that the focus moves to a specific element when the trap gets enabled.
+
+<Code code={`
+const DialogContent: Component<{
+  open: boolean
+}> = (props) => {
+  const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
+  const [initialFocusRef, setInitialFocusRef] =
+    createSignal<HTMLElement | null>(null)
+
+  createFocusTrap({
+    element: contentRef,
+    enabled: () => props.open,
+    initialFocusElement: initialFocusRef,
+  })
+
+  return (
+    <Show when={props.open}>
+      <div ref={setContentRef}>Dialog</div>
+      <button>Close</button>
+      <input ref={setInitialFocusRef} />
+    </Show>
+  )
+}
+`} lang="tsx" copyButton />
+
+## API reference
+
+<GenerateApiDocs utility="createFocusTrap" />

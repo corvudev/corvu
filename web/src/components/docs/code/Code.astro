@@ -1,0 +1,21 @@
+---
+import CopyToClipboard from '@components/docs/code/CopyToClipboard'
+import RawCode from '@components/docs/code/RawCode.astro'
+
+interface Props {
+  code: string
+  lang: 'html' | 'tsx' | 'js' | 'css' | 'bash'
+  copyButton?: boolean
+}
+
+const { code, lang, copyButton } = Astro.props
+
+const trimmedCode = code.trim()
+---
+
+<div
+  class="not-prose relative mb-4 mt-2 grid rounded-md border-2 border-corvu-400 bg-corvu-1000"
+>
+  <RawCode code={trimmedCode} lang={lang} />
+  {copyButton && <CopyToClipboard code={trimmedCode} client:visible />}
+</div>

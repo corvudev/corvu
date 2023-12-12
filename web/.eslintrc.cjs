@@ -27,6 +27,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/triple-slash-reference': 'off',
     'prettier/prettier': [
       'error',
       {
@@ -62,6 +63,7 @@ module.exports = {
         },
       },
     ],
+    'solid/self-closing-comp': 'off',
   },
   overrides: [
     {
@@ -70,6 +72,9 @@ module.exports = {
       parserOptions: {
         parser: '@typescript-eslint/parser',
         extraFileExtensions: ['.astro'],
+      },
+      rules: {
+        'solid/prefer-for': 'off',
       },
     },
   ],
