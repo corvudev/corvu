@@ -125,61 +125,86 @@ const findNearbySnapPoints = (
   )
 }
 
-export const shouldDrag = (
+export const targetIsScrollable = (
   targetElement: HTMLElement,
-  mode: 'ifScrolled' | 'ifScrollable',
-  side: 'top' | 'right' | 'bottom' | 'left',
+  direction: 'y' | 'x',
 ) => {
-  const textSelection = window.getSelection()?.toString()
-  if (textSelection) return false
-
   let currentElement: HTMLElement | null = targetElement
   while (currentElement) {
-    if (mode === 'ifScrollable' && isScrollable(currentElement)) {
-      return false
+    if (isScrollable(currentElement, direction)) {
+      return true
     }
 
-    switch (side) {
-      case 'top':
-        if (
-          isScrollable(currentElement) &&
-          currentElement.scrollTop !==
-            currentElement.scrollHeight - currentElement.clientHeight
-        )
-          return false
-        break
-      case 'right':
-        if (isScrollable(currentElement) && currentElement.scrollLeft !== 0)
-          return false
-        break
-      case 'bottom':
-        if (isScrollable(currentElement) && currentElement.scrollTop !== 0)
-          return false
-        break
-      case 'left':
-        if (
-          isScrollable(currentElement) &&
-          currentElement.scrollLeft !==
-            currentElement.scrollWidth - currentElement.clientWidth
-        )
-          return false
-        break
-    }
-
-    if (currentElement.dataset.corvuDialogContent === '') return true
+    if (currentElement.dataset.corvuDialogContent === '') return false
 
     currentElement = currentElement.parentElement
   }
-  return true
+  return false
 }
 
-const isScrollable = (element: HTMLElement) =>
-  getComputedStyle(element).overflowY !== 'visible' &&
-  (element.scrollHeight > element.clientHeight ||
-    element.scrollWidth > element.clientWidth)
+export const targetIsScrolled = (
+  targetElement: HTMLElement,
+  side: 'top' | 'right' | 'bottom' | 'left',
+) => {
+  let currentElement: HTMLElement | null = targetElement
+  while (currentElement) {
+    switch (side) {
+      case 'top':
+        if (
+          isScrollable(currentElement, sideToDirection(side)) &&
+          currentElement.scrollTop !==
+            currentElement.scrollHeight - currentElement.clientHeight
+        )
+          return true
+        break
+      case 'right':
+        if (
+          isScrollable(currentElement, sideToDirection(side)) &&
+          currentElement.scrollLeft !== 0
+        )
+          return true
+        break
+      case 'bottom':
+        if (
+          isScrollable(currentElement, sideToDirection(side)) &&
+          currentElement.scrollTop !== 0
+        )
+          return true
+        break
+      case 'left':
+        if (
+          isScrollable(currentElement, sideToDirection(side)) &&
+          currentElement.scrollLeft !==
+            currentElement.scrollWidth - currentElement.clientWidth
+        )
+          return true
+        break
+    }
 
-export const getScrollableParents = (element: HTMLElement) => {
-  const scrollableParents = []
+    if (currentElement.dataset.corvuDialogContent === '') return false
+
+    currentElement = currentElement.parentElement
+  }
+  return false
+}
+
+const isScrollable = (element: HTMLElement, direction: 'y' | 'x') => {
+  switch (direction) {
+    case 'y':
+      return (
+        getComputedStyle(element).overflowY !== 'visible' &&
+        element.scrollHeight > element.clientHeight
+      )
+    case 'x':
+      return (
+        getComputedStyle(element).overflowX !== 'visible' &&
+        element.scrollWidth > element.clientWidth
+      )
+  }
+}
+
+export const getScrollables = (element: HTMLElement) => {
+  const scrollables = []
 
   let currentElement: HTMLElement | null = element
   while (currentElement) {
@@ -188,13 +213,26 @@ export const getScrollableParents = (element: HTMLElement) => {
       (currentElement.scrollHeight > currentElement.clientHeight ||
         currentElement.scrollWidth > currentElement.clientWidth)
     ) {
-      scrollableParents.push(currentElement)
+      scrollables.push(currentElement)
     }
     if (currentElement.dataset.corvuDialogContent === '') {
-      return scrollableParents
+      return scrollables
     }
 
     currentElement = currentElement.parentElement
   }
-  return scrollableParents
+  return scrollables
+}
+
+export const sideToDirection = (
+  side: 'top' | 'right' | 'bottom' | 'left',
+): 'y' | 'x' => {
+  switch (side) {
+    case 'top':
+    case 'bottom':
+      return 'y'
+    case 'right':
+    case 'left':
+      return 'x'
+  }
 }

@@ -2,6 +2,7 @@ import { isFunction } from '@lib/assertions'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
 import { resolveSnapPoint } from '@lib/drawer'
+import { sleep } from '@lib/utils'
 import {
   InternalDialogContextValue,
   useInternalDialogContext,
@@ -69,6 +70,10 @@ export type DrawerRootProps = {
    * @defaultValue true
    */
   handleScrollableElements?: boolean
+  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer.
+   * @defaultValue 50
+   */
+  scrollThreshold?: number
   children:
     | JSX.Element
     | ((
@@ -96,6 +101,8 @@ export type DrawerRootChildrenProps = {
   allowSkippingSnapPoints: boolean
   /** Whether the logic to handle dragging on scrollable elements is enabled. */
   handleScrollableElements: boolean
+  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
+  scrollThreshold: number
   /** Whether the drawer is currently being dragged by the user. */
   isDragging: boolean
   /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
@@ -122,6 +129,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       velocityCacheReset: 200,
       allowSkippingSnapPoints: true,
       handleScrollableElements: true,
+      scrollThreshold: 50,
     },
     props,
   )
@@ -138,6 +146,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     'velocityCacheReset',
     'allowSkippingSnapPoints',
     'handleScrollableElements',
+    'scrollThreshold',
     'open',
     'initialOpen',
     'onOpenChange',
@@ -201,30 +210,33 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const onOpenChange = (open: boolean) => {
     if (open) {
       setOpen(true)
-      batch(() => {
-        setIsTransitioning(true)
-        setActiveSnapPoint(localProps.defaultSnapPoint)
-      })
-      setTimeout(
-        () => {
+      // eslint-disable-next-line solid/reactivity
+      sleep(0).then(() => {
+        batch(() => {
+          setIsTransitioning(true)
+          setActiveSnapPoint(localProps.defaultSnapPoint)
+        })
+        const transitionDuration =
+          parseFloat(drawerStyles()!.transitionDelay) * 1000 +
+          parseFloat(drawerStyles()!.transitionDuration) * 1000
+        setTimeout(() => {
           setIsTransitioning(false)
-        },
-        parseFloat(drawerStyles()!.transitionDuration) * 1000,
-      )
+        }, transitionDuration)
+      })
     } else {
       batch(() => {
         setIsTransitioning(true)
         setActiveSnapPoint(0)
       })
-      setTimeout(
-        () => {
-          batch(() => {
-            setOpen(false)
-            setIsTransitioning(false)
-          })
-        },
-        parseFloat(drawerStyles()!.transitionDuration) * 1000,
-      )
+      const transitionDuration =
+        parseFloat(drawerStyles()!.transitionDelay) * 1000 +
+        parseFloat(drawerStyles()!.transitionDuration) * 1000
+      setTimeout(() => {
+        batch(() => {
+          setOpen(false)
+          setIsTransitioning(false)
+        })
+      }, transitionDuration)
     }
   }
 
@@ -253,6 +265,9 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     },
     get handleScrollableElements() {
       return localProps.handleScrollableElements
+    },
+    get scrollThreshold() {
+      return localProps.scrollThreshold
     },
     get translate() {
       return translate()
@@ -294,6 +309,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           velocityCacheReset: () => localProps.velocityCacheReset,
           allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
           handleScrollableElements: () => localProps.handleScrollableElements,
+          scrollThreshold: () => localProps.scrollThreshold,
         }}
       >
         <InternalDrawerContext.Provider
@@ -311,6 +327,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             velocityCacheReset: () => localProps.velocityCacheReset,
             allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
             handleScrollableElements: () => localProps.handleScrollableElements,
+            scrollThreshold: () => localProps.scrollThreshold,
             dampFunction: localProps.dampFunction,
             velocityFunction: localProps.velocityFunction,
             setIsDragging,

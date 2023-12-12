@@ -1,8 +1,10 @@
 import {
   resolveSnapPoint,
   findClosestSnapPoint,
-  shouldDrag,
-  getScrollableParents,
+  getScrollables,
+  targetIsScrollable,
+  targetIsScrolled,
+  sideToDirection,
 } from '@lib/drawer'
 import { dataIf } from '@lib/utils'
 import DialogContent, { DialogContentProps } from '@primitives/dialog/Content'
@@ -33,12 +35,14 @@ const DrawerContent = <
 ) => {
   const [localProps, otherProps] = splitProps(props, ['contextId', 'style'])
 
-  let dragStartPos: number
+  let pointerDown = false
+  let pointerDownPos: number | null = null
+  let dragStartPos: number | null = null
 
   // Values used to handle dragging on scrollable elements.
-  let didMove = false
   let targetedScrollableElements: HTMLElement[] = []
-  let originalScrollOverflows: string[] = []
+  const originalScrollOverflows: string[] = []
+  const originalScrollOffsets: { scrollTop: number; scrollLeft: number }[] = []
 
   // Values used to calculate the velocity of the drawer when the user releases it.
   let cachedMoveTimestamp: Date
@@ -50,20 +54,6 @@ const DrawerContent = <
   const dialogContext = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
   )
-
-  createEffect(() => {
-    document.addEventListener('pointermove', onPointerMove)
-    document.addEventListener('touchmove', onTouchMove)
-    document.addEventListener('pointerup', onPointerUp)
-    document.addEventListener('touchend', onPointerUp)
-
-    onCleanup(() => {
-      document.removeEventListener('pointermove', onPointerMove)
-      document.removeEventListener('touchmove', onTouchMove)
-      document.removeEventListener('pointerup', onPointerUp)
-      document.removeEventListener('touchend', onPointerUp)
-    })
-  })
 
   const snapPoints = createMemo(() =>
     drawerContext()
@@ -91,49 +81,49 @@ const DrawerContent = <
     }
   })
 
+  createEffect(() => {
+    document.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('touchmove', onTouchMove)
+    document.addEventListener('pointerup', onPointerUp)
+    document.addEventListener('touchend', onPointerUp)
+
+    onCleanup(() => {
+      document.removeEventListener('pointermove', onPointerMove)
+      document.removeEventListener('touchmove', onTouchMove)
+      document.removeEventListener('pointerup', onPointerUp)
+      document.removeEventListener('touchend', onPointerUp)
+    })
+  })
+
   const onPointerDown = (event: PointerEvent) => {
-    // Don't drag if the user wants to drag on an already scrolled element.
-    if (
-      !shouldDrag(
-        event.target as HTMLElement,
-        'ifScrolled',
-        drawerContext().side(),
-      )
-    ) {
-      return
-    }
-
-    if (drawerContext().isDragging()) return
-
+    pointerDown = true
     switch (drawerContext().side()) {
       case 'top':
       case 'bottom':
-        dragStartPos = event.clientY
+        pointerDownPos = event.clientY
         break
       case 'right':
       case 'left':
-        dragStartPos = event.clientX
+        pointerDownPos = event.clientX
     }
 
     if (drawerContext().handleScrollableElements()) {
-      didMove = false
-      targetedScrollableElements = []
-      originalScrollOverflows = []
+      targetedScrollableElements = getScrollables(event.target as HTMLElement)
+      targetedScrollableElements.forEach((targetedScrollableElement) => {
+        originalScrollOverflows.push(
+          targetedScrollableElement.style.overflow || '',
+        )
+        originalScrollOffsets.push({
+          scrollTop: targetedScrollableElement.scrollTop,
+          scrollLeft: targetedScrollableElement.scrollLeft,
+        })
+      })
     }
-
-    cachedMoveTimestamp = new Date()
-    cachedTranslate = drawerContext().translate()
-
-    batch(() => {
-      drawerContext().setIsDragging(true)
-      drawerContext().setIsTransitioning(false)
-    })
   }
 
   const onPointerMove = (event: PointerEvent) => {
     onMove(event.target as HTMLElement, event.clientY, event.clientX)
   }
-
   const onTouchMove = (event: TouchEvent) => {
     if (!event.touches[0]) return
     onMove(
@@ -144,7 +134,85 @@ const DrawerContent = <
   }
 
   const onMove = (target: HTMLElement, y: number, x: number) => {
-    if (!drawerContext().isDragging()) return
+    if (!pointerDown || pointerDownPos === null) return
+
+    if (!drawerContext().isDragging() || dragStartPos === null) {
+      if (drawerContext().handleScrollableElements()) {
+        let deviation: number
+        switch (drawerContext().side()) {
+          case 'top':
+            deviation = -(pointerDownPos - y)
+            break
+          case 'bottom':
+            deviation = pointerDownPos - y
+            break
+          case 'right':
+            deviation = pointerDownPos - x
+            break
+          case 'left':
+            deviation = -(pointerDownPos - x)
+            break
+        }
+        deviation -= drawerContext().resolvedActiveSnapPoint().offset
+
+        const direction = sideToDirection(drawerContext().side())
+
+        if (targetIsScrolled(target, drawerContext().side())) {
+          onPointerUp()
+          return
+        }
+        if (
+          deviation > snapPoints()[snapPoints().length - 1]!.offset &&
+          targetIsScrollable(target, direction)
+        ) {
+          onPointerUp()
+          return
+        }
+        if (
+          targetedScrollableElements.some((targetedScrollableElement, idx) => {
+            switch (direction) {
+              case 'y':
+                return (
+                  targetedScrollableElement.scrollLeft !==
+                  originalScrollOffsets[idx]!.scrollLeft
+                )
+              case 'x':
+                return (
+                  targetedScrollableElement.scrollTop !==
+                  originalScrollOffsets[idx]!.scrollTop
+                )
+            }
+          })
+        ) {
+          onPointerUp()
+          return
+        }
+        if (
+          Math.abs(deviation) < drawerContext().scrollThreshold() &&
+          targetIsScrollable(target, direction === 'y' ? 'x' : 'y')
+        ) {
+          return
+        }
+      }
+
+      switch (drawerContext().side()) {
+        case 'top':
+        case 'bottom':
+          dragStartPos = y
+          break
+        case 'right':
+        case 'left':
+          dragStartPos = x
+      }
+
+      cachedMoveTimestamp = new Date()
+      cachedTranslate = drawerContext().translate()
+
+      batch(() => {
+        drawerContext().setIsDragging(true)
+        drawerContext().setIsTransitioning(false)
+      })
+    }
 
     let deviation: number
     switch (drawerContext().side()) {
@@ -161,29 +229,6 @@ const DrawerContent = <
         deviation = -(dragStartPos - x)
         break
     }
-
-    if (drawerContext().handleScrollableElements() && deviation !== 0) {
-      // Don't drag if the user wants to drag upwards on a scrollable element.
-      if (
-        !didMove &&
-        deviation > 0 &&
-        !shouldDrag(target, 'ifScrollable', drawerContext().side())
-      ) {
-        onPointerUp()
-        return
-      }
-      if (!didMove) {
-        didMove = true
-        targetedScrollableElements = getScrollableParents(target)
-        targetedScrollableElements.forEach((targetedScrollableElement) => {
-          originalScrollOverflows.push(
-            targetedScrollableElement.style.overflow || '',
-          )
-          targetedScrollableElement.style.overflow = 'hidden'
-        })
-      }
-    }
-
     deviation -= drawerContext().resolvedActiveSnapPoint().offset
 
     if (deviation > 0) deviation = drawerContext().dampFunction(deviation)
@@ -201,6 +246,10 @@ const DrawerContent = <
   }
 
   const onPointerUp = () => {
+    pointerDown = false
+    pointerDownPos = null
+    dragStartPos = null
+
     if (!drawerContext().isDragging()) return
 
     batch(() => {
@@ -216,6 +265,9 @@ const DrawerContent = <
           targetedScrollableElement.removeAttribute('style')
         }
       })
+
+      targetedScrollableElements.length = 0
+      originalScrollOverflows.length = 0
     }
 
     const now = new Date()
@@ -239,12 +291,12 @@ const DrawerContent = <
         dialogContext().setOpen(false)
       } else {
         drawerContext().setTranslate(closestSnapPoint.offset)
-        setTimeout(
-          () => {
-            drawerContext().setIsTransitioning(false)
-          },
-          parseFloat(drawerContext().drawerStyles()!.transitionDuration) * 1000,
-        )
+        const transitionDuration =
+          parseFloat(drawerContext().drawerStyles()!.transitionDelay) * 1000 +
+          parseFloat(drawerContext().drawerStyles()!.transitionDuration) * 1000
+        setTimeout(() => {
+          drawerContext().setIsTransitioning(false)
+        }, transitionDuration)
       }
     })
   }

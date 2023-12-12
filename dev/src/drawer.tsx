@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Drawer from 'corvu/drawer'
-import { type VoidComponent } from 'solid-js'
+import { For, type VoidComponent } from 'solid-js'
 
 const DrawerDev: VoidComponent = () => {
   return (
@@ -63,6 +63,11 @@ const Uncontrolled: VoidComponent<{
               <Drawer.Description class="text-sm">
                 Drawer Description
               </Drawer.Description>
+              <div class="max-h-[400px] overflow-y-auto border border-purple-700">
+                <For each={new Array(100).fill(0)}>
+                  {(_, i) => <p>{i()}</p>}
+                </For>
+              </div>
             </Drawer.Content>
             <Drawer.Overlay
               class={clsx(
