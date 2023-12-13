@@ -2,7 +2,7 @@
   "name": "@corvu/monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "Unstyled, accessible and customizable primitives for SolidJS",
+  "description": "Unstyled, accessible and customizable UI primitives for SolidJS",
   "homepage": "https://corvu.dev",
   "license": "MIT",
   "author": {

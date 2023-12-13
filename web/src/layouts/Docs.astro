@@ -43,8 +43,10 @@ const { frontmatter, headings } = Astro.props
       <Topbar client:load>
         <Navigation />
       </Topbar>
-      <div class="mt-[88px] flex px-4">
-        <div class="fixed hidden w-52 md:block">
+      <div class="mt-[88px] flex px-4 md:pl-0">
+        <div
+          class="fixed hidden h-[calc(100%-88px)] w-52 overflow-y-auto px-4 pb-2 md:block"
+        >
           <Navigation />
         </div>
         <div class="-mt-1 mb-6 grow">

@@ -2,7 +2,7 @@
   "name": "corvu",
   "version": "0.1.0",
   "private": false,
-  "description": "Unstyled, accessible and customizable primitives for SolidJS",
+  "description": "Unstyled, accessible and customizable UI primitives for SolidJS",
   "keywords": [
     "solid",
     "solidjs",
