@@ -36,7 +36,7 @@ Import a primitive and use it in your app:
 import Dialog from 'corvu/dialog';
 
 const App = () => {
-  retrun (
+  return (
     <Dialog.Root>
       <Dialog.Trigger>Open</Dialog.Trigger>
       <Dialog.Portal>

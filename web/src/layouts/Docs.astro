@@ -21,6 +21,7 @@ interface Props {
 }
 
 const { frontmatter, headings } = Astro.props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!doctype html>
@@ -31,6 +32,7 @@ const { frontmatter, headings } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <Head {...frontmatter} />
+    <link rel="canonical" href={canonicalURL} />
     <script
       defer
       data-domain="corvu.dev"
