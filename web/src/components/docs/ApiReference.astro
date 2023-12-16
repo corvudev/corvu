@@ -7,7 +7,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
 ---
 
 <div
-  class="relative mb-4 rounded-md border-2 border-corvu-400 bg-corvu-1000 p-4 prose-code:bg-corvu-200"
+  class="relative my-4 rounded-md border-2 border-corvu-400 bg-corvu-1000 p-4 prose-code:bg-corvu-200"
 >
   <div class="not-prose flex items-start justify-between">
     <h3 id={encodeURIComponent(name)} class="scroll-mt-24 text-lg font-bold">
@@ -31,20 +31,22 @@ const { type, name, descriptionHtml, parts } = Astro.props
             {part.props.map((property) => (
               <div class="mt-3 border-b border-corvu-400 pb-3">
                 <div class="md:flex md:items-start md:justify-between">
-                  <dt
-                    class:list={[
-                      'max-w-fit rounded px-1 py-0.5 font-mono text-base font-bold text-corvu-dark',
-                      {
-                        'bg-corvu-400':
-                          !property.displayType ||
-                          property.displayType === 'property',
-                        'bg-cyan-500': property.displayType === 'function',
-                        'bg-orange-400': property.displayType === 'data',
-                      },
-                    ]}
-                  >
-                    {property.name}
-                  </dt>
+                  {property.name && (
+                    <p
+                      class:list={[
+                        'max-w-fit rounded px-1 py-0.5 font-mono text-base font-bold text-corvu-dark',
+                        {
+                          'bg-corvu-400':
+                            !property.displayType ||
+                            property.displayType === 'property',
+                          'bg-cyan-500': property.displayType === 'function',
+                          'bg-orange-400': property.displayType === 'data',
+                        },
+                      ]}
+                    >
+                      {property.name}
+                    </p>
+                  )}
                   {property.type && (
                     <div class="mt-1 md:mt-0 md:text-right">
                       <code class="not-prose col-span-2 font-mono">
@@ -58,7 +60,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                     Default: <span set:html={property.defaultHtml} />
                   </p>
                 )}
-                <dd
+                <p
                   class="prose col-span-4 col-start-2 mt-1"
                   set:html={property.descriptionHtml}
                 />

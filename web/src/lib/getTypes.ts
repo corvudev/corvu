@@ -136,7 +136,7 @@ const getComponent = (componentName: ComponentSpecifications) => {
     }
     if (apiTypes) {
       apiReference.parts.push({
-        name: 'Props',
+        name: 'Returns',
         props: apiTypes.sort((a, b) => {
           const aIndex = context.forcedSorting?.indexOf(a.name)
           const bIndex = context.forcedSorting?.indexOf(b.name)
@@ -422,7 +422,7 @@ const getUtility = (utilityName: UtilitySpecifications) => {
         throw new Error(`${functionSpec.name} not found`)
       }
 
-      let apiTypes = resolveFunction(typeDeclaration)
+      let apiTypes = resolveFunctionProps(typeDeclaration)
       // Insert zero width space to prevent components rendering as
       apiTypes = apiTypes.map((apiType) => {
         apiType.defaultHtml = replaceElements(apiType.defaultHtml)
@@ -458,13 +458,44 @@ const getUtility = (utilityName: UtilitySpecifications) => {
         })
       }
 
+      let apiReturns = resolveFunctionReturns(typeDeclaration)
+      // Insert zero width space to prevent components rendering as
+      apiReturns = apiReturns.map((apiReturn) => {
+        apiReturn.defaultHtml = replaceElements(apiReturn.defaultHtml)
+        apiReturn.descriptionHtml = replaceElements(apiReturn.descriptionHtml)!
+        return apiReturn
+      })
+
+      if (
+        apiReturns &&
+        !(apiReturns.length === 1 && apiReturns[0].type === 'void')
+      ) {
+        apiReference.parts.push({
+          name: 'Returns',
+          props: apiReturns.sort((a, b) => {
+            const aIndex = functionSpec.forcedSorting?.indexOf(a.name)
+            const bIndex = functionSpec.forcedSorting?.indexOf(b.name)
+            if (aIndex !== undefined && bIndex !== undefined) {
+              return aIndex - bIndex
+            }
+            if (aIndex !== undefined) {
+              return -1
+            }
+            if (bIndex !== undefined) {
+              return 1
+            }
+            return a.name.localeCompare(b.name)
+          }),
+        })
+      }
+
       apiReferences.push(apiReference)
     }
   }
   return apiReferences
 }
 
-const resolveFunction = (functionVariant: DeclarationVariant) => {
+const resolveFunctionProps = (functionVariant: DeclarationVariant) => {
   const parameterType = functionVariant.signatures![0].parameters[0].type
 
   if (!parameterType) {
@@ -496,6 +527,27 @@ const resolveFunction = (functionVariant: DeclarationVariant) => {
   return apiTypes
 }
 
+const resolveFunctionReturns = (functionVariant: DeclarationVariant) => {
+  const parameterType = functionVariant.signatures![0].type
+
+  if (!parameterType) {
+    throw new Error(`Missing signature for the ${functionVariant.name} utility`)
+  }
+
+  if (parameterType.type === 'reflection') {
+    return getReflectionProps(parameterType)
+  }
+
+  return [
+    {
+      name: '',
+      type: resolveTypeTopLevel(parameterType),
+      descriptionHtml: '',
+      displayType: 'property',
+    },
+  ] as ApiType[]
+}
+
 const getReflectionProps = (type: ReflectionType) => {
   const props = type.declaration.children
   if (!props) {
@@ -522,9 +574,6 @@ const getReflectionProps = (type: ReflectionType) => {
       })
     } else if (prop.type?.type === 'reflection') {
       const signature = prop.type.declaration.signatures![0]
-      if (!signature.parameters) {
-        throw new Error(`Missing signature for the ${prop.name} prop`)
-      }
 
       const type = resolveTypeTopLevel(signature.type, signature.parameters)
       apiTypes.push({
