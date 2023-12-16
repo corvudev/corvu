@@ -34,7 +34,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                   {property.name && (
                     <p
                       class:list={[
-                        'max-w-fit rounded px-1 py-0.5 font-mono text-base font-bold text-corvu-dark',
+                        'not-prose max-w-fit rounded px-1 py-0.5 font-mono text-base font-bold text-corvu-dark',
                         {
                           'bg-corvu-400':
                             !property.displayType ||
