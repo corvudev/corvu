@@ -13,7 +13,10 @@ const createPresence = (props: {
   show: Accessor<boolean>
   /** The element which animations should be tracked. */
   element: Accessor<HTMLElement | null>
-}) => {
+}): {
+  present: Accessor<boolean>
+  state: Accessor<'present' | 'hiding' | 'hidden'>
+} => {
   const refStyles = createMemo(() => {
     const element = props.element()
     if (!element) return
