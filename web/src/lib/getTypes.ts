@@ -1,4 +1,10 @@
 import apiJson from '@assets/api.json'
+import {
+  type ComponentSpecifications,
+  componentSpecifications,
+  utilitySpecifications,
+  type UtilitySpecifications,
+} from '@lib/apiSpecifications'
 import type {
   CorvuApi,
   DeclarationVariant,
@@ -29,209 +35,6 @@ type ApiType = {
   defaultHtml?: string
   descriptionHtml: string
   displayType?: 'property' | 'function' | 'data' | 'children'
-}
-
-type TypeSpecification = {
-  name: string
-  forcedSorting?: string[]
-}
-
-type ComponentSpecifications = 'Dialog' | 'Drawer'
-
-const componentSpecifications: {
-  [key in ComponentSpecifications]: {
-    exportName: string
-    components: TypeSpecification[]
-    contexts: TypeSpecification[]
-    types: TypeSpecification[]
-  }
-} = {
-  Dialog: {
-    exportName: 'primitives/dialog',
-    components: [
-      {
-        name: 'Root',
-        forcedSorting: [
-          'role',
-          'open',
-          'onOpenChange',
-          'initialOpen',
-          'modal',
-          'closeOnEscapeKeyDown',
-          'onEscapeKeyDown',
-          'closeOnOutsidePointerDown',
-          'onOutsidePointerDown',
-          'noOutsidePointerEvents',
-          'preventScroll',
-          'preventScrollbarShift',
-          'trapFocus',
-          'restoreFocus',
-          'initialFocusEl',
-          'onInitialFocus',
-          'finalFocusEl',
-          'onFinalFocus',
-          'dialogId',
-          'labelId',
-          'descriptionId',
-          'contextId',
-          'children',
-        ],
-      },
-      {
-        name: 'Trigger',
-      },
-      {
-        name: 'Portal',
-        forcedSorting: ['forceMount', 'contextId'],
-      },
-      {
-        name: 'Overlay',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
-      },
-      {
-        name: 'Content',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
-      },
-      {
-        name: 'Close',
-      },
-      {
-        name: 'Label',
-      },
-      {
-        name: 'Description',
-      },
-    ],
-    contexts: [
-      {
-        name: 'useContext',
-        forcedSorting: [
-          'role',
-          'open',
-          'contentPresent',
-          'overlayPresent',
-          'setOpen',
-          'initialOpen',
-          'modal',
-          'closeOnEscapeKeyDown',
-          'onEscapeKeyDown',
-          'closeOnOutsidePointerDown',
-          'onOutsidePointerDown',
-          'noOutsidePointerEvents',
-          'preventScroll',
-          'preventScrollbarShift',
-          'trapFocus',
-          'restoreFocus',
-          'initialFocusEl',
-          'onInitialFocus',
-          'finalFocusEl',
-          'onFinalFocus',
-          'dialogId',
-          'labelId',
-          'descriptionId',
-        ],
-      },
-    ],
-    types: [
-      {
-        name: 'RootChildrenProps',
-        forcedSorting: [
-          'role',
-          'open',
-          'contentPresent',
-          'overlayPresent',
-          'setOpen',
-          'initialOpen',
-          'modal',
-          'closeOnEscapeKeyDown',
-          'onEscapeKeyDown',
-          'closeOnOutsidePointerDown',
-          'onOutsidePointerDown',
-          'noOutsidePointerEvents',
-          'preventScroll',
-          'preventScrollbarShift',
-          'trapFocus',
-          'restoreFocus',
-          'initialFocusEl',
-          'onInitialFocus',
-          'finalFocusEl',
-          'onFinalFocus',
-          'dialogId',
-          'labelId',
-          'descriptionId',
-        ],
-      },
-    ],
-  },
-  Drawer: {
-    exportName: 'primitives/drawer',
-    components: [
-      {
-        name: 'Root',
-        forcedSorting: [
-          'snapPoints',
-          'breakPoints',
-          'defaultSnapPoint',
-          'activeSnapPoint',
-          'onActiveSnapPointChange',
-          'side',
-          'dampFunction',
-          'velocityFunction',
-          'velocityCacheReset',
-          'allowSkippingSnapPoints',
-          'handleScrollableElements',
-          'scrollThreshold',
-          'children',
-        ],
-      },
-      {
-        name: 'Content',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
-      },
-    ],
-    contexts: [
-      {
-        name: 'useContext',
-        forcedSorting: [
-          'snapPoints',
-          'breakPoints',
-          'defaultSnapPoint',
-          'activeSnapPoint',
-          'setActiveSnapPoint',
-          'side',
-          'velocityCacheReset',
-          'allowSkippingSnapPoints',
-          'handleScrollableElements',
-          'scrollThreshold',
-          'isDragging',
-          'isTransitioning',
-          'openPercentage',
-          'translate',
-        ],
-      },
-    ],
-    types: [
-      {
-        name: 'RootChildrenProps',
-        forcedSorting: [
-          'snapPoints',
-          'breakPoints',
-          'defaultSnapPoint',
-          'activeSnapPoint',
-          'setActiveSnapPoint',
-          'side',
-          'velocityCacheReset',
-          'allowSkippingSnapPoints',
-          'handleScrollableElements',
-          'scrollThreshold',
-          'isDragging',
-          'isTransitioning',
-          'openPercentage',
-          'translate',
-        ],
-      },
-    ],
-  },
 }
 
 const getComponent = (componentName: ComponentSpecifications) => {
@@ -548,111 +351,6 @@ const resolveType = (type: DeclarationVariant) => {
   return apiTypes
 }
 
-type UtilitySpecifications =
-  | 'createControllableSignal'
-  | 'createDisableScroll'
-  | 'createFocusTrap'
-  | 'keyedContext'
-  | 'createPresence'
-  | 'Polymorphic'
-
-const titleToUtilitySpecification = (
-  title:
-    | 'Controllable Signal'
-    | 'Disable Scroll'
-    | 'Focus Trap'
-    | 'Keyed Context'
-    | 'Presence'
-    | 'Polymorphic',
-): UtilitySpecifications => {
-  switch (title) {
-    case 'Controllable Signal':
-      return 'createControllableSignal'
-    case 'Disable Scroll':
-      return 'createDisableScroll'
-    case 'Focus Trap':
-      return 'createFocusTrap'
-    case 'Keyed Context':
-      return 'keyedContext'
-    case 'Presence':
-      return 'createPresence'
-    case 'Polymorphic':
-      return 'Polymorphic'
-  }
-}
-
-const utilitySpecifications: {
-  [key in UtilitySpecifications]: {
-    components?: TypeSpecification[]
-    functions?: TypeSpecification[]
-  }
-} = {
-  createControllableSignal: {
-    functions: [
-      {
-        name: 'createControllableSignal',
-        forcedSorting: ['value', 'onChange', 'defaultValue'],
-      },
-    ],
-  },
-  createDisableScroll: {
-    functions: [
-      {
-        name: 'createDisableScroll',
-        forcedSorting: ['enabled', 'preventScrollbarShift'],
-      },
-    ],
-  },
-  createFocusTrap: {
-    functions: [
-      {
-        name: 'createFocusTrap',
-        forcedSorting: [
-          'element',
-          'enabled',
-          'initialFocusElement',
-          'onInitialFocus',
-          'restoreFocus',
-          'finalFocusElement',
-          'onFinalFocus',
-        ],
-      },
-    ],
-  },
-  keyedContext: {
-    functions: [
-      {
-        name: 'createKeyedContext',
-        forcedSorting: ['key', 'defaultValue'],
-      },
-      {
-        name: 'getKeyedContext',
-      },
-      {
-        name: 'useKeyedContext',
-      },
-    ],
-  },
-  createPresence: {
-    functions: [
-      {
-        name: 'createPresence',
-        forcedSorting: ['show', 'element'],
-      },
-    ],
-  },
-  Polymorphic: {
-    components: [
-      {
-        name: 'Polymorphic',
-      },
-      {
-        name: 'As',
-      },
-    ],
-  },
-}
-
 const getUtility = (utilityName: UtilitySpecifications) => {
   const { components, functions } = utilitySpecifications[utilityName]
 
@@ -878,8 +576,11 @@ const formatText = (text?: Text[]) => {
 }
 
 const replaceElements = (text?: string) => {
-  return text?.replaceAll(/<([^\>]*)\/>/g, (_, b) => {
-    return `<​${b} />`
+  return text?.replaceAll(/<([^\>]*)>/g, (string, b) => {
+    if (string === '<code>' || string === '</code>') {
+      return string
+    }
+    return `<\u200B${b}>`
   })
 }
 
@@ -990,6 +691,11 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
       if (argumentNames.length > 0) {
         typeName += `${type.name}<${argumentNames.join(', ')}>`
       } else {
+        // The child function of the drawer root component accepts both the drawer and dialog children props.
+        // Use their original name to avoid confusion.
+        if (type.name.endsWith('RootChildrenProps')) {
+          return type.name
+        }
         const resolvedReference = resolveReferenceType(type)
         if (typeof resolvedReference === 'string') {
           typeName += resolvedReference
@@ -1022,69 +728,4 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
   return typeName
 }
 
-const getHeadings = (name: string) => {
-  const componentSpecification =
-    componentSpecifications[name as ComponentSpecifications]
-  const headings: {
-    text: string
-    slug: string
-  }[] = []
-
-  if (componentSpecification) {
-    const { components, contexts, types } = componentSpecification
-
-    for (const component of components) {
-      headings.push({
-        text: component.name,
-        slug: encodeURIComponent(`${name}.${component.name}`),
-      })
-    }
-
-    for (const context of contexts) {
-      headings.push({
-        text: context.name,
-        slug: encodeURIComponent(`${name}.${context.name}`),
-      })
-    }
-
-    for (const type of types) {
-      headings.push({
-        text: type.name,
-        slug: encodeURIComponent(`${name}.${type.name}`),
-      })
-    }
-
-    return headings
-  }
-
-  const utilitySpecification =
-    utilitySpecifications[titleToUtilitySpecification(name as never)]
-
-  if (utilitySpecification) {
-    const { components, functions } = utilitySpecification
-
-    if (components) {
-      for (const component of components) {
-        headings.push({
-          text: component.name,
-          slug: encodeURIComponent(component.name),
-        })
-      }
-    }
-
-    if (functions) {
-      for (const functionType of functions) {
-        headings.push({
-          text: functionType.name,
-          slug: encodeURIComponent(functionType.name),
-        })
-      }
-    }
-
-    return headings
-  }
-
-  return []
-}
-
-export { getComponent, getUtility, getHeadings }
+export { getComponent, getUtility }

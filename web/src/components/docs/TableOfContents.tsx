@@ -1,4 +1,4 @@
-import { getHeadings } from '@lib/getTypes'
+import getApiHeadings from '@lib/getApiHeadings'
 import clsx from 'clsx'
 import { For, createEffect, createSignal, onCleanup } from 'solid-js'
 import type { VoidComponent } from 'solid-js'
@@ -36,7 +36,7 @@ const TableOfContents: VoidComponent<{
     })
 
   // eslint-disable-next-line solid/reactivity
-  const apiHeadings = getHeadings(props.headings[0].text)
+  const apiHeadings = getApiHeadings(props.headings[0].text)
 
   if (apiHeadings) {
     const apiTitle = tableOfContents.find((h) => h.slug === 'api-reference')
@@ -77,7 +77,7 @@ const TableOfContents: VoidComponent<{
   })
 
   return (
-    <div class="mr-4 hidden w-52 justify-end text-sm lg:flex">
+    <div class="ml-6 hidden w-52 text-sm lg:flex">
       <nav class="fixed">
         {tableOfContents.length > 0 && (
           <p class="text-base font-semibold">On this page</p>
