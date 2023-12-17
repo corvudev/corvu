@@ -1,0 +1,5 @@
+---
+"corvu": patch
+---
+
+Dispose roots

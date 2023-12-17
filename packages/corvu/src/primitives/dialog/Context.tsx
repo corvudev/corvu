@@ -1,3 +1,4 @@
+import { Disposer } from '@lib/create/disposer'
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
 import { createContext, type Accessor, type Setter, useContext } from 'solid-js'
 
@@ -83,6 +84,7 @@ export type InternalDialogContextValue = DialogContextValue & {
   unregisterLabelId(): void
   registerDescriptionId(): void
   unregisterDescriptionId(): void
+  disposer: Disposer
 }
 
 const InternalDialogContext = createContext<InternalDialogContextValue>()

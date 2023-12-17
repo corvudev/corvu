@@ -4,7 +4,13 @@ import createDisableScroll from '@lib/create/disableScroll'
 import createOnce from '@lib/create/once'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, createRoot, splitProps } from 'solid-js'
+import {
+  Show,
+  createEffect,
+  createMemo,
+  createRoot,
+  splitProps,
+} from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -57,7 +63,11 @@ const DialogContent = <
 
   const memoizedChildren = createOnce(() => localProps.children)
 
-  const content = createRoot((_dispose) => {
+  const content = createRoot((dispose) => {
+    createEffect(() => {
+      context().disposer.register(dispose)
+    })
+
     return (
       <Dismissible
         element={context().contentRef}

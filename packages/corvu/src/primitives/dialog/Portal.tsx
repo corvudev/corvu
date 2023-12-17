@@ -27,7 +27,10 @@ const DialogPortal = (props: DialogPortalProps) => {
     useInternalDialogContext(localProps.contextId),
   )
 
-  const memoizedChildren = createOnceRoot(() => localProps.children)
+  const memoizedChildren = createOnceRoot(
+    () => localProps.children,
+    () => context().disposer.register,
+  )
 
   return (
     <Show
