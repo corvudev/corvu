@@ -2,7 +2,13 @@ import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createOnceRoot from '@lib/create/onceRoot'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, splitProps } from 'solid-js'
+import {
+  Show,
+  createMemo,
+  createUniqueId,
+  onCleanup,
+  splitProps,
+} from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -50,7 +56,14 @@ const DialogOverlay = <
 
   const memoizedChildren = createOnceRoot(
     () => localProps.children,
-    () => context().disposer.register,
+    () => {
+      const _context = context()
+      return (dispose) => {
+        const id = createUniqueId()
+        _context.disposer.register(id, dispose)
+        onCleanup(() => _context.disposer.unregister(id))
+      }
+    },
   )
 
   return (

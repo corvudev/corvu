@@ -9,6 +9,8 @@ import {
   createEffect,
   createMemo,
   createRoot,
+  createUniqueId,
+  onCleanup,
   splitProps,
 } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
@@ -65,7 +67,10 @@ const DialogContent = <
 
   const content = createRoot((dispose) => {
     createEffect(() => {
-      context().disposer.register(dispose)
+      const _context = context()
+      const id = createUniqueId()
+      _context.disposer.register(id, dispose)
+      onCleanup(() => _context.disposer.unregister(id))
     })
 
     return (
