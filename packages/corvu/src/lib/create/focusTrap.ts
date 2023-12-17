@@ -1,13 +1,6 @@
 import { MaybeAccessor } from '@lib/types'
 import { access, sleep } from '@lib/utils'
-import {
-  createSignal,
-  type Accessor,
-  createEffect,
-  onCleanup,
-  untrack,
-  mergeProps,
-} from 'solid-js'
+import { type Accessor, createEffect, onCleanup, mergeProps } from 'solid-js'
 
 const focusableElementSelector =
   'a[href]:not([tabindex="-1"]), button:not([tabindex="-1"]), input:not([tabindex="-1"]), textarea:not([tabindex="-1"]), select:not([tabindex="-1"]), details:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'
@@ -49,74 +42,73 @@ const createFocusTrap = (props: {
     props,
   )
 
-  const [firstFocusElement, setFirstFocusElement] =
-    createSignal<HTMLElement | null>(null)
-  const [lastFocusElement, setLastFocusElement] =
-    createSignal<HTMLElement | null>(null)
+  let firstFocusElement: HTMLElement | null = null
+  let lastFocusElement: HTMLElement | null = null
 
   let originalFocusedElement: HTMLElement | null = null
 
   createEffect(() => {
     const container = defaultedProps.element()
     if (container && access(defaultedProps.enabled)) {
-      const [_firstFocusElement, _lastFocusElement] = untrack(() => {
-        scanElements(container)
+      const focusableElements = initFocusTrap(container)
 
-        const _firstFocusElement = firstFocusElement()
-        const _lastFocusElement = lastFocusElement()
-
-        if (_firstFocusElement) {
-          _firstFocusElement.addEventListener(
-            'keydown',
-            onFirstFocusElementKeyDown,
-          )
-        }
-        if (_lastFocusElement) {
-          _lastFocusElement.addEventListener(
-            'keydown',
-            onLastFocusElementKeyDown,
-          )
-        }
-
-        return [_firstFocusElement, _lastFocusElement]
-      })
+      if (firstFocusElement) {
+        firstFocusElement.addEventListener(
+          'keydown',
+          onFirstFocusElementKeyDown,
+        )
+      }
+      if (lastFocusElement) {
+        lastFocusElement.addEventListener('keydown', onLastFocusElementKeyDown)
+      }
+      if (focusableElements.length === 0) {
+        ;(document.activeElement as HTMLElement | null)?.blur()
+        document.addEventListener('keydown', preventFocus)
+      }
 
       onCleanup(() => {
-        restoreFocus(container)
-
-        if (_firstFocusElement) {
-          _firstFocusElement.removeEventListener(
+        if (firstFocusElement) {
+          firstFocusElement.removeEventListener(
             'keydown',
             onFirstFocusElementKeyDown,
           )
         }
-        if (_lastFocusElement) {
-          _lastFocusElement.removeEventListener(
+        if (lastFocusElement) {
+          lastFocusElement.removeEventListener(
             'keydown',
             onLastFocusElementKeyDown,
           )
         }
+        if (focusableElements.length === 0) {
+          document.removeEventListener('keydown', preventFocus)
+        }
+
+        restoreFocus(container)
       })
     }
   })
 
-  const scanElements = (container: HTMLElement) => {
+  const initFocusTrap = (container: HTMLElement) => {
+    originalFocusedElement = document.activeElement as HTMLElement | null
+
     const focusableElements = Array.from(
       container.querySelectorAll(focusableElementSelector),
     )
+    firstFocusElement = focusableElements[0] as HTMLElement | null
+    lastFocusElement = focusableElements[
+      focusableElements.length - 1
+    ] as HTMLElement | null
 
-    setFirstFocusElement((focusableElements[0] as HTMLElement) ?? null)
-    setLastFocusElement(
-      (focusableElements[focusableElements.length - 1] as HTMLElement) ?? null,
-    )
-
-    originalFocusedElement = document.activeElement as HTMLElement | null
-    const initialFocusElement = access(defaultedProps.initialFocusElement)
-    const _firstFocusElement = firstFocusElement()
+    const initialFocusElement =
+      access(defaultedProps.initialFocusElement) ?? firstFocusElement
     const onInitialFocus = defaultedProps.onInitialFocus
 
+    if (!initialFocusElement) {
+      return focusableElements
+    }
+
     let event: CustomEvent | undefined
-    if ((initialFocusElement || _firstFocusElement) && onInitialFocus) {
+    if (onInitialFocus) {
       event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
       container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
       container.dispatchEvent(event)
@@ -124,14 +116,10 @@ const createFocusTrap = (props: {
     }
 
     if (event?.defaultPrevented) {
-      return
+      return focusableElements
     }
 
-    if (initialFocusElement) {
-      initialFocusElement.focus()
-    } else {
-      firstFocusElement()?.focus()
-    }
+    initialFocusElement.focus()
 
     return focusableElements
   }
@@ -139,14 +127,20 @@ const createFocusTrap = (props: {
   const onFirstFocusElementKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Tab' && event.shiftKey) {
       event.preventDefault()
-      lastFocusElement()?.focus()
+      lastFocusElement!.focus()
     }
   }
 
   const onLastFocusElementKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Tab' && !event.shiftKey) {
       event.preventDefault()
-      firstFocusElement()?.focus()
+      firstFocusElement!.focus()
+    }
+  }
+
+  const preventFocus = (event: KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      event.preventDefault()
     }
   }
 
@@ -154,9 +148,10 @@ const createFocusTrap = (props: {
     const restoreFocus = access(defaultedProps.restoreFocus)
     if (!restoreFocus) return
 
-    const finalFocusElement = access(defaultedProps.finalFocusElement)
+    const finalFocusElement =
+      access(defaultedProps.finalFocusElement) ?? originalFocusedElement
 
-    if (!finalFocusElement && !originalFocusedElement) {
+    if (!finalFocusElement) {
       return
     }
 
@@ -173,11 +168,7 @@ const createFocusTrap = (props: {
       return
     }
 
-    sleep(0).then(() =>
-      finalFocusElement
-        ? finalFocusElement.focus()
-        : originalFocusedElement?.focus(),
-    )
+    sleep(0).then(() => finalFocusElement.focus())
   }
 }
 
