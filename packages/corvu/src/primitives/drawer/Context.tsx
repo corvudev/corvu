@@ -1,7 +1,7 @@
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
 import { ResolvedSnapPoint } from '@lib/drawer'
 import { DefaultBreakpoint } from '@primitives/drawer'
-import { Accessor, createContext, useContext } from 'solid-js'
+import { Accessor, Setter, createContext, useContext } from 'solid-js'
 
 export type DrawerContextValue = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
@@ -73,6 +73,8 @@ type InternalDrawerContextValue = DrawerContextValue & {
   drawerSize: Accessor<number>
   resolvedActiveSnapPoint: Accessor<ResolvedSnapPoint>
   drawerStyles: Accessor<CSSStyleDeclaration | undefined>
+  isClosing: Accessor<boolean>
+  setIsClosing: Setter<boolean>
 }
 
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()

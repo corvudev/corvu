@@ -171,6 +171,8 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
 
   const [isDragging, setIsDragging] = createSignal(false)
   const [isTransitioning, setIsTransitioning] = createSignal(false)
+  const [isClosing, setIsClosing] = createSignal(false)
+
   const drawerStyles = createMemo(() => {
     const contentRef = dialogContext()?.contentRef()
     if (!contentRef) return undefined
@@ -217,11 +219,15 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           setActiveSnapPoint(localProps.defaultSnapPoint)
         })
         const transitionDuration =
-          parseFloat(drawerStyles()!.transitionDelay) * 1000 +
           parseFloat(drawerStyles()!.transitionDuration) * 1000
-        setTimeout(() => {
+        if (transitionDuration === 0) {
           setIsTransitioning(false)
-        }, transitionDuration)
+        }
+      })
+    } else if (isClosing()) {
+      batch(() => {
+        setOpen(false)
+        setIsClosing(false)
       })
     } else {
       batch(() => {
@@ -229,14 +235,13 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
         setActiveSnapPoint(0)
       })
       const transitionDuration =
-        parseFloat(drawerStyles()!.transitionDelay) * 1000 +
         parseFloat(drawerStyles()!.transitionDuration) * 1000
-      setTimeout(() => {
-        batch(() => {
-          setOpen(false)
-          setIsTransitioning(false)
-        })
-      }, transitionDuration)
+      if (transitionDuration === 0) {
+        setOpen(false)
+        setIsTransitioning(false)
+      } else {
+        setIsClosing(true)
+      }
     }
   }
 
@@ -336,6 +341,8 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             drawerSize,
             resolvedActiveSnapPoint,
             drawerStyles,
+            isClosing,
+            setIsClosing,
           }}
         >
           <DialogRoot

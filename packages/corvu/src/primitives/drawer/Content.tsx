@@ -298,11 +298,10 @@ const DrawerContent = <
       } else {
         drawerContext().setTranslate(closestSnapPoint.offset)
         const transitionDuration =
-          parseFloat(drawerContext().drawerStyles()!.transitionDelay) * 1000 +
           parseFloat(drawerContext().drawerStyles()!.transitionDuration) * 1000
-        setTimeout(() => {
+        if (transitionDuration === 0) {
           drawerContext().setIsTransitioning(false)
-        }, transitionDuration)
+        }
       }
     })
   }
@@ -317,6 +316,14 @@ const DrawerContent = <
         ...localProps.style,
       }}
       onPointerDown={onPointerDown}
+      onTransitionEnd={() => {
+        batch(() => {
+          if (drawerContext().isClosing()) {
+            dialogContext().setOpen(false)
+          }
+          drawerContext().setIsTransitioning(false)
+        })
+      }}
       data-transitioning={dataIf(drawerContext().isTransitioning())}
       {...(otherProps as DialogContentProps<T>)}
     />
