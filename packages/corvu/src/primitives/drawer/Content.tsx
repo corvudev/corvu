@@ -82,6 +82,8 @@ const DrawerContent = <
   })
 
   createEffect(() => {
+    if (!dialogContext().open()) return
+
     document.addEventListener('pointermove', onPointerMove)
     document.addEventListener('touchmove', onTouchMove)
     document.addEventListener('pointerup', onPointerUp)
