@@ -1,7 +1,6 @@
 import Dismissible from '@lib/components/Dismissible'
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
-import createOnce from '@lib/create/once'
 import { mergeRefs, some, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
 import { Show, createMemo, splitProps } from 'solid-js'
@@ -67,55 +66,53 @@ const DialogContent = <
 
   return (
     <Show when={keepAlive()}>
-      {(() => {
-        const memoizedChildren = createOnce(() => localProps.children)
+      <Dismissible
+        element={context().contentRef}
+        enabled={context().open()}
+        onDismiss={() => context().setOpen(false)}
+        dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+        dismissOnOutsidePointerDown={context().closeOnOutsidePointerDown}
+        noOutsidePointerEvents={context().noOutsidePointerEvents}
+        onEscapeKeyDown={context().onEscapeKeyDown}
+        onOutsidePointerDown={context().onOutsidePointerDown}
+      >
+        {(props) => {
+          const memoizedChildren = createMemo(() => localProps.children)
 
-        return (
-          <Show when={show()}>
-            <Dismissible
-              element={context().contentRef}
-              enabled={context().open()}
-              onDismiss={() => context().setOpen(false)}
-              dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
-              dismissOnOutsidePointerDown={context().closeOnOutsidePointerDown}
-              noOutsidePointerEvents={context().noOutsidePointerEvents}
-              onEscapeKeyDown={context().onEscapeKeyDown}
-              onOutsidePointerDown={context().onOutsidePointerDown}
-            >
-              {(props) => (
-                <Polymorphic
-                  ref={mergeRefs(context().setContentRef, localProps.ref)}
-                  as={
-                    localProps.as ??
-                    (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
-                  }
-                  role={context().role()}
-                  id={context().dialogId()}
-                  aria-labelledby={context().labelId()}
-                  aria-describedby={context().descriptionId()}
-                  aria-modal={context().modal() ? 'true' : 'false'}
-                  data-open={dataIf(context().open())}
-                  data-closed={dataIf(!context().open())}
-                  data-corvu-dialog-content=""
-                  tabIndex="-1"
-                  style={
-                    props.isLastLayer
-                      ? {
-                          'pointer-events': 'auto',
-                          'user-select': 'text',
-                          ...localProps.style,
-                        }
-                      : localProps.style
-                  }
-                  {...otherProps}
-                >
-                  {memoizedChildren()()}
-                </Polymorphic>
-              )}
-            </Dismissible>
-          </Show>
-        )
-      })()}
+          return (
+            <Show when={show()}>
+              <Polymorphic
+                ref={mergeRefs(context().setContentRef, localProps.ref)}
+                as={
+                  localProps.as ??
+                  (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
+                }
+                role={context().role()}
+                id={context().dialogId()}
+                aria-labelledby={context().labelId()}
+                aria-describedby={context().descriptionId()}
+                aria-modal={context().modal() ? 'true' : 'false'}
+                data-open={dataIf(context().open())}
+                data-closed={dataIf(!context().open())}
+                data-corvu-dialog-content=""
+                tabIndex="-1"
+                style={
+                  props.isLastLayer
+                    ? {
+                        'pointer-events': 'auto',
+                        'user-select': 'text',
+                        ...localProps.style,
+                      }
+                    : localProps.style
+                }
+                {...otherProps}
+              >
+                {memoizedChildren()}
+              </Polymorphic>
+            </Show>
+          )
+        }}
+      </Dismissible>
     </Show>
   )
 }
