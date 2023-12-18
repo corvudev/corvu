@@ -73,7 +73,10 @@ const createFocusTrap = (props: {
 
   const mutationObserverCallback = () => {
     loadFocusTrap(defaultedProps.element()!)
-    if (document.activeElement === document.body) {
+    if (
+      document.activeElement === null ||
+      document.activeElement === document.body
+    ) {
       initialFocus(defaultedProps.element()!)
     }
   }
