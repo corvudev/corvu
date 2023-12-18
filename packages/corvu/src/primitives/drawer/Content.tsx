@@ -157,6 +157,8 @@ const DrawerContent = <
         }
         deviation -= drawerContext().resolvedActiveSnapPoint().offset
 
+        if (deviation === 0) return
+
         const direction = sideToDirection(drawerContext().side())
 
         if (targetIsScrolled(target, drawerContext().side())) {

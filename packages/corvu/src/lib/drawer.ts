@@ -152,7 +152,7 @@ export const targetIsScrolled = (
       case 'top':
         if (
           isScrollable(currentElement, sideToDirection(side)) &&
-          currentElement.scrollTop !==
+          Math.ceil(currentElement.scrollTop) !==
             currentElement.scrollHeight - currentElement.clientHeight
         )
           return true
@@ -174,7 +174,7 @@ export const targetIsScrolled = (
       case 'left':
         if (
           isScrollable(currentElement, sideToDirection(side)) &&
-          currentElement.scrollLeft !==
+          Math.ceil(currentElement.scrollLeft) !==
             currentElement.scrollWidth - currentElement.clientWidth
         )
           return true

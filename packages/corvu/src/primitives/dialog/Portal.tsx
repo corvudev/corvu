@@ -35,10 +35,7 @@ const DialogPortal = (props: DialogPortalProps) => {
       context().overlayPresent,
     )
 
-  const keepAlive = createMemo((prev) => {
-    if (prev) return prev
-    return show()
-  }, false)
+  const keepAlive = createMemo((prev) => prev || show(), false)
 
   return (
     <Show when={keepAlive()}>
