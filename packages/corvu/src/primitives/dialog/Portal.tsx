@@ -1,14 +1,7 @@
-import createOnceRoot from '@lib/create/onceRoot'
 import { OverrideComponentProps } from '@lib/types'
 import { some } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import {
-  Show,
-  createMemo,
-  createUniqueId,
-  onCleanup,
-  splitProps,
-} from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
 
 export type DialogPortalProps = OverrideComponentProps<
@@ -33,28 +26,31 @@ const DialogPortal = (props: DialogPortalProps) => {
     useInternalDialogContext(localProps.contextId),
   )
 
-  const memoizedChildren = createOnceRoot(
-    () => localProps.children,
-    () => {
-      const _context = context()
-      return (dispose) => {
-        const id = createUniqueId()
-        _context.disposer.register(id, dispose)
-        onCleanup(() => _context.disposer.unregister(id))
-      }
-    },
-  )
+  const show = () =>
+    some(
+      context().open,
+      // eslint-disable-next-line solid/reactivity
+      () => localProps.forceMount,
+      context().contentPresent,
+      context().overlayPresent,
+    )
+
+  const keepAlive = createMemo((prev) => {
+    if (prev) return prev
+    return show()
+  }, false)
 
   return (
-    <Show
-      when={some(
-        context().open,
-        () => localProps.forceMount,
-        context().contentPresent,
-        context().overlayPresent,
-      )}
-    >
-      <Portal {...otherProps}>{memoizedChildren()()}</Portal>
+    <Show when={keepAlive()}>
+      {(() => {
+        const memoizedChildren = createMemo(() => localProps.children)
+
+        return (
+          <Show when={show()}>
+            <Portal {...otherProps}>{memoizedChildren()}</Portal>
+          </Show>
+        )
+      })()}
     </Show>
   )
 }

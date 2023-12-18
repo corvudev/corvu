@@ -1,14 +1,7 @@
 import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import createOnceRoot from '@lib/create/onceRoot'
 import { some, mergeRefs, dataIf } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import {
-  Show,
-  createMemo,
-  createUniqueId,
-  onCleanup,
-  splitProps,
-} from 'solid-js'
+import { Show, createMemo, splitProps } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { JSX, ValidComponent } from 'solid-js'
 
@@ -54,42 +47,48 @@ const DialogOverlay = <
     useInternalDialogContext(localProps.contextId),
   )
 
-  const memoizedChildren = createOnceRoot(
-    () => localProps.children,
-    () => {
-      const _context = context()
-      return (dispose) => {
-        const id = createUniqueId()
-        _context.disposer.register(id, dispose)
-        onCleanup(() => _context.disposer.unregister(id))
-      }
-    },
-  )
+  const show = () =>
+    some(
+      context().open,
+      // eslint-disable-next-line solid/reactivity
+      () => localProps.forceMount,
+      context().overlayPresent,
+    )
+
+  const keepAlive = createMemo((prev) => {
+    if (prev) return prev
+    return show()
+  }, false)
 
   return (
-    <Show
-      when={some(
-        context().open,
-        () => localProps.forceMount,
-        context().overlayPresent,
-      )}
-    >
-      <Polymorphic
-        as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
-        ref={mergeRefs(context().setOverlayRef, localProps.ref)}
-        aria-hidden="true"
-        data-open={dataIf(context().open())}
-        data-closed={dataIf(!context().open())}
-        data-corvu-dialog-overlay=""
-        tabIndex="-1"
-        style={{
-          'pointer-events': 'auto',
-          ...localProps.style,
-        }}
-        {...otherProps}
-      >
-        {memoizedChildren()()}
-      </Polymorphic>
+    <Show when={keepAlive()}>
+      {(() => {
+        const memoizedChildren = createMemo(() => localProps.children)
+
+        return (
+          <Show when={show()}>
+            <Polymorphic
+              as={
+                localProps.as ??
+                (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)
+              }
+              ref={mergeRefs(context().setOverlayRef, localProps.ref)}
+              aria-hidden="true"
+              data-open={dataIf(context().open())}
+              data-closed={dataIf(!context().open())}
+              data-corvu-dialog-overlay=""
+              tabIndex="-1"
+              style={{
+                'pointer-events': 'auto',
+                ...localProps.style,
+              }}
+              {...otherProps}
+            >
+              {memoizedChildren()}
+            </Polymorphic>
+          </Show>
+        )
+      })()}
     </Show>
   )
 }

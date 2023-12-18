@@ -1,6 +1,5 @@
 import { isFunction } from '@lib/assertions'
 import createControllableSignal from '@lib/create/controllableSignal'
-import createDisposer from '@lib/create/disposer'
 import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
@@ -16,7 +15,6 @@ import {
   createSignal,
   untrack,
   createMemo,
-  onCleanup,
 } from 'solid-js'
 import type { Component, JSX, Setter } from 'solid-js'
 
@@ -175,9 +173,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
   const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
   const [overlayRef, setOverlayRef] = createSignal<HTMLElement | null>(null)
 
-  const disposer = createDisposer()
-  onCleanup(() => disposer())
-
   const { present: contentPresent } = createPresence({
     show: open,
     element: contentRef,
@@ -329,7 +324,6 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             unregisterDescriptionId,
             setContentRef,
             setOverlayRef,
-            disposer,
           }}
         >
           {untrack(() => resolveChildren())}
