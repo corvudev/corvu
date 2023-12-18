@@ -263,6 +263,7 @@ export const utilitySpecifications: {
         forcedSorting: [
           'element',
           'enabled',
+          'observeChanges',
           'initialFocusElement',
           'onInitialFocus',
           'restoreFocus',
