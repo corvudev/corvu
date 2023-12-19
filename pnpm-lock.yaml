@@ -4,13 +4,18 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@changesets/changelog-github@0.5.0':
+    hash: ajc3yu4dut4tzg6iceydi32rky
+    path: patches/@changesets__changelog-github@0.5.0.patch
+
 importers:
 
   .:
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0
-        version: 0.5.0
+        version: 0.5.0(patch_hash=ajc3yu4dut4tzg6iceydi32rky)
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.27.1
@@ -816,7 +821,7 @@ packages:
       '@changesets/types': 6.0.0
     dev: true
 
-  /@changesets/changelog-github@0.5.0:
+  /@changesets/changelog-github@0.5.0(patch_hash=ajc3yu4dut4tzg6iceydi32rky):
     resolution: {integrity: sha512-zoeq2LJJVcPJcIotHRJEEA2qCqX0AQIeFE+L21L8sRLPVqDhSXY8ZWAt2sohtBpFZkBwu+LUwMSKRr2lMy3LJA==}
     dependencies:
       '@changesets/get-github-info': 0.6.0
@@ -825,6 +830,7 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: true
+    patched: true
 
   /@changesets/cli@2.27.1:
     resolution: {integrity: sha512-iJ91xlvRnnrJnELTp4eJJEOPjgpF3NOh4qeQehM6Ugiz9gJPRZ2t+TsXun6E3AMN4hScZKjqVXl0TX+C7AB3ZQ==}
