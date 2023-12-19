@@ -14,6 +14,11 @@ import Topbar from '@components/Topbar'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>corvu</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+    </style>
   </head>
   <body class="flex h-full flex-col bg-corvu-1000 text-corvu-50 antialiased">
     <Topbar client:load>

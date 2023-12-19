@@ -38,6 +38,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       data-domain="corvu.dev"
       data-api="/plausible/api/event"
       src="/plausible/js/script.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+    </style>
   </head>
   <body class="flex h-full flex-col bg-corvu-1000 text-corvu-50 antialiased">
     <Background type="docs" client:load />

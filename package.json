@@ -10,9 +10,6 @@
     "email": "code@jasi.dev",
     "url": "https://github.com/GiyoMoon"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "dev:corvu": "npm-run-all --parallel dev:dev watch:corvu",
     "dev:dev": "pnpm -r --filter @corvu/dev run dev",
