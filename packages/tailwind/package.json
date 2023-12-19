@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/corvudev/corvu"
+    "url": "git+https://github.com/corvudev/corvu.git"
   },
   "license": "MIT",
   "author": {
