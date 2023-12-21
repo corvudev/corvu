@@ -448,7 +448,7 @@ var corvu = {
   tokenColors: [
     {
       scope: ['comment', 'punctuation.definition.comment'],
-      settings: { foreground: '#767c9dB0', fontStyle: 'italic' },
+      settings: { foreground: '#767c9d', fontStyle: 'italic' },
     },
     {
       scope: 'meta.parameters comment.block',
@@ -490,7 +490,7 @@ var corvu = {
       ],
       settings: { foreground: '#e4f0fb' },
     },
-    { scope: ['keyword.control.flow'], settings: { foreground: '#A888F1c0' } },
+    { scope: ['keyword.control.flow'], settings: { foreground: '#A888F1' } },
     {
       scope: ['keyword.operator.new', 'keyword.control.new'],
       settings: { foreground: '#A888F1' },

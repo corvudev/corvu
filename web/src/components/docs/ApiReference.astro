@@ -13,7 +13,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
     <h3 id={encodeURIComponent(name)} class="scroll-mt-24 text-lg font-bold">
       {name}
     </h3>
-    <div class="-mr-4 -mt-4 rounded-bl-md bg-corvu-400 px-2 py-1">
+    <div class="-mr-4 -mt-4 rounded-bl-md bg-corvu-700 px-2 py-1">
       {type === 'component' && <p class="text-sm font-bold">Component</p>}
       {type === 'context' && <p class="text-sm font-bold">Context</p>}
       {type === 'type' && <p class="text-sm font-bold">Type</p>}
@@ -27,7 +27,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
         <div>
           <p class="font-bold">{part.name}</p>
           {part.description && <p class="mt-1">{part.description}</p>}
-          <dl class="text-sm">
+          <div class="text-sm">
             {part.props.map((property) => (
               <div class="mt-3 border-b border-corvu-400 pb-3">
                 <div class="md:flex md:items-start md:justify-between">
@@ -66,7 +66,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                 />
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       ))
     }
