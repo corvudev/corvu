@@ -164,11 +164,13 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     onChange: defaultedProps.onOpenChange,
   })
 
-  const [labelId, registerLabelId, unregisterLabelId] = createRegister(
-    () => defaultedProps.labelId ?? createUniqueId(),
-  )
+  const [labelId, registerLabelId, unregisterLabelId] = createRegister({
+    value: () => defaultedProps.labelId ?? createUniqueId(),
+  })
   const [descriptionId, registerDescriptionId, unregisterDescriptionId] =
-    createRegister(() => defaultedProps.descriptionId ?? createUniqueId())
+    createRegister({
+      value: () => defaultedProps.descriptionId ?? createUniqueId(),
+    })
 
   const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
   const [overlayRef, setOverlayRef] = createSignal<HTMLElement | null>(null)

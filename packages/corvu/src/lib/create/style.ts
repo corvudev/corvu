@@ -1,26 +1,29 @@
-import { onCleanup } from 'solid-js'
+import { createEffect, onCleanup } from 'solid-js'
 
-const createStyle = (
-  element: HTMLElement,
-  style: Partial<CSSStyleDeclaration>,
-  cleanup?: () => void,
-) => {
-  const originalStyles = (
-    Object.keys(style) as (keyof CSSStyleDeclaration)[]
-  ).map((key) => {
-    return [key, element.style[key]]
-  })
-
-  Object.assign(element.style, style)
-
-  onCleanup(() => {
-    originalStyles.forEach((originalStyle) => {
-      element.style[originalStyle[0] as never] = originalStyle[1] as never
+const createStyle = (props: {
+  element: HTMLElement
+  style: Partial<CSSStyleDeclaration>
+  cleanup?: () => void
+}) => {
+  createEffect(() => {
+    const originalStyles = (
+      Object.keys(props.style) as (keyof CSSStyleDeclaration)[]
+    ).map((key) => {
+      return [key, props.element.style[key]]
     })
-    if (element.style.length === 0) {
-      element.removeAttribute('style')
-    }
-    cleanup?.()
+
+    Object.assign(props.element.style, props.style)
+
+    onCleanup(() => {
+      originalStyles.forEach((originalStyle) => {
+        props.element.style[originalStyle[0] as never] =
+          originalStyle[1] as never
+      })
+      if (props.element.style.length === 0) {
+        props.element.removeAttribute('style')
+      }
+      props.cleanup?.()
+    })
   })
 }
 

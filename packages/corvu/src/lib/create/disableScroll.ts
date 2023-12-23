@@ -39,18 +39,18 @@ const createDisableScroll = (props: {
     if (access(defaultedProps.preventScrollbarShift) && scrollbarWidth > 0) {
       const scrollY = window.scrollY
 
-      createStyle(
-        body,
-        {
+      createStyle({
+        element: body,
+        style: {
           paddingRight: `calc(${
             window.getComputedStyle(body).paddingRight
           } + ${scrollbarWidth}px)`,
         },
-        () => {
+        cleanup: () => {
           if (isIOS()) return
           window.scrollTo(0, scrollY)
         },
-      )
+      })
     }
 
     if (isIOS()) {
@@ -59,23 +59,26 @@ const createDisableScroll = (props: {
       const offsetTop = window.scrollY
       const offsetLeft = window.scrollX
 
-      createStyle(
-        body,
-        {
+      createStyle({
+        element: body,
+        style: {
           position: 'fixed',
           overflow: 'hidden',
           top: `-${offsetTop}px`,
           left: `-${offsetLeft}px`,
         },
-        () => {
+        cleanup: () => {
           window.scrollTo(offsetLeft, offsetTop)
         },
-      )
+      })
     } else {
       if (body.style.overflow === 'hidden') return
 
-      createStyle(body, {
-        overflow: 'hidden',
+      createStyle({
+        element: body,
+        style: {
+          overflow: 'hidden',
+        },
       })
     }
   })

@@ -1,15 +1,25 @@
-import { createMemo, createSignal } from 'solid-js'
-import type { Accessor } from 'solid-js'
+import { MaybeAccessor } from '@lib/types'
+import { access } from '@lib/utils'
+import { createMemo, createSignal, mergeProps } from 'solid-js'
 
 /** Creates a memo which can be registered/unregistered with the returned `register` and `unregister` functions. */
-const createRegister = <T>(
-  value: Accessor<T | undefined>,
-  initialRegistered = false,
-) => {
-  const [isRegistered, setIsRegistered] = createSignal(initialRegistered)
+const createRegister = <T>(props: {
+  value: MaybeAccessor<T | undefined>
+  initialRegistered?: boolean
+}) => {
+  const defaultedProps = mergeProps(
+    {
+      initialRegistered: false,
+    },
+    props,
+  )
+
+  const [isRegistered, setIsRegistered] = createSignal(
+    defaultedProps.initialRegistered,
+  )
   const registerable = createMemo<T | undefined>(() => {
     if (!isRegistered()) return undefined
-    return value()
+    return access(defaultedProps.value) as T | undefined
   })
 
   return [

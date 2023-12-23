@@ -26,7 +26,10 @@ const PolymorphicButton = <
 
   const [localProps, otherProps] = splitProps(props, ['as', 'ref', 'type'])
 
-  const tagName = createTagName(ref, DEFAULT_POLYMORPHIC_BUTTON_ELEMENT)
+  const tagName = createTagName({
+    element: ref,
+    fallback: DEFAULT_POLYMORPHIC_BUTTON_ELEMENT,
+  })
 
   const isNativeButton = createMemo(() => {
     return isButton(tagName(), localProps.type)
