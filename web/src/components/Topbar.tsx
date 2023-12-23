@@ -8,7 +8,12 @@ const Topbar: FlowComponent = (props) => {
 
   createEffect(() => {
     const scrolled = () => {
-      setScrolled(window.scrollY > 20)
+      const bodyTop = getComputedStyle(document.body).top
+      if (bodyTop !== 'auto') {
+        setScrolled(-parseInt(bodyTop, 10) > 20)
+      } else {
+        setScrolled(window.scrollY > 20)
+      }
     }
 
     scrolled()

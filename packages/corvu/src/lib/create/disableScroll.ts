@@ -1,3 +1,5 @@
+import createStyle from '@lib/create/style'
+import { isIOS } from '@lib/platform'
 import { access } from '@lib/utils'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
@@ -25,33 +27,57 @@ const createDisableScroll = (props: {
 
     if (!access(defaultedProps.enabled)) return
 
-    const originalOverflow = body.style.overflow
-    const originalPaddingRight = body.style.paddingRight
-
-    const originalWidth = body.offsetWidth
-    body.style.overflow = 'hidden'
-    const scrollbarWidth = body.offsetWidth - originalWidth
+    const scrollbarWidth = window.innerWidth - body.offsetWidth
 
     if (scrollbarWidth > 0) {
       body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
+      onCleanup(() => {
+        body.style.removeProperty('--scrollbar-width')
+      })
     }
 
     if (access(defaultedProps.preventScrollbarShift) && scrollbarWidth > 0) {
-      body.style.paddingRight = `calc(${
-        window.getComputedStyle(body).paddingRight
-      } + ${scrollbarWidth}px)`
+      const scrollY = window.scrollY
+
+      createStyle(
+        body,
+        {
+          paddingRight: `calc(${
+            window.getComputedStyle(body).paddingRight
+          } + ${scrollbarWidth}px)`,
+        },
+        () => {
+          if (isIOS()) return
+          window.scrollTo(0, scrollY)
+        },
+      )
     }
 
-    onCleanup(() => {
-      body.style.overflow = originalOverflow
-      if (scrollbarWidth && scrollbarWidth > 0) {
-        body.style.paddingRight = originalPaddingRight
-        body.style.removeProperty('--scrollbar-width')
-      }
-      if (body.style.length === 0) {
-        body.removeAttribute('style')
-      }
-    })
+    if (isIOS()) {
+      if (body.style.position === 'fixed') return
+
+      const offsetTop = window.scrollY
+      const offsetLeft = window.scrollX
+
+      createStyle(
+        body,
+        {
+          position: 'fixed',
+          overflow: 'hidden',
+          top: `-${offsetTop}px`,
+          left: `-${offsetLeft}px`,
+        },
+        () => {
+          window.scrollTo(offsetLeft, offsetTop)
+        },
+      )
+    } else {
+      if (body.style.overflow === 'hidden') return
+
+      createStyle(body, {
+        overflow: 'hidden',
+      })
+    }
   })
 }
 

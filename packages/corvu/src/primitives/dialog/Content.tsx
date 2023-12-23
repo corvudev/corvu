@@ -68,7 +68,7 @@ const DialogContent = <
     <Show when={keepAlive()}>
       <Dismissible
         element={context().contentRef}
-        enabled={context().open()}
+        enabled={context().open() || context().contentPresent()}
         onDismiss={() => context().setOpen(false)}
         dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
         dismissOnOutsidePointerDown={context().closeOnOutsidePointerDown}
