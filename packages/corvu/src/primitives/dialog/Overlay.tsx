@@ -1,9 +1,16 @@
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import { some, mergeRefs, dataIf } from '@lib/utils'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, splitProps } from 'solid-js'
+import {
+  createMemo,
+  type JSX,
+  Show,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import { dataIf, mergeRefs, some } from '@lib/utils'
+import Polymorphic, {
+  type PolymorphicAttributes,
+} from '@lib/components/Polymorphic'
 import type { OverrideComponentProps } from '@lib/types'
-import type { JSX, ValidComponent } from 'solid-js'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
 
 const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 

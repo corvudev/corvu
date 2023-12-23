@@ -1,4 +1,4 @@
-import { Accessor, createMemo } from 'solid-js'
+import { type Accessor, createMemo } from 'solid-js'
 
 const createTagName = (props: {
   element: Accessor<HTMLElement | null>

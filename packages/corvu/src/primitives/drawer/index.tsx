@@ -1,22 +1,22 @@
 import {
-  useContext as useDialogContext,
   Close,
   Description,
   Label,
   Overlay,
   Portal,
   Trigger,
+  useContext as useDialogContext,
 } from '@primitives/dialog'
-import Content from '@primitives/drawer/Content'
 import {
+  type DrawerContextValue,
   useDrawerContext as useContext,
-  DrawerContextValue,
 } from '@primitives/drawer/Context'
 import Root, {
   DefaultBreakpoint,
-  DrawerRootChildrenProps,
-  DrawerRootProps,
+  type DrawerRootChildrenProps,
+  type DrawerRootProps,
 } from '@primitives/drawer/Root'
+import Content from '@primitives/drawer/Content'
 
 export type {
   DrawerContextValue as ContextValue,

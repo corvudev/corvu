@@ -6,7 +6,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:solid/typescript',
   ],
-  plugins: ['@typescript-eslint', 'import', 'prettier', 'solid'],
+  plugins: ['@typescript-eslint', 'prettier', 'solid'],
   ignorePatterns: ['dist', 'node_modules'],
   rules: {
     'no-console': 'warn',
@@ -35,26 +35,10 @@ module.exports = {
         semi: false,
       },
     ],
-    'import/first': 'error',
-    'import/no-duplicates': 'error',
-    'import/newline-after-import': 'error',
-    'import/order': [
-      2,
+    'sort-imports': [
+      'warn',
       {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          'object',
-          'type',
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
+        ignoreCase: true,
       },
     ],
   },

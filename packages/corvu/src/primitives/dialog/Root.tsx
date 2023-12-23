@@ -1,22 +1,24 @@
-import { isFunction } from '@lib/assertions'
+import {
+  type Component,
+  createMemo,
+  createSignal,
+  createUniqueId,
+  type JSX,
+  mergeProps,
+  type Setter,
+  untrack,
+} from 'solid-js'
+import {
+  createDialogContext,
+  createInternalDialogContext,
+} from '@primitives/dialog/Context'
+import { access } from '@lib/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
 import createRegister from '@lib/create/register'
-import { access } from '@lib/utils'
-import {
-  createDialogContext,
-  createInternalDialogContext,
-} from '@primitives/dialog/Context'
-import {
-  mergeProps,
-  createUniqueId,
-  createSignal,
-  untrack,
-  createMemo,
-} from 'solid-js'
-import type { Component, JSX, Setter } from 'solid-js'
+import { isFunction } from '@lib/assertions'
 
 export type DialogRootProps = {
   /** The `role` attribute of the dialog element.

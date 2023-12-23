@@ -1,5 +1,5 @@
-import { access } from '@lib/utils'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
+import { access } from '@lib/utils'
 import type { MaybeAccessor } from '@lib/types'
 
 const createEscapeKeyDown = (props: {

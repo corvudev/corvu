@@ -1,22 +1,24 @@
-import { isFunction } from '@lib/assertions'
-import createDismissible, {
-  CreateDismissableProps,
-} from '@lib/create/dismissible'
-import createOnce from '@lib/create/once'
-import { access } from '@lib/utils'
 import {
+  type Accessor,
+  type Component,
   createContext,
-  useContext,
-  splitProps,
-  createUniqueId,
-  createSignal,
-  Show,
-  untrack,
-  createMemo,
   createEffect,
+  createMemo,
+  createSignal,
+  createUniqueId,
+  type JSX,
   mergeProps,
+  Show,
+  splitProps,
+  untrack,
+  useContext,
 } from 'solid-js'
-import type { Accessor, Component, JSX } from 'solid-js'
+import createDismissible, {
+  type CreateDismissableProps,
+} from '@lib/create/dismissible'
+import { access } from '@lib/utils'
+import createOnce from '@lib/create/once'
+import { isFunction } from '@lib/assertions'
 
 type DismissibleContextValue = {
   layers: Accessor<string[]>

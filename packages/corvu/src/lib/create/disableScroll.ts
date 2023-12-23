@@ -1,7 +1,7 @@
+import { createEffect, mergeProps, onCleanup } from 'solid-js'
+import { access } from '@lib/utils'
 import createStyle from '@lib/create/style'
 import { isIOS } from '@lib/platform'
-import { access } from '@lib/utils'
-import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
 /** Disables scrolling of the body element.

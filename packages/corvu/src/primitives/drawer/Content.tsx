@@ -1,23 +1,25 @@
 import {
-  resolveSnapPoint,
-  findClosestSnapPoint,
-  getScrollables,
-  targetIsScrollable,
-  targetIsScrolled,
-  sideToDirection,
-} from '@lib/drawer'
-import { dataIf } from '@lib/utils'
-import DialogContent, { DialogContentProps } from '@primitives/dialog/Content'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { useInternalDrawerContext } from '@primitives/drawer/Context'
-import {
   batch,
   createEffect,
   createMemo,
   onCleanup,
   splitProps,
+  type ValidComponent,
 } from 'solid-js'
-import type { ValidComponent } from 'solid-js'
+import DialogContent, {
+  type DialogContentProps,
+} from '@primitives/dialog/Content'
+import {
+  findClosestSnapPoint,
+  getScrollables,
+  resolveSnapPoint,
+  sideToDirection,
+  targetIsScrollable,
+  targetIsScrolled,
+} from '@lib/drawer'
+import { dataIf } from '@lib/utils'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
+import { useInternalDrawerContext } from '@primitives/drawer/Context'
 
 const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
 

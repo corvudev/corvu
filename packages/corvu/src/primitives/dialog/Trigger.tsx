@@ -1,11 +1,9 @@
-import { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import PolymorphicButton from '@lib/components/PolymorphicButton'
-import { OverrideComponentProps } from '@lib/types'
 import { callEventHandler, dataIf } from '@lib/utils'
+import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
+import type { OverrideComponentProps } from '@lib/types'
+import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { createMemo, splitProps } from 'solid-js'
-import type { ValidComponent } from 'solid-js'
-import type { JSX } from 'solid-js/jsx-runtime'
 
 const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
 

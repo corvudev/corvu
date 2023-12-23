@@ -1,4 +1,4 @@
-import { Context, createContext, useContext } from 'solid-js'
+import { type Context, createContext, useContext } from 'solid-js'
 
 const keyedContexts = new Map<string, Context<unknown>>()
 

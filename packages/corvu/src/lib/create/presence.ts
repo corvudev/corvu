@@ -1,11 +1,11 @@
 import {
-  createSignal,
+  type Accessor,
   createEffect,
-  untrack,
-  onCleanup,
   createMemo,
+  createSignal,
+  onCleanup,
+  untrack,
 } from 'solid-js'
-import type { Accessor } from 'solid-js'
 
 /** Creates a presence which is aware of animations and waits for them before hiding. */
 const createPresence = (props: {

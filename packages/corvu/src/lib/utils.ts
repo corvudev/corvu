@@ -1,6 +1,6 @@
-import { isFunction } from '@lib/assertions'
-import { MaybeAccessor, MaybeAccessorValue } from '@lib/types'
 import type { Accessor, JSX } from 'solid-js'
+import type { MaybeAccessor, MaybeAccessorValue } from '@lib/types'
+import { isFunction } from '@lib/assertions'
 
 /**!
  * Part of this code is taken from and inspired by solid-primitives.

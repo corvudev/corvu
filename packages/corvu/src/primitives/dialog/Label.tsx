@@ -1,8 +1,15 @@
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { createEffect, createMemo, onCleanup, splitProps } from 'solid-js'
+import {
+  createEffect,
+  createMemo,
+  onCleanup,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import Polymorphic, {
+  type PolymorphicAttributes,
+} from '@lib/components/Polymorphic'
 import type { OverrideComponentProps } from '@lib/types'
-import type { ValidComponent } from 'solid-js'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
 
 const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
 

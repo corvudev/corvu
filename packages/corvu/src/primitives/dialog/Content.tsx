@@ -1,11 +1,18 @@
-import Dismissible from '@lib/components/Dismissible'
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import {
+  createMemo,
+  type JSX,
+  Show,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import { dataIf, mergeRefs, some } from '@lib/utils'
+import Polymorphic, {
+  type PolymorphicAttributes,
+} from '@lib/components/Polymorphic'
 import createDisableScroll from '@lib/create/disableScroll'
-import { mergeRefs, some, dataIf } from '@lib/utils'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, splitProps } from 'solid-js'
+import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
-import type { JSX, ValidComponent } from 'solid-js'
+import { useInternalDialogContext } from '@primitives/dialog/Context'
 
 const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
 

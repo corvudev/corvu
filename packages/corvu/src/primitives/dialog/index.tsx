@@ -1,20 +1,20 @@
-import Close, { DialogCloseProps } from '@primitives/dialog/Close'
-import Content, { DialogContentProps } from '@primitives/dialog/Content'
-import {
-  useDialogContext as useContext,
-  DialogContextValue,
-} from '@primitives/dialog/Context'
+import Close, { type DialogCloseProps } from '@primitives/dialog/Close'
+import Content, { type DialogContentProps } from '@primitives/dialog/Content'
 import Description, {
-  DialogDescriptionProps,
+  type DialogDescriptionProps,
 } from '@primitives/dialog/Description'
-import Label, { DialogLabelProps } from '@primitives/dialog/Label'
-import Overlay, { DialogOverlayProps } from '@primitives/dialog/Overlay'
-import Portal, { DialogPortalProps } from '@primitives/dialog/Portal'
+import {
+  type DialogContextValue,
+  useDialogContext as useContext,
+} from '@primitives/dialog/Context'
+import Label, { type DialogLabelProps } from '@primitives/dialog/Label'
+import Overlay, { type DialogOverlayProps } from '@primitives/dialog/Overlay'
+import Portal, { type DialogPortalProps } from '@primitives/dialog/Portal'
 import Root, {
-  DialogRootChildrenProps,
-  DialogRootProps,
+  type DialogRootChildrenProps,
+  type DialogRootProps,
 } from '@primitives/dialog/Root'
-import Trigger, { DialogTriggerProps } from '@primitives/dialog/Trigger'
+import Trigger, { type DialogTriggerProps } from '@primitives/dialog/Trigger'
 
 export type {
   DialogContextValue as ContextValue,

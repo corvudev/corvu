@@ -1,16 +1,16 @@
-import { OverrideComponentProps } from '@lib/types'
-import { combineProps } from '@solid-primitives/props'
 import {
   children,
-  JSX,
+  createMemo,
+  For,
+  type JSX,
+  type ResolvedJSXElement,
+  Show,
   splitProps,
   type ValidComponent,
-  For,
-  Show,
-  ResolvedJSXElement,
-  createMemo,
 } from 'solid-js'
-import { Dynamic, DynamicProps } from 'solid-js/web'
+import { Dynamic, type DynamicProps } from 'solid-js/web'
+import { combineProps } from '@solid-primitives/props'
+import type { OverrideComponentProps } from 'src'
 
 const DEFAULT_POLYMORPHIC_ELEMENT = 'div'
 

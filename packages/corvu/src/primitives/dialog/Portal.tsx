@@ -1,8 +1,8 @@
-import { OverrideComponentProps } from '@lib/types'
+import { createMemo, Show, splitProps } from 'solid-js'
+import type { OverrideComponentProps } from '@lib/types'
+import { Portal } from 'solid-js/web'
 import { some } from '@lib/utils'
 import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { Show, createMemo, splitProps } from 'solid-js'
-import { Portal } from 'solid-js/web'
 
 export type DialogPortalProps = OverrideComponentProps<
   typeof Portal,

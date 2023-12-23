@@ -1,32 +1,32 @@
-import { isFunction } from '@lib/assertions'
-import createControllableSignal from '@lib/create/controllableSignal'
-import createOnce from '@lib/create/once'
-import { resolveSnapPoint } from '@lib/drawer'
-import { sleep } from '@lib/utils'
 import {
-  InternalDialogContextValue,
-  useInternalDialogContext,
-} from '@primitives/dialog/Context'
-import DialogRoot, {
-  DialogRootChildrenProps,
-  DialogRootProps,
-} from '@primitives/dialog/Root'
-import {
-  createDrawerContext,
-  createInternalDrawerContext,
-} from '@primitives/drawer/Context'
-import { createWritableMemo } from '@solid-primitives/memo'
-import {
-  Component,
-  JSX,
   batch,
+  type Component,
   createEffect,
   createMemo,
   createSignal,
+  type JSX,
   mergeProps,
   splitProps,
   untrack,
 } from 'solid-js'
+import {
+  createDrawerContext,
+  createInternalDrawerContext,
+} from '@primitives/drawer/Context'
+import DialogRoot, {
+  type DialogRootChildrenProps,
+  type DialogRootProps,
+} from '@primitives/dialog/Root'
+import {
+  type InternalDialogContextValue,
+  useInternalDialogContext,
+} from '@primitives/dialog/Context'
+import createControllableSignal from '@lib/create/controllableSignal'
+import createOnce from '@lib/create/once'
+import { createWritableMemo } from '@solid-primitives/memo'
+import { isFunction } from '@lib/assertions'
+import { resolveSnapPoint } from '@lib/drawer'
+import { sleep } from '@lib/utils'
 
 /** Alternative placeholder to not override a certain breakpoint. */
 export const DefaultBreakpoint = undefined

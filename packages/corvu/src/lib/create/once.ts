@@ -1,5 +1,4 @@
-import { createMemo } from 'solid-js'
-import type { Accessor } from 'solid-js'
+import { type Accessor, createMemo } from 'solid-js'
 
 /** Creates a memoized signal when called for the first time. */
 const createOnce = <T>(fn: () => T) => {

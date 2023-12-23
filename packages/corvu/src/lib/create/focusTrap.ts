@@ -1,14 +1,14 @@
-import { MaybeAccessor } from '@lib/types'
 import { access, sleep } from '@lib/utils'
 import {
   type Accessor,
   createEffect,
-  onCleanup,
-  mergeProps,
-  createSignal,
   createMemo,
+  createSignal,
+  mergeProps,
+  onCleanup,
   untrack,
 } from 'solid-js'
+import type { MaybeAccessor } from '@lib/types'
 
 const focusableElementSelector =
   'a[href]:not([tabindex="-1"]), button:not([tabindex="-1"]), input:not([tabindex="-1"]), textarea:not([tabindex="-1"]), select:not([tabindex="-1"]), details:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'

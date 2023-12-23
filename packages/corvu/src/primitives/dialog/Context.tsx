@@ -1,5 +1,5 @@
+import { type Accessor, createContext, type Setter, useContext } from 'solid-js'
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
-import { createContext, type Accessor, type Setter, useContext } from 'solid-js'
 
 export type DialogContextValue = {
   /** The `role` attribute of the dialog element. */

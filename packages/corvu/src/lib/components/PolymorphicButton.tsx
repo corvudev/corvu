@@ -1,9 +1,16 @@
-import { isButton } from '@lib/assertions'
-import Polymorphic, { PolymorphicAttributes } from '@lib/components/Polymorphic'
+import {
+  createMemo,
+  createSignal,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import Polymorphic, {
+  type PolymorphicAttributes,
+} from '@lib/components/Polymorphic'
 import createTagName from '@lib/create/tagName'
-import { OverrideComponentProps } from '@lib/types'
+import { isButton } from '@lib/assertions'
 import { mergeRefs } from '@lib/utils'
-import { ValidComponent, createMemo, createSignal, splitProps } from 'solid-js'
+import type { OverrideComponentProps } from '@lib/types'
 
 const DEFAULT_POLYMORPHIC_BUTTON_ELEMENT = 'button'
 

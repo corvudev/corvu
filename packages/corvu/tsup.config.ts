@@ -1,8 +1,8 @@
+import { defineConfig } from 'tsup'
+import type { Options } from 'tsup'
 // @ts-expect-error: esbuild-plugin-solid doesn't support NodeNext moduleResolution
 // See: https://github.com/amoutonbrady/esbuild-plugin-solid/pull/7
 import { solidPlugin } from 'esbuild-plugin-solid'
-import { defineConfig } from 'tsup'
-import type { Options } from 'tsup'
 
 function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
   return {

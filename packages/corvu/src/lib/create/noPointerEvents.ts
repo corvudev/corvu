@@ -1,7 +1,7 @@
-import createStyle from '@lib/create/style'
-import { access } from '@lib/utils'
 import { createEffect, mergeProps } from 'solid-js'
-import type { MaybeAccessor } from '@lib/types'
+import { access } from '@lib/utils'
+import createStyle from '@lib/create/style'
+import type { MaybeAccessor } from 'src'
 
 const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
   const defaultedProps = mergeProps(

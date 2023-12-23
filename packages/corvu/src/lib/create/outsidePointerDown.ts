@@ -1,5 +1,5 @@
+import { type Accessor, createEffect, mergeProps, onCleanup } from 'solid-js'
 import { access } from '@lib/utils'
-import { Accessor, createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
 const createOutsidePointerDown = (props: {

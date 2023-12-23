@@ -1,7 +1,7 @@
+import { type Accessor, mergeProps } from 'solid-js'
 import createEscapeKeyDown from '@lib/create/escapeKeyDown'
 import createNoPointerEvents from '@lib/create/noPointerEvents'
 import createOutsidePointerDown from '@lib/create/outsidePointerDown'
-import { mergeProps, type Accessor } from 'solid-js'
 import type { MaybeAccessor } from '@lib/types'
 
 export type CreateDismissableProps = {
