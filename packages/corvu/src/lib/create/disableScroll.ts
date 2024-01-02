@@ -1,4 +1,4 @@
-import { createEffect, mergeProps, onCleanup } from 'solid-js'
+import { createEffect, mergeProps } from 'solid-js'
 import { access } from '@lib/utils'
 import createStyle from '@lib/create/style'
 import { isIOS } from '@lib/platform'
@@ -30,14 +30,18 @@ const createDisableScroll = (props: {
     const scrollbarWidth = window.innerWidth - body.offsetWidth
 
     if (scrollbarWidth > 0) {
-      body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
-      onCleanup(() => {
-        body.style.removeProperty('--scrollbar-width')
+      createStyle({
+        element: body,
+        style: {},
+        properties: [
+          { key: '--scrollbar-width', value: `${scrollbarWidth}px` },
+        ],
       })
     }
 
     if (access(defaultedProps.preventScrollbarShift) && scrollbarWidth > 0) {
-      const scrollY = window.scrollY
+      const offsetTop = window.scrollY
+      const offsetLeft = window.scrollX
 
       createStyle({
         element: body,
@@ -48,7 +52,7 @@ const createDisableScroll = (props: {
         },
         cleanup: () => {
           if (isIOS()) return
-          window.scrollTo(0, scrollY)
+          window.scrollTo(offsetLeft, offsetTop)
         },
       })
     }
