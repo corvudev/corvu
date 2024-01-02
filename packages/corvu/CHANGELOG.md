@@ -1,5 +1,11 @@
 # corvu
 
+## 0.1.2
+
+### Patch Changes
+
+- Fix createDisableScroll not working on iOS platform - [`bb6f568`](https://github.com/corvudev/corvu/commit/bb6f568020c767f35d301af3ca52d23b23419183) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.1
 
 ### Patch Changes
