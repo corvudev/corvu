@@ -2,9 +2,15 @@ import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import { access } from '@lib/utils'
 import type { MaybeAccessor } from '@lib/types'
 
+/**
+ * Listens for the escape key to be pressed and calls the `onEscapeKeyDown` callback.
+ *
+ * @param props.enabled - Whether the listener is enabled. *Default = `true`*
+ * @param props.onEscapeKeyDown - Callback fired when the escape key is pressed.
+ */
 const createEscapeKeyDown = (props: {
-  onEscapeKeyDown: (event: KeyboardEvent) => void
   enabled?: MaybeAccessor<boolean>
+  onEscapeKeyDown: (event: KeyboardEvent) => void
 }) => {
   const defaultedProps = mergeProps(
     {

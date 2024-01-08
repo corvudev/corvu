@@ -24,6 +24,7 @@ export type PolymorphicButtonProps<
   }
 >
 
+/** An accessible button that sets `type` and `role` properly based on if it's a native button or not. */
 const PolymorphicButton = <
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_BUTTON_ELEMENT,
 >(

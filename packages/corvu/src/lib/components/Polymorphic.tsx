@@ -15,9 +15,9 @@ import type { OverrideComponentProps } from 'src'
 const DEFAULT_POLYMORPHIC_ELEMENT = 'div'
 
 export type PolymorphicAttributes<T extends ValidComponent> = {
-  /** Component to render the polymorphic component as. */
+  /** Component to render the polymorphic component as. *Default = `div`* */
   as?: T
-  /** Whether to render the polymorphic component as the first `<As />` component found in its children. */
+  /** Whether to render the polymorphic component as the first `<As />` component found in its children. *Default = `false`* */
   asChild?: boolean
   /** @hidden */
   children?: JSX.Element

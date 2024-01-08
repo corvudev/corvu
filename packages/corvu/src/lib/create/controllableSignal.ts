@@ -7,24 +7,38 @@ import {
 } from 'solid-js'
 import { isFunction } from '@lib/assertions'
 
-/** Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop. */
-const createControllableSignal = <T>(props: {
-  /** Optionally provide your own state to use. */
+/**
+ * Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop.
+ * @param props.value - Controlled value of the state.
+ * @param props.initialValue - Initial value of the state.
+ * @param props.onChange - Callback fired when the value changes.
+ * @returns ```typescript
+ * [state: Accessor<T>, setState: Setter<T>]
+ * ```
+ */
+function createControllableSignal<T>(props: {
   value?: Accessor<T | undefined>
-  /** Default value of the signal. */
-  defaultValue: T
-  /** Callback fired when the value changes. */
   onChange?(value: T): void
-}): Signal<T> => {
+}): Signal<T | undefined>
+function createControllableSignal<T>(props: {
+  value?: Accessor<T | undefined>
+  initialValue: T
+  onChange?(value: T): void
+}): Signal<T>
+function createControllableSignal<T>(props: {
+  value?: Accessor<T | undefined>
+  initialValue?: T
+  onChange?(value: T): void
+}): Signal<T | undefined> {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
-    props.defaultValue,
+    props.initialValue,
   )
 
   const isControlled = () => props.value?.() !== undefined
   const value = () =>
     isControlled() ? (props.value?.() as T) : uncontrolledSignal()
 
-  const setValue: Setter<T> = (next?: unknown) => {
+  const setValue: Setter<T | undefined> = (next?: unknown) => {
     return untrack(() => {
       let nextValue: Exclude<T, Function>
       if (isFunction(next)) {

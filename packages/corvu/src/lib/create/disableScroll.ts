@@ -24,12 +24,12 @@ const isActive = (id: string) =>
 /**
  * Disables scroll outside of the given element.
  *
- * @param props.element Disable scroll outside of this element.
- * @param props.enabled Whether scroll should be disabled. *Default = `true`*
- * @param props.hideScrollbar Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
- * @param props.preventScrollbarShift Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
- * @param props.preventScrollbarShiftMode Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`*
- * @param props.allowPinchZoom Whether pinch zoom should be allowed. *Default = `false`*
+ * @param props.element - Disable scroll outside of this element.
+ * @param props.enabled - Whether scroll should be disabled. *Default = `true`*
+ * @param props.hideScrollbar - Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
+ * @param props.preventScrollbarShift - Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
+ * @param props.preventScrollbarShiftMode - Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`*
+ * @param props.allowPinchZoom - Whether pinch zoom should be allowed. *Default = `false`*
  */
 const createDisableScroll = (props: {
   element: MaybeAccessor<HTMLElement | null>

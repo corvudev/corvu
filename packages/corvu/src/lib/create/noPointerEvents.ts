@@ -3,6 +3,11 @@ import { access } from '@lib/utils'
 import createStyle from '@lib/create/style'
 import type { MaybeAccessor } from 'src'
 
+/**
+ * Disables pointer events on the `<body>` element.
+ *
+ * @param props.enabled - Whether pointer events should be disabled. * Default = `true`*
+ */
 const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
   const defaultedProps = mergeProps(
     {

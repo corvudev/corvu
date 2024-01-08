@@ -28,11 +28,13 @@ type DismissibleContextValue = {
 
 const DismissibleContext = createContext<DismissibleContextValue>()
 
-type DismissibleProps = CreateDismissableProps & {
+type DismissibleProps = {
+  /** Whether the dismissible is enabled. *Default = `true`* */
   enabled: boolean
   children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
-}
+} & CreateDismissableProps
 
+/** A component that can be dismissed by pressing the escape key or clicking outside of it. Can be nested. */
 const Dismissible: Component<DismissibleProps> = (props) => {
   const upperContext = useContext(DismissibleContext)
 

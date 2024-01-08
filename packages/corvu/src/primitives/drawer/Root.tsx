@@ -33,47 +33,29 @@ import { sleep } from '@lib/utils'
 export const DefaultBreakpoint = undefined
 
 export type DrawerRootProps = {
-  /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values.
-   * @defaultValue [0, 1]
-   */
+  /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. *Default = `[0, 1]`* */
   snapPoints?: (string | number)[]
-  /** Optionally override the default breakpoints between snap points. This list has to be the length of `snapPoints.length - 1`. Use `Drawer.DefaultBreakpoint` or `undefined` for breakpoints you don't want to override.
-   * @defaultValue [Drawer.DefaultBreakpoint]
-   */
+  /** Optionally override the default breakpoints between snap points. This list has to be the length of `snapPoints.length - 1`. Use `Drawer.DefaultBreakpoint` or `undefined` for breakpoints you don't want to override. *Default = `[Drawer.DefaultBreakpoint]`* */
   breakPoints?: (string | number | typeof DefaultBreakpoint)[]
-  /** The point to snap to when the drawer opens.
-   * @defaultValue 1
-   */
+  /** The point to snap to when the drawer opens. *Default = `1`* */
   defaultSnapPoint?: string | number
   /** The active snap point. */
   activeSnapPoint?: string | number
   /** Callback fired when the active snap point changes. */
   onActiveSnapPointChange?(activeSnapPoint: string | number): void
-  /** The side of the viewport the drawer appears. Is used to properly calculate dragging.
-   * @defaultValue 'bottom'
-   */
+  /** The side of the viewport the drawer appears. Is used to properly calculate dragging. *Default = `'bottom'`* */
   side?: Side
-  /** Function to create a dampened distance if the user tries to drag the drawer away from the last snap point.
-   * @defaultValue `(distance: number) => 6 * Math.log(distance + 1)`
-   */
+  /** Function to create a dampened distance if the user tries to drag the drawer away from the last snap point. *Default = `(distance: number) => 6 * Math.log(distance + 1)`* */
   dampFunction?(distance: number): number
   /** Function to calculate the velocity when the user stop dragging. This velocity modifier is used to calculate the point the drawer will snap to after release. You can disable velocity by always returning 1. */
   velocityFunction?(distance: number, time: number): number
-  /** After how many milliseconds the cached distance used for the velocity function should reset.
-   * @defaultValue 200
-   */
+  /** After how many milliseconds the cached distance used for the velocity function should reset. *Default = `200`* */
   velocityCacheReset?: number
-  /** Whether the user can skip snap points if the velocity is high enough.
-   * @defaultValue true
-   */
+  /** Whether the user can skip snap points if the velocity is high enough. *Default = `true`* */
   allowSkippingSnapPoints?: boolean
-  /** Corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property.
-   * @defaultValue true
-   */
+  /** Corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property. *Default = `true`* */
   handleScrollableElements?: boolean
-  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer.
-   * @defaultValue 25
-   */
+  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. *Default = `25`* */
   scrollThreshold?: number
   children:
     | JSX.Element
@@ -157,13 +139,13 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
 
   const [open, setOpen] = createControllableSignal({
     value: () => localProps.open,
-    defaultValue: localProps.initialOpen,
+    initialValue: localProps.initialOpen,
     onChange: localProps.onOpenChange,
   })
 
   const [activeSnapPoint, setActiveSnapPoint] = createControllableSignal({
     value: () => localProps.activeSnapPoint,
-    defaultValue: 0,
+    initialValue: 0,
     onChange: localProps.onActiveSnapPointChange,
   })
 

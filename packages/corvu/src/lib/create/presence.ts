@@ -6,19 +6,30 @@ import {
   onCleanup,
   untrack,
 } from 'solid-js'
+import { access } from '@lib/utils'
+import type { MaybeAccessor } from 'src'
 
-/** Creates a presence which is aware of animations and waits for them before hiding. */
+/**
+ * Creates a presence which is aware of css animations and waits for them to finish before changing changing it's state to `hidden`.
+ *
+ * @param props.show - Whether the presence is showing or not.
+ * @param props.element - The element which animations should be tracked.
+ * @returns ```typescript
+ * {
+ *   present: Accessor<boolean>
+ *   state: Accessor<'present' | 'hiding' | 'hidden'>
+ * }
+ * ```
+ */
 const createPresence = (props: {
-  /** Whether the presence is showing or not. */
-  show: Accessor<boolean>
-  /** The element which animations should be tracked. */
-  element: Accessor<HTMLElement | null>
+  show: MaybeAccessor<boolean>
+  element: MaybeAccessor<HTMLElement | null>
 }): {
   present: Accessor<boolean>
   state: Accessor<'present' | 'hiding' | 'hidden'>
 } => {
   const refStyles = createMemo(() => {
-    const element = props.element()
+    const element = access(props.element)
     if (!element) return
     return getComputedStyle(element)
   })
@@ -26,12 +37,12 @@ const createPresence = (props: {
   const [presentState, setPresentState] = createSignal<
     'present' | 'hiding' | 'hidden'
     // eslint-disable-next-line solid/reactivity
-  >(props.show() ? 'present' : 'hidden')
+  >(access(props.show) ? 'present' : 'hidden')
 
   let animationName = ''
 
   createEffect((prevShow) => {
-    const show = props.show()
+    const show = access(props.show)
 
     untrack(() => {
       if (prevShow === show) return show
@@ -61,7 +72,7 @@ const createPresence = (props: {
   })
 
   createEffect(() => {
-    const element = props.element()
+    const element = access(props.element)
 
     if (!element) {
       untrack(() => {

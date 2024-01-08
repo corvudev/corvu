@@ -21,63 +21,37 @@ import createRegister from '@lib/create/register'
 import { isFunction } from '@lib/assertions'
 
 export type DialogRootProps = {
-  /** The `role` attribute of the dialog element.
-   * @defaultValue 'dialog'
-   */
+  /** The `role` attribute of the dialog element. *Default = `'dialog'`* */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not.
-   * @defaultValue `false`
-   */
+  /** Whether the dialog is open or not. *Default = `false`* */
   open?: boolean
   /** Callback fired when the open state changes. */
   onOpenChange?(open: boolean): void
-  /** Whether the dialog is open initially or not.
-   * @defaultValue `false`
-   */
+  /** Whether the dialog is open initially or not. *Default = `false`* */
   initialOpen?: boolean
-  /** Whether the dialog should be rendered as a modal or not.
-   * @defaultValue `true`
-   */
+  /** Whether the dialog should be rendered as a modal or not. *Default = `true`* */
   modal?: boolean
-  /** Whether the dialog should close when the user presses the `Escape` key.
-   * @defaultValue `true`
-   */
+  /** Whether the dialog should close when the user presses the `Escape` key. *Default = `true`* */
   closeOnEscapeKeyDown?: boolean
   /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
-   * @defaultValue `true` if `modal` is `true`, `false` otherwise
-   */
+  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`. *Default = `true` if `modal` is `true`, `false` otherwise* */
   closeOnOutsidePointerDown?: boolean
   /** Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`. */
   onOutsidePointerDown?(event: MouseEvent): void
-  /** Whether pointer events outside of `<Dialog.Content />` should be disabled.
-   * @defaultValue `true` if `modal` is `true`, `false` otherwise
-   */
+  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. *Default = `true` if `modal` is `true`, `false` otherwise* */
   noOutsidePointerEvents?: boolean
-  /** Whether scroll outside of the dialog should be disabled.
-   * @defaultValue `true` if `modal` is `true`, `false` otherwise
-   */
+  /** Whether scroll outside of the dialog should be disabled. *Default = `true` if `modal` is `true`, `false` otherwise* */
   disableScroll?: boolean
-  /** Whether the scrollbar of the `<body>` element should be hidden.
-   * @defaultValue `true` if `modal` is `true`, `false` otherwise
-   */
+  /** Whether the scrollbar of the `<body>` element should be hidden. *Default = `true` if `modal` is `true`, `false` otherwise* */
   hideScrollbar?: boolean
-  /** Whether padding should be added to the <body>` element to avoid layout shift.
-   * @defaultValue `true`
-   */
+  /** Whether padding should be added to the <body>` element to avoid layout shift. *Default = `true`* */
   preventScrollbarShift?: boolean
-  /**  Whether padding or margin should be used to avoid layout shift.
-   * @defaultValue `'padding'`
-   */
+  /**  Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`* */
   preventScrollbarShiftMode?: 'padding' | 'margin'
-  /** Whether the dialog should trap focus or not.
-   * @defaultValue `true`
-   */
+  /** Whether the dialog should trap focus or not. *Default = `true`* */
   trapFocus?: boolean
-  /** Whether the dialog should restore focus to the previous active element when it closes.
-   * @defaultValue `true`
-   */
+  /** Whether the dialog should restore focus to the previous active element when it closes. *Default = `true`* */
   restoreFocus?: boolean
   /** The element to receive focus when the dialog opens. */
   initialFocusEl?: HTMLElement
@@ -87,17 +61,11 @@ export type DialogRootProps = {
   finalFocusEl?: HTMLElement
   /** Callback fired when focus moves out of the dialog. Can be prevented by calling `event.preventDefault`. */
   onFinalFocus?(event: Event): void
-  /** The `id` attribute of the dialog element.
-   * @defaultValue A `unique` id.
-   */
+  /** The `id` attribute of the dialog element. *Default = A unique id.* */
   dialogId?: string
-  /** The `id` attribute of the dialog label element.
-   * @defaultValue A `unique` id.
-   */
+  /** The `id` attribute of the dialog label element. *Default = A unique id.* */
   labelId?: string
-  /** The `id` attribute of the dialog description element.
-   * @defaultValue A `unique` id.
-   */
+  /** The `id` attribute of the dialog description element. *Default = A unique id.* */
   descriptionId?: string
   /** The `id` of the dialog context. Useful if you have nested dialogs and want to create components that belong to a dialog higher up in the tree. */
   contextId?: string
@@ -175,7 +143,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
 
   const [open, setOpen] = createControllableSignal({
     value: () => defaultedProps.open,
-    defaultValue: defaultedProps.initialOpen,
+    initialValue: defaultedProps.initialOpen,
     onChange: defaultedProps.onOpenChange,
   })
 

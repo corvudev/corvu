@@ -1,6 +1,5 @@
 import { access, sleep } from '@lib/utils'
 import {
-  type Accessor,
   createEffect,
   createMemo,
   createSignal,
@@ -17,33 +16,26 @@ const EVENT_INITIAL_FOCUS = 'focusTrap.initialFocus'
 const EVENT_FINAL_FOCUS = 'focusTrap.finalFocus'
 const EVENT_OPTIONS = { bubbles: false, cancelable: true }
 
-/** Traps focus inside the given element. */
+/**
+ * Traps focus inside the given element. Is aware of changes being made to the DOM tree inside the focus trap by using a `MutationObserver`.
+ *
+ * @param props.element - Element to trap focus in.
+ * @param props.enabled - If the focus trap is enabled. *Default = `true`*
+ * @param props.observeChanges - Whether to watch for changes being made to the DOM tree inside the focus trap and reload the focus trap accordingly. *Default = `true`*
+ * @param props.initialFocusElement - The element to receive focus when the focus trap is activated. *Default = The first focusable element inside `element`*
+ * @param props.restoreFocus - If the focus should be restored to the element the focus was on initially when the focus trap is deactivated. *Default = `true`*
+ * @param props.finalFocusElement - The element to receive focus when the focus trap is deactivated (`enabled` = `false`). *Default = The element the focus was on initially*
+ * @param props.onInitialFocus - Callback fired when focus moves inside the focus trap. Can be prevented by calling `event.preventDefault`.
+ * @param props.onFinalFocus - Callback fired when focus moves outside the focus trap. Can be prevented by calling `event.preventDefault`.
+ */
 const createFocusTrap = (props: {
-  /** Element to trap focus in. */
-  element: Accessor<HTMLElement | null>
-  /** If the focus trap is enabled.
-   * @defaultValue `true`
-   */
+  element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-  /** Whether to watch for changes being made to the DOM tree inside the focus trap and reload the focus trap accordingly.
-   * @defaultValue `true`
-   */
   observeChanges?: MaybeAccessor<boolean>
-  /** The element to receive focus when the focus trap is activated.
-   * @defaultValue The first focusable element inside `element`
-   */
   initialFocusElement?: MaybeAccessor<HTMLElement | null>
-  /** If the focus should be restored to the element the focus was on initially when the focus trap is deactivated.
-   * @defaultValue `true`
-   */
   restoreFocus?: MaybeAccessor<boolean>
-  /** The element to receive focus when the focus trap is deactivated (`enabled` = `false`).
-   * @defaultValue The element the focus was on initially
-   */
   finalFocusElement?: MaybeAccessor<HTMLElement | null>
-  /** Callback fired when focus moves inside the focus trap. Can be prevented by calling `event.preventDefault`. */
   onInitialFocus?: (event: Event) => void
-  /** Callback fired when focus moves outside the focus trap. Can be prevented by calling `event.preventDefault`. */
   onFinalFocus?: (event: Event) => void
 }) => {
   const defaultedProps = mergeProps(
@@ -72,17 +64,17 @@ const createFocusTrap = (props: {
   let originalFocusedElement: HTMLElement | null = null
 
   const mutationObserverCallback = () => {
-    loadFocusTrap(defaultedProps.element()!)
+    loadFocusTrap(access(defaultedProps.element)!)
     if (
       document.activeElement === null ||
       document.activeElement === document.body
     ) {
-      initialFocus(defaultedProps.element()!)
+      initialFocus(access(defaultedProps.element)!)
     }
   }
 
   createEffect(() => {
-    const container = defaultedProps.element()
+    const container = access(defaultedProps.element)
     if (container && access(defaultedProps.enabled)) {
       originalFocusedElement = document.activeElement as HTMLElement | null
 
