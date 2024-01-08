@@ -32,7 +32,7 @@ const Topbar: FlowComponent = (props) => {
     >
       <div
         class={clsx(
-          'mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-b-xl border-b-4 px-3 transition-all',
+          'mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-b-xl border-b-4 px-3',
           {
             'border-transparent': !scrolled(),
             'bg-corvu-1000 border-corvu-600': scrolled(),

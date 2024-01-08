@@ -16,10 +16,14 @@ export type DialogContextValue = {
   closeOnOutsidePointerDown: Accessor<boolean>
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: Accessor<boolean>
-  /** Whether the dialog should prevent scrolling on the `<body>` element. */
-  preventScroll: Accessor<boolean>
-  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing. */
+  /** Whether scroll outside of the dialog should be disabled. */
+  disableScroll: Accessor<boolean>
+  /** Whether the scrollbar of the `<body>` element should be hidden. */
+  hideScrollbar: Accessor<boolean>
+  /** Whether padding should be added to the <body>` element to avoid layout shift. */
   preventScrollbarShift: Accessor<boolean>
+  /** Whether padding or margin should be used to avoid layout shift. */
+  preventScrollbarShiftMode: Accessor<'padding' | 'margin'>
   /** Whether the dialog should trap focus or not. */
   trapFocus: Accessor<boolean>
   /** Whether the dialog should restore focus to the previous active element when it closes. */

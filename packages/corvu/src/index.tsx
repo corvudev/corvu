@@ -17,4 +17,5 @@ export type {
   MaybeAccessor,
   OverrideComponentProps,
   OverrideProps,
+  Side,
 } from '@lib/types'

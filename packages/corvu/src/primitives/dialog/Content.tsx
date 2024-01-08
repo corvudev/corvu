@@ -67,8 +67,11 @@ const DialogContent = <
   const keepAlive = createMemo((prev) => prev || show(), false)
 
   createDisableScroll({
-    enabled: () => context().contentPresent() && context().preventScroll(),
+    element: context().contentRef,
+    enabled: () => context().contentPresent() && context().disableScroll(),
+    hideScrollbar: context().hideScrollbar,
     preventScrollbarShift: context().preventScrollbarShift,
+    preventScrollbarShiftMode: context().preventScrollbarShiftMode,
   })
 
   return (

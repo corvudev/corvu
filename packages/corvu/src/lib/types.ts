@@ -11,3 +11,6 @@ export type MaybeAccessor<T> = T | (() => T)
 
 export type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
   T extends () => unknown ? ReturnType<T> : T
+
+export type Side = 'top' | 'right' | 'bottom' | 'left'
+export type Axis = 'x' | 'y'

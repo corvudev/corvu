@@ -55,14 +55,22 @@ export type DialogRootProps = {
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   noOutsidePointerEvents?: boolean
-  /** Whether the dialog should prevent scrolling on the `<body>` element.
+  /** Whether scroll outside of the dialog should be disabled.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
-  preventScroll?: boolean
-  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing.
+  disableScroll?: boolean
+  /** Whether the scrollbar of the `<body>` element should be hidden.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
+   */
+  hideScrollbar?: boolean
+  /** Whether padding should be added to the <body>` element to avoid layout shift.
+   * @defaultValue `true`
    */
   preventScrollbarShift?: boolean
+  /**  Whether padding or margin should be used to avoid layout shift.
+   * @defaultValue `'padding'`
+   */
+  preventScrollbarShiftMode?: 'padding' | 'margin'
   /** Whether the dialog should trap focus or not.
    * @defaultValue `true`
    */
@@ -112,10 +120,14 @@ export type DialogRootChildrenProps = {
   closeOnOutsidePointerDown: boolean
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: boolean
-  /** Whether the dialog should prevent scrolling on the `<body>` element. */
-  preventScroll: boolean
-  /** Whether padding should be added to the body element to avoid shifting because of the scrollbar disappearing */
+  /** Whether scroll outside of the dialog should be disabled. */
+  disableScroll: boolean
+  /** Whether the scrollbar of the `<body>` element should be hidden. */
+  hideScrollbar: boolean
+  /** Whether padding should be added to the <body>` element to avoid layout shift. */
   preventScrollbarShift: boolean
+  /** Whether padding or margin should be used to avoid layout shift. */
+  preventScrollbarShiftMode: 'padding' | 'margin'
   /** Whether the dialog should trap focus or not. */
   trapFocus: boolean
   /** Whether the dialog should restore focus to the previous active element when it closes. */
@@ -150,9 +162,10 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
         props.modal ?? DEFAULT_MODAL ? true : false,
       noOutsidePointerEvents: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
-      preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
-      preventScrollbarShift: () =>
-        props.modal ?? DEFAULT_MODAL ? true : false,
+      disableScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      hideScrollbar: true,
+      preventScrollbarShift: true,
+      preventScrollbarShiftMode: 'padding' as const,
       trapFocus: true,
       restoreFocus: true,
       dialogId: createUniqueId(),
@@ -216,11 +229,17 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get noOutsidePointerEvents() {
       return access(defaultedProps.noOutsidePointerEvents)
     },
-    get preventScroll() {
-      return access(defaultedProps.preventScroll)
+    get disableScroll() {
+      return access(defaultedProps.disableScroll)
+    },
+    get hideScrollbar() {
+      return defaultedProps.hideScrollbar
     },
     get preventScrollbarShift() {
       return access(defaultedProps.preventScrollbarShift)
+    },
+    get preventScrollbarShiftMode() {
+      return defaultedProps.preventScrollbarShiftMode
     },
     get trapFocus() {
       return defaultedProps.trapFocus
@@ -279,9 +298,12 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             access(defaultedProps.closeOnOutsidePointerDown),
           noOutsidePointerEvents: () =>
             access(defaultedProps.noOutsidePointerEvents),
-          preventScroll: () => access(defaultedProps.preventScroll),
+          disableScroll: () => access(defaultedProps.disableScroll),
+          hideScrollbar: () => defaultedProps.hideScrollbar,
           preventScrollbarShift: () =>
             access(defaultedProps.preventScrollbarShift),
+          preventScrollbarShiftMode: () =>
+            defaultedProps.preventScrollbarShiftMode,
           trapFocus: () => defaultedProps.trapFocus,
           restoreFocus: () => defaultedProps.restoreFocus,
           initialFocusEl: () => defaultedProps.initialFocusEl,
@@ -308,9 +330,12 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
             noOutsidePointerEvents: () =>
               access(defaultedProps.noOutsidePointerEvents),
-            preventScroll: () => access(defaultedProps.preventScroll),
+            disableScroll: () => access(defaultedProps.disableScroll),
+            hideScrollbar: () => defaultedProps.hideScrollbar,
             preventScrollbarShift: () =>
               access(defaultedProps.preventScrollbarShift),
+            preventScrollbarShiftMode: () =>
+              defaultedProps.preventScrollbarShiftMode,
             trapFocus: () => defaultedProps.trapFocus,
             restoreFocus: () => defaultedProps.restoreFocus,
             initialFocusEl: () => defaultedProps.initialFocusEl,

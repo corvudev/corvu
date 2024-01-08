@@ -25,7 +25,8 @@ import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
 import { createWritableMemo } from '@solid-primitives/memo'
 import { isFunction } from '@lib/assertions'
-import { resolveSnapPoint } from '@lib/drawer'
+import { resolveSnapPoint } from '@primitives/drawer/lib'
+import type { Side } from '@lib/types'
 import { sleep } from '@lib/utils'
 
 /** Alternative placeholder to not override a certain breakpoint. */
@@ -51,7 +52,7 @@ export type DrawerRootProps = {
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging.
    * @defaultValue 'bottom'
    */
-  side?: 'top' | 'right' | 'bottom' | 'left'
+  side?: Side
   /** Function to create a dampened distance if the user tries to drag the drawer away from the last snap point.
    * @defaultValue `(distance: number) => 6 * Math.log(distance + 1)`
    */
@@ -94,7 +95,7 @@ export type DrawerRootChildrenProps = {
   /** Set the current active snap point. */
   setActiveSnapPoint(snapPoint: string | number): void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
-  side: 'top' | 'right' | 'bottom' | 'left'
+  side: Side
   /** After how many milliseconds the cached distance used for the velocity function should reset. */
   velocityCacheReset: number
   /** Whether the user can skip snap points if the velocity is high enough. */

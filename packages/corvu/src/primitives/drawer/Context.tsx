@@ -1,7 +1,8 @@
 import { type Accessor, createContext, type Setter, useContext } from 'solid-js'
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
 import { DefaultBreakpoint } from '@primitives/drawer'
-import type { ResolvedSnapPoint } from '@lib/drawer'
+import type { ResolvedSnapPoint } from '@primitives/drawer/lib'
+import type { Side } from '@lib/types'
 
 export type DrawerContextValue = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
@@ -15,7 +16,7 @@ export type DrawerContextValue = {
   /** Change the active snap point. */
   setActiveSnapPoint(snapPoint: string | number): void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
-  side: Accessor<'top' | 'right' | 'bottom' | 'left'>
+  side: Accessor<Side>
   /** After how many milliseconds the cached distance used for the velocity function should reset. */
   velocityCacheReset: Accessor<number>
   /** Whether the user can skip snap points if the velocity is high enough. */

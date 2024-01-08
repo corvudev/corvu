@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Dialog from 'corvu/dialog'
-import { createSignal, type VoidComponent } from 'solid-js'
+import { createSignal, type VoidComponent, For } from 'solid-js'
 
 const DialogDev: VoidComponent = () => {
   return (
@@ -48,6 +48,9 @@ const Uncontrolled: VoidComponent = () => {
           <Dialog.Label class="font-bold">Hello</Dialog.Label>
           <Dialog.Description class="text-sm">Desc</Dialog.Description>
           <p class="text-xs">Random text</p>
+          <div class="max-h-[400px] overflow-y-auto border border-purple-700">
+            <For each={new Array(100).fill(0)}>{(_, i) => <p>{i()}</p>}</For>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
