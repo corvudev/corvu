@@ -1,6 +1,6 @@
 export { default as Polymorphic, As } from '@lib/components/Polymorphic'
 export { default as createControllableSignal } from '@lib/create/controllableSignal'
-export { default as createDisableScroll } from '@lib/create/disableScroll'
+export { default as createPreventScroll } from '@lib/create/preventScroll'
 export { default as createFocusTrap } from '@lib/create/focusTrap'
 export {
   createKeyedContext,

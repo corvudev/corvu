@@ -1,15 +1,15 @@
 ---
 layout: '@layouts/Docs.astro'
-title: corvu • Disable Scroll
+title: corvu • Prevent Scroll
 description: Unstyled, accessible and customizable UI primitives for SolidJS.
 image: https://corvu.dev/banner.jpg
 ---
 import Code from '@components/docs/code/Code.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
 
-# Disable Scroll
+# Prevent Scroll
 
-Utility which disables scrolling on the body element. Useful when working with modals, dropdowns, etc.
+Utility which prevents scrolling on the body element. Useful when working with modals, dropdowns, etc.
 
 By default, this utility will add padding to the body element to prevent the page from jumping when the scrollbar is removed. This can be disabled by passing `preventScrollbarShift = false`.
 
@@ -17,13 +17,13 @@ It also adds the CSS variable `--scrollbar-width` to the body element, indicatin
 
 ## Usage
 <Code code={`
-import { createDisableScroll } from 'corvu'
+import { createPreventScroll } from 'corvu'
 `} lang="tsx" copyButton />
 <Code code={`
 const DialogContent: Component<{
   open: boolean
 }> = (props) => {
-  createDisableScroll({
+  createPreventScroll({
     enabled: () => props.open
   })
 
@@ -50,4 +50,4 @@ Use the `--scrollbar-width` CSS variable to add padding to fixed elements to pre
 
 ## API reference
 
-<GenerateApiDocs utility="createDisableScroll" />
+<GenerateApiDocs utility="createPreventScroll" />

@@ -86,7 +86,7 @@ import Dialog from 'corvu/dialog'
 `} lang="tsx" copyButton />
 
 ### Scrolling
-By default, corvu disables scrolling on the body element  while the dialog is open. It will also add additional padding to the body to prevent the page from jumping when the scrollbar disappears. There is also a CSS variable called `--scrollbar-width` which is present when the scrollbar is hidden. You can use this to prevent any fixed element from jumping:
+By default, corvu prevents scrolling of elements outside of the dialog content while the dialog open. It will also add additional padding to the body to prevent the page from jumping when the scrollbar disappears. There is also a CSS variable called `--scrollbar-width` which is present when the scrollbar is hidden. You can use this to prevent any fixed element from jumping:
 
 <Code code={`
 <header

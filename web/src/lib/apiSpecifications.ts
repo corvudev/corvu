@@ -203,7 +203,7 @@ export const componentSpecifications: {
 
 export type UtilitySpecifications =
   | 'createControllableSignal'
-  | 'createDisableScroll'
+  | 'createPreventScroll'
   | 'createFocusTrap'
   | 'keyedContext'
   | 'createPresence'
@@ -212,7 +212,7 @@ export type UtilitySpecifications =
 export const titleToUtilitySpecification = (
   title:
     | 'Controllable Signal'
-    | 'Disable Scroll'
+    | 'Prevent Scroll'
     | 'Focus Trap'
     | 'Keyed Context'
     | 'Presence'
@@ -221,8 +221,8 @@ export const titleToUtilitySpecification = (
   switch (title) {
     case 'Controllable Signal':
       return 'createControllableSignal'
-    case 'Disable Scroll':
-      return 'createDisableScroll'
+    case 'Prevent Scroll':
+      return 'createPreventScroll'
     case 'Focus Trap':
       return 'createFocusTrap'
     case 'Keyed Context':
@@ -248,11 +248,18 @@ export const utilitySpecifications: {
       },
     ],
   },
-  createDisableScroll: {
+  createPreventScroll: {
     functions: [
       {
-        name: 'createDisableScroll',
-        forcedSorting: ['enabled', 'preventScrollbarShift'],
+        name: 'createPreventScroll',
+        forcedSorting: [
+          'element',
+          'enabled',
+          'hideScrollbar',
+          'preventScrollbarShift',
+          'preventScrollbarShiftMode',
+          'allowPinchZoom',
+        ],
       },
     ],
   },

@@ -17,21 +17,21 @@ import {
 import { getScrollAtLocation, locationIsScrollable } from '@lib/scroll'
 import createStyle from '@lib/create/style'
 
-const [disableScrollStack, setDisableScrollStack] = createSignal<string[]>([])
+const [preventScrollStack, setPreventScrollStack] = createSignal<string[]>([])
 const isActive = (id: string) =>
-  disableScrollStack().indexOf(id) === disableScrollStack().length - 1
+  preventScrollStack().indexOf(id) === preventScrollStack().length - 1
 
 /**
- * Disables scroll outside of the given element.
+ * Prevents scroll outside of the given element.
  *
- * @param props.element - Disable scroll outside of this element.
- * @param props.enabled - Whether scroll should be disabled. *Default = `true`*
+ * @param props.element - Prevent scroll outside of this element.
+ * @param props.enabled - Whether scroll should be prevented. *Default = `true`*
  * @param props.hideScrollbar - Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
  * @param props.preventScrollbarShift - Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
  * @param props.preventScrollbarShiftMode - Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`*
  * @param props.allowPinchZoom - Whether pinch zoom should be allowed. *Default = `false`*
  */
-const createDisableScroll = (props: {
+const createPreventScroll = (props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
   hideScrollbar?: MaybeAccessor<boolean>
@@ -50,7 +50,7 @@ const createDisableScroll = (props: {
     props,
   )
 
-  const disableScrollId = createUniqueId()
+  const preventScrollId = createUniqueId()
 
   const currentEvents: {
     type: string
@@ -65,11 +65,11 @@ const createDisableScroll = (props: {
   createEffect(() => {
     if (!access(defaultedProps.enabled)) return
 
-    setDisableScrollStack((stack) => [...stack, disableScrollId])
+    setPreventScrollStack((stack) => [...stack, preventScrollId])
 
     onCleanup(() => {
-      setDisableScrollStack((stack) =>
-        stack.filter((id) => id !== disableScrollId),
+      setPreventScrollStack((stack) =>
+        stack.filter((id) => id !== preventScrollId),
       )
     })
   })
@@ -132,7 +132,7 @@ const createDisableScroll = (props: {
     const element = access(defaultedProps.element)
 
     if (
-      !isActive(disableScrollId) ||
+      !isActive(preventScrollId) ||
       !element ||
       !access(defaultedProps.enabled)
     )
@@ -307,4 +307,4 @@ const handleScroll = (
   return false
 }
 
-export default createDisableScroll
+export default createPreventScroll
