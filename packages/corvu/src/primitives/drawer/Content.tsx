@@ -136,7 +136,7 @@ const DrawerContent = <
         const axis: Axis = Math.abs(delta[0]) > Math.abs(delta[1]) ? 'x' : 'y'
         const axisDelta = axis === 'x' ? delta[0] : delta[1]
 
-        if (axisDelta === 0) return
+        if (Math.abs(axisDelta) < 0.3) return
 
         const wrapper = dialogContext().contentRef()!
 
