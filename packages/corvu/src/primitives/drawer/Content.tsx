@@ -9,7 +9,11 @@ import {
 import DialogContent, {
   type DialogContentProps,
 } from '@primitives/dialog/Content'
-import { findClosestSnapPoint, resolveSnapPoint } from '@primitives/drawer/lib'
+import {
+  findClosestSnapPoint,
+  locationIsDraggable,
+  resolveSnapPoint,
+} from '@primitives/drawer/lib'
 import type { Axis } from '@lib/types'
 import { dataIf } from '@lib/utils'
 import { getScrollAtLocation } from '@lib/scroll'
@@ -95,6 +99,14 @@ const DrawerContent = <
   })
 
   const onPointerDown = (event: PointerEvent) => {
+    if (
+      !locationIsDraggable(
+        event.target as HTMLElement,
+        dialogContext().contentRef()!,
+      )
+    )
+      return
+
     pointerDown = true
     if (drawerContext().handleScrollableElements()) {
       currentPointerStart = [event.clientX, event.clientY]

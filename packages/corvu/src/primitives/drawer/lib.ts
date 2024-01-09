@@ -10,7 +10,15 @@ type ResolvedSnapPointWithBreakPoints = ResolvedSnapPoint & {
   lowerBreakPoint?: number
 }
 
-/** Converts snap and break points into offsets that can be used to apply the translate value to the drawer. */
+/**
+ * Converts snap and break points into offsets that can be used to apply the translate value to the drawer.
+ *
+ * @param snapPoint - The snap point to resolve.
+ * @param drawerSize - The size of the drawer.
+ * @param index - The index of the snap point in the list of snap points.
+ * @param breakPoints - The list of break points.
+ * @returns The resolved snap point.
+ */
 export const resolveSnapPoint = (
   snapPoint: string | number,
   drawerSize: number,
@@ -40,6 +48,14 @@ export const resolveSnapPoint = (
   }
 }
 
+/**
+ * Converts a snap or break point into an offset that can be used to apply the translate value to the drawer.
+ * @param point - The snap or break point to resolve.
+ * @param drawerSize - The size of the drawer.
+ * @returns The resolved snap or break point.
+ * @throws If the point is not a number or a string ending with 'px'.
+ *
+ */
 export const resolvePoint = (
   point: number | string,
   drawerSize: number,
@@ -53,7 +69,12 @@ export const resolvePoint = (
   return drawerSize - parseInt(point, 10)
 }
 
-/** Find the closest snap point to the given offset. */
+/**
+ * Find the closest snap point to the given offset.
+ * @param snapPoints - The snap points to search through.
+ * @param offset - The current offset.
+ * @param offsetWithVelocity - The current offset with the velocity applied.
+ */
 export const findClosestSnapPoint = (
   snapPoints: ResolvedSnapPointWithBreakPoints[],
   offset: number,
@@ -61,13 +82,13 @@ export const findClosestSnapPoint = (
   allowSkippingSnapPoints: boolean,
 ) => {
   // Find the closest snap point above the given offset.
-  const upperSnapPoint = findNearbySnapPoints(
+  const upperSnapPoint = findNearbySnapPoint(
     'upper',
     snapPoints,
     allowSkippingSnapPoints ? offsetWithVelocity : offset,
   )
   // Find the closest snap point below the given offset.
-  const lowerSnapPoint = findNearbySnapPoints(
+  const lowerSnapPoint = findNearbySnapPoint(
     'lower',
     snapPoints,
     allowSkippingSnapPoints ? offsetWithVelocity : offset,
@@ -93,8 +114,13 @@ export const findClosestSnapPoint = (
     : upperSnapPoint
 }
 
-/** Find either the closest snap point above or under the given offset. */
-const findNearbySnapPoints = (
+/**
+ * Find either the closest snap point above or under the given offset.
+ * @param side - Whether to find the closest snap point above or under the given offset.
+ * @param snapPoints - The snap points to search through.
+ * @param offset - The current offset.
+ */
+const findNearbySnapPoint = (
   side: 'upper' | 'lower',
   snapPoints: ResolvedSnapPointWithBreakPoints[],
   offset: number,
@@ -123,4 +149,32 @@ const findNearbySnapPoints = (
     },
     undefined,
   )
+}
+
+/**
+ * Returns true if the given location is draggable, meaning that the target element and all of its parents don't have the `data-disable-drag` attribute present.
+ *
+ * @param location - The HTMLElement to check.
+ * @param stopAt - The HTMLElement to stop at when searching up the tree. Defaults to the body element.
+ * @returns Whether the location is draggable.
+ */
+export const locationIsDraggable = (
+  location: HTMLElement,
+  stopAt?: HTMLElement,
+) => {
+  let currentElement: HTMLElement | null = location
+
+  let stopReached = false
+
+  do {
+    if (currentElement.hasAttribute('data-disable-drag')) return false
+
+    if (currentElement === (stopAt ?? document.body)) {
+      stopReached = true
+    } else {
+      currentElement = currentElement.parentElement
+    }
+  } while (currentElement && !stopReached)
+
+  return true
 }
