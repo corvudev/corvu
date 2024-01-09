@@ -45,7 +45,7 @@ export type DrawerRootProps = {
   onActiveSnapPointChange?(activeSnapPoint: string | number): void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. *Default = `'bottom'`* */
   side?: Side
-  /** Function to create a dampened distance if the user tries to drag the drawer away from the last snap point. *Default = `(distance: number) => 6 * Math.log(distance + 1)`* */
+  /** Function to create a dampened distance if the user tries to drag the drawer away from the last snap point. */
   dampFunction?(distance: number): number
   /** Function to calculate the velocity when the user stop dragging. This velocity modifier is used to calculate the point the drawer will snap to after release. You can disable velocity by always returning 1. */
   velocityFunction?(distance: number, time: number): number

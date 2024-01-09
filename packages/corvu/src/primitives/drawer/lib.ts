@@ -152,7 +152,7 @@ const findNearbySnapPoint = (
 }
 
 /**
- * Returns true if the given location is draggable, meaning that the target element and all of its parents don't have the `data-disable-drag` attribute present.
+ * Returns true if the given location is draggable, meaning that the target element and all of its parents don't have the `data-corvu-no-drag` attribute present.
  *
  * @param location - The HTMLElement to check.
  * @param stopAt - The HTMLElement to stop at when searching up the tree. Defaults to the body element.
@@ -167,7 +167,7 @@ export const locationIsDraggable = (
   let stopReached = false
 
   do {
-    if (currentElement.hasAttribute('data-disable-drag')) return false
+    if (currentElement.hasAttribute('data-corvu-no-drag')) return false
 
     if (currentElement === (stopAt ?? document.body)) {
       stopReached = true
