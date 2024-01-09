@@ -23,7 +23,10 @@ const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
  * @data `data-corvu-dialog-content` - Present on every drawer/dialog content element.
  * @data `data-open` - Present when the drawer is open.
  * @data `data-closed` - Present when the drawer is closed.
- * @data `data-transitioning` - Present when the drawer is currently transitioning.
+ * @data `data-transitioning` - Present when the drawer is transitioning (opening, closing or snapping).
+ * @data `data-opening` - Present when the drawer is in the open transition.
+ * @data `data-closing` - Present when the drawer is in the close transition.
+ * @data `data-snapping` - Present when the drawer is transitioning after the user stops dragging.
  */
 const DrawerContent = <
   T extends ValidComponent = typeof DEFAULT_DRAWER_CONTENT_ELEMENT,
@@ -156,7 +159,7 @@ const DrawerContent = <
 
       batch(() => {
         drawerContext().setIsDragging(true)
-        drawerContext().setIsTransitioning(false)
+        drawerContext().setTransitionState(null)
       })
     }
 
@@ -212,7 +215,7 @@ const DrawerContent = <
     )
 
     batch(() => {
-      drawerContext().setIsTransitioning(true)
+      drawerContext().setTransitionState('snapping')
       drawerContext().setIsDragging(false)
     })
 
@@ -225,7 +228,7 @@ const DrawerContent = <
         const transitionDuration =
           parseFloat(drawerContext().drawerStyles()!.transitionDuration) * 1000
         if (transitionDuration === 0) {
-          drawerContext().setIsTransitioning(false)
+          drawerContext().setTransitionState(null)
         }
       }
     })
@@ -243,13 +246,25 @@ const DrawerContent = <
       onPointerDown={onPointerDown}
       onTransitionEnd={() => {
         batch(() => {
-          if (drawerContext().isClosing()) {
+          if (drawerContext().transitionState() === 'closing') {
             dialogContext().setOpen(false)
           }
-          drawerContext().setIsTransitioning(false)
+          drawerContext().setTransitionState(null)
         })
       }}
       data-transitioning={dataIf(drawerContext().isTransitioning())}
+      data-opening={dataIf(
+        drawerContext().transitionState() === 'opening' &&
+          drawerContext().isTransitioning(),
+      )}
+      data-closing={dataIf(
+        drawerContext().transitionState() === 'closing' &&
+          drawerContext().isTransitioning(),
+      )}
+      data-snapping={dataIf(
+        drawerContext().transitionState() === null &&
+          drawerContext().isTransitioning(),
+      )}
       {...(otherProps as DialogContentProps<T>)}
     />
   )

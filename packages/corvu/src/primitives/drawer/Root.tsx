@@ -67,17 +67,27 @@ export type DrawerRootProps = {
 /** Props which are passed to the Root component children function. */
 export type DrawerRootChildrenProps = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
-  snapPoints?: (string | number)[]
+  snapPoints: (string | number)[]
   /** Breakpoints between snap points. */
-  breakPoints?: (string | number | typeof DefaultBreakpoint)[]
+  breakPoints: (string | number | typeof DefaultBreakpoint)[]
   /** The point to snap to when the drawer opens. */
-  defaultSnapPoint?: string | number
+  defaultSnapPoint: string | number
   /** The active snap point. */
   activeSnapPoint: string | number
   /** Set the current active snap point. */
   setActiveSnapPoint(snapPoint: string | number): void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
   side: Side
+  /** Whether the drawer is currently being dragged by the user. */
+  isDragging: boolean
+  /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
+  isTransitioning: boolean
+  /** The transition state that the drawer is currently in. */
+  transitionState: 'opening' | 'closing' | 'snapping' | null
+  /** How much the drawer is currently open. Can be > 1 depending on your `dampFunction`. */
+  openPercentage: number
+  /** The current translate value applied to the drawer. Is the same for every side. */
+  translate: number
   /** After how many milliseconds the cached distance used for the velocity function should reset. */
   velocityCacheReset: number
   /** Whether the user can skip snap points if the velocity is high enough. */
@@ -86,14 +96,6 @@ export type DrawerRootChildrenProps = {
   handleScrollableElements: boolean
   /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
   scrollThreshold: number
-  /** Whether the drawer is currently being dragged by the user. */
-  isDragging: boolean
-  /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
-  isTransitioning: boolean
-  /** How much the drawer is currently open. Can be > 1 depending on your `dampFunction`. */
-  openPercentage: number
-  /** The current translate value applied to the drawer. Is the same for every side. */
-  translate: number
 }
 
 /** Context wrapper for the drawer. Is required for every drawer you create. */
@@ -153,8 +155,9 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     createSignal<InternalDialogContextValue>()
 
   const [isDragging, setIsDragging] = createSignal(false)
-  const [isTransitioning, setIsTransitioning] = createSignal(false)
-  const [isClosing, setIsClosing] = createSignal(false)
+  const [transitionState, setTransitionState] = createSignal<
+    'opening' | 'closing' | 'snapping' | null
+  >(null)
 
   const drawerStyles = createMemo(() => {
     const contentRef = dialogContext()?.contentRef()
@@ -198,37 +201,45 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       // eslint-disable-next-line solid/reactivity
       sleep(0).then(() => {
         batch(() => {
-          setIsTransitioning(true)
+          setTransitionState('opening')
           setActiveSnapPoint(localProps.defaultSnapPoint)
         })
         const transitionDuration =
           parseFloat(drawerStyles()!.transitionDuration) * 1000
         if (transitionDuration === 0) {
-          setIsTransitioning(false)
+          batch(() => {
+            setTransitionState(null)
+          })
         }
       })
-    } else if (isClosing()) {
+    } else if (transitionState() === 'closing') {
       batch(() => {
         setOpen(false)
-        setIsClosing(false)
       })
     } else {
       batch(() => {
-        setIsTransitioning(true)
+        setTransitionState('closing')
         setActiveSnapPoint(0)
       })
       const transitionDuration =
         parseFloat(drawerStyles()!.transitionDuration) * 1000
       if (transitionDuration === 0) {
         setOpen(false)
-        setIsTransitioning(false)
-      } else {
-        setIsClosing(true)
+        setTransitionState(null)
       }
     }
   }
 
   const childrenProps: DrawerRootChildrenProps = {
+    get snapPoints() {
+      return localProps.snapPoints
+    },
+    get breakPoints() {
+      return localProps.breakPoints
+    },
+    get defaultSnapPoint() {
+      return localProps.defaultSnapPoint
+    },
     get activeSnapPoint() {
       return activeSnapPoint()
     },
@@ -236,14 +247,21 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     get side() {
       return localProps.side
     },
+
     get isDragging() {
       return isDragging()
     },
     get isTransitioning() {
-      return isTransitioning()
+      return transitionState() !== null
+    },
+    get transitionState() {
+      return transitionState()
     },
     get openPercentage() {
       return openPercentage()
+    },
+    get translate() {
+      return translate()
     },
     get velocityCacheReset() {
       return localProps.velocityCacheReset
@@ -256,9 +274,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     },
     get scrollThreshold() {
       return localProps.scrollThreshold
-    },
-    get translate() {
-      return translate()
     },
   }
 
@@ -291,7 +306,8 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           setActiveSnapPoint,
           side: () => localProps.side,
           isDragging,
-          isTransitioning,
+          isTransitioning: () => transitionState() !== null,
+          transitionState,
           openPercentage,
           translate,
           velocityCacheReset: () => localProps.velocityCacheReset,
@@ -309,7 +325,8 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             setActiveSnapPoint,
             side: () => localProps.side,
             isDragging,
-            isTransitioning,
+            isTransitioning: () => transitionState() !== null,
+            transitionState,
             openPercentage,
             translate,
             velocityCacheReset: () => localProps.velocityCacheReset,
@@ -319,13 +336,11 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             dampFunction: localProps.dampFunction,
             velocityFunction: localProps.velocityFunction,
             setIsDragging,
-            setIsTransitioning,
             setTranslate,
             drawerSize,
             resolvedActiveSnapPoint,
             drawerStyles,
-            isClosing,
-            setIsClosing,
+            setTransitionState,
           }}
         >
           <DialogRoot

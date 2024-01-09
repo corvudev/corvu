@@ -29,6 +29,8 @@ export type DrawerContextValue = {
   isDragging: Accessor<boolean>
   /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
   isTransitioning: Accessor<boolean>
+  /** The transition state that the drawer is currently in. */
+  transitionState: Accessor<'opening' | 'closing' | 'snapping' | null>
   /** How much the drawer is currently open. Can be > 1 depending on your `dampFunction`. */
   openPercentage: Accessor<number>
   /** The current translate value applied to the drawer. Is the same for every side. */
@@ -69,13 +71,11 @@ type InternalDrawerContextValue = DrawerContextValue & {
   dampFunction(distance: number): number
   velocityFunction(distance: number, time: number): number
   setIsDragging(isDragging: boolean): void
-  setIsTransitioning(isTransitioning: boolean): void
   setTranslate(translate: number): void
   drawerSize: Accessor<number>
   resolvedActiveSnapPoint: Accessor<ResolvedSnapPoint>
   drawerStyles: Accessor<CSSStyleDeclaration | undefined>
-  isClosing: Accessor<boolean>
-  setIsClosing: Setter<boolean>
+  setTransitionState: Setter<'opening' | 'closing' | 'snapping' | null>
 }
 
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()
