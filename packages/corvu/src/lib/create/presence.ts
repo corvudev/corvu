@@ -34,12 +34,16 @@ const createPresence = (props: {
     return getComputedStyle(element)
   })
 
+  const getAnimationName = () => {
+    return refStyles()?.animationName ?? 'none'
+  }
+
   const [presentState, setPresentState] = createSignal<
     'present' | 'hiding' | 'hidden'
     // eslint-disable-next-line solid/reactivity
   >(access(props.show) ? 'present' : 'hidden')
 
-  let animationName = ''
+  let animationName = 'none'
 
   createEffect((prevShow) => {
     const show = access(props.show)
@@ -74,14 +78,7 @@ const createPresence = (props: {
   createEffect(() => {
     const element = access(props.element)
 
-    if (!element) {
-      untrack(() => {
-        if (presentState() === 'hiding') {
-          setPresentState('hidden')
-        }
-      })
-      return
-    }
+    if (!element) return
 
     const handleAnimationStart = (event: AnimationEvent) => {
       if (event.target === element) {
@@ -113,10 +110,6 @@ const createPresence = (props: {
       element.removeEventListener('animationend', handleAnimationEnd)
     })
   })
-
-  const getAnimationName = () => {
-    return refStyles()?.animationName ?? 'none'
-  }
 
   return {
     present: () => presentState() === 'present' || presentState() === 'hiding',
