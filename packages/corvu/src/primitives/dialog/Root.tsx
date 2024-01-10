@@ -45,7 +45,7 @@ export type DialogRootProps = {
   preventScroll?: boolean
   /** Whether the scrollbar of the `<body>` element should be hidden. *Default = `true` if `modal` is `true`, `false` otherwise* */
   hideScrollbar?: boolean
-  /** Whether padding should be added to the <body>` element to avoid layout shift. *Default = `true`* */
+  /** Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`* */
   preventScrollbarShift?: boolean
   /**  Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`* */
   preventScrollbarShiftMode?: 'padding' | 'margin'
@@ -92,7 +92,7 @@ export type DialogRootChildrenProps = {
   preventScroll: boolean
   /** Whether the scrollbar of the `<body>` element should be hidden. */
   hideScrollbar: boolean
-  /** Whether padding should be added to the <body>` element to avoid layout shift. */
+  /** Whether padding should be added to the `<body>` element to avoid layout shift. */
   preventScrollbarShift: boolean
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: 'padding' | 'margin'

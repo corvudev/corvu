@@ -20,7 +20,7 @@ export type DialogContextValue = {
   preventScroll: Accessor<boolean>
   /** Whether the scrollbar of the `<body>` element should be hidden. */
   hideScrollbar: Accessor<boolean>
-  /** Whether padding should be added to the <body>` element to avoid layout shift. */
+  /** Whether padding should be added to the `<body>` element to avoid layout shift. */
   preventScrollbarShift: Accessor<boolean>
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: Accessor<'padding' | 'margin'>
