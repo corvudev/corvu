@@ -34,8 +34,8 @@ const DrawerCommentsExample: VoidComponent = () => {
                 <Drawer.Label class="border-b-2 border-corvu-400 py-2 text-center text-xl font-bold">
                   Comments
                 </Drawer.Label>
-                <div class="grow divide-y divide-corvu-400 overflow-y-auto">
-                  <For each={new Array(30)}>
+                <div class="grow divide-y divide-white/10 overflow-y-auto">
+                  <For each={new Array(20)}>
                     {() => (
                       <div class="flex items-center space-x-2 p-2">
                         <div class="h-8 w-8 rounded-full bg-corvu-800" />

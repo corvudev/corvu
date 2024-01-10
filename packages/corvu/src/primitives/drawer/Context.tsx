@@ -17,14 +17,6 @@ export type DrawerContextValue = {
   setActiveSnapPoint(snapPoint: string | number): void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
   side: Accessor<Side>
-  /** After how many milliseconds the cached distance used for the velocity function should reset. */
-  velocityCacheReset: Accessor<number>
-  /** Whether the user can skip snap points if the velocity is high enough. */
-  allowSkippingSnapPoints: Accessor<boolean>
-  /** Whether the logic to handle dragging on scrollable elements is enabled. */
-  handleScrollableElements: Accessor<boolean>
-  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
-  scrollThreshold: Accessor<number>
   /** Whether the drawer is currently being dragged by the user. */
   isDragging: Accessor<boolean>
   /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
@@ -35,6 +27,14 @@ export type DrawerContextValue = {
   openPercentage: Accessor<number>
   /** The current translate value applied to the drawer. Is the same for every side. */
   translate: Accessor<number>
+  /** After how many milliseconds the cached distance used for the velocity function should reset. */
+  velocityCacheReset: Accessor<number>
+  /** Whether the user can skip snap points if the velocity is high enough. */
+  allowSkippingSnapPoints: Accessor<boolean>
+  /** Whether the logic to handle dragging on scrollable elements is enabled. */
+  handleScrollableElements: Accessor<boolean>
+  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
+  scrollThreshold: Accessor<number>
 }
 
 const DrawerContext = createContext<DrawerContextValue>()

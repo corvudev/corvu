@@ -28,7 +28,7 @@ const DrawerScrollableExample: VoidComponent = () => {
                 Drawer with a scrollable element
               </Drawer.Label>
               <div class="mt-3 grow divide-y divide-corvu-400 overflow-y-auto">
-                <For each={new Array(30)}>
+                <For each={new Array(20)}>
                   {(_, idx) => (
                     <p
                       class={clsx('py-2 text-center font-bold', {
