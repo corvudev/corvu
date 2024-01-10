@@ -1,0 +1,61 @@
+<div align="center">
+  <img src="https://raw.githubusercontent.com/corvudev/corvu/main/assets/solid-prevent-scroll.png" width=1000 alt="Solid Prevent Scroll" />
+</div>
+<br />
+
+SolidJS utility that prevents scrolling outside of a given DOM element. Works by preventing events that else would lead to scrolling.
+
+## Features
+
+- Supports nested scroll containers
+- Works both vertically and horizontally
+- Removes the body scrollbar without layout shift
+
+## Usage
+
+By default, it also hides the scrollbar of the body element and adds padding to it to prevent the page from jumping. This behavior can be disabled and modified with the `hideScrollbar`, `preventScrollbarShift`, and `preventScrollbarShiftMode` props.
+
+It also adds the CSS variable `--scrollbar-width` to the body element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to fixed elements, like a topbar.
+
+```tsx
+import createPreventScroll from 'solid-prevent-scroll'
+```
+
+```tsx
+const DialogContent: Component<{
+  open: boolean
+}> = (props) => {
+  const [ref, setRef] = createSignal(null)
+
+  createPreventScroll({
+    element: ref,
+    enabled: () => props.open, // default = true
+    hideScrollbar: true, // default
+    preventScrollbarShift: true, // default
+    preventScrollbarShiftMode: 'padding', // default, `padding` or `margin`
+    allowPinchZoom: false, // default
+  })
+
+  return (
+    <Show when={props.open}>
+      <div ref={setRef}>Dialog</div>
+    </Show>
+  )
+}
+```
+
+Use the `--scrollbar-width` CSS variable to add padding to fixed elements to prevent the content from shifting when the scrollbar is removed:
+
+```tsx
+<header
+  class="fixed top-0 inset-x-0 z-50"
+  style={{
+    'padding-right': 'var(--scrollbar-width, 0)',
+  }}
+>
+  Header
+</header>
+```
+
+## Further Reading
+This utility is a re-export of the `createPreventScroll` function from [corvu](https://corvu.dev). For more information, see [Prevent Scroll](https://corvu.dev/docs/utilities/prevent-scroll) in the corvu docs.
