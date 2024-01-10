@@ -33,8 +33,6 @@ export type DrawerContextValue = {
   allowSkippingSnapPoints: Accessor<boolean>
   /** Whether the logic to handle dragging on scrollable elements is enabled. */
   handleScrollableElements: Accessor<boolean>
-  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
-  scrollThreshold: Accessor<number>
 }
 
 const DrawerContext = createContext<DrawerContextValue>()

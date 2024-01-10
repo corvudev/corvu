@@ -56,8 +56,6 @@ export type DrawerRootProps = {
   allowSkippingSnapPoints?: boolean
   /** Corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property. *Default = `true`* */
   handleScrollableElements?: boolean
-  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. *Default = `25`* */
-  scrollThreshold?: number
   children:
     | JSX.Element
     | ((
@@ -95,8 +93,6 @@ export type DrawerRootChildrenProps = {
   allowSkippingSnapPoints: boolean
   /** Whether the logic to handle dragging on scrollable elements is enabled. */
   handleScrollableElements: boolean
-  /** Threshold in pixels after which the drawer is allowed to start dragging when the user tries to drag on an element that is scrollable in the opposite direction of the drawer. */
-  scrollThreshold: number
 }
 
 /** Context wrapper for the drawer. Is required for every drawer you create. */
@@ -116,7 +112,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       velocityCacheReset: 200,
       allowSkippingSnapPoints: true,
       handleScrollableElements: true,
-      scrollThreshold: 25,
     },
     props,
   )
@@ -133,7 +128,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     'velocityCacheReset',
     'allowSkippingSnapPoints',
     'handleScrollableElements',
-    'scrollThreshold',
     'open',
     'initialOpen',
     'onOpenChange',
@@ -285,9 +279,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     get handleScrollableElements() {
       return localProps.handleScrollableElements
     },
-    get scrollThreshold() {
-      return localProps.scrollThreshold
-    },
   }
 
   const memoizedChildren = createOnce(() => localProps.children)
@@ -326,7 +317,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           velocityCacheReset: () => localProps.velocityCacheReset,
           allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
           handleScrollableElements: () => localProps.handleScrollableElements,
-          scrollThreshold: () => localProps.scrollThreshold,
         }}
       >
         <InternalDrawerContext.Provider
@@ -345,7 +335,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             velocityCacheReset: () => localProps.velocityCacheReset,
             allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
             handleScrollableElements: () => localProps.handleScrollableElements,
-            scrollThreshold: () => localProps.scrollThreshold,
             dampFunction: localProps.dampFunction,
             velocityFunction: localProps.velocityFunction,
             setIsDragging,
