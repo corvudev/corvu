@@ -6,6 +6,7 @@ import {
   createSignal,
   type JSX,
   mergeProps,
+  onCleanup,
   splitProps,
   untrack,
 } from 'solid-js'
@@ -102,6 +103,7 @@ export type DrawerRootChildrenProps = {
 const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
+      initialOpen: false,
       snapPoints: [0, 1],
       breakPoints: [DefaultBreakpoint],
       defaultSnapPoint: 1,
@@ -165,24 +167,35 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     return getComputedStyle(contentRef)
   })
 
-  // TODO: This is a workaround because memos are synchronous in Solid v1.
-  //       The height is still 0 when running in a memo because
-  //       the children of the drawer element haven't been attached to
-  //       the DOM yet.
-  //       Maybe this can be rewritten to use a memo in v2.
   const [drawerSize, setDrawerSize] = createSignal(0)
+
   createEffect(() => {
-    switch (localProps.side) {
-      case 'top':
-      case 'bottom':
-        setDrawerSize(dialogContext()?.contentRef()?.clientHeight ?? 0)
-        break
-      case 'left':
-      case 'right':
-        setDrawerSize(dialogContext()?.contentRef()?.clientWidth ?? 0)
-        break
-    }
+    if (!dialogContext()?.open()) return
+    const element = dialogContext()?.contentRef()
+    if (!element) return
+
+    const observer = new ResizeObserver(resizeObserverCallback)
+    observer.observe(element)
+    onCleanup(() => {
+      observer.disconnect()
+    })
   })
+
+  const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
+    for (const entry of entries) {
+      if (entry.target !== dialogContext()?.contentRef()) continue
+      switch (localProps.side) {
+        case 'top':
+        case 'bottom':
+          setDrawerSize(entry.target.clientHeight)
+          break
+        case 'left':
+        case 'right':
+          setDrawerSize(entry.target.clientWidth)
+          break
+      }
+    }
+  }
 
   const resolvedActiveSnapPoint = createMemo(() =>
     resolveSnapPoint(activeSnapPoint(), drawerSize()),
