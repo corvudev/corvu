@@ -21,7 +21,7 @@ const ExampleWrapper: FlowComponent<{
 
   return (
     <div class="not-prose my-3 @container">
-      <div class="flex items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-1000 p-2">
+      <div class="flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-1000 p-2">
         <Show
           when={viewCode() && props.codeSnippets.length > 1}
           fallback={<div />}
