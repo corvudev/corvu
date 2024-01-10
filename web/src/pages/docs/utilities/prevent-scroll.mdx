@@ -4,18 +4,27 @@ title: SolidJS Prevent Scroll
 description: Prevent scroll outside of a given element.
 image: https://corvu.dev/banner.jpg
 ---
+import Features from '@components/docs/Features.astro'
 import Code from '@components/docs/code/Code.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
 
 # Prevent Scroll
 
-Utility which prevents scrolling on the body element. Useful when working with modals, dropdowns, etc.
+Utility that prevents scrolling outside of a given DOM element. Works by preventing events that else would lead to scrolling.
 
-By default, this utility will add padding to the body element to prevent the page from jumping when the scrollbar is removed. This can be disabled by passing `preventScrollbarShift = false`.
-
-It also adds the CSS variable `--scrollbar-width` to the body element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to elements that are fixed, like a topbar for example.
+## Features
+<Features features={[
+  'Supports nested scroll containers',
+  'Works both vertically and horizontally',
+  'Removes the body scrollbar without layout shift',
+]} />
 
 ## Usage
+
+By default, it also hides the scrollbar of the body element and adds padding to it to prevent the page from jumping. This behavior can be disabled and modified with the `hideScrollbar`, `preventScrollbarShift`, and `preventScrollbarShiftMode` props.
+
+It also adds the CSS variable `--scrollbar-width` to the body element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to fixed elements, like a topbar.
+
 <Code code={`
 import { createPreventScroll } from 'corvu'
 `} lang="tsx" copyButton />
@@ -23,13 +32,17 @@ import { createPreventScroll } from 'corvu'
 const DialogContent: Component<{
   open: boolean
 }> = (props) => {
+  const [ref, setRef] = createSignal(null)
+
   createPreventScroll({
-    enabled: () => props.open
+    element: ref,
+    enabled: () => props.open,
+    hideScrollbar: true, // default
   })
 
   return (
     <Show when={props.open}>
-      <div>Dialog</div>
+      <div ref={setRef}>Dialog</div>
     </Show>
   )
 }

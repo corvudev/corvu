@@ -121,6 +121,14 @@ Corvu's tailwind plugin also provides a `corvu-transitioning` modifier that you 
 </Drawer.Content>
 `} lang="tsx" copyButton />
 
+Additionally, there are different data attributes applied depending on the current state of the drawer:
+
+- `data-opening`: Present when the drawer is in the open transition.
+- `data-closing`: Present when the drawer is in the close transition.
+- `data-snapping`: Present when the drawer is transitioning after the user stops dragging.
+
+This allows you to apply different transitions based on the transition state of the drawer.
+
 You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children function and use it to animate the background for example:
 
 <Code code={`

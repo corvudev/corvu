@@ -1,21 +1,26 @@
 ---
 layout: '@layouts/Docs.astro'
 title: SolidJS Focus Trap
-description: Trap focus inside a given element. Is aware of changes being made to the DOM tree inside the focus trap by using a MutationObserver.
+description: Trap focus inside a given element. Is aware of changes being made to the DOM tree inside the focus trap.
 image: https://corvu.dev/banner.jpg
 ---
+import Features from '@components/docs/Features.astro'
 import Code from '@components/docs/code/Code.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
 
 # Focus Trap
 
-Traps focus inside a given DOM element. Has many options to customize the behavior like if the focus should be restored when the trap is disabled and it provides callback functions for the `onInitialFocus` and `onFinalFocus` events which are preventable.
+Utility that traps focus inside a given DOM element.
 
-**Default behavior**
-
-The first focusable element within the focus trap element will be focused initially. When the trap is disabled, the focus will be restored to the element that was focused before the trap was enabled.
+## Features
+<Features features={[
+  'Watches for DOM changes inside the focus trap and updates accordingly',
+  'Properly restores focus when the trap gets disabled',
+  'Very customizable',
+]} />
 
 ## Usage
+
 <Code code={`
 import { createFocusTrap } from 'corvu'
 `} lang="tsx" copyButton />
@@ -37,6 +42,8 @@ const DialogContent: Component<{
   )
 }
 `} lang="tsx" copyButton />
+
+The first focusable element within the focus trap element will be focused initially. When the trap is disabled, the focus will be restored to the element that was focused before the trap was enabled.
 
 ### Custom initial focus element
 This example shows how to customize the initial focus element so that the focus moves to a specific element when the trap gets enabled.
