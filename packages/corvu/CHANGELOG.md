@@ -1,5 +1,25 @@
 # corvu
 
+## 0.2.0
+
+### Minor Changes
+
+- Remove scrollThreshold from the drawer as it's not needed anymore - [`c73b2fb`](https://github.com/corvudev/corvu/commit/c73b2fb96519f08549b67243425af160a0627b4f) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Rename createDisableScroll to createPreventScroll - [`ca5b647`](https://github.com/corvudev/corvu/commit/ca5b6478541637208a45d1ea4eebe0e844f82d75) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Rewrite createDisableScroll - [`a37b873`](https://github.com/corvudev/corvu/commit/a37b873710644411ebf40c15fbac34463b7a4cb4) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Unify create functions and improve docs - [`fb50ce3`](https://github.com/corvudev/corvu/commit/fb50ce3ef57f303ed4d5779fdd0d0f189268d1b6) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+### Patch Changes
+
+- Watch for drawer height changes - [`fda114e`](https://github.com/corvudev/corvu/commit/fda114ed35cd791e1af53730a575ec3da30e4e48) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add transitionState to the drawer primitive - [`8232435`](https://github.com/corvudev/corvu/commit/8232435a820aa44857428f8fcf27a354f95c70b6) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Disable drag on elements with the data-corvu-no-drag attribute - [`0427844`](https://github.com/corvudev/corvu/commit/0427844dcdc2d7bc2028667c6ff93f44a38810b6) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.2
 
 ### Patch Changes
