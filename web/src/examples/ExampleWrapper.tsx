@@ -33,7 +33,7 @@ const ExampleWrapper: FlowComponent<{
                 setActiveExample(parseInt(e.currentTarget.value, 10))
                 setActiveTab(0)
               }}
-              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-1000 !bg-caret py-1.5 pl-3 pr-10 text-sm text-corvu-50"
+              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-1000 !bg-caret py-1.5 pl-3 pr-10 text-sm text-corvu-text"
               aria-label="Select template"
             >
               <For each={props.codeSnippets}>

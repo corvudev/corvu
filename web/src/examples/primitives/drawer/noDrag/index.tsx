@@ -1,14 +1,13 @@
-import clsx from 'clsx'
 import Drawer from 'corvu/drawer'
-import { For, type VoidComponent } from 'solid-js'
+import type { VoidComponent } from 'solid-js'
 
-const DrawerScrollableExample: VoidComponent = () => {
+const DrawerNoDragExample: VoidComponent = () => {
   return (
     <Drawer.Root>
       {(props) => (
         <>
           <p class="mb-2 rounded-lg bg-corvu-300 px-2 py-1 font-bold">
-            Scrollable example
+            No drag example
           </p>
           <Drawer.Trigger class="rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
             Open Drawer
@@ -23,22 +22,17 @@ const DrawerScrollableExample: VoidComponent = () => {
               }}
             />
             <Drawer.Content class="peer fixed inset-x-0 bottom-0 z-50 mx-auto flex h-full max-h-[500px] flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] lg:select-none">
-              <div class="h-1 w-10 shrink-0 self-center rounded-full bg-corvu-50" />
+              <div class="h-1 w-10 self-center rounded-full bg-corvu-50" />
               <Drawer.Label class="mt-2 text-center text-xl font-bold">
-                Drawer with a scrollable element
+                I'm a drawer!
               </Drawer.Label>
-              <div class="mt-3 grow divide-y divide-corvu-400 overflow-y-auto">
-                <For each={new Array(30)}>
-                  {(_, idx) => (
-                    <p
-                      class={clsx('py-2 text-center font-bold', {
-                        'bg-corvu-dark': idx() % 2 === 0,
-                      })}
-                    >
-                      List item {idx() + 1}
-                    </p>
-                  )}
-                </For>
+              <div
+                class="m-6 flex h-[200px] items-center justify-center rounded-lg border-2 border-corvu-400 text-center text-lg"
+                data-corvu-no-drag
+              >
+                Dragging in here does nothing.
+                <br />
+                Have a cookie 🍪
               </div>
             </Drawer.Content>
           </Drawer.Portal>
@@ -48,4 +42,4 @@ const DrawerScrollableExample: VoidComponent = () => {
   )
 }
 
-export default DrawerScrollableExample
+export default DrawerNoDragExample

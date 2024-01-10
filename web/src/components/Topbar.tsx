@@ -25,7 +25,7 @@ const Topbar: FlowComponent = (props) => {
 
   return (
     <header
-      class="fixed inset-x-0 top-0 z-50"
+      class="fixed inset-x-0 top-0 z-30"
       style={{
         'padding-right': 'var(--scrollbar-width, 0)',
       }}

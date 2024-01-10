@@ -16,7 +16,7 @@ const DialogExample: VoidComponent = () => {
           <Dialog.Description class="mt-2">
             Tell us what you like about Solid the most!
           </Dialog.Description>
-          <textarea class="mt-3 w-full rounded border-2 border-corvu-500 bg-corvu-dark focus:outline-none" />
+          <textarea class="mt-3 w-full rounded border-2 border-corvu-500 focus:outline-none" />
           <div class="mt-3 flex justify-between">
             <Dialog.Close class="rounded-md bg-corvu-200 px-3 py-2 text-corvu-dark">
               Cancel

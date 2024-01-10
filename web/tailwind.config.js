@@ -8,7 +8,6 @@ export default {
     typography: {
       DEFAULT: {
         css: {
-          color: '#f2f0fe',
           'blockquote > p': {
             marginBottom: '0px !important',
             fontSize: '1rem !important',
@@ -36,6 +35,7 @@ export default {
       },
       colors: {
         corvu: {
+          text: '#dbd9e6',
           50: '#f2f0fe',
           100: '#e6e2fd',
           200: '#d4cbfb',

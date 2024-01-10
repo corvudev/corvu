@@ -17,6 +17,10 @@ import BreakpointsExample from '@examples/primitives/drawer/breakpoints/index'
 import BreakpointsTailwindTsx from '@examples/primitives/drawer/breakpoints/index?raw'
 import ScrollableExample from '@examples/primitives/drawer/scrollable/index'
 import ScrollableTailwindTsx from '@examples/primitives/drawer/scrollable/index?raw'
+import CommentsExample from '@examples/primitives/drawer/comments/index'
+import CommentsTailwindTsx from '@examples/primitives/drawer/comments/index?raw'
+import NoDragExample from '@examples/primitives/drawer/noDrag/index'
+import NoDragTailwindTsx from '@examples/primitives/drawer/noDrag/index?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
@@ -209,6 +213,64 @@ Scrollable elements work out of the box. The drawer will check if the user is dr
 }]} client:load>
   <ScrollableExample client:load />
   <RawCode slot="tailwindTsx" code={ScrollableTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Dynamic content height
+You might want the height of the drawer to adjust so its content is always fully visible no matter what snap point the user is on.
+
+A common example would be a comment section which can be expanded:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <CommentsExample client:load />
+  <RawCode slot="tailwindTsx" code={CommentsTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+To achieve this, you can use the `props.openPercentage` property and change the height of the drawer accordingly. Make sure to create a wrapper element inside `Drawer.Content` and not apply the height directly to the `Content` component, otherwise the drawer will not be able to calculate the correct height.
+
+<Code code={`
+style={{
+  height: \`\${
+    props.openPercentage < 0.7
+      ? 70
+      : props.openPercentage * 100
+  }%\`,
+}}
+`} lang="tsx" copyButton />
+
+The height will adjust to match the drawer's height until it's under 70%, which is the last snap point. Don't forget to apply the same transition function as you defined for your drawer transform and you're good to go!
+
+### Disable dragging on certain elements
+You can disable drag on an element by giving it the `data-corvu-no-drag` attribute. Corvu will ignore any drag events on elements with this attribute.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <NoDragExample client:load />
+  <RawCode slot="tailwindTsx" code={NoDragTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 
