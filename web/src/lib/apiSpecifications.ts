@@ -249,7 +249,7 @@ export const utilitySpecifications: {
     functions: [
       {
         name: 'createControllableSignal',
-        forcedSorting: ['value', 'onChange', 'defaultValue'],
+        forcedSorting: ['value', 'onChange', 'initialValue'],
       },
     ],
   },

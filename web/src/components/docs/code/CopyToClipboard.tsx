@@ -25,12 +25,12 @@ const CopyToClipboard: VoidComponent<{ code: string }> = (props) => {
   return (
     <>
       {copied() && (
-        <p class="absolute right-10 top-2.5 rounded bg-corvu-1000 p-1 text-corvu-400/90 opacity-100 animate-in slide-in-from-right-3">
+        <p class="absolute right-8 top-0 bg-corvu-1000 p-2 text-sm text-corvu-400/90 opacity-100 animate-in slide-in-from-right-3">
           copied!
         </p>
       )}
       <button
-        class={clsx('absolute right-2 top-2 bg-corvu-1000 p-2', {
+        class={clsx('absolute right-1 top-0 bg-corvu-1000 p-2', {
           'text-corvu-400/80': !copied(),
           'text-corvu-400': copied(),
         })}

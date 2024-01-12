@@ -23,7 +23,7 @@ const Dialog: Component<{
 }> = (props) => {
   const [open, setOpen] = createControllableSignal({
     value: () => props.open,
-    defaultValue: () => props.initialOpen,
+    initialValue: () => props.initialOpen,
     onChange: props.onOpenChange,
   })
 
