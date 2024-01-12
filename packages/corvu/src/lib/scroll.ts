@@ -60,36 +60,6 @@ const isScrollable = (element: HTMLElement, axis: Axis | 'both') => {
 }
 
 /**
- * Returns true if the given location is scrollable on the given axis.
- *
- * @param location - The HTMLElement to check.
- * @param axis - The axis to check for.
- * @param stopAt - The HTMLElement to stop at when searching up the tree for scrollable elements. Defaults to the body element.
- * @returns Whether the location is scrollable.
- */
-const locationIsScrollable = (
-  location: HTMLElement,
-  axis: Axis | 'both',
-  stopAt?: HTMLElement,
-) => {
-  let currentElement: HTMLElement | null = location
-
-  let stopReached = false
-
-  do {
-    if (isScrollable(currentElement, axis)) return true
-
-    if (currentElement === (stopAt ?? document.body)) {
-      stopReached = true
-    } else {
-      currentElement = currentElement.parentElement
-    }
-  } while (currentElement && !stopReached)
-
-  return false
-}
-
-/**
  * Returns all scrollable elements at the given location.
  *
  * @param location - The HTMLElement to check.
@@ -175,7 +145,6 @@ export {
   getScrollDimensions,
   isScrollContainer,
   isScrollable,
-  locationIsScrollable,
   getScrollablesAtLocation,
   getScrollAtLocation,
 }

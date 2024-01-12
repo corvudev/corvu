@@ -5,7 +5,6 @@
  * https://github.com/theKashey/react-remove-scroll
  */
 
-import { access, sleep } from '@lib/utils'
 import type { Axis, MaybeAccessor } from '@lib/types'
 import {
   createEffect,
@@ -14,8 +13,9 @@ import {
   mergeProps,
   onCleanup,
 } from 'solid-js'
-import { getScrollAtLocation, locationIsScrollable } from '@lib/scroll'
+import { access } from '@lib/utils'
 import createStyle from '@lib/create/style'
+import { getScrollAtLocation } from '@lib/scroll'
 
 const [preventScrollStack, setPreventScrollStack] = createSignal<string[]>([])
 const isActive = (id: string) =>
@@ -24,7 +24,7 @@ const isActive = (id: string) =>
 /**
  * Prevents scroll outside of the given element.
  *
- * @param props.element - Prevent scroll outside of this element.
+ * @param props.element - Prevent scroll outside of this element. If the element is `null`, scroll will be prevented on the whole page. *Default = `null`*
  * @param props.enabled - Whether scroll should be prevented. *Default = `true`*
  * @param props.hideScrollbar - Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
  * @param props.preventScrollbarShift - Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
@@ -32,7 +32,7 @@ const isActive = (id: string) =>
  * @param props.allowPinchZoom - Whether pinch zoom should be allowed. *Default = `false`*
  */
 const createPreventScroll = (props: {
-  element: MaybeAccessor<HTMLElement | null>
+  element?: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
   hideScrollbar?: MaybeAccessor<boolean>
   preventScrollbarShift?: MaybeAccessor<boolean>
@@ -41,6 +41,7 @@ const createPreventScroll = (props: {
 }) => {
   const defaultedProps = mergeProps(
     {
+      element: null,
       enabled: true,
       hideScrollbar: true,
       preventScrollbarShift: true,
@@ -52,12 +53,6 @@ const createPreventScroll = (props: {
 
   const preventScrollId = createUniqueId()
 
-  const currentEvents: {
-    type: string
-    delta: [number, number]
-    target: HTMLElement
-    shouldCancel: boolean
-  }[] = []
   let currentTouchStart: [number, number] = [0, 0]
   let currentTouchStartAxis: Axis | null = null
   let currentTouchStartDelta: number | null = null
@@ -75,10 +70,7 @@ const createPreventScroll = (props: {
   })
 
   createEffect(() => {
-    const element = access(defaultedProps.element)
-
     if (
-      !element ||
       !access(defaultedProps.enabled) ||
       !access(defaultedProps.hideScrollbar)
     )
@@ -87,8 +79,6 @@ const createPreventScroll = (props: {
     const { body } = document
 
     const scrollbarWidth = window.innerWidth - body.offsetWidth
-
-    if (scrollbarWidth === 0) return
 
     const style: Partial<CSSStyleDeclaration> = {
       overflow: 'hidden',
@@ -123,41 +113,30 @@ const createPreventScroll = (props: {
       style,
       properties,
       cleanup: () => {
-        window.scrollTo(offsetLeft, offsetTop)
+        if (scrollbarWidth > 0) {
+          window.scrollTo(offsetLeft, offsetTop)
+        }
       },
     })
   })
 
   createEffect(() => {
-    const element = access(defaultedProps.element)
+    if (!isActive(preventScrollId) || !access(defaultedProps.enabled)) return
 
-    if (
-      !isActive(preventScrollId) ||
-      !element ||
-      !access(defaultedProps.enabled)
-    )
-      return
-
-    document.addEventListener('wheel', maybePreventScroll, { passive: false })
+    document.addEventListener('wheel', maybePreventWheel, {
+      passive: false,
+    })
+    document.addEventListener('touchstart', logTouchStart, {
+      passive: false,
+    })
     document.addEventListener('touchmove', maybePreventTouch, {
       passive: false,
     })
-    document.addEventListener('touchstart', logTouchStart, { passive: false })
-
-    element.addEventListener('scroll', scrollCapture, { capture: true })
-    element.addEventListener('wheel', scrollCapture, { capture: true })
-    element.addEventListener('touchmove', touchMoveCapture, { capture: true })
 
     onCleanup(() => {
-      document.removeEventListener('wheel', maybePreventScroll)
-      document.removeEventListener('touchmove', maybePreventTouch)
+      document.removeEventListener('wheel', maybePreventWheel)
       document.removeEventListener('touchstart', logTouchStart)
-
-      element.removeEventListener('scroll', scrollCapture, { capture: true })
-      element.removeEventListener('wheel', scrollCapture, { capture: true })
-      element.removeEventListener('touchmove', touchMoveCapture, {
-        capture: true,
-      })
+      document.removeEventListener('touchmove', maybePreventTouch)
     })
   })
 
@@ -167,31 +146,28 @@ const createPreventScroll = (props: {
     currentTouchStartDelta = null
   }
 
-  const scrollCapture = (event: Event | WheelEvent) => {
-    const wrapper = access(defaultedProps.element)!
+  const maybePreventWheel = (event: WheelEvent) => {
+    const target = event.target as HTMLElement
+    const wrapper = access(defaultedProps.element)
 
     const delta = getDeltaXY(event as WheelEvent)
+    const axis = Math.abs(delta[0]) > Math.abs(delta[1]) ? 'x' : 'y'
+    const axisDelta = axis === 'x' ? delta[0] : delta[1]
 
-    const axis: Axis = Math.abs(delta[0]) > Math.abs(delta[1]) ? 'x' : 'y'
-
+    const resultsInScroll = wouldScroll(target, axis, axisDelta, wrapper)
     let shouldCancel: boolean
-
-    if (!locationIsScrollable(event.target as HTMLElement, axis, wrapper)) {
-      shouldCancel = true
+    if (wrapper && wrapper.contains(target)) {
+      shouldCancel = !resultsInScroll
     } else {
-      shouldCancel = handleScroll(
-        access(defaultedProps.element)!,
-        event.target as HTMLElement,
-        axis === 'x' ? delta[0] : delta[1],
-        axis,
-      )
+      shouldCancel = resultsInScroll
     }
-
-    recordCurrentEvent(event, getDeltaXY(event as WheelEvent), shouldCancel)
+    if (shouldCancel && event.cancelable) {
+      event.preventDefault()
+    }
   }
 
-  const touchMoveCapture = (event: TouchEvent) => {
-    const wrapper = access(defaultedProps.element)!
+  const maybePreventTouch = (event: TouchEvent) => {
+    const wrapper = access(defaultedProps.element)
     const target = event.target as HTMLElement
 
     let shouldCancel: boolean
@@ -204,7 +180,7 @@ const createPreventScroll = (props: {
         const delta = getTouchXY(event).map(
           (touch, i) => currentTouchStart[i]! - touch,
         ) as [number, number]
-        const axis: Axis = Math.abs(delta[0]) > Math.abs(delta[1]) ? 'x' : 'y'
+        const axis = Math.abs(delta[0]) > Math.abs(delta[1]) ? 'x' : 'y'
 
         currentTouchStartAxis = axis
         currentTouchStartDelta = axis === 'x' ? delta[0] : delta[1]
@@ -213,59 +189,23 @@ const createPreventScroll = (props: {
       // Allow touch on range inputs
       if ((target as HTMLInputElement).type === 'range') {
         shouldCancel = false
-      } else if (
-        !locationIsScrollable(target, currentTouchStartAxis, wrapper)
-      ) {
-        shouldCancel = true
       } else {
-        shouldCancel = handleScroll(
-          access(defaultedProps.element)!,
-          event.target as HTMLElement,
-          currentTouchStartDelta,
+        const wouldResultInScroll = wouldScroll(
+          target,
           currentTouchStartAxis,
+          currentTouchStartDelta,
+          wrapper,
         )
+        if (wrapper && wrapper.contains(target)) {
+          shouldCancel = !wouldResultInScroll
+        } else {
+          shouldCancel = wouldResultInScroll
+        }
       }
     }
 
-    recordCurrentEvent(event, getTouchXY(event), shouldCancel)
-  }
-
-  const recordCurrentEvent = (
-    event: Event,
-    delta: [number, number],
-    shouldCancel: boolean,
-  ) => {
-    const currentEvent = {
-      type: event.type,
-      delta,
-      target: event.target as HTMLElement,
-      shouldCancel,
-    }
-    currentEvents.push(currentEvent)
-    sleep(0).then(() => {
-      const index = currentEvents.indexOf(currentEvent)
-      if (index === -1) return
-      currentEvents.splice(index, 1)
-    })
-  }
-
-  const maybePreventScroll = (event: WheelEvent) =>
-    maybePrevent(event, getDeltaXY(event))
-  const maybePreventTouch = (event: TouchEvent) =>
-    maybePrevent(event, getTouchXY(event))
-
-  const maybePrevent = (event: Event, delta: [number, number]) => {
-    const sourceEvent = currentEvents.find(
-      (currentEvent) =>
-        currentEvent.type === event.type &&
-        currentEvent.target === event.target &&
-        deltaEquals(currentEvent.delta, delta),
-    )
-
-    if (!sourceEvent || (sourceEvent && sourceEvent.shouldCancel)) {
-      if (event.cancelable) {
-        event.preventDefault()
-      }
+    if (shouldCancel && event.cancelable) {
+      event.preventDefault()
     }
   }
 }
@@ -280,16 +220,22 @@ const getTouchXY = (event: TouchEvent): [number, number] =>
     ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY]
     : [0, 0]
 
-const deltaEquals = (a: [number, number], b: [number, number]) =>
-  a[0] === b[0] && a[1] === b[1]
-
-const handleScroll = (
-  wrapper: HTMLElement,
+/**
+ * Checks whether a certain delta on a target would result in scrolling on the given axis.
+ *
+ * @param target - The target element.
+ * @param delta - The delta to check.
+ * @param axis - The axis to check.
+ * @param wrapper - The wrapper element. If the target is contained in the wrapper, the function will check if it would scroll inside the wrapper
+ * @returns Whether the delta would result in scrolling on the given axis.
+ */
+const wouldScroll = (
   target: HTMLElement,
-  delta: number,
   axis: Axis,
+  delta: number,
+  wrapper: HTMLElement | null,
 ) => {
-  const targetInWrapper = wrapper.contains(target)
+  const targetInWrapper = wrapper && wrapper.contains(target)
 
   const [availableScroll, availableScrollTop] = getScrollAtLocation(
     target,
@@ -299,12 +245,13 @@ const handleScroll = (
 
   // On firefox, availableScroll can be 1 even if there is no scroll available.
   if (delta > 0 && Math.abs(availableScroll) <= 1) {
-    return true
-  } else if (delta < 0 && Math.abs(availableScrollTop) < 1) {
-    return true
+    return false
+  }
+  if (delta < 0 && Math.abs(availableScrollTop) < 1) {
+    return false
   }
 
-  return false
+  return true
 }
 
 export default createPreventScroll
