@@ -1,5 +1,11 @@
 # corvu
 
+## 0.2.1
+
+### Patch Changes
+
+- Refactor preventScroll to require fewer event listeners and make element optional - [`503d816`](https://github.com/corvudev/corvu/commit/503d8163d009d1e232f2367ab0e363525f588cbb) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.2.0
 
 ### Minor Changes
