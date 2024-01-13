@@ -1,5 +1,4 @@
 import {
-  createEffect,
   createMemo,
   onCleanup,
   splitProps,
@@ -34,13 +33,13 @@ const DialogLabel = <
 ) => {
   const [localProps, otherProps] = splitProps(props, ['as', 'contextId'])
 
-  const context = createMemo(() =>
-    useInternalDialogContext(localProps.contextId),
-  )
+  const context = createMemo(() => {
+    const context = useInternalDialogContext(localProps.contextId)
 
-  createEffect(() => {
-    context().registerLabelId()
-    onCleanup(() => context().unregisterLabelId())
+    context.registerLabelId()
+    onCleanup(() => context.unregisterLabelId())
+
+    return context
   })
 
   return (

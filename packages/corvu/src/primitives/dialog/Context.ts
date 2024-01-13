@@ -53,7 +53,7 @@ const DialogContext = createContext<DialogContextValue>()
 export const createDialogContext = (contextId?: string) => {
   if (!contextId) return DialogContext
 
-  const context = createKeyedContext<DialogContextValue>(contextId)
+  const context = createKeyedContext<DialogContextValue>(`dialog-${contextId}`)
   return context
 }
 
@@ -69,7 +69,7 @@ export const useDialogContext = (contextId?: string) => {
     return context
   }
 
-  const context = useKeyedContext<DialogContextValue>(contextId)
+  const context = useKeyedContext<DialogContextValue>(`dialog-${contextId}`)
   if (!context) {
     throw new Error(
       `[corvu]: Dialog context with id "${contextId}" not found. Make sure to wrap Dialog components in <Dialog.Root contextId="${contextId}">`,
@@ -95,7 +95,7 @@ export const createInternalDialogContext = (contextId?: string) => {
   if (!contextId) return InternalDialogContext
 
   const context = createKeyedContext<InternalDialogContextValue>(
-    `internal-${contextId}`,
+    `dialog-internal-${contextId}`,
   )
   return context
 }
@@ -112,7 +112,7 @@ export const useInternalDialogContext = (contextId?: string) => {
   }
 
   const context = useKeyedContext<InternalDialogContextValue>(
-    `internal-${contextId}`,
+    `dialog-internal-${contextId}`,
   )
   if (!context) {
     throw new Error(
