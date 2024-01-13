@@ -11,7 +11,7 @@ function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
     format,
     clean: true,
     dts: format === 'esm' && !jsx,
-    entry: ['src/index.tsx', 'src/primitives/*/index.tsx'],
+    entry: ['src/index.ts', 'src/primitives/*/index.ts'],
     outDir: 'dist/',
     treeshake: { preset: 'smallest' },
     replaceNodeEnv: true,
