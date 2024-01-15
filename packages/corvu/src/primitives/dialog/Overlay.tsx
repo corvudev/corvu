@@ -10,7 +10,7 @@ import Polymorphic, {
   type PolymorphicAttributes,
 } from '@lib/components/Polymorphic'
 import type { OverrideComponentProps } from '@lib/types'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
+import { useInternalDialogContext } from '@primitives/dialog/context'
 
 const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 

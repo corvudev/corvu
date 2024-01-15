@@ -6,7 +6,7 @@ import Description, {
 import {
   type DialogContextValue,
   useDialogContext as useContext,
-} from '@primitives/dialog/Context'
+} from '@primitives/dialog/context'
 import Label, { type DialogLabelProps } from '@primitives/dialog/Label'
 import Overlay, { type DialogOverlayProps } from '@primitives/dialog/Overlay'
 import Portal, { type DialogPortalProps } from '@primitives/dialog/Portal'

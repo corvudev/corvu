@@ -17,8 +17,8 @@ import {
 import type { Axis } from '@lib/types'
 import { dataIf } from '@lib/utils'
 import { getScrollAtLocation } from '@lib/scroll'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
-import { useInternalDrawerContext } from '@primitives/drawer/Context'
+import { useInternalDialogContext } from '@primitives/dialog/context'
+import { useInternalDrawerContext } from '@primitives/drawer/context'
 
 const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
 

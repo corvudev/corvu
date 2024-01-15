@@ -12,7 +12,7 @@ import Polymorphic, {
 import createPreventScroll from '@lib/create/preventScroll'
 import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
+import { useInternalDialogContext } from '@primitives/dialog/context'
 
 const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
 

@@ -17,7 +17,7 @@ import {
 import {
   type DrawerContextValue,
   useDrawerContext as useContext,
-} from '@primitives/drawer/Context'
+} from '@primitives/drawer/context'
 import Root, {
   DefaultBreakpoint,
   type DrawerRootChildrenProps,

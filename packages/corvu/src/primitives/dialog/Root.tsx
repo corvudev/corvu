@@ -11,7 +11,7 @@ import {
 import {
   createDialogContext,
   createInternalDialogContext,
-} from '@primitives/dialog/Context'
+} from '@primitives/dialog/context'
 import { access } from '@lib/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createFocusTrap from '@lib/create/focusTrap'

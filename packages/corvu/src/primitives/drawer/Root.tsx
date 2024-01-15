@@ -13,7 +13,7 @@ import {
 import {
   createDrawerContext,
   createInternalDrawerContext,
-} from '@primitives/drawer/Context'
+} from '@primitives/drawer/context'
 import DialogRoot, {
   type DialogRootChildrenProps,
   type DialogRootProps,
@@ -21,7 +21,7 @@ import DialogRoot, {
 import {
   type InternalDialogContextValue,
   useInternalDialogContext,
-} from '@primitives/dialog/Context'
+} from '@primitives/dialog/context'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
 import { createWritableMemo } from '@solid-primitives/memo'

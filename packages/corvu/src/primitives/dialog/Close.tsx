@@ -3,7 +3,7 @@ import { callEventHandler } from '@lib/utils'
 import type { OverrideComponentProps } from '@lib/types'
 import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import PolymorphicButton from '@lib/components/PolymorphicButton'
-import { useInternalDialogContext } from '@primitives/dialog/Context'
+import { useInternalDialogContext } from '@primitives/dialog/context'
 
 const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
 
