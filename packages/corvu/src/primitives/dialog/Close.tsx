@@ -19,7 +19,7 @@ export type DialogCloseProps<
   }
 >
 
-/** Close button which changes the open state to false when clicked.
+/** Close button that changes the open state to false when clicked.
  *
  * @data `data-corvu-dialog-close` - Present on every dialog close element.
  */

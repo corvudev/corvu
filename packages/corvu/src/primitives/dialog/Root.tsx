@@ -23,7 +23,7 @@ import { isFunction } from '@lib/assertions'
 export type DialogRootProps = {
   /** The `role` attribute of the dialog element. *Default = `'dialog'`* */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not. *Default = `false`* */
+  /** Whether the dialog is open or not. */
   open?: boolean
   /** Callback fired when the open state changes. */
   onOpenChange?(open: boolean): void

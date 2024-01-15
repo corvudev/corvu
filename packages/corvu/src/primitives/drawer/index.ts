@@ -4,6 +4,7 @@ import {
   type ContentProps,
   Description,
   type DescriptionProps,
+  type ContextValue as DialogContextValue,
   Label,
   type LabelProps,
   Overlay,
@@ -27,6 +28,7 @@ import Content from '@primitives/drawer/Content'
 
 export type {
   DrawerContextValue as ContextValue,
+  DialogContextValue,
   DrawerRootProps as RootProps,
   DrawerRootChildrenProps as RootChildrenProps,
   TriggerProps,
