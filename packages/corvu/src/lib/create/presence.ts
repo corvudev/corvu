@@ -10,7 +10,7 @@ import { access } from '@lib/utils'
 import type { MaybeAccessor } from 'src'
 
 /**
- * Creates a presence which is aware of css animations and waits for them to finish before changing changing it's state to `hidden`.
+ * Manages the presence of an element in the DOM while being aware of pending animations.
  *
  * @param props.show - Whether the presence is showing or not.
  * @param props.element - The element which animations should be tracked.

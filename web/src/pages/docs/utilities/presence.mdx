@@ -9,7 +9,7 @@ import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
 
 # Presence
 
-A presence is used to create animation-aware components which wait for any animation to finish before removing the element from the DOM. You can see it in action in the [Dialog](/docs/primitives/dialog) primitive.
+Manages the presence of an element in the DOM while being aware of pending animations before unmounting it. You can see it in action in the [Dialog](/docs/primitives/dialog) primitive.
 
 The `createPresence` utility returns a boolean called `present` which indicates if the element should be present in the DOM or not.
 
