@@ -106,8 +106,12 @@ export type DialogRootChildrenProps = {
   finalFocusEl?: HTMLElement
   /** Whether the dialog content is present. This differes from `open` as it tracks pending animations. */
   contentPresent: boolean
+  /** The ref of the dialog content. */
+  contentRef: HTMLElement | null
   /** Whether the dialog overlay is present. This differes from `open` as it tracks pending animations. */
   overlayPresent: boolean
+  /** The ref of the dialog overlay. */
+  overlayRef: HTMLElement | null
   /** The `id` attribute of the dialog description element. */
   dialogId: string
   /** The `id` attribute of the dialog label element. Is undefined if no `Dialog.Label` is present. */
@@ -224,8 +228,14 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get contentPresent() {
       return contentPresent()
     },
+    get contentRef() {
+      return contentRef()
+    },
     get overlayPresent() {
       return overlayPresent()
+    },
+    get overlayRef() {
+      return overlayRef()
     },
     get dialogId() {
       return defaultedProps.dialogId
