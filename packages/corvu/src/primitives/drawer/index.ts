@@ -1,10 +1,17 @@
 import {
   Close,
+  type CloseProps,
+  type ContentProps,
   Description,
+  type DescriptionProps,
   Label,
+  type LabelProps,
   Overlay,
+  type OverlayProps,
   Portal,
+  type PortalProps,
   Trigger,
+  type TriggerProps,
   useContext as useDialogContext,
 } from '@primitives/dialog'
 import {
@@ -20,8 +27,15 @@ import Content from '@primitives/drawer/Content'
 
 export type {
   DrawerContextValue as ContextValue,
-  DrawerRootChildrenProps as RootChildrenProps,
   DrawerRootProps as RootProps,
+  DrawerRootChildrenProps as RootChildrenProps,
+  TriggerProps,
+  PortalProps,
+  OverlayProps,
+  ContentProps,
+  LabelProps,
+  DescriptionProps,
+  CloseProps,
 }
 
 export {

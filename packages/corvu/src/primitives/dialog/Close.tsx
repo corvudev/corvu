@@ -15,7 +15,7 @@ export type DialogCloseProps<
     /** The `id` of the dialog context to use. */
     contextId?: string
     /** @hidden */
-    onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
+    onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
   }
 >
 
@@ -38,9 +38,7 @@ const DialogClose = <
     useInternalDialogContext(localProps.contextId),
   )
 
-  const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
-    event,
-  ) => {
+  const onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (event) => {
     !callEventHandler(localProps.onClick, event) && context().setOpen(false)
   }
 

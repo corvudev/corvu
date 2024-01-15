@@ -164,7 +164,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const [drawerSize, setDrawerSize] = createSignal(0)
 
   createEffect(() => {
-    if (!dialogContext()?.open()) return
     const element = dialogContext()?.contentRef()
     if (!element) return
 

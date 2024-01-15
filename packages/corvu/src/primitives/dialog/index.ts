@@ -18,8 +18,8 @@ import Trigger, { type DialogTriggerProps } from '@primitives/dialog/Trigger'
 
 export type {
   DialogContextValue as ContextValue,
-  DialogRootChildrenProps as RootChildrenProps,
   DialogRootProps as RootProps,
+  DialogRootChildrenProps as RootChildrenProps,
   DialogTriggerProps as TriggerProps,
   DialogPortalProps as PortalProps,
   DialogOverlayProps as OverlayProps,

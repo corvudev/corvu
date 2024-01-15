@@ -15,11 +15,11 @@ export type DialogTriggerProps<
     /** The `id` of the dialog context to use. */
     contextId?: string
     /** @hidden */
-    onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
+    onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
   }
 >
 
-/** Button which changes the open state when clicked.
+/** Button which changes the open state of the dialog when clicked.
  *
  * @data `data-corvu-dialog-trigger` - Present on every dialog trigger element.
  * @data `data-open` - Present when the dialog is open.
@@ -40,7 +40,7 @@ const DialogTrigger = <
     useInternalDialogContext(localProps.contextId),
   )
 
-  const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (e) => {
+  const onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (e) => {
     !callEventHandler(localProps.onClick, e) &&
       context().setOpen((open) => !open)
   }
