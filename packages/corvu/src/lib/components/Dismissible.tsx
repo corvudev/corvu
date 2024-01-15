@@ -92,7 +92,7 @@ const RootDismissible: Component<DismissibleProps> = (props) => {
     noOutsidePointerEvents: () =>
       access(localProps.noOutsidePointerEvents) && localProps.enabled,
     onDismiss: (reason) => {
-      localProps.onDismiss?.(reason)
+      localProps.onDismiss(reason)
     },
     ...otherProps,
   })
@@ -170,7 +170,7 @@ const ChildDismissible: Component<
       access(localProps.dismissOnOutsidePointerDown) && isLastLayer(),
     noOutsidePointerEvents: () => access(localProps.noOutsidePointerEvents),
     onDismiss: (reason) => {
-      localProps.onDismiss?.(reason)
+      localProps.onDismiss(reason)
     },
     ...otherProps,
   })

@@ -42,4 +42,16 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: true,
+      },
+      rules: {
+        '@typescript-eslint/no-unnecessary-condition': 'error',
+      },
+    },
+  ],
 }

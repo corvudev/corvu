@@ -80,30 +80,28 @@ const getComponent = (componentName: ComponentSpecifications) => {
       ),
       parts: [],
     }
-    if (apiTypes) {
-      apiReference.parts.push({
-        name: 'Props',
-        props: apiTypes.sort((a, b) => {
-          const aIndex = component.forcedSorting?.indexOf(a.name)
-          const bIndex = component.forcedSorting?.indexOf(b.name)
-          if (aIndex !== undefined && bIndex !== undefined) {
-            return aIndex - bIndex
-          }
-          if (aIndex !== undefined) {
-            return -1
-          }
-          if (bIndex !== undefined) {
-            return 1
-          }
-          return a.name.localeCompare(b.name)
-        }),
-      })
-    }
+    apiReference.parts.push({
+      name: 'Props',
+      props: apiTypes.sort((a, b) => {
+        const aIndex = component.forcedSorting?.indexOf(a.name)
+        const bIndex = component.forcedSorting?.indexOf(b.name)
+        if (aIndex !== undefined && bIndex !== undefined) {
+          return aIndex - bIndex
+        }
+        if (aIndex !== undefined) {
+          return -1
+        }
+        if (bIndex !== undefined) {
+          return 1
+        }
+        return a.name.localeCompare(b.name)
+      }),
+    })
     if (dataTags) {
       apiReference.parts.push({
         name: 'Data',
         description: `Data attributes present on ${parentDeclaration.name}.${component.name} components.`,
-        props: dataTags ?? [],
+        props: dataTags,
       })
     }
 
@@ -134,25 +132,23 @@ const getComponent = (componentName: ComponentSpecifications) => {
       ),
       parts: [],
     }
-    if (apiTypes) {
-      apiReference.parts.push({
-        name: 'Returns',
-        props: apiTypes.sort((a, b) => {
-          const aIndex = context.forcedSorting?.indexOf(a.name)
-          const bIndex = context.forcedSorting?.indexOf(b.name)
-          if (aIndex !== undefined && bIndex !== undefined) {
-            return aIndex - bIndex
-          }
-          if (aIndex !== undefined) {
-            return -1
-          }
-          if (bIndex !== undefined) {
-            return 1
-          }
-          return a.name.localeCompare(b.name)
-        }),
-      })
-    }
+    apiReference.parts.push({
+      name: 'Returns',
+      props: apiTypes.sort((a, b) => {
+        const aIndex = context.forcedSorting?.indexOf(a.name)
+        const bIndex = context.forcedSorting?.indexOf(b.name)
+        if (aIndex !== undefined && bIndex !== undefined) {
+          return aIndex - bIndex
+        }
+        if (aIndex !== undefined) {
+          return -1
+        }
+        if (bIndex !== undefined) {
+          return 1
+        }
+        return a.name.localeCompare(b.name)
+      }),
+    })
 
     apiReferences.push(apiReference)
   }
@@ -179,25 +175,23 @@ const getComponent = (componentName: ComponentSpecifications) => {
       descriptionHtml: formatText(typeDeclaration.comment?.summary),
       parts: [],
     }
-    if (apiTypes) {
-      apiReference.parts.push({
-        name: 'Props',
-        props: apiTypes.sort((a, b) => {
-          const aIndex = type.forcedSorting?.indexOf(a.name)
-          const bIndex = type.forcedSorting?.indexOf(b.name)
-          if (aIndex !== undefined && bIndex !== undefined) {
-            return aIndex - bIndex
-          }
-          if (aIndex !== undefined) {
-            return -1
-          }
-          if (bIndex !== undefined) {
-            return 1
-          }
-          return a.name.localeCompare(b.name)
-        }),
-      })
-    }
+    apiReference.parts.push({
+      name: 'Props',
+      props: apiTypes.sort((a, b) => {
+        const aIndex = type.forcedSorting?.indexOf(a.name)
+        const bIndex = type.forcedSorting?.indexOf(b.name)
+        if (aIndex !== undefined && bIndex !== undefined) {
+          return aIndex - bIndex
+        }
+        if (aIndex !== undefined) {
+          return -1
+        }
+        if (bIndex !== undefined) {
+          return 1
+        }
+        return a.name.localeCompare(b.name)
+      }),
+    })
 
     apiReferences.push(apiReference)
   }
@@ -225,7 +219,7 @@ const resolveComponent = (component: DeclarationVariant) => {
   // Components always have their props inside a separate type
   const referenceType = component.signatures![0].parameters[0].type
 
-  if (!referenceType || referenceType.type !== 'reference') {
+  if (referenceType.type !== 'reference') {
     throw new Error(`Missing type for the ${component.name} component`)
   }
 
@@ -322,7 +316,7 @@ const resolveContext = (context: DeclarationVariant) => {
   // Contexts always have their props inside a separate type
   const referenceType = context.signatures![0].type
 
-  if (!referenceType || referenceType.type !== 'reference') {
+  if (referenceType.type !== 'reference') {
     throw new Error(`Missing type for the ${context.name} component`)
   }
 
@@ -382,30 +376,28 @@ const getUtility = (utilityName: UtilitySpecifications) => {
         ),
         parts: [],
       }
-      if (apiTypes) {
-        apiReference.parts.push({
-          name: 'Props',
-          props: apiTypes.sort((a, b) => {
-            const aIndex = component.forcedSorting?.indexOf(a.name)
-            const bIndex = component.forcedSorting?.indexOf(b.name)
-            if (aIndex !== undefined && bIndex !== undefined) {
-              return aIndex - bIndex
-            }
-            if (aIndex !== undefined) {
-              return -1
-            }
-            if (bIndex !== undefined) {
-              return 1
-            }
-            return a.name.localeCompare(b.name)
-          }),
-        })
-      }
+      apiReference.parts.push({
+        name: 'Props',
+        props: apiTypes.sort((a, b) => {
+          const aIndex = component.forcedSorting?.indexOf(a.name)
+          const bIndex = component.forcedSorting?.indexOf(b.name)
+          if (aIndex !== undefined && bIndex !== undefined) {
+            return aIndex - bIndex
+          }
+          if (aIndex !== undefined) {
+            return -1
+          }
+          if (bIndex !== undefined) {
+            return 1
+          }
+          return a.name.localeCompare(b.name)
+        }),
+      })
       if (dataTags) {
         apiReference.parts.push({
           name: 'Data',
           description: `Data attributes present on ${component.name} components.`,
-          props: dataTags ?? [],
+          props: dataTags,
         })
       }
 
@@ -438,25 +430,23 @@ const getUtility = (utilityName: UtilitySpecifications) => {
         ),
         parts: [],
       }
-      if (apiTypes) {
-        apiReference.parts.push({
-          name: 'Props',
-          props: apiTypes.sort((a, b) => {
-            const aIndex = functionSpec.forcedSorting?.indexOf(a.name)
-            const bIndex = functionSpec.forcedSorting?.indexOf(b.name)
-            if (aIndex !== undefined && bIndex !== undefined) {
-              return aIndex - bIndex
-            }
-            if (aIndex !== undefined) {
-              return -1
-            }
-            if (bIndex !== undefined) {
-              return 1
-            }
-            return a.name.localeCompare(b.name)
-          }),
-        })
-      }
+      apiReference.parts.push({
+        name: 'Props',
+        props: apiTypes.sort((a, b) => {
+          const aIndex = functionSpec.forcedSorting?.indexOf(a.name)
+          const bIndex = functionSpec.forcedSorting?.indexOf(b.name)
+          if (aIndex !== undefined && bIndex !== undefined) {
+            return aIndex - bIndex
+          }
+          if (aIndex !== undefined) {
+            return -1
+          }
+          if (bIndex !== undefined) {
+            return 1
+          }
+          return a.name.localeCompare(b.name)
+        }),
+      })
 
       let apiReturns = resolveFunctionReturns(typeDeclaration)
       // Insert zero width space to prevent components rendering as
@@ -466,10 +456,7 @@ const getUtility = (utilityName: UtilitySpecifications) => {
         return apiReturn
       })
 
-      if (
-        apiReturns &&
-        !(apiReturns.length === 1 && apiReturns[0].type === 'void')
-      ) {
+      if (!(apiReturns.length === 1 && apiReturns[0].type === 'void')) {
         apiReference.parts.push({
           name: 'Returns',
           props: apiReturns.sort((a, b) => {
@@ -498,10 +485,6 @@ const getUtility = (utilityName: UtilitySpecifications) => {
 const resolveFunctionProps = (functionVariant: DeclarationVariant) => {
   const parameterType = functionVariant.signatures![0].parameters[0].type
 
-  if (!parameterType) {
-    throw new Error(`Missing signature for the ${functionVariant.name} utility`)
-  }
-
   if (parameterType.type === 'reflection') {
     return getReflectionProps(parameterType)
   }
@@ -509,12 +492,6 @@ const resolveFunctionProps = (functionVariant: DeclarationVariant) => {
   const apiTypes: ApiType[] = []
 
   for (const parameter of functionVariant.signatures![0].parameters) {
-    if (!parameter.type) {
-      throw new Error(
-        `Missing type for the ${parameter} parameter of ${functionVariant.name} utility`,
-      )
-    }
-
     const type = resolveTypeTopLevel(parameter.type)
     apiTypes.push({
       name: parameter.name,
@@ -529,10 +506,6 @@ const resolveFunctionProps = (functionVariant: DeclarationVariant) => {
 
 const resolveFunctionReturns = (functionVariant: DeclarationVariant) => {
   const parameterType = functionVariant.signatures![0].type
-
-  if (!parameterType) {
-    throw new Error(`Missing signature for the ${functionVariant.name} utility`)
-  }
 
   if (parameterType.type === 'reflection') {
     return getReflectionProps(parameterType)
@@ -560,9 +533,6 @@ const getReflectionProps = (type: ReflectionType) => {
     // Functions have signatures. Get the first signature and use it's parameters.
     if (prop.signatures) {
       const signature = prop.signatures[0]
-      if (!signature.parameters) {
-        throw new Error(`Missing signature for the ${prop.name} prop`)
-      }
 
       const type = resolveTypeTopLevel(signature.type, signature.parameters)
       apiTypes.push({

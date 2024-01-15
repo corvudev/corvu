@@ -21,7 +21,7 @@ const callEventHandler = <T, E extends Event>(
     }
   }
 
-  return event?.defaultPrevented
+  return event.defaultPrevented
 }
 
 const access = <T extends MaybeAccessor<unknown>>(

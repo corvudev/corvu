@@ -112,8 +112,7 @@ export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
 
 const isAsComponent = (children: ResolvedJSXElement) => {
   return (
-    !!children &&
-    (children as unknown as AsComponent)[AS_COMPONENT_SYMBOL] === true
+    !!children && !!(children as unknown as AsComponent)[AS_COMPONENT_SYMBOL]
   )
 }
 

@@ -3,11 +3,13 @@ import {
   titleToUtilitySpecification,
   utilitySpecifications,
   type ComponentSpecifications,
+  type UtilitySpecifications,
 } from '@lib/apiSpecifications'
 
 const getApiHeadings = (name: string) => {
-  const componentSpecification =
-    componentSpecifications[name as ComponentSpecifications]
+  const componentSpecification = componentSpecifications[
+    name as ComponentSpecifications
+  ] as (typeof componentSpecifications)[ComponentSpecifications] | undefined
   const headings: {
     text: string
     slug: string
@@ -40,8 +42,9 @@ const getApiHeadings = (name: string) => {
     return headings
   }
 
-  const utilitySpecification =
-    utilitySpecifications[titleToUtilitySpecification(name as never)]
+  const utilitySpecification = utilitySpecifications[
+    titleToUtilitySpecification(name as never)
+  ] as (typeof utilitySpecifications)[UtilitySpecifications] | undefined
 
   if (utilitySpecification) {
     const { components, functions } = utilitySpecification

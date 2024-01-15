@@ -38,7 +38,7 @@ const TableOfContents: VoidComponent<{
   // eslint-disable-next-line solid/reactivity
   const apiHeadings = getApiHeadings(props.headings[0].text)
 
-  if (apiHeadings) {
+  if (apiHeadings.length > 0) {
     const apiTitle = tableOfContents.find((h) => h.slug === 'api-reference')
     if (apiTitle) {
       apiTitle.subheadings = apiHeadings.map((h) => {
