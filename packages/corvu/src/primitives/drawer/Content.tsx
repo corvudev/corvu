@@ -237,8 +237,9 @@ const DrawerContent = <
         dialogContext().setOpen(false)
       } else {
         drawerContext().setTranslate(closestSnapPoint.offset)
-        const transitionDuration =
-          parseFloat(drawerContext().drawerStyles()!.transitionDuration) * 1000
+        const transitionDuration = parseFloat(
+          drawerContext().drawerStyles()!.transitionDuration,
+        )
         if (transitionDuration === 0) {
           drawerContext().setTransitionState(null)
         }
@@ -265,18 +266,9 @@ const DrawerContent = <
         })
       }}
       data-transitioning={dataIf(drawerContext().isTransitioning())}
-      data-opening={dataIf(
-        drawerContext().transitionState() === 'opening' &&
-          drawerContext().isTransitioning(),
-      )}
-      data-closing={dataIf(
-        drawerContext().transitionState() === 'closing' &&
-          drawerContext().isTransitioning(),
-      )}
-      data-snapping={dataIf(
-        drawerContext().transitionState() === null &&
-          drawerContext().isTransitioning(),
-      )}
+      data-opening={dataIf(drawerContext().transitionState() === 'opening')}
+      data-closing={dataIf(drawerContext().transitionState() === 'closing')}
+      data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
       {...(otherProps as DialogContentProps<T>)}
     />
   )

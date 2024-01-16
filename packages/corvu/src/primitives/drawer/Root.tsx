@@ -167,6 +167,8 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     const element = dialogContext()?.contentRef()
     if (!element) return
 
+    syncDrawerSize(element)
+
     const observer = new ResizeObserver(resizeObserverCallback)
     observer.observe(element)
     onCleanup(() => {
@@ -177,16 +179,23 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
     for (const entry of entries) {
       if (entry.target !== dialogContext()?.contentRef()) continue
-      switch (localProps.side) {
-        case 'top':
-        case 'bottom':
-          setDrawerSize(entry.target.clientHeight)
-          break
-        case 'left':
-        case 'right':
-          setDrawerSize(entry.target.clientWidth)
-          break
-      }
+      syncDrawerSize(entry.target as HTMLElement)
+    }
+  }
+
+  const syncDrawerSize = (element: HTMLElement) => {
+    const previousDrawerSize = untrack(() => drawerSize())
+    switch (localProps.side) {
+      case 'top':
+      case 'bottom':
+        if (previousDrawerSize === element.clientHeight) return
+        setDrawerSize(element.clientHeight)
+        break
+      case 'left':
+      case 'right':
+        if (previousDrawerSize === element.clientWidth) return
+        setDrawerSize(element.clientWidth)
+        break
     }
   }
 
@@ -210,28 +219,29 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           setTransitionState('opening')
           setActiveSnapPoint(localProps.defaultSnapPoint)
         })
-        const transitionDuration =
-          parseFloat(drawerStyles()!.transitionDuration) * 1000
+        const transitionDuration = parseFloat(
+          drawerStyles()!.transitionDuration,
+        )
         if (transitionDuration === 0) {
-          batch(() => {
-            setTransitionState(null)
-          })
+          setTransitionState(null)
         }
       })
     } else if (transitionState() === 'closing') {
       batch(() => {
         setOpen(false)
+        setTransitionState(null)
       })
     } else {
       batch(() => {
         setTransitionState('closing')
         setActiveSnapPoint(0)
       })
-      const transitionDuration =
-        parseFloat(drawerStyles()!.transitionDuration) * 1000
+      const transitionDuration = parseFloat(drawerStyles()!.transitionDuration)
       if (transitionDuration === 0) {
-        setOpen(false)
-        setTransitionState(null)
+        batch(() => {
+          setOpen(false)
+          setTransitionState(null)
+        })
       }
     }
   }
