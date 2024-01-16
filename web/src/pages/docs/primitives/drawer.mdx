@@ -21,6 +21,8 @@ import CommentsExample from '@examples/primitives/drawer/comments/index'
 import CommentsTailwindTsx from '@examples/primitives/drawer/comments/index?raw'
 import NoDragExample from '@examples/primitives/drawer/noDrag/index'
 import NoDragTailwindTsx from '@examples/primitives/drawer/noDrag/index?raw'
+import TransitionResizeExample from '@examples/primitives/drawer/transitionResize/index'
+import TransitionResizeTailwindTsx from '@examples/primitives/drawer/transitionResize/index?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
@@ -221,6 +223,29 @@ Scrollable elements work out of the box. The drawer will check if the user is dr
 }]} client:load>
   <ScrollableExample client:load />
   <RawCode slot="tailwindTsx" code={ScrollableTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Transitioning the content height
+Corvu's drawer can handle `height: auto` and transition between heights when the content changes. This is possible by using a `ResizeObserver` to detect height changes and apply a fixed height for the time of the transition.
+
+This is disabled by default and you need to set the `transitionResize` property on the root component to enable it. Also, remember to set `transition-property: height` on the drawer content ;).
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <TransitionResizeExample client:load />
+  <RawCode slot="tailwindTsx" code={TransitionResizeTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 
