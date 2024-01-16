@@ -38,7 +38,7 @@ const DrawerCommentsExample: VoidComponent = () => {
                   <For each={new Array(20)}>
                     {() => (
                       <div class="flex items-center space-x-2 p-2">
-                        <div class="h-8 w-8 rounded-full bg-corvu-800" />
+                        <div class="size-8 rounded-full bg-corvu-800" />
                         <div>
                           <p class="font-bold">Username</p>
                           <p class="text-sm">This is a comment</p>

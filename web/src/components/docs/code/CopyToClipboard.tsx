@@ -42,7 +42,7 @@ const CopyToClipboard: VoidComponent<{ code: string }> = (props) => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="h-5 w-5"
+            class="size-5"
           >
             <g>
               <g>
@@ -57,7 +57,7 @@ const CopyToClipboard: VoidComponent<{ code: string }> = (props) => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="h-5 w-5"
+            class="size-5"
           >
             <g>
               <g>

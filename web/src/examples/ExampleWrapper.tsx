@@ -56,7 +56,7 @@ const ExampleWrapper: FlowComponent<{
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="h-5 w-5"
+            class="size-5"
           >
             <g>
               <g>
@@ -82,7 +82,7 @@ const ExampleWrapper: FlowComponent<{
             },
           )}
         >
-          <div class="z-10 flex h-full w-full flex-col items-center justify-center">
+          <div class="z-10 flex size-full flex-col items-center justify-center">
             {props.children}
           </div>
         </div>

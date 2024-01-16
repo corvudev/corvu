@@ -36,7 +36,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
       <Match when={props.type === 'home'}>
         <div class="fixed inset-0 -z-20">
           <div
-            class="absolute -z-20 hidden h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#7250AE,transparent_120%)] blur-md md:block"
+            class="absolute -z-20 hidden size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#7250AE,transparent_120%)] blur-md md:block"
             style={{
               display: x() === null ? 'none' : undefined,
               left: `${x()}px`,
@@ -50,7 +50,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
       <Match when={props.type === 'docs'}>
         <div class="fixed inset-0 -z-20 hidden md:block">
           <div
-            class="absolute -z-20 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#7250AE,transparent_120%)] blur-md"
+            class="absolute -z-20 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(#7250AE,transparent_120%)] blur-md"
             style={{
               display: x() === null ? 'none' : 'block',
               left: `${x()}px`,
