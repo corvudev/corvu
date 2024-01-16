@@ -24,11 +24,11 @@ import {
 } from '@primitives/dialog/context'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
+import createTransitionSize from '@lib/create/transitionSize'
 import { createWritableMemo } from '@solid-primitives/memo'
 import { isFunction } from '@lib/assertions'
 import { resolveSnapPoint } from '@primitives/drawer/lib'
 import type { Side } from '@lib/types'
-import { sleep } from '@lib/utils'
 
 /** Alternative placeholder to not override a certain breakpoint. */
 export const DefaultBreakpoint = undefined
@@ -56,6 +56,8 @@ export type DrawerRootProps = {
   allowSkippingSnapPoints?: boolean
   /** Corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property. *Default = `true`* */
   handleScrollableElements?: boolean
+  /** Whether the drawer should watch for size changes and apply a fixed width/height for transitions. *Default = `false`* */
+  transitionResize?: boolean
   children:
     | JSX.Element
     | ((
@@ -82,7 +84,7 @@ export type DrawerRootChildrenProps = {
   /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
   isTransitioning: boolean
   /** The transition state that the drawer is currently in. */
-  transitionState: 'opening' | 'closing' | 'snapping' | null
+  transitionState: 'opening' | 'closing' | 'snapping' | 'resizing' | null
   /** How much the drawer is currently open. Can be > 1 depending on your `dampFunction`. */
   openPercentage: number
   /** The current translate value applied to the drawer. Is the same for every side. */
@@ -93,6 +95,8 @@ export type DrawerRootChildrenProps = {
   allowSkippingSnapPoints: boolean
   /** Whether the logic to handle dragging on scrollable elements is enabled. */
   handleScrollableElements: boolean
+  /** Whether the drawer watches for size changes and applies a fixed width/height for transitions. */
+  transitionResize: boolean
 }
 
 /** Context wrapper for the drawer. Is required for every drawer you create. */
@@ -112,6 +116,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       velocityCacheReset: 200,
       allowSkippingSnapPoints: true,
       handleScrollableElements: true,
+      transitionResize: false,
     },
     props,
   )
@@ -128,6 +133,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     'velocityCacheReset',
     'allowSkippingSnapPoints',
     'handleScrollableElements',
+    'transitionResize',
     'open',
     'initialOpen',
     'onOpenChange',
@@ -150,10 +156,29 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const [dialogContext, setDialogContext] =
     createSignal<InternalDialogContextValue>()
 
+  const { transitioning: sizeTransitioning, transitionSize } =
+    createTransitionSize({
+      element: () => dialogContext()?.contentRef() ?? null,
+      enabled: () => open() && localProps.transitionResize,
+      property: () => {
+        switch (localProps.side) {
+          case 'top':
+          case 'bottom':
+            return 'height'
+          case 'left':
+          case 'right':
+            return 'width'
+        }
+      },
+    })
+
   const [isDragging, setIsDragging] = createSignal(false)
-  const [transitionState, setTransitionState] = createSignal<
-    'opening' | 'closing' | 'snapping' | null
-  >(null)
+  const [transitionState, setTransitionState] = createWritableMemo<
+    'opening' | 'closing' | 'snapping' | 'resizing' | null
+  >(() => {
+    if (sizeTransitioning()) return 'resizing'
+    return null
+  })
 
   const drawerStyles = createMemo(() => {
     const contentRef = dialogContext()?.contentRef()
@@ -188,13 +213,13 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     switch (localProps.side) {
       case 'top':
       case 'bottom':
-        if (previousDrawerSize === element.clientHeight) return
-        setDrawerSize(element.clientHeight)
+        if (previousDrawerSize === element.offsetHeight) return
+        setDrawerSize(element.offsetHeight)
         break
       case 'left':
       case 'right':
-        if (previousDrawerSize === element.clientWidth) return
-        setDrawerSize(element.clientWidth)
+        if (previousDrawerSize === element.offsetWidth) return
+        setDrawerSize(element.offsetWidth)
         break
     }
   }
@@ -213,8 +238,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const onOpenChange = (open: boolean) => {
     if (open) {
       setOpen(true)
-      // eslint-disable-next-line solid/reactivity
-      sleep(0).then(() => {
+      requestAnimationFrame(() => {
         batch(() => {
           setTransitionState('opening')
           setActiveSnapPoint(localProps.defaultSnapPoint)
@@ -288,6 +312,9 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     get handleScrollableElements() {
       return localProps.handleScrollableElements
     },
+    get transitionResize() {
+      return localProps.transitionResize
+    },
   }
 
   const memoizedChildren = createOnce(() => localProps.children)
@@ -326,6 +353,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           velocityCacheReset: () => localProps.velocityCacheReset,
           allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
           handleScrollableElements: () => localProps.handleScrollableElements,
+          transitionResize: () => localProps.transitionResize,
         }}
       >
         <InternalDrawerContext.Provider
@@ -344,6 +372,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             velocityCacheReset: () => localProps.velocityCacheReset,
             allowSkippingSnapPoints: () => localProps.allowSkippingSnapPoints,
             handleScrollableElements: () => localProps.handleScrollableElements,
+            transitionResize: () => localProps.transitionResize,
             dampFunction: localProps.dampFunction,
             velocityFunction: localProps.velocityFunction,
             setIsDragging,
@@ -352,6 +381,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             resolvedActiveSnapPoint,
             drawerStyles,
             setTransitionState,
+            transitionSize,
           }}
         >
           <DialogRoot

@@ -50,6 +50,4 @@ const mergeRefs = <T>(
 
 const dataIf = (condition: boolean) => (condition ? '' : undefined)
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-export { callEventHandler, access, some, chain, mergeRefs, dataIf, sleep }
+export { callEventHandler, access, some, chain, mergeRefs, dataIf }

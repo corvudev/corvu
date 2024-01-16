@@ -31,6 +31,7 @@ const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
  * @data `data-opening` - Present when the drawer is in the open transition.
  * @data `data-closing` - Present when the drawer is in the close transition.
  * @data `data-snapping` - Present when the drawer is transitioning after the user stops dragging.
+ * @data `data-resizing` - Present when the drawer is transitioning after the size (width/height) changes. Only present if `transitionResize` is set to `true`.
  */
 const DrawerContent = <
   T extends ValidComponent = typeof DEFAULT_DRAWER_CONTENT_ELEMENT,
@@ -80,6 +81,30 @@ const DrawerContent = <
       case 'left':
         return `translate3d(${-drawerContext().translate()}px, 0, 0)`
     }
+  })
+
+  const transitionHeight = createMemo(() => {
+    const transitionSize = drawerContext().transitionSize()
+    if (!transitionSize) return undefined
+
+    switch (drawerContext().side()) {
+      case 'top':
+      case 'bottom':
+        return `${transitionSize}px`
+    }
+    return undefined
+  })
+
+  const transitionWidth = createMemo(() => {
+    const transitionSize = drawerContext().transitionSize()
+    if (!transitionSize) return undefined
+
+    switch (drawerContext().side()) {
+      case 'left':
+      case 'right':
+        return `${transitionSize}px`
+    }
+    return undefined
   })
 
   createEffect(() => {
@@ -254,6 +279,8 @@ const DrawerContent = <
         transform: transformValue(),
         'transition-duration': drawerContext().isDragging() ? '0ms' : undefined,
         'user-select': 'none',
+        height: transitionHeight(),
+        width: transitionWidth(),
         ...localProps.style,
       }}
       onPointerDown={onPointerDown}
@@ -262,13 +289,16 @@ const DrawerContent = <
           if (drawerContext().transitionState() === 'closing') {
             dialogContext().setOpen(false)
           }
-          drawerContext().setTransitionState(null)
+          if (drawerContext().transitionState() !== 'resizing') {
+            drawerContext().setTransitionState(null)
+          }
         })
       }}
       data-transitioning={dataIf(drawerContext().isTransitioning())}
       data-opening={dataIf(drawerContext().transitionState() === 'opening')}
       data-closing={dataIf(drawerContext().transitionState() === 'closing')}
       data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
+      data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
       {...(otherProps as DialogContentProps<T>)}
     />
   )

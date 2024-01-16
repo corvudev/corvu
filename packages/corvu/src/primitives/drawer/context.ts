@@ -22,7 +22,9 @@ export type DrawerContextValue = {
   /** Whether the drawer is currently transitioning to a snap point after the user stopped dragging or the drawer opens/closes. */
   isTransitioning: Accessor<boolean>
   /** The transition state that the drawer is currently in. */
-  transitionState: Accessor<'opening' | 'closing' | 'snapping' | null>
+  transitionState: Accessor<
+    'opening' | 'closing' | 'snapping' | 'resizing' | null
+  >
   /** How much the drawer is currently open. Can be > 1 depending on your `dampFunction`. */
   openPercentage: Accessor<number>
   /** The current translate value applied to the drawer. Is the same for every side. */
@@ -33,6 +35,8 @@ export type DrawerContextValue = {
   allowSkippingSnapPoints: Accessor<boolean>
   /** Whether the logic to handle dragging on scrollable elements is enabled. */
   handleScrollableElements: Accessor<boolean>
+  /** Whether the drawer watches for size changes and applies a fixed width/height for transitions. */
+  transitionResize: Accessor<boolean>
 }
 
 const DrawerContext = createContext<DrawerContextValue>()
@@ -73,7 +77,10 @@ type InternalDrawerContextValue = DrawerContextValue & {
   drawerSize: Accessor<number>
   resolvedActiveSnapPoint: Accessor<ResolvedSnapPoint>
   drawerStyles: Accessor<CSSStyleDeclaration | undefined>
-  setTransitionState: Setter<'opening' | 'closing' | 'snapping' | null>
+  setTransitionState: Setter<
+    'opening' | 'closing' | 'snapping' | 'resizing' | null
+  >
+  transitionSize: Accessor<number | null>
 }
 
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()

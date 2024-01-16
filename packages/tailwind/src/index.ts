@@ -7,6 +7,7 @@ const dataStates = [
   'opening',
   'closing',
   'snapping',
+  'resizing',
 ]
 
 export type PluginOptions = {
