@@ -1,6 +1,6 @@
 {
   "name": "@corvu/tailwind",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "Tailwind plugin for corvu, the unstyled, accessible and customizable UI primitive library for SolidJS",
   "keywords": [

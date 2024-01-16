@@ -1,5 +1,11 @@
 # @corvu/tailwind
 
+## 0.1.2
+
+### Patch Changes
+
+- Add `resizing` modifier - [`5f9a5d0`](https://github.com/corvudev/corvu/commit/5f9a5d03f108ff0c23895951955bb97a9cdad20b) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.1
 
 ### Patch Changes

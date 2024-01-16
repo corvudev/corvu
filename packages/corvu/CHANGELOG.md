@@ -1,5 +1,19 @@
 # corvu
 
+## 0.2.2
+
+### Patch Changes
+
+- Possibility to transition the width/height of drawers with a dynamic size - [`5f9a5d0`](https://github.com/corvudev/corvu/commit/5f9a5d03f108ff0c23895951955bb97a9cdad20b) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add contentRef and overlayRef to dialog root children props - [`6c5142a`](https://github.com/corvudev/corvu/commit/6c5142a392c9db4281fd7d8f7943975ece3d08b3) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Export DialogContextValue in corvu/drawer - [`e295703`](https://github.com/corvudev/corvu/commit/e295703957dbfe254725562c73e928ea5f5e6750) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Fix drawer opening transition and set data-snapping properly - [`82e07bb`](https://github.com/corvudev/corvu/commit/82e07bb9fca2488ee085fbc7f4aabb954adf2753) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Drawer: export missing prop types - [`9b16e26`](https://github.com/corvudev/corvu/commit/9b16e26e50709add035a43cbcb17037b02888d58) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.2.1
 
 ### Patch Changes
