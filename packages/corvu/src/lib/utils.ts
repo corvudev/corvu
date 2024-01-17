@@ -50,4 +50,15 @@ const mergeRefs = <T>(
 
 const dataIf = (condition: boolean) => (condition ? '' : undefined)
 
-export { callEventHandler, access, some, chain, mergeRefs, dataIf }
+const afterRepaint = (fn: () => void) =>
+  requestAnimationFrame(() => requestAnimationFrame(fn))
+
+export {
+  callEventHandler,
+  access,
+  some,
+  chain,
+  mergeRefs,
+  dataIf,
+  afterRepaint,
+}

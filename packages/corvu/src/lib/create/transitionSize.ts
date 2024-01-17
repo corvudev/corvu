@@ -1,3 +1,4 @@
+import { access, afterRepaint } from '@lib/utils'
 import {
   type Accessor,
   batch,
@@ -6,7 +7,6 @@ import {
   mergeProps,
   onCleanup,
 } from 'solid-js'
-import { access } from '@lib/utils'
 import type { MaybeAccessor } from 'src'
 
 /**
@@ -105,7 +105,7 @@ function createTransitionSize(props: {
             setTransitionSize(startSize)
             setTransitioning(true)
           })
-          requestAnimationFrame(() => {
+          afterRepaint(() => {
             setTransitionSize(currentSize)
             const transitionDuration = parseFloat(
               getComputedStyle(entry.target).transitionDuration,
@@ -126,7 +126,7 @@ function createTransitionSize(props: {
             setTransitionSize(getSizeProperty(property, startSize!))
             setTransitioning(true)
           })
-          requestAnimationFrame(() => {
+          afterRepaint(() => {
             setTransitionSize(getSizeProperty(property, currentSize))
             const transitionDuration = parseFloat(
               getComputedStyle(entry.target).transitionDuration,

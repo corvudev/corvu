@@ -1,3 +1,4 @@
+import { access, afterRepaint } from '@lib/utils'
 import {
   createEffect,
   createMemo,
@@ -6,7 +7,6 @@ import {
   onCleanup,
   untrack,
 } from 'solid-js'
-import { access } from '@lib/utils'
 import type { MaybeAccessor } from '@lib/types'
 
 const focusableElementSelector =
@@ -213,7 +213,7 @@ const createFocusTrap = (props: {
       return
     }
 
-    requestAnimationFrame(() => finalFocusElement.focus())
+    afterRepaint(() => finalFocusElement.focus())
   }
 }
 
