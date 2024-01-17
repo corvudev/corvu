@@ -1,5 +1,11 @@
 # corvu
 
+## 0.2.3
+
+### Patch Changes
+
+- Correctly use requestAnimationFrame to wait for browser repaint - [`5704a0b`](https://github.com/corvudev/corvu/commit/5704a0b28f99d4ed0c2922a6f82aa6e9dfe0fea2) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.2.2
 
 ### Patch Changes
