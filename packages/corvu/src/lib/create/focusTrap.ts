@@ -1,4 +1,4 @@
-import { access, afterRepaint } from '@lib/utils'
+import { access, afterPaint } from '@lib/utils'
 import {
   createEffect,
   createMemo,
@@ -213,7 +213,7 @@ const createFocusTrap = (props: {
       return
     }
 
-    afterRepaint(() => finalFocusElement.focus())
+    afterPaint(() => finalFocusElement.focus())
   }
 }
 

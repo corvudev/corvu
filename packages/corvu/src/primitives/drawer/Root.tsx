@@ -22,7 +22,7 @@ import {
   type InternalDialogContextValue,
   useInternalDialogContext,
 } from '@primitives/dialog/context'
-import { afterRepaint } from '@lib/utils'
+import { afterPaint } from '@lib/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
 import createTransitionSize from '@lib/create/transitionSize'
@@ -240,7 +240,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     if (open) {
       setOpen(true)
       // eslint-disable-next-line solid/reactivity
-      afterRepaint(() => {
+      afterPaint(() => {
         batch(() => {
           setTransitionState('opening')
           setActiveSnapPoint(localProps.defaultSnapPoint)
