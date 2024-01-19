@@ -49,13 +49,31 @@ type DeclarationVariant = {
   kind: number
   flags: object
   comment?: Comment
-  children?: DeclarationVariant[]
+  children?: (DeclarationVariant | ReferenceVariant)[]
   groups?: {
     title: string
     children: number[]
   }[]
   sources: Source[]
   signatures?: SignatureVariant[]
+  typeParameters?: TypeParamVariant[]
+  type?: Type
+}
+
+type DeclarationVariantWithSignature = {
+  id: number
+  name: string
+  variant: 'declaration'
+  kind: number
+  flags: object
+  comment?: Comment
+  children?: (DeclarationVariant | ReferenceVariant)[]
+  groups?: {
+    title: string
+    children: number[]
+  }[]
+  sources: Source[]
+  signatures: [SignatureVariant]
   typeParameters?: TypeParamVariant[]
   type?: Type
 }
@@ -68,6 +86,21 @@ type TypeParamVariant = {
   flags: object
   type: Type
   default?: Type
+}
+
+type ReferenceVariant = {
+  id: number
+  name: string
+  variant: 'reference'
+  kind: number
+  flags: object
+  soruces: Source[]
+  target:
+    | {
+        sourceFileName: string
+        qualifiedName: string
+      }
+    | number
 }
 
 type Source = {
@@ -99,6 +132,7 @@ type Type =
   | ReflectionType
   | ArrayType
   | QueryType
+  | TupleType
 
 type UnionType = {
   type: 'union'
@@ -126,7 +160,7 @@ type ReferenceType = {
 
 type LiteralType = {
   type: 'literal'
-  value: string
+  value: string | null
 }
 
 type IntersectionType = {
@@ -147,4 +181,9 @@ type ArrayType = {
 type QueryType = {
   type: 'query'
   queryType: Type
+}
+
+type TupleType = {
+  type: 'tuple'
+  elements: Type[]
 }

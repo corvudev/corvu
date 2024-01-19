@@ -72,7 +72,7 @@ export type DialogRootProps = {
   children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }
 
-/** Props which are passed to the Root component children function. */
+/** Props that are passed to the Root component children callback. */
 export type DialogRootChildrenProps = {
   /** The `role` attribute of the dialog element. */
   role: 'dialog' | 'alertdialog'

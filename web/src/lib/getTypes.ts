@@ -13,6 +13,9 @@ import type {
   Type,
   Text,
   ReflectionType,
+  ReferenceVariant,
+  DeclarationVariantWithSignature,
+  LiteralType,
 } from 'src/@types/api'
 
 const corvuApi = apiJson as CorvuApi
@@ -52,16 +55,10 @@ const getComponent = (componentName: ComponentSpecifications) => {
   const apiReferences: ApiReference[] = []
 
   for (const component of components) {
-    const componentDeclaration = parentDeclaration.children.find(
-      (c) => c.name === component.name,
+    const componentDeclaration = findDeclaration(
+      parentDeclaration,
+      component.name,
     )
-    if (
-      !componentDeclaration ||
-      !componentDeclaration.signatures ||
-      !componentDeclaration.signatures[0]
-    ) {
-      throw new Error(`${componentName}.${component.name} not found`)
-    }
 
     let apiTypes = resolveComponent(componentDeclaration)
     // Insert zero width space to prevent components rendering as
@@ -72,6 +69,7 @@ const getComponent = (componentName: ComponentSpecifications) => {
     })
 
     const dataTags = getDataTags(componentDeclaration.signatures[0].comment)
+    const cssTags = getCssTags(componentDeclaration.signatures[0].comment)
     const apiReference: ApiReference = {
       type: 'component',
       name: `${componentName}.${component.name}`,
@@ -100,8 +98,15 @@ const getComponent = (componentName: ComponentSpecifications) => {
     if (dataTags) {
       apiReference.parts.push({
         name: 'Data',
-        description: `Data attributes present on ${parentDeclaration.name}.${component.name} components.`,
+        description: `Data attributes present on ${componentName}.${component.name} components.`,
         props: dataTags,
+      })
+    }
+    if (cssTags) {
+      apiReference.parts.push({
+        name: 'CSS props',
+        description: `CSS properties attributes present on ${componentName}.${component.name} components.`,
+        props: cssTags,
       })
     }
 
@@ -109,12 +114,7 @@ const getComponent = (componentName: ComponentSpecifications) => {
   }
 
   for (const context of contexts) {
-    const contextDeclaration = parentDeclaration.children.find(
-      (c) => c.name === context.name,
-    )
-    if (!contextDeclaration || !contextDeclaration.signatures![0]) {
-      throw new Error(`${componentName}.${context.name} not found`)
-    }
+    const contextDeclaration = findDeclaration(parentDeclaration, context.name)
 
     let apiTypes = resolveContext(contextDeclaration)
     // Insert zero width space to prevent components rendering as
@@ -154,12 +154,14 @@ const getComponent = (componentName: ComponentSpecifications) => {
   }
 
   for (const type of types) {
-    const typeDeclaration = parentDeclaration.children.find(
+    let typeDeclaration = parentDeclaration.children.find(
       (c) => c.name === type.name,
     )
     if (!typeDeclaration) {
       throw new Error(`${componentName}.${type.name} not found`)
     }
+
+    typeDeclaration = typeDeclaration as DeclarationVariant
 
     let apiTypes = resolveType(typeDeclaration)
     // Insert zero width space to prevent components rendering as
@@ -206,14 +208,26 @@ const resolveComponent = (component: DeclarationVariant) => {
   if (component.signatures![0].typeParameter && component.name !== 'As') {
     if (
       !component.signatures![0].typeParameter[0] ||
-      !component.signatures![0].typeParameter[0].default ||
-      component.signatures![0].typeParameter[0].default.type !== 'literal'
+      !component.signatures![0].typeParameter[0].default
     ) {
       throw new Error(
         `Missing default type parameter for the ${component.name} component`,
       )
     }
-    defaultAs = component.signatures![0].typeParameter[0].default.value
+    if (
+      component.signatures![0].typeParameter[0].default.type === 'literal' &&
+      component.signatures![0].typeParameter[0].default.value
+    ) {
+      defaultAs = component.signatures![0].typeParameter[0].default.value
+    } else if (
+      component.signatures![0].typeParameter[0].default.type === 'reference'
+    ) {
+      defaultAs = component.signatures![0].typeParameter[0].default.name
+    } else {
+      throw new Error(
+        `Missing default type parameter for the ${component.name} component`,
+      )
+    }
   }
 
   // Components always have their props inside a separate type
@@ -223,7 +237,7 @@ const resolveComponent = (component: DeclarationVariant) => {
     throw new Error(`Missing type for the ${component.name} component`)
   }
 
-  const propDeclaration = resolveReferenceType(referenceType)
+  const propDeclaration = resolveReference(referenceType)
 
   if (typeof propDeclaration === 'string') {
     return [
@@ -253,7 +267,7 @@ const resolveComponent = (component: DeclarationVariant) => {
       )
     }
     if (typeArgument.type === 'reference') {
-      const propDeclaration = resolveReferenceType(typeArgument)
+      const propDeclaration = resolveReference(typeArgument)
       if (
         typeof propDeclaration === 'string' ||
         !propDeclaration.type ||
@@ -270,7 +284,27 @@ const resolveComponent = (component: DeclarationVariant) => {
       for (const type of typeArgument.types) {
         switch (type.type) {
           case 'reference':
-            const resolvedReference = resolveReferenceType(type)
+            if (type.name === 'Omit') {
+              const allProps = getReflectionProps(
+                (
+                  resolveReference(
+                    type.typeArguments![0] as ReferenceType,
+                  ) as DeclarationVariant
+                ).type as ReflectionType,
+              )
+              const omittedProps =
+                type.typeArguments![1].type === 'union'
+                  ? type.typeArguments![1].types.map(
+                      (type) => (type as LiteralType).value,
+                    )
+                  : [(type.typeArguments![1] as LiteralType).value]
+
+              apiTypes.push(
+                ...allProps.filter((prop) => !omittedProps.includes(prop.name)),
+              )
+              break
+            }
+            const resolvedReference = resolveReference(type)
             if (
               typeof resolvedReference === 'string' ||
               !resolvedReference.type ||
@@ -320,7 +354,7 @@ const resolveContext = (context: DeclarationVariant) => {
     throw new Error(`Missing type for the ${context.name} component`)
   }
 
-  const propDeclaration = resolveReferenceType(referenceType)
+  const propDeclaration = resolveReference(referenceType)
 
   if (typeof propDeclaration === 'string' || !propDeclaration.type) {
     throw new Error(`Missing props for the ${context.name} component`)
@@ -352,12 +386,10 @@ const getUtility = (utilityName: UtilitySpecifications) => {
 
   if (components) {
     for (const component of components) {
-      const componentDeclaration = corvuApiIndex.children!.find(
-        (c) => c.name === component.name,
+      const componentDeclaration = findDeclaration(
+        corvuApiIndex,
+        component.name,
       )
-      if (!componentDeclaration || !componentDeclaration.signatures![0]) {
-        throw new Error(`${component.name} not found`)
-      }
 
       let apiTypes = resolveComponent(componentDeclaration)
       // Insert zero width space to prevent components rendering as
@@ -407,12 +439,14 @@ const getUtility = (utilityName: UtilitySpecifications) => {
 
   if (functions) {
     for (const functionSpec of functions) {
-      const typeDeclaration = corvuApiIndex.children!.find(
+      let typeDeclaration = corvuApiIndex.children!.find(
         (c) => c.name === functionSpec.name,
       )
       if (!typeDeclaration) {
         throw new Error(`${functionSpec.name} not found`)
       }
+
+      typeDeclaration = typeDeclaration as DeclarationVariant
 
       let apiTypes = resolveFunctionProps(typeDeclaration)
       // Insert zero width space to prevent components rendering as
@@ -529,7 +563,7 @@ const getReflectionProps = (type: ReflectionType) => {
 
   const apiTypes: ApiType[] = []
 
-  for (const prop of props) {
+  for (const prop of props as DeclarationVariant[]) {
     // Functions have signatures. Get the first signature and use it's parameters.
     if (prop.signatures) {
       const signature = prop.signatures[0]
@@ -630,8 +664,46 @@ const getDataTags = (comment?: DeclarationVariant['comment']) => {
   }) as ApiType[]
 }
 
-const resolveReferenceType = (
-  type: ReferenceType,
+const getCssTags = (comment?: DeclarationVariant['comment']) => {
+  if (!comment || !comment.blockTags) {
+    return undefined
+  }
+  const dataTags = comment.blockTags.filter((tag) => tag.tag === '@css')
+  return dataTags.map((dataTag) => {
+    return {
+      name: dataTag.content[0].text.slice(1, -1),
+      descriptionHtml: formatText(dataTag.content.slice(1)).replace(' - ', ''),
+      displayType: 'data',
+    }
+  }) as ApiType[]
+}
+
+const findDeclaration = (parent: DeclarationVariant, name: string) => {
+  if (!parent.children) {
+    throw new Error(`${parent.name} has no children`)
+  }
+
+  let contextDeclaration = parent.children.find((c) => c.name === name)
+
+  if (!contextDeclaration) {
+    throw new Error(`${parent.name}.${name} not found`)
+  }
+
+  if (contextDeclaration.variant === 'reference') {
+    contextDeclaration = resolveReference(
+      contextDeclaration,
+    ) as DeclarationVariant
+  }
+
+  if (!contextDeclaration.signatures![0]) {
+    throw new Error(`${parent.name}.${name} has no signatures`)
+  }
+
+  return contextDeclaration as DeclarationVariantWithSignature
+}
+
+const resolveReference = (
+  type: ReferenceType | ReferenceVariant,
 ): DeclarationVariant | string => {
   if (typeof type.target !== 'number') {
     return type.target.qualifiedName
@@ -655,12 +727,15 @@ const findDeclarationById = (
   scope: DeclarationVariant[],
 ): DeclarationVariant | undefined => {
   for (const declaration of scope.flatMap((child) => child.children ?? [])) {
-    if (declaration.id === id) {
+    if (declaration.id === id && declaration.variant === 'declaration') {
       return declaration
     }
 
-    if (declaration.children) {
-      const foundDeclaration = findDeclarationById(id, declaration.children)
+    if (declaration.variant === 'declaration' && declaration.children) {
+      const foundDeclaration = findDeclarationById(
+        id,
+        declaration.children as DeclarationVariant[],
+      )
       if (foundDeclaration) {
         return foundDeclaration
       }
@@ -673,7 +748,6 @@ const findDeclarationById = (
 // Resolve Types and don't resolve references
 const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
   let typeName = ''
-
   if (parameters) {
     const params: {
       name: string
@@ -695,7 +769,7 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
       typeName += type.name
       break
     case 'literal':
-      typeName += `'${type.value}'`
+      typeName += `${type.value === null ? 'null' : `'${type.value}'`}`
       break
     case 'union':
       typeName += type.types
@@ -715,7 +789,7 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
         if (type.name.endsWith('RootChildrenProps')) {
           return type.name
         }
-        const resolvedReference = resolveReferenceType(type)
+        const resolvedReference = resolveReference(type)
         if (typeof resolvedReference === 'string') {
           typeName += resolvedReference
         } else {
@@ -736,12 +810,29 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
       typeName += resolvedType
       break
     case 'array':
-      typeName += '['
-      typeName += resolveTypeTopLevel(type.elementType)
-      typeName += ']'
-      break
+      if (type.elementType.type === 'intrinsic') {
+        typeName += resolveTypeTopLevel(type.elementType)
+        typeName += '[]'
+        break
+      } else if (type.elementType.type === 'union') {
+        typeName += '['
+        typeName += resolveTypeTopLevel(type.elementType)
+        typeName += ']'
+        break
+      } else {
+        throw new Error(
+          `Unexpected array element type ${type.elementType.type}`,
+        )
+      }
     case 'query':
       typeName += resolveTypeTopLevel(type.queryType)
+      break
+    case 'tuple':
+      typeName += '['
+      typeName += type.elements
+        .map((type) => resolveTypeTopLevel(type))
+        .join(', ')
+      typeName += ']'
       break
   }
   return typeName

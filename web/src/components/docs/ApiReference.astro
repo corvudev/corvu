@@ -20,7 +20,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
     </div>
   </div>
   <p class="mt-1" set:html={descriptionHtml} />
-  <div class="mt-3 space-y-6">
+  <div class="mt-3">
     {
       parts.map((part) => (
         <div>
@@ -28,7 +28,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
           {part.description && <p class="mt-1">{part.description}</p>}
           <div class="divide-y divide-corvu-400/50 text-sm">
             {part.props.map((property) => (
-              <div class="pb-2 pt-3">
+              <div class="pt-2">
                 <div class="md:flex md:items-start md:justify-between">
                   {property.name && (
                     <p

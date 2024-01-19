@@ -66,7 +66,7 @@ export type DrawerRootProps = {
       ) => JSX.Element)
 } & Omit<DialogRootProps, 'children'>
 
-/** Props which are passed to the Root component children function. */
+/** Props that are passed to the Root component children callback. */
 export type DrawerRootChildrenProps = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
   snapPoints: (string | number)[]

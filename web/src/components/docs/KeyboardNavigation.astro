@@ -1,0 +1,31 @@
+---
+interface Props {
+  keys: {
+    key: string
+    behavior: string
+  }[]
+}
+
+const { keys } = Astro.props
+---
+
+<div class="not-prose mt-2 overflow-y-auto text-left">
+  <table class="w-full min-w-[500px]">
+    <tr class="border-b border-corvu-400/50">
+      <th class="py-3 text-sm">Key</th>
+      <th>Behavior</th>
+    </tr>
+    {
+      keys.map((key) => (
+        <tr class="border-b border-corvu-400/50">
+          <td class="py-3 pr-2">
+            <kbd class="whitespace-nowrap rounded border border-corvu-400 bg-corvu-dark px-1.5 py-0.5 text-sm">
+              {key.key}
+            </kbd>
+          </td>
+          <td>{key.behavior}</td>
+        </tr>
+      ))
+    }
+  </table>
+</div>

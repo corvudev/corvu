@@ -26,6 +26,7 @@ import TransitionResizeTailwindTsx from '@examples/primitives/drawer/transitionR
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
 import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import Link from '@components/docs/Link.astro'
 
 # Drawer
 
@@ -131,7 +132,7 @@ Additionally, there are different data attributes applied depending on the curre
 
 This allows you to apply different transitions based on the transition state of the drawer.
 
-You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children function and use it to animate the background for example:
+You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children callback and use it to animate the background for example:
 
 <Code code={`
 <Drawer.Root>
@@ -308,12 +309,12 @@ You can disable drag on an element by giving it the `data-corvu-no-drag` attribu
 </ExampleWrapper>
 
 ## Accessibility
-Adheres to the [Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal) and [Alert Dialog WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/).
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" text="Dialog WAI-ARIA design pattern" newTab /> and <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/" text="Alert Dialog WAI-ARIA design pattern" newTab />.
 
 ## API reference
 
 Only components which are specific to the drawer are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog#api-reference).
 
-The dialog context is re-exported as `Drawer.useDialogContext` and the root children function also accepts all props of the dialog root children function, which are documented in the [Dialog API reference](/docs/primitives/dialog#Dialog.RootChildrenProps).
+The dialog context is re-exported as `Drawer.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog#Dialog.RootChildrenProps).
 
 <GenerateApiDocs primitive="Drawer" />

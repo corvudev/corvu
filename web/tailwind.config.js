@@ -56,6 +56,28 @@ export default {
         caret:
           "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none'%3E%3Cpath fill='%23f2f0fe' d='m16.6922 7.9422-6.25 6.25a.6256.6256 0 0 1-.8844 0l-6.25-6.25A.625.625 0 0 1 3.75 6.875h12.5a.6251.6251 0 0 1 .4422 1.0672Z'/%3E%3C/svg%3E\")",
       },
+      animation: {
+        expand: 'expand 250ms cubic-bezier(0.32,0.72,0,0.75)',
+        collapse: 'collapse 250ms cubic-bezier(0.32,0.72,0,0.75)',
+      },
+      keyframes: {
+        expand: {
+          '0%': {
+            height: '0px',
+          },
+          '100%': {
+            height: 'var(--corvu-disclosure-content-height)',
+          },
+        },
+        collapse: {
+          '0%': {
+            height: 'var(--corvu-disclosure-content-height)',
+          },
+          '100%': {
+            height: '0px',
+          },
+        },
+      },
     },
   },
   plugins: [

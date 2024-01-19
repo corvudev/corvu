@@ -3,11 +3,14 @@ import plugin from 'tailwindcss/plugin'
 const dataStates = [
   'open',
   'closed',
+  'expanded',
+  'collapsed',
   'transitioning',
   'opening',
   'closing',
   'snapping',
   'resizing',
+  'disabled',
 ]
 
 export type PluginOptions = {
