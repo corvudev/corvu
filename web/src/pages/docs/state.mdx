@@ -69,9 +69,9 @@ const DialogContent = () => {
 
 Every primitive provides different properties in its context, have a look at the API section of each primitive to see what's available.
 
-## Root children function
+## Children callbacks
 
-The `Root` component of every primitive also accepts a function as its children. By doing this, we can pass the internal state to the children for you to access. An example of this looks like this:
+The `Root` component of every primitive (and in a few cases others) also accepts a function as its children. By doing this, we can pass the internal state to the children for you to access. An example of this looks like this:
 
 <Code code={`
 import Dialog from 'corvu/dialog'

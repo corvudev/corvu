@@ -4,7 +4,48 @@ import plugin from 'tailwindcss/plugin'
 module.exports = {
   content: ['./src/**/*.{html,ts,tsx}', './index.html'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        corvu: {
+          50: '#f2f0fe',
+          100: '#e6e2fd',
+          200: '#d4cbfb',
+          light: '#D4C0FF',
+          300: '#bcacf6',
+          400: '#a888f1',
+          500: '#9a6de9',
+          600: '#8f50dc',
+          700: '#7e41c3',
+          accent: '#7250AE',
+          800: '#63359c',
+          900: '#52317d',
+          dark: '#180f23',
+          1000: '#0C0812',
+        },
+      },
+      animation: {
+        expand: 'expand 150ms linear',
+        collapse: 'collapse 150ms linear',
+      },
+      keyframes: {
+        expand: {
+          '0%': {
+            height: '0px',
+          },
+          '100%': {
+            height: 'var(--corvu-disclosure-content-height)',
+          },
+        },
+        collapse: {
+          '0%': {
+            height: 'var(--corvu-disclosure-content-height)',
+          },
+          '100%': {
+            height: '0px',
+          },
+        },
+      },
+    },
   },
   plugins: [
     require('@corvu/tailwind'),

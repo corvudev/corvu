@@ -4,7 +4,7 @@ import type { VoidComponent } from 'solid-js'
 const DialogExample: VoidComponent = () => {
   return (
     <Dialog.Root>
-      <Dialog.Trigger class="rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
+      <Dialog.Trigger class="my-auto rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
         Open Dialog
       </Dialog.Trigger>
       <Dialog.Portal>

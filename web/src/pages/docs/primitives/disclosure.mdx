@@ -1,0 +1,127 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Disclosure
+description: A customizable, unstyled and accessible disclosure/collapsible component for SolidJS
+image: https://corvu.dev/banner.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/disclosure/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/disclosure/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/disclosure/tailwind.js?raw'
+import CssTsx from '@examples/primitives/disclosure/basic/css/index?raw'
+import CssStyle from '@examples/primitives/disclosure/basic/css/index.css?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
+import Link from '@components/docs/Link.astro'
+
+# Disclosure
+
+An interactive component which expands/collapses content.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Option to hide the content when collapsed instead of unmounting it for better SEO',
+  'CSS variables to animate the height/width of the content',
+  'Full keyboard navigation',
+]} />
+
+## Usage
+<Code code={`
+import Disclosure from 'corvu/disclosure'
+// Or
+// import { Root, Trigger, ... } from 'corvu/disclosure'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+<Disclosure.Root>
+  <Disclosure.Trigger />
+  <Disclosure.Content />
+</Disclosure.Root>
+`} lang="tsx" copyButton />
+
+### Animation
+Corvu sets the `--corvu-disclosure-content-height` and `--corvu-disclosure-content-width` CSS properties on the disclosure content that make it possible to animate the height/width.
+
+<Code code={`
+[data-corvu-disclosure-content][data-collapsed] {
+  animation: collapse 200ms linear;
+}
+[data-corvu-disclosure-content][data-expanded] {
+  animation: expand 200ms linear;
+}
+
+@keyframes collapse {
+  0% {
+    height: var(--corvu-disclosure-content-height);
+  }
+  100% {
+    height: 0px;
+  }
+}
+
+@keyframes expand {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: var(--corvu-disclosure-content-height);
+  }
+}
+`} lang="css" copyButton />
+
+## Accessibility
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" text="Disclosure WAI-ARIA design pattern" newTab />.
+
+### Keyboard navigation
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Space',
+    behavior: 'Activates the trigger and toggles the disclosure.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'Activates the trigger and toggles the disclosure.'
+  }
+]} />
+
+## API reference
+
+<GenerateApiDocs primitive="Disclosure" />

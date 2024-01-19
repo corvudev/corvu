@@ -5,16 +5,14 @@ import {
   getUtility,
   type ApiReference as ApiReferenceType,
 } from '@lib/getTypes'
+import type {
+  ComponentSpecifications,
+  UtilitySpecifications,
+} from '@lib/apiSpecifications'
 
 interface Props {
-  primitive?: 'Dialog'
-  utility:
-    | 'createControllableSignal'
-    | 'createPreventScroll'
-    | 'createFocusTrap'
-    | 'keyedContext'
-    | 'createPresence'
-    | 'Polymorphic'
+  primitive?: ComponentSpecifications
+  utility?: UtilitySpecifications
 }
 
 const { primitive, utility } = Astro.props

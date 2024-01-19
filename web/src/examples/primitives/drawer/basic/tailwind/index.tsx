@@ -6,7 +6,7 @@ const DrawerExample: VoidComponent = () => {
     <Drawer.Root breakPoints={[0.75]}>
       {(props) => (
         <>
-          <Drawer.Trigger class="rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
+          <Drawer.Trigger class="my-auto rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
             Open Drawer
           </Drawer.Trigger>
           <Drawer.Portal>

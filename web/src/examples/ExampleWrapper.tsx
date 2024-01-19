@@ -20,7 +20,7 @@ const ExampleWrapper: FlowComponent<{
   const [activeTab, setActiveTab] = createSignal(0)
 
   return (
-    <div class="not-prose my-3 @container">
+    <div class="not-prose my-3">
       <div class="flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-1000 p-2">
         <Show
           when={viewCode() && props.codeSnippets.length > 1}
@@ -76,13 +76,14 @@ const ExampleWrapper: FlowComponent<{
       <Show when={!viewCode()}>
         <div
           class={clsx(
-            'aspect-h-9 aspect-w-16 relative rounded-b-xl bg-corvu-400 text-corvu-1000 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
+            'relative rounded-b-xl bg-corvu-400 text-corvu-1000 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
             {
-              '@xl:aspect-h-4': !props.heading,
+              'h-[300px] @xl:h-[400px]': props.heading,
+              'h-[200px]': !props.heading,
             },
           )}
         >
-          <div class="z-10 flex size-full flex-col items-center justify-center">
+          <div class="relative z-10 flex size-full flex-col items-center">
             {props.children}
           </div>
         </div>

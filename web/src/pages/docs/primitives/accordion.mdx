@@ -1,0 +1,188 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Accordion
+description: A customizable, unstyled and accessible accordion component for SolidJS
+image: https://corvu.dev/banner.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/accordion/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/accordion/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/accordion/tailwind.js?raw'
+import CssTsx from '@examples/primitives/accordion/basic/css/index?raw'
+import CssStyle from '@examples/primitives/accordion/basic/css/index.css?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
+import Link from '@components/docs/Link.astro'
+
+# Accordion
+
+A component that consists of multiple collapsible sections.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Option to hide the content when collapsed instead of unmounting it for better SEO',
+  'CSS variables to animate the height/width of every item content',
+  'Full keyboard navigation',
+]} />
+
+## Usage
+<Code code={`
+import Accordion from 'corvu/accordion'
+// Or
+// import { Root, Trigger, ... } from 'corvu/accordion'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Trigger />
+    <Accordion.Content />
+  </Accordion.Item>
+</Accordion.Root>
+`} lang="tsx" copyButton />
+
+The accordion item uses the [Disclosure](/docs/primitives/disclosure) component under the hood. It forwards the same props in the Item children callback and the disclosure context is re-exported as `Accordion.useDisclosureContext`.
+
+### Animation
+Corvu sets the `--corvu-disclosure-content-height` and `--corvu-disclosure-content-width` css properties on every accordion item content that make it possible to animate the height/width.
+
+<Code code={`
+[data-corvu-accordion-content][data-collapsed] {
+  animation: collapse 200ms linear;
+}
+[data-corvu-accordion-content][data-expanded] {
+  animation: expand 200ms linear;
+}
+
+@keyframes collapse {
+  0% {
+    height: var(--corvu-disclosure-content-height);
+  }
+  100% {
+    height: 0px;
+  }
+}
+
+@keyframes expand {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: var(--corvu-disclosure-content-height);
+  }
+}
+`} lang="css" copyButton />
+
+## Accessibility
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" text="Accordion WAI-ARIA design pattern" newTab />.
+
+### Ensuring items are accessible
+Based on the Accordion WAI-ARIA design pattern, every accordion item trigger should include a meaningful title text and should be wrapped in a heading element like this:
+
+<Code code={`
+  <Accordion.Item>
+    <h3>
+      <Accordion.Trigger>What is corvu?</Accordion.Trigger>
+    </h3>
+    <Accordion.Content />
+  </Accordion.Item>
+`} lang="tsx" copyButton />
+
+If you don't want to use a heading element for some reason, you can instead use the `aria-level` attribute to define the hierarchical level:
+
+<Code code={`
+  <Accordion.Item>
+    <span aria-level="3">
+      <Accordion.Trigger>What is corvu?</Accordion.Trigger>
+    </span>
+    <Accordion.Content />
+  </Accordion.Item>
+`} lang="tsx" copyButton />
+
+### Keyboard navigation
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Space',
+    behavior: 'When the trigger of an item is focused, toggles the item content.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'When the trigger of an item is focused, toggles the item content.'
+  },
+  {
+    key: 'Tab',
+    behavior: 'Moves focus to the next focusable element.'
+  },
+  {
+    key: 'Shift + Tab',
+    behavior: 'Moves focus to the previous focusable element.'
+  },
+  {
+    key: 'ArrowDown',
+    behavior: 'When the trigger of an item is focused and orientation is \'vertical\' (default), moves to the next trigger.'
+  },
+  {
+    key: 'ArrowUp',
+    behavior: 'When the trigger of an item is focused and orientation is \'vertical\' (default), moves to the previous trigger.'
+  },
+  {
+    key: 'ArrowRight',
+    behavior: 'When the trigger of an item is focused and orientation is \'horizontal\', moves to the next trigger.'
+  },
+  {
+    key: 'ArrowLeft',
+    behavior: 'When the trigger of an item is focused and orientation is \'horizontal\', moves to the previous trigger.'
+  },
+  {
+    key: 'Home',
+    behavior: 'When the trigger of an item is focused, moves to the first trigger.'
+  },
+  {
+    key: 'End',
+    behavior: 'When the trigger of an item is focused, moves to the first trigger.'
+  }
+]} />
+
+## API reference
+
+The disclosure context is re-exported as `Accordion.useDisclosureContext` and the item children callback also accepts all props of the disclosure root children callback, which are documented in the [Disclosure API reference](/docs/primitives/disclosure#Disclosure.RootChildrenProps).
+
+<GenerateApiDocs primitive="Accordion" />
