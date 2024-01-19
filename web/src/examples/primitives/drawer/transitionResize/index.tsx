@@ -10,12 +10,14 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
     <Drawer.Root transitionResize>
       {(props) => (
         <>
-          <p class="mb-2 rounded-lg bg-corvu-300 px-2 py-1 font-bold">
-            Transition resize example
-          </p>
-          <Drawer.Trigger class="rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
-            Open Drawer
-          </Drawer.Trigger>
+          <div class="my-auto flex flex-col items-center">
+            <p class="mb-2 rounded-lg bg-corvu-300 px-2 py-1 font-bold">
+              Transition resize example
+            </p>
+            <Drawer.Trigger class="rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
+              Open Drawer
+            </Drawer.Trigger>
+          </div>
           <Drawer.Portal>
             <Drawer.Overlay
               class="fixed inset-0 z-40 corvu-peer-transitioning:transition-colors corvu-peer-transitioning:duration-500 corvu-peer-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
