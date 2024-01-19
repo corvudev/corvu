@@ -1,5 +1,11 @@
 # @corvu/tailwind
 
+## 0.1.3
+
+### Patch Changes
+
+- Add the `expanded`, `collapsed` and `disabled` modifiers - [#5](https://github.com/corvudev/corvu/pull/5) [`6960a2d`](https://github.com/corvudev/corvu/commit/6960a2d269bb3c680b36a52e42b7dab23fa9a040) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.2
 
 ### Patch Changes

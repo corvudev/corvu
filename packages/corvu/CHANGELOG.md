@@ -1,5 +1,13 @@
 # corvu
 
+## 0.2.4
+
+### Patch Changes
+
+- Add disclosure and accordion primitives - [#5](https://github.com/corvudev/corvu/pull/5) [`6960a2d`](https://github.com/corvudev/corvu/commit/6960a2d269bb3c680b36a52e42b7dab23fa9a040) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Dialog: prevent possible hydration bug - [`e79efd4`](https://github.com/corvudev/corvu/commit/e79efd43c71431ad5fef56941368c4a2f355c36b) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.2.3
 
 ### Patch Changes
