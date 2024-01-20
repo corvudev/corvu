@@ -5,7 +5,7 @@ import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
+export const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
 
 export type DialogCloseProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
@@ -16,6 +16,8 @@ export type DialogCloseProps<
     contextId?: string
     /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+    /** @hidden */
+    'data-corvu-dialog-close'?: string | undefined
   }
 >
 
@@ -32,6 +34,7 @@ const DialogClose = <
     'as',
     'contextId',
     'onClick',
+    'data-corvu-dialog-close',
   ])
 
   const context = createMemo(() =>
@@ -47,7 +50,11 @@ const DialogClose = <
       as={localProps.as ?? (DEFAULT_DIALOG_CLOSE_ELEMENT as ValidComponent)}
       onClick={onClick}
       aria-label="close"
-      data-corvu-dialog-close=""
+      data-corvu-dialog-close={
+        localProps.hasOwnProperty('data-corvu-dialog-close')
+          ? localProps['data-corvu-dialog-close']
+          : ''
+      }
       {...otherProps}
     />
   )

@@ -5,7 +5,7 @@ import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDisclosureContext } from '@primitives/disclosure/context'
 
-const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
+export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
 
 export type DisclosureTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,

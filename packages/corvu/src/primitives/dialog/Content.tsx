@@ -14,7 +14,7 @@ import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
+export const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
 
 export type DialogContentProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
@@ -29,6 +29,8 @@ export type DialogContentProps<
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
+    /** @hidden */
+    'data-corvu-dialog-content'?: string | undefined
   }
 >
 
@@ -50,6 +52,7 @@ const DialogContent = <
     'children',
     'ref',
     'style',
+    'data-corvu-dialog-content',
   ])
 
   const context = createMemo(() =>
@@ -81,10 +84,14 @@ const DialogContent = <
         enabled={context().open() || context().contentPresent()}
         onDismiss={() => context().setOpen(false)}
         dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
-        dismissOnOutsidePointerDown={context().closeOnOutsidePointerDown}
+        dismissOnOutsidePointer={context().closeOnOutsidePointer}
+        dismissOnOutsidePointerStrategy={
+          context().closeOnOutsidePointerStrategy
+        }
+        dismissOnOutsidePointerIgnore={context().triggerRef}
         noOutsidePointerEvents={context().noOutsidePointerEvents}
         onEscapeKeyDown={context().onEscapeKeyDown}
-        onOutsidePointerDown={context().onOutsidePointerDown}
+        onOutsidePointer={context().onOutsidePointer}
       >
         {(props) => {
           const memoizedChildren = createMemo(() => localProps.children)
@@ -104,7 +111,11 @@ const DialogContent = <
                 aria-modal={context().modal() ? 'true' : 'false'}
                 data-open={dataIf(context().open())}
                 data-closed={dataIf(!context().open())}
-                data-corvu-dialog-content=""
+                data-corvu-dialog-content={
+                  localProps.hasOwnProperty('data-corvu-dialog-content')
+                    ? localProps['data-corvu-dialog-content']
+                    : ''
+                }
                 tabIndex="-1"
                 style={
                   props.isLastLayer

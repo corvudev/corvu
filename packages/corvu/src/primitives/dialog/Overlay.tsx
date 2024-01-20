@@ -27,6 +27,8 @@ export type DialogOverlayProps<
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
+    /** @hidden */
+    'data-corvu-dialog-overlay'?: string | undefined
   }
 >
 
@@ -48,6 +50,7 @@ const DialogOverlay = <
     'children',
     'ref',
     'style',
+    'data-corvu-dialog-overlay',
   ])
 
   const context = createMemo(() =>
@@ -80,7 +83,11 @@ const DialogOverlay = <
               aria-hidden="true"
               data-open={dataIf(context().open())}
               data-closed={dataIf(!context().open())}
-              data-corvu-dialog-overlay=""
+              data-corvu-dialog-overlay={
+                localProps.hasOwnProperty('data-corvu-dialog-overlay')
+                  ? localProps['data-corvu-dialog-overlay']
+                  : ''
+              }
               tabIndex="-1"
               style={{
                 'pointer-events': 'auto',

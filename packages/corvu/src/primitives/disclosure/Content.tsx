@@ -11,7 +11,7 @@ import Polymorphic from '@lib/components/Polymorphic'
 import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalDisclosureContext } from '@primitives/disclosure/context'
 
-const DEFAULT_DISCLOSURE_CONTENT_ELEMENT = 'div'
+export const DEFAULT_DISCLOSURE_CONTENT_ELEMENT = 'div'
 
 export type DisclosureContentProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_CONTENT_ELEMENT,

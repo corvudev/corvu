@@ -7,6 +7,7 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import DialogContent, {
+  DEFAULT_DIALOG_CONTENT_ELEMENT,
   type DialogContentProps,
 } from '@primitives/dialog/Content'
 import {
@@ -20,11 +21,9 @@ import { getScrollAtLocation } from '@lib/scroll'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 import { useInternalDrawerContext } from '@primitives/drawer/context'
 
-const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
-
 /** Content of the drawer. Can be animated.
  *
- * @data `data-corvu-dialog-content` - Present on every drawer/dialog content element.
+ * @data `data-corvu-drawer-content` - Present on every drawer content element.
  * @data `data-open` - Present when the drawer is open.
  * @data `data-closed` - Present when the drawer is closed.
  * @data `data-transitioning` - Present when the drawer is transitioning (opening, closing or snapping).
@@ -34,7 +33,7 @@ const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
  * @data `data-resizing` - Present when the drawer is transitioning after the size (width/height) changes. Only present if `transitionResize` is set to `true`.
  */
 const DrawerContent = <
-  T extends ValidComponent = typeof DEFAULT_DRAWER_CONTENT_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
 >(
   props: DialogContentProps<T>,
 ) => {
@@ -299,6 +298,8 @@ const DrawerContent = <
       data-closing={dataIf(drawerContext().transitionState() === 'closing')}
       data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
       data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
+      data-corvu-dialog-content={undefined}
+      data-corvu-drawer-content=""
       {...(otherProps as DialogContentProps<T>)}
     />
   )

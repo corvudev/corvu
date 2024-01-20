@@ -118,6 +118,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       allowSkippingSnapPoints: true,
       handleScrollableElements: true,
       transitionResize: false,
+      closeOnOutsidePointer: true,
     },
     props,
   )
@@ -138,6 +139,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     'open',
     'initialOpen',
     'onOpenChange',
+    'closeOnOutsidePointer',
     'contextId',
     'children',
   ])
@@ -390,6 +392,9 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             open={open()}
             onOpenChange={onOpenChange}
             contextId={localProps.contextId}
+            closeOnOutsidePointer={
+              !isDragging() && localProps.closeOnOutsidePointer
+            }
             {...otherProps}
           >
             {(dialogChildrenProps) => resolveChildren(dialogChildrenProps)}

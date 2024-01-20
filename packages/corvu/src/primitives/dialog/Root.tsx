@@ -36,9 +36,11 @@ export type DialogRootProps = {
   /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
   onEscapeKeyDown?(event: KeyboardEvent): void
   /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`. *Default = `true` if `modal` is `true`, `false` otherwise* */
-  closeOnOutsidePointerDown?: boolean
+  closeOnOutsidePointer?: boolean
+  /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. *Default = `pointerup` */
+  closeOnOutsidePointerStrategy?: 'pointerdown' | 'pointerup'
   /** Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`. */
-  onOutsidePointerDown?(event: MouseEvent): void
+  onOutsidePointer?(event: MouseEvent): void
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. *Default = `true` if `modal` is `true`, `false` otherwise* */
   noOutsidePointerEvents?: boolean
   /** Whether scroll outside of the dialog should be prevented. *Default = `true` if `modal` is `true`, `false` otherwise* */
@@ -85,7 +87,9 @@ export type DialogRootChildrenProps = {
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: boolean
   /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
-  closeOnOutsidePointerDown: boolean
+  closeOnOutsidePointer: boolean
+  /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. */
+  closeOnOutsidePointerStrategy: 'pointerdown' | 'pointerup'
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: boolean
   /** Whether scroll outside of the dialog should be prevented. */
@@ -130,8 +134,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       initialOpen: false,
       modal: true,
       closeOnEscapeKeyDown: true,
-      closeOnOutsidePointerDown: () =>
+      closeOnOutsidePointer: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
+      closeOnOutsidePointerStrategy: 'pointerup' as const,
       noOutsidePointerEvents: () =>
         props.modal ?? DEFAULT_MODAL ? true : false,
       preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
@@ -159,6 +164,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       value: () => defaultedProps.descriptionId ?? createUniqueId(),
     })
 
+  const [triggerRef, setTriggerRef] = createSignal<HTMLElement | null>(null)
   const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
   const [overlayRef, setOverlayRef] = createSignal<HTMLElement | null>(null)
 
@@ -195,8 +201,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     get closeOnEscapeKeyDown() {
       return defaultedProps.closeOnEscapeKeyDown
     },
-    get closeOnOutsidePointerDown() {
-      return access(defaultedProps.closeOnOutsidePointerDown)
+    get closeOnOutsidePointer() {
+      return access(defaultedProps.closeOnOutsidePointer)
+    },
+    get closeOnOutsidePointerStrategy() {
+      return defaultedProps.closeOnOutsidePointerStrategy
     },
     get noOutsidePointerEvents() {
       return access(defaultedProps.noOutsidePointerEvents)
@@ -272,8 +281,10 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           setOpen,
           modal: () => defaultedProps.modal,
           closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
-          closeOnOutsidePointerDown: () =>
-            access(defaultedProps.closeOnOutsidePointerDown),
+          closeOnOutsidePointer: () =>
+            access(defaultedProps.closeOnOutsidePointer),
+          closeOnOutsidePointerStrategy: () =>
+            defaultedProps.closeOnOutsidePointerStrategy,
           noOutsidePointerEvents: () =>
             access(defaultedProps.noOutsidePointerEvents),
           preventScroll: () => access(defaultedProps.preventScroll),
@@ -303,9 +314,11 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             modal: () => defaultedProps.modal,
             closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
             onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
-            closeOnOutsidePointerDown: () =>
-              access(defaultedProps.closeOnOutsidePointerDown),
-            onOutsidePointerDown: defaultedProps.onOutsidePointerDown,
+            closeOnOutsidePointer: () =>
+              access(defaultedProps.closeOnOutsidePointer),
+            closeOnOutsidePointerStrategy: () =>
+              defaultedProps.closeOnOutsidePointerStrategy,
+            onOutsidePointer: defaultedProps.onOutsidePointer,
             noOutsidePointerEvents: () =>
               access(defaultedProps.noOutsidePointerEvents),
             preventScroll: () => access(defaultedProps.preventScroll),
@@ -331,6 +344,8 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             unregisterDescriptionId,
             setContentRef,
             setOverlayRef,
+            triggerRef,
+            setTriggerRef,
           }}
         >
           {untrack(() => resolveChildren())}

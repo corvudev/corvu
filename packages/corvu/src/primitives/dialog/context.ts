@@ -13,7 +13,9 @@ export type DialogContextValue = {
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: Accessor<boolean>
   /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`. */
-  closeOnOutsidePointerDown: Accessor<boolean>
+  closeOnOutsidePointer: Accessor<boolean>
+  /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. */
+  closeOnOutsidePointerStrategy: Accessor<'pointerdown' | 'pointerup'>
   /** Whether pointer events outside of `<Dialog.Content />` should be disabled. */
   noOutsidePointerEvents: Accessor<boolean>
   /** Whether scroll outside of the dialog should be prevented. */
@@ -82,11 +84,13 @@ export type InternalDialogContextValue = DialogContextValue & {
   setContentRef(element: HTMLElement): void
   setOverlayRef(element: HTMLElement): void
   onEscapeKeyDown?(event: KeyboardEvent): void
-  onOutsidePointerDown?(event: MouseEvent): void
+  onOutsidePointer?(event: MouseEvent): void
   registerLabelId(): void
   unregisterLabelId(): void
   registerDescriptionId(): void
   unregisterDescriptionId(): void
+  triggerRef: Accessor<HTMLElement | null>
+  setTriggerRef(element: HTMLElement): void
 }
 
 const InternalDialogContext = createContext<InternalDialogContextValue>()

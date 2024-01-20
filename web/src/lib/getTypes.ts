@@ -95,14 +95,14 @@ const getComponent = (componentName: ComponentSpecifications) => {
         return a.name.localeCompare(b.name)
       }),
     })
-    if (dataTags) {
+    if (dataTags && dataTags.length > 0) {
       apiReference.parts.push({
         name: 'Data',
         description: `Data attributes present on ${componentName}.${component.name} components.`,
         props: dataTags,
       })
     }
-    if (cssTags) {
+    if (cssTags && cssTags.length > 0) {
       apiReference.parts.push({
         name: 'CSS props',
         description: `CSS properties attributes present on ${componentName}.${component.name} components.`,

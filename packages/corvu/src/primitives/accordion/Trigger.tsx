@@ -9,6 +9,7 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import DisclosureTrigger, {
+  DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
   type DisclosureTriggerProps,
 } from '@primitives/disclosure/Trigger'
 import type { OverrideComponentProps } from '@lib/types'
@@ -16,10 +17,8 @@ import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalAccordionContext } from '@primitives/accordion/context'
 import { useInternalAccordionItemContext } from '@primitives/accordion/itemContext'
 
-const DEFAULT_ACCORDION_TRIGGER_ELEMENT = 'button'
-
 export type AccordionTriggerProps<
-  T extends ValidComponent = typeof DEFAULT_ACCORDION_TRIGGER_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
@@ -38,7 +37,7 @@ export type AccordionTriggerProps<
  * @data `data-disabled` - Present when the accordion trigger is disabled.
  */
 const AccordionTrigger = <
-  T extends ValidComponent = typeof DEFAULT_ACCORDION_TRIGGER_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
 >(
   props: AccordionTriggerProps<T>,
 ) => {
@@ -80,9 +79,9 @@ const AccordionTrigger = <
       onKeyDown={onKeyDown}
       contextId={localProps.contextId}
       aria-disabled={context().disabled() ? 'true' : undefined}
-      data-corvu-accordion-trigger=""
-      data-corvu-disclosure-trigger={undefined}
       data-disabled={dataIf(context().disabled())}
+      data-corvu-disclosure-trigger={undefined}
+      data-corvu-accordion-trigger=""
       disabled={context().disabled() ? 'true' : undefined}
       {...(otherProps as DisclosureTriggerProps<T>)}
     />

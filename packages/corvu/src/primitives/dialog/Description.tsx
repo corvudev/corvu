@@ -11,7 +11,7 @@ import Polymorphic, {
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
+export const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
 
 export type DialogDescriptionProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
@@ -20,6 +20,8 @@ export type DialogDescriptionProps<
   PolymorphicAttributes<T> & {
     /** The `id` of the dialog context to use. */
     contextId?: string
+    /** @hidden */
+    'data-corvu-dialog-description'?: string | undefined
   }
 >
 
@@ -32,7 +34,11 @@ const DialogDescription = <
 >(
   props: DialogDescriptionProps<T>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['as', 'contextId'])
+  const [localProps, otherProps] = splitProps(props, [
+    'as',
+    'contextId',
+    'data-corvu-dialog-description',
+  ])
 
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
@@ -50,7 +56,11 @@ const DialogDescription = <
         localProps.as ?? (DEFAULT_DIALOG_DESCRIPTION_ELEMENT as ValidComponent)
       }
       id={context().descriptionId()}
-      data-corvu-dialog-description=""
+      data-corvu-dialog-description={
+        localProps.hasOwnProperty('data-corvu-dialog-description')
+          ? localProps['data-corvu-dialog-description']
+          : ''
+      }
       {...otherProps}
     />
   )

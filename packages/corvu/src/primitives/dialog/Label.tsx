@@ -20,6 +20,8 @@ export type DialogLabelProps<
   PolymorphicAttributes<T> & {
     /** The `id` of the dialog context to use. */
     contextId?: string
+    /** @hidden */
+    'data-corvu-dialog-label'?: string | undefined
   }
 >
 
@@ -32,7 +34,11 @@ const DialogLabel = <
 >(
   props: DialogLabelProps<T>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['as', 'contextId'])
+  const [localProps, otherProps] = splitProps(props, [
+    'as',
+    'contextId',
+    'data-corvu-dialog-label',
+  ])
 
   const context = createMemo(() =>
     useInternalDialogContext(localProps.contextId),
@@ -48,7 +54,11 @@ const DialogLabel = <
     <Polymorphic
       as={localProps.as ?? (DEFAULT_DIALOG_LABEL_ELEMENT as ValidComponent)}
       id={context().labelId()}
-      data-corvu-dialog-label=""
+      data-corvu-dialog-label={
+        localProps.hasOwnProperty('data-corvu-dialog-label')
+          ? localProps['data-corvu-dialog-label']
+          : ''
+      }
       {...otherProps}
     />
   )

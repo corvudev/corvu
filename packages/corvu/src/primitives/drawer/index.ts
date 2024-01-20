@@ -1,17 +1,19 @@
 import {
-  Close,
+  DrawerClose as Close,
+  DrawerDescription as Description,
+  DrawerLabel as Label,
+  DrawerOverlay as Overlay,
+  DrawerTrigger as Trigger,
+} from '@primitives/drawer/DialogOverrides'
+import {
   type CloseProps,
   type ContentProps,
-  Description,
   type DescriptionProps,
   type ContextValue as DialogContextValue,
-  Label,
   type LabelProps,
-  Overlay,
   type OverlayProps,
   Portal,
   type PortalProps,
-  Trigger,
   type TriggerProps,
   useContext as useDialogContext,
 } from '@primitives/dialog'

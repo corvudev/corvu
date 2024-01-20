@@ -8,7 +8,6 @@ import {
   createUniqueId,
   type JSX,
   mergeProps,
-  Show,
   splitProps,
   untrack,
   useContext,
@@ -17,7 +16,6 @@ import createDismissible, {
   type CreateDismissableProps,
 } from '@lib/create/dismissible'
 import { access } from '@lib/utils'
-import createOnce from '@lib/create/once'
 import { isFunction } from '@lib/assertions'
 
 type DismissibleContextValue = {
@@ -35,22 +33,47 @@ type DismissibleProps = {
 } & CreateDismissableProps
 
 /** A component that can be dismissed by pressing the escape key or clicking outside of it. Can be nested. */
-const Dismissible: Component<DismissibleProps> = (props) => {
-  const upperContext = useContext(DismissibleContext)
+const DismissibleProvider: Component<DismissibleProps> = (props) => {
+  const memoizedDismissible = createMemo(() => {
+    const upperContext = useContext(DismissibleContext)
+    if (upperContext) {
+      return <Dismissible {...props} />
+    }
 
-  return (
-    <Show when={upperContext} fallback={<RootDismissible {...props} />} keyed>
-      {(upperContext) => <ChildDismissible {...props} {...upperContext} />}
-    </Show>
-  )
+    const layerId = createUniqueId()
+    const [layers, setLayers] = createSignal<string[]>([layerId])
+
+    const onLayerShow = (layerId: string) => {
+      setLayers((layers) => [...layers, layerId])
+    }
+
+    const onLayerDismiss = (layerId: string) => {
+      setLayers((layers) => layers.filter((layer) => layer !== layerId))
+    }
+
+    return (
+      <DismissibleContext.Provider
+        value={{
+          layers,
+          onLayerShow,
+          onLayerDismiss,
+        }}
+      >
+        <Dismissible {...props} />
+      </DismissibleContext.Provider>
+    )
+  })
+
+  return memoizedDismissible as unknown as JSX.Element
 }
 
-const RootDismissible: Component<DismissibleProps> = (props) => {
+const Dismissible: Component<DismissibleProps> = (props) => {
   const defaultedProps = mergeProps(
     {
       enabled: true,
       dismissOnEscapeKeyDown: true,
-      dismissOnOutsidePointerDown: true,
+      dismissOnOutsidePointer: true,
+      dismissOnOutsidePointerStrategy: 'pointerup' as const,
       noOutsidePointerEvents: true,
     },
     props,
@@ -60,24 +83,27 @@ const RootDismissible: Component<DismissibleProps> = (props) => {
     'enabled',
     'children',
     'dismissOnEscapeKeyDown',
-    'dismissOnOutsidePointerDown',
+    'dismissOnOutsidePointer',
+    'dismissOnOutsidePointerStrategy',
+    'dismissOnOutsidePointerIgnore',
     'noOutsidePointerEvents',
     'onDismiss',
   ])
 
+  const context = useContext(DismissibleContext) as DismissibleContextValue
+
   const layerId = createUniqueId()
-  const [layers, setLayers] = createSignal<string[]>([layerId])
 
-  const onLayerShow = (layerId: string) => {
-    setLayers((layers) => [...layers, layerId])
-  }
-
-  const onLayerDismiss = (layerId: string) => {
-    setLayers((layers) => layers.filter((layer) => layer !== layerId))
-  }
+  createEffect(() => {
+    if (localProps.enabled) {
+      context.onLayerShow(layerId)
+    } else {
+      context.onLayerDismiss(layerId)
+    }
+  })
 
   const isLastLayer = () => {
-    return layers()[layers().length - 1] === layerId
+    return context.layers()[context.layers().length - 1] === layerId
   }
 
   createDismissible({
@@ -85,90 +111,14 @@ const RootDismissible: Component<DismissibleProps> = (props) => {
       access(localProps.dismissOnEscapeKeyDown) &&
       isLastLayer() &&
       localProps.enabled,
-    dismissOnOutsidePointerDown: () =>
-      access(localProps.dismissOnOutsidePointerDown) &&
+    dismissOnOutsidePointer: () =>
+      access(localProps.dismissOnOutsidePointer) &&
       isLastLayer() &&
       localProps.enabled,
+    dismissOnOutsidePointerStrategy: localProps.dismissOnOutsidePointerStrategy,
+    dismissOnOutsidePointerIgnore: localProps.dismissOnOutsidePointerIgnore,
     noOutsidePointerEvents: () =>
       access(localProps.noOutsidePointerEvents) && localProps.enabled,
-    onDismiss: (reason) => {
-      localProps.onDismiss(reason)
-    },
-    ...otherProps,
-  })
-
-  const memoizedChildren = createOnce(() => localProps.children)
-
-  const resolveChildren = () => {
-    const children = memoizedChildren()()
-    if (isFunction(children)) {
-      return children({
-        get isLastLayer() {
-          return isLastLayer()
-        },
-      })
-    }
-    return children
-  }
-
-  return (
-    <DismissibleContext.Provider
-      value={{
-        layers,
-        onLayerShow,
-        onLayerDismiss,
-      }}
-    >
-      {untrack(() => resolveChildren())}
-    </DismissibleContext.Provider>
-  )
-}
-
-const ChildDismissible: Component<
-  DismissibleProps & DismissibleContextValue
-> = (props) => {
-  const defaultedProps = mergeProps(
-    {
-      enabled: true,
-      dismissOnEscapeKeyDown: true,
-      dismissOnOutsidePointerDown: true,
-      noOutsidePointerEvents: true,
-    },
-    props,
-  )
-
-  const [localProps, otherProps] = splitProps(defaultedProps, [
-    'enabled',
-    'children',
-    'dismissOnEscapeKeyDown',
-    'dismissOnOutsidePointerDown',
-    'noOutsidePointerEvents',
-    'onDismiss',
-    'layers',
-    'onLayerShow',
-    'onLayerDismiss',
-  ])
-
-  const layerId = createUniqueId()
-
-  createEffect(() => {
-    if (localProps.enabled) {
-      localProps.onLayerShow(layerId)
-    } else {
-      localProps.onLayerDismiss(layerId)
-    }
-  })
-
-  const isLastLayer = () => {
-    return localProps.layers()[localProps.layers().length - 1] === layerId
-  }
-
-  createDismissible({
-    dismissOnEscapeKeyDown: () =>
-      access(localProps.dismissOnEscapeKeyDown) && isLastLayer(),
-    dismissOnOutsidePointerDown: () =>
-      access(localProps.dismissOnOutsidePointerDown) && isLastLayer(),
-    noOutsidePointerEvents: () => access(localProps.noOutsidePointerEvents),
     onDismiss: (reason) => {
       localProps.onDismiss(reason)
     },
@@ -192,4 +142,4 @@ const ChildDismissible: Component<
   return untrack(() => resolveChildren())
 }
 
-export default Dismissible
+export default DismissibleProvider

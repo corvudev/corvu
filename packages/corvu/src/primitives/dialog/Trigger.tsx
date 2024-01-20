@@ -1,4 +1,4 @@
-import { callEventHandler, dataIf } from '@lib/utils'
+import { callEventHandler, dataIf, mergeRefs } from '@lib/utils'
 import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
 import type { OverrideComponentProps } from '@lib/types'
 import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
@@ -15,7 +15,11 @@ export type DialogTriggerProps<
     /** The `id` of the dialog context to use. */
     contextId?: string
     /** @hidden */
+    ref?: (element: HTMLElement) => void
+    /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+    /** @hidden */
+    'data-corvu-dialog-trigger'?: string | undefined
   }
 >
 
@@ -33,7 +37,9 @@ const DialogTrigger = <
   const [localProps, otherProps] = splitProps(props, [
     'as',
     'contextId',
+    'ref',
     'onClick',
+    'data-corvu-dialog-trigger',
   ])
 
   const context = createMemo(() =>
@@ -47,6 +53,7 @@ const DialogTrigger = <
 
   return (
     <PolymorphicButton
+      ref={mergeRefs(context().setTriggerRef, localProps.ref)}
       as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
       onClick={onClick}
       aria-haspopup="dialog"
@@ -54,7 +61,11 @@ const DialogTrigger = <
       aria-controls={context().dialogId()}
       data-open={dataIf(context().open())}
       data-closed={dataIf(!context().open())}
-      data-corvu-dialog-trigger=""
+      data-corvu-dialog-trigger={
+        localProps.hasOwnProperty('data-corvu-dialog-trigger')
+          ? localProps['data-corvu-dialog-trigger']
+          : ''
+      }
       {...otherProps}
     />
   )
