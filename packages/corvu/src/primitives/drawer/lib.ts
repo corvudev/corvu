@@ -176,7 +176,7 @@ export const locationIsDraggable = (
     )
       return false
 
-    if (currentElement === (stopAt ?? document.body)) {
+    if (currentElement === (stopAt ?? document.documentElement)) {
       stopReached = true
     } else {
       currentElement = currentElement.parentElement

@@ -30,7 +30,12 @@ const isScrollContainer = (element: HTMLElement, axis: Axis | 'both') => {
   const styles = getComputedStyle(element)
   const overflow = axis === 'x' ? styles.overflowX : styles.overflowY
 
-  return overflow === 'auto' || overflow === 'scroll'
+  return (
+    overflow === 'auto' ||
+    overflow === 'scroll' ||
+    // The HTML element is a scroll container if it has overflow visible
+    (element.tagName === 'HTML' && overflow === 'visible')
+  )
 }
 
 /**
@@ -83,7 +88,7 @@ const getScrollablesAtLocation = (
       scrollables.push(currentElement)
     }
 
-    if (currentElement === (stopAt ?? document.body)) {
+    if (currentElement === (stopAt ?? document.documentElement)) {
       stopReached = true
     } else {
       currentElement = currentElement.parentElement
@@ -131,7 +136,7 @@ const getScrollAtLocation = (
       availableScroll += scrolled
       availableScrollTop += scrollOffset
     }
-    if (currentElement === (stopAt ?? document.body)) {
+    if (currentElement === (stopAt ?? document.documentElement)) {
       wrapperReached = true
     } else {
       currentElement = currentElement.parentElement
