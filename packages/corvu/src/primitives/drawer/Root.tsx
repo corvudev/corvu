@@ -119,6 +119,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
       handleScrollableElements: true,
       transitionResize: false,
       closeOnOutsidePointer: true,
+      allowPinchZoom: false,
     },
     props,
   )

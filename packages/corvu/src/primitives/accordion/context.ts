@@ -8,9 +8,9 @@ export type AccordionContextValue = {
   value: Accessor<string | string[] | null>
   /** Callback fired when the value changes. */
   setValue: Setter<string | string[] | null>
-  /** Whether the accordion can be fully collapsed or not. */
+  /** Whether the accordion can be fully collapsed. */
   collapsible: Accessor<boolean>
-  /** Whether the accordion is disabled or not. */
+  /** Whether the accordion is disabled. */
   disabled: Accessor<boolean>
   /** The orientation of the accordion. */
   orientation: Accessor<'horizontal' | 'vertical'>

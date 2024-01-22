@@ -2,7 +2,7 @@ import { type Accessor, createContext, type Setter, useContext } from 'solid-js'
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
 
 export type DisclosureContextValue = {
-  /** Whether the disclosure is expanded or not. */
+  /** Whether the disclosure is expanded. */
   expanded: Accessor<boolean>
   /** Callback fired when the expanded state changes. */
   setExpanded: Setter<boolean>

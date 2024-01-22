@@ -4,11 +4,11 @@ import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
 export type DialogContextValue = {
   /** The `role` attribute of the dialog element. */
   role: Accessor<'dialog' | 'alertdialog'>
-  /** Whether the dialog is open or not. */
+  /** Whether the dialog is open. */
   open: Accessor<boolean>
   /** Change the open state of the dialog. */
   setOpen: Setter<boolean>
-  /** Whether the dialog should be rendered as a modal or not. */
+  /** Whether the dialog should be rendered as a modal. */
   modal: Accessor<boolean>
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: Accessor<boolean>
@@ -26,7 +26,9 @@ export type DialogContextValue = {
   preventScrollbarShift: Accessor<boolean>
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: Accessor<'padding' | 'margin'>
-  /** Whether the dialog should trap focus or not. */
+  /** Whether the dialog should allow pinch zoom while scroll is disabled. */
+  allowPinchZoom: Accessor<boolean>
+  /** Whether the dialog should trap focus. */
   trapFocus: Accessor<boolean>
   /** Whether the dialog should restore focus to the previous active element when it closes. */
   restoreFocus: Accessor<boolean>

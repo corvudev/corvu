@@ -12,7 +12,7 @@ import type { MaybeAccessor } from 'src'
 /**
  * Manages the presence of an element in the DOM while being aware of pending animations.
  *
- * @param props.show - Whether the presence is showing or not.
+ * @param props.show - Whether the presence is showing.
  * @param props.element - The element which animations should be tracked.
  * @returns ```typescript
  * {

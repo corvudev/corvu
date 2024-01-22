@@ -20,11 +20,11 @@ import createPresence from '@lib/create/presence'
 import { isFunction } from '@lib/assertions'
 
 export type DisclosureRootProps = {
-  /** Whether the disclosure is expanded or not. */
+  /** Whether the disclosure is expanded. */
   expanded?: boolean
   /** Callback fired when the expanded state changes. */
   onExpandedChange?: (expanded: boolean) => void
-  /** Whether the disclosure is expanded initially or not. *Default = `false`* */
+  /** Whether the disclosure is expanded initially. *Default = `false`* */
   initialExpanded?: boolean
   /** Whether the disclosure content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons. *Default = `remove`* */
   collapseBehavior?: 'remove' | 'hide'
@@ -37,7 +37,7 @@ export type DisclosureRootProps = {
 
 /** Props that are passed to the Root component children callback. */
 export type DisclosureRootChildrenProps = {
-  /** Whether the disclosure is expanded or not. */
+  /** Whether the disclosure is expanded. */
   expanded: boolean
   /** Callback fired when the expanded state changes. */
   setExpanded: Setter<boolean>

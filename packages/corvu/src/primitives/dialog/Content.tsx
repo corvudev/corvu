@@ -9,7 +9,6 @@ import { dataIf, mergeRefs, some } from '@lib/utils'
 import Polymorphic, {
   type PolymorphicAttributes,
 } from '@lib/components/Polymorphic'
-import createPreventScroll from '@lib/create/preventScroll'
 import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
@@ -68,14 +67,6 @@ const DialogContent = <
     )
 
   const keepAlive = createMemo((prev) => prev || show(), false)
-
-  createPreventScroll({
-    element: context().contentRef,
-    enabled: () => context().contentPresent() && context().preventScroll(),
-    hideScrollbar: context().hideScrollbar,
-    preventScrollbarShift: context().preventScrollbarShift,
-    preventScrollbarShiftMode: context().preventScrollbarShiftMode,
-  })
 
   return (
     <Show when={keepAlive()}>

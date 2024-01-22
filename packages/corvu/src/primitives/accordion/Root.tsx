@@ -24,9 +24,9 @@ export type AccordionRootProps = {
   onValueChange?: (value: string | string[] | null) => void
   /** The value of the accordion initially. *Default = `null`* */
   initialValue?: string | string[] | null
-  /** Whether the accordion can be fully collapsed or not. *Default = `true`* */
+  /** Whether the accordion can be fully collapsed. *Default = `true`* */
   collapsible?: boolean
-  /** Whether the accordion is disabled or not. *Default = `false`* */
+  /** Whether the accordion is disabled. *Default = `false`* */
   disabled?: boolean
   /** The orientation of the accordion. *Default = `vertical`* */
   orientation?: 'vertical' | 'horizontal'
@@ -47,9 +47,9 @@ export type AccordionRootChildrenProps = {
   value: string | string[] | null
   /** Callback fired when the value changes. */
   setValue: Setter<string | string[] | null>
-  /** Whether the accordion can be fully collapsed or not. */
+  /** Whether the accordion can be fully collapsed. */
   collapsible: boolean
-  /** Whether the accordion is disabled or not. */
+  /** Whether the accordion is disabled. */
   disabled: boolean
   /** The orientation of the accordion. */
   orientation: 'horizontal' | 'vertical'

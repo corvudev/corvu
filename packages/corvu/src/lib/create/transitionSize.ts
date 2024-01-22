@@ -13,7 +13,7 @@ import type { MaybeAccessor } from 'src'
  * Utility that uses a `ResizeObserver` to provide the size of an element before and after resize. Used to transition the width/height of elements that don't have a fixed size applied.
  *
  * @param props.element - The element to transition.
- * @param props.enabled - Whether the utility is enabled or not. *Default = `true`*
+ * @param props.enabled - Whether the utility is enabled. *Default = `true`*
  * @param props.property - The size property to transition. *Default = `'both'`*
  * @returns ```typescript
  * {

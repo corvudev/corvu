@@ -17,19 +17,20 @@ import createControllableSignal from '@lib/create/controllableSignal'
 import createFocusTrap from '@lib/create/focusTrap'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
+import createPreventScroll from '@lib/create/preventScroll'
 import createRegister from '@lib/create/register'
 import { isFunction } from '@lib/assertions'
 
 export type DialogRootProps = {
   /** The `role` attribute of the dialog element. *Default = `'dialog'`* */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not. */
+  /** Whether the dialog is open. */
   open?: boolean
   /** Callback fired when the open state changes. */
   onOpenChange?(open: boolean): void
-  /** Whether the dialog is open initially or not. *Default = `false`* */
+  /** Whether the dialog is open initially. *Default = `false`* */
   initialOpen?: boolean
-  /** Whether the dialog should be rendered as a modal or not. *Default = `true`* */
+  /** Whether the dialog should be rendered as a modal. *Default = `true`* */
   modal?: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. *Default = `true`* */
   closeOnEscapeKeyDown?: boolean
@@ -51,7 +52,9 @@ export type DialogRootProps = {
   preventScrollbarShift?: boolean
   /**  Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`* */
   preventScrollbarShiftMode?: 'padding' | 'margin'
-  /** Whether the dialog should trap focus or not. *Default = `true`* */
+  /** Whether the dialog should allow pinch zoom while scroll is disabled. *Default = `true`* */
+  allowPinchZoom?: boolean
+  /** Whether the dialog should trap focus. *Default = `true`* */
   trapFocus?: boolean
   /** Whether the dialog should restore focus to the previous active element when it closes. *Default = `true`* */
   restoreFocus?: boolean
@@ -78,11 +81,11 @@ export type DialogRootProps = {
 export type DialogRootChildrenProps = {
   /** The `role` attribute of the dialog element. */
   role: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open or not. */
+  /** Whether the dialog is open. */
   open: boolean
   /** Change the open state of the dialog. */
   setOpen: Setter<boolean>
-  /** Whether the dialog should be rendered as a modal or not. */
+  /** Whether the dialog should be rendered as a modal. */
   modal: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: boolean
@@ -100,7 +103,9 @@ export type DialogRootChildrenProps = {
   preventScrollbarShift: boolean
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: 'padding' | 'margin'
-  /** Whether the dialog should trap focus or not. */
+  /** Whether the dialog should allow pinch zoom while scroll is disabled. */
+  allowPinchZoom: boolean
+  /** Whether the dialog should trap focus. */
   trapFocus: boolean
   /** Whether the dialog should restore focus to the previous active element when it closes. */
   restoreFocus: boolean
@@ -143,6 +148,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       hideScrollbar: true,
       preventScrollbarShift: true,
       preventScrollbarShiftMode: 'padding' as const,
+      allowPinchZoom: true,
       trapFocus: true,
       restoreFocus: true,
       dialogId: createUniqueId(),
@@ -187,6 +193,15 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     onInitialFocus: defaultedProps.onInitialFocus,
   })
 
+  createPreventScroll({
+    element: contentRef,
+    enabled: () => contentPresent() && access(defaultedProps.preventScroll),
+    hideScrollbar: () => defaultedProps.hideScrollbar,
+    preventScrollbarShift: () => defaultedProps.preventScrollbarShift,
+    preventScrollbarShiftMode: () => defaultedProps.preventScrollbarShiftMode,
+    allowPinchZoom: () => defaultedProps.allowPinchZoom,
+  })
+
   const childrenProps: DialogRootChildrenProps = {
     get role() {
       return defaultedProps.role
@@ -221,6 +236,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     },
     get preventScrollbarShiftMode() {
       return defaultedProps.preventScrollbarShiftMode
+    },
+    get allowPinchZoom() {
+      return defaultedProps.allowPinchZoom
     },
     get trapFocus() {
       return defaultedProps.trapFocus
@@ -293,6 +311,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             access(defaultedProps.preventScrollbarShift),
           preventScrollbarShiftMode: () =>
             defaultedProps.preventScrollbarShiftMode,
+          allowPinchZoom: () => defaultedProps.allowPinchZoom,
           trapFocus: () => defaultedProps.trapFocus,
           restoreFocus: () => defaultedProps.restoreFocus,
           initialFocusEl: () => defaultedProps.initialFocusEl,
@@ -327,6 +346,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
               access(defaultedProps.preventScrollbarShift),
             preventScrollbarShiftMode: () =>
               defaultedProps.preventScrollbarShiftMode,
+            allowPinchZoom: () => defaultedProps.allowPinchZoom,
             trapFocus: () => defaultedProps.trapFocus,
             restoreFocus: () => defaultedProps.restoreFocus,
             initialFocusEl: () => defaultedProps.initialFocusEl,
