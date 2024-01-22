@@ -153,6 +153,12 @@ const DrawerContent = <
     if (!pointerDown) return
 
     if (!drawerContext().isDragging() || dragStartPos === null) {
+      const selection = window.getSelection()
+      if (selection && selection.toString().length > 0) {
+        onPointerUp()
+        return
+      }
+
       if (drawerContext().handleScrollableElements()) {
         const delta = [x, y].map(
           (pointer, i) => currentPointerStart[i]! - pointer,
@@ -277,7 +283,6 @@ const DrawerContent = <
       style={{
         transform: transformValue(),
         'transition-duration': drawerContext().isDragging() ? '0ms' : undefined,
-        'user-select': 'none',
         height: transitionHeight(),
         width: transitionWidth(),
         ...localProps.style,
