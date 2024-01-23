@@ -42,6 +42,22 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "accordion": [
+        "./dist/primitives/accordion/index.d.ts"
+      ],
+      "dialog": [
+        "./dist/primitives/dialog/index.d.ts"
+      ],
+      "disclosure": [
+        "./dist/primitives/disclosure/index.d.ts"
+      ],
+      "drawer": [
+        "./dist/primitives/drawer/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
