@@ -81,6 +81,7 @@ type InternalDrawerContextValue = DrawerContextValue & {
     'opening' | 'closing' | 'snapping' | 'resizing' | null
   >
   transitionSize: Accessor<number | null>
+  closeDrawer(): void
 }
 
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()

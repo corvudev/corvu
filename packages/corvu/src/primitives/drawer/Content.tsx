@@ -131,6 +131,8 @@ const DrawerContent = <
     )
       return
 
+    if (drawerContext().transitionState() === 'closing') return
+
     pointerDown = true
     if (drawerContext().handleScrollableElements()) {
       currentPointerStart = [event.clientX, event.clientY]
@@ -291,7 +293,7 @@ const DrawerContent = <
       onTransitionEnd={() => {
         batch(() => {
           if (drawerContext().transitionState() === 'closing') {
-            dialogContext().setOpen(false)
+            drawerContext().closeDrawer()
           }
           if (drawerContext().transitionState() !== 'resizing') {
             drawerContext().setTransitionState(null)

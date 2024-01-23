@@ -25,7 +25,6 @@ const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
       element: body,
       style: {
         pointerEvents: 'none',
-        userSelect: 'none',
       },
     })
   })

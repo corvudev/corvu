@@ -190,6 +190,58 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     return getComputedStyle(contentRef)
   })
 
+  const [transitionAwareOpen, setTransitionAwareOpen] = createSignal(
+    defaultedProps.initialOpen,
+  )
+
+  createEffect(() => {
+    const _open = open()
+
+    untrack(() => {
+      if (transitionAwareOpen() === _open) {
+        return
+      }
+
+      if (_open) {
+        setTransitionAwareOpen(true)
+        // eslint-disable-next-line solid/reactivity
+        afterPaint(() => {
+          batch(() => {
+            setTransitionState('opening')
+            setActiveSnapPoint(localProps.defaultSnapPoint)
+          })
+          const transitionDuration = parseFloat(
+            drawerStyles()!.transitionDuration,
+          )
+          if (transitionDuration === 0) {
+            setTransitionState(null)
+          }
+        })
+      } else {
+        batch(() => {
+          setTransitionState('closing')
+          setActiveSnapPoint(0)
+        })
+        // eslint-disable-next-line solid/reactivity
+        afterPaint(() => {
+          const transitionDuration = parseFloat(
+            drawerStyles()!.transitionDuration,
+          )
+          if (transitionDuration === 0) {
+            closeDrawer()
+          }
+        })
+      }
+    })
+  })
+
+  const closeDrawer = () => {
+    batch(() => {
+      setTransitionAwareOpen(false)
+      setTransitionState(null)
+    })
+  }
+
   const [drawerSize, setDrawerSize] = createSignal(0)
 
   createEffect(() => {
@@ -238,42 +290,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     if (!drawerSize()) return 0
     return (drawerSize() - translate()) / drawerSize()
   })
-
-  const onOpenChange = (open: boolean) => {
-    if (open) {
-      setOpen(true)
-      // eslint-disable-next-line solid/reactivity
-      afterPaint(() => {
-        batch(() => {
-          setTransitionState('opening')
-          setActiveSnapPoint(localProps.defaultSnapPoint)
-        })
-        const transitionDuration = parseFloat(
-          drawerStyles()!.transitionDuration,
-        )
-        if (transitionDuration === 0) {
-          setTransitionState(null)
-        }
-      })
-    } else if (transitionState() === 'closing') {
-      batch(() => {
-        setOpen(false)
-        setTransitionState(null)
-      })
-    } else {
-      batch(() => {
-        setTransitionState('closing')
-        setActiveSnapPoint(0)
-      })
-      const transitionDuration = parseFloat(drawerStyles()!.transitionDuration)
-      if (transitionDuration === 0) {
-        batch(() => {
-          setOpen(false)
-          setTransitionState(null)
-        })
-      }
-    }
-  }
 
   const childrenProps: DrawerRootChildrenProps = {
     get snapPoints() {
@@ -387,11 +403,12 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
             drawerStyles,
             setTransitionState,
             transitionSize,
+            closeDrawer,
           }}
         >
           <DialogRoot
-            open={open()}
-            onOpenChange={onOpenChange}
+            open={transitionAwareOpen()}
+            onOpenChange={setOpen}
             contextId={localProps.contextId}
             closeOnOutsidePointer={
               !isDragging() && localProps.closeOnOutsidePointer

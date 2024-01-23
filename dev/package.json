@@ -13,7 +13,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite dev",
+    "dev": "vite dev --host",
     "lint": "eslint --max-warnings=0 .",
     "preview": "vite preview"
   },

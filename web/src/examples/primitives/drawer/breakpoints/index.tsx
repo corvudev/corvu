@@ -23,7 +23,7 @@ const DrawerBreakPointExample: VoidComponent = () => {
                 })`,
               }}
             />
-            <Drawer.Content class="peer fixed inset-x-0 bottom-0 z-50 flex h-full max-h-[500px] flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] lg:select-none">
+            <Drawer.Content class="peer fixed inset-x-0 bottom-0 z-50 flex h-full max-h-[500px] flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
               <div class="h-1 w-10 self-center rounded-full bg-corvu-50" />
               <Drawer.Label class="mt-2 text-center text-xl font-bold">
                 I'm a drawer!
