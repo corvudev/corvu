@@ -1,6 +1,6 @@
 import { access } from '@lib/utils'
 import { createMemo } from 'solid-js'
-import type { MaybeAccessor } from 'src'
+import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Returns a memoized signal with the tag name of the element.

@@ -10,14 +10,20 @@ import {
 } from 'solid-js'
 import { Dynamic, type DynamicProps } from 'solid-js/web'
 import { combineProps } from '@solid-primitives/props'
-import type { OverrideComponentProps } from 'src'
+import type { OverrideComponentProps } from '@lib/types'
 
 const DEFAULT_POLYMORPHIC_ELEMENT = 'div'
 
 export type PolymorphicAttributes<T extends ValidComponent> = {
-  /** Component to render the polymorphic component as. *Default = `div`* */
+  /**
+   * Component to render the polymorphic component as.
+   * @defaultValue `div`
+   */
   as?: T
-  /** Whether to render the polymorphic component as the first `<As />` component found in its children. *Default = `false`* */
+  /**
+   * Whether to render the polymorphic component as the first `<As />` component found in its children.
+   * @defaultValue `false`
+   */
   asChild?: boolean
   /** @hidden */
   children?: JSX.Element

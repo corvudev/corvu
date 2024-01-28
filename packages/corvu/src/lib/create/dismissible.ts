@@ -5,23 +5,45 @@ import type { MaybeAccessor } from '@lib/types'
 import { mergeProps } from 'solid-js'
 
 export type CreateDismissableProps = {
-  /** The element to make dismissable. */
+  /**
+   * The element to make dismissable.
+   */
   element: MaybeAccessor<HTMLElement | null>
-  /** Callback fired when the element is being dismissed. */
+  /**
+   * Callback fired when the element is being dismissed.
+   */
   onDismiss(reason: 'escapeKey' | 'pointerOutside'): void
-  /** Whether to dismiss the element when the escape key is pressed. *Default = `true`* */
+  /**
+   * Whether to dismiss the element when the escape key is pressed.
+   * @defaultValue `true`
+   */
   dismissOnEscapeKeyDown?: MaybeAccessor<boolean>
-  /** Whether to dismiss the element when a pointer down event happens outside the element. *Default = `true`* */
+  /**
+   * Whether to dismiss the element when a pointer down event happens outside the element.
+   * @defaultValue `true`
+   */
   dismissOnOutsidePointer?: MaybeAccessor<boolean>
-  /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. *Default = `pointerup` */
+  /**
+   * Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`.
+   * @defaultValue `pointerup`
+   */
   dismissOnOutsidePointerStrategy?: MaybeAccessor<'pointerdown' | 'pointerup'>
-  /** Ignore pointer events that occur inside of this element. */
+  /**
+   * Ignore pointer events that occur inside of this element.
+   */
   dismissOnOutsidePointerIgnore?: MaybeAccessor<HTMLElement | null>
-  /** Whether to disable pointer events outside the element. *Default = `true`* */
+  /**
+   * Whether to disable pointer events outside the element.
+   * @defaultValue `true`
+   */
   noOutsidePointerEvents?: MaybeAccessor<boolean>
-  /** Callback fired when the escape key is pressed. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when the escape key is pressed. Can be prevented by calling `event.preventDefault`.
+   */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Callback fired when a pointer down event happens outside the element. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when a pointer down event happens outside the element. Can be prevented by calling `event.preventDefault`.
+   */
   onOutsidePointer?(event: MouseEvent): void
 }
 

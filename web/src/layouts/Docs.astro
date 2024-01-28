@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/dosis'
 import '@fontsource-variable/rubik'
+import '@assets/global.css'
 import Background from '@components/Background'
 import Navigation from '@components/docs/nav/Navigation.astro'
 import TableOfContents from '@components/docs/TableOfContents'
@@ -39,11 +40,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       data-domain="corvu.dev"
       data-api="/plausible/api/event"
       src="/plausible/js/script.js"></script>
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-    </style>
   </head>
   <body class="flex h-full flex-col bg-corvu-1000 text-corvu-text antialiased">
     <Background type="docs" client:load />
@@ -53,7 +49,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       </Topbar>
       <div class="mt-[88px] flex px-4 md:pl-0">
         <div
-          class="fixed hidden h-[calc(100%-88px)] w-52 overflow-y-auto px-4 pb-2 md:block"
+          class="fixed hidden h-[calc(100%-88px)] w-52 overflow-y-auto px-4 pb-2 nav-scrollbar md:block"
         >
           <Navigation />
         </div>

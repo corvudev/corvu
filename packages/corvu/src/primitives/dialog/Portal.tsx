@@ -7,9 +7,14 @@ import { useInternalDialogContext } from '@primitives/dialog/context'
 export type DialogPortalProps = OverrideComponentProps<
   typeof Portal,
   {
-    /** Whether the dialog portal should be forced to render. Useful when using third-party animation libraries. */
+    /**
+     * Whether the dialog portal should be forced to render. Useful when using third-party animation libraries.
+     * @defaultValue `false`
+     */
     forceMount?: boolean
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
   }
 >

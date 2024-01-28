@@ -1,7 +1,7 @@
 import { createEffect, mergeProps } from 'solid-js'
 import { access } from '@lib/utils'
 import createStyle from '@lib/create/style'
-import type { MaybeAccessor } from 'src'
+import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Disables pointer events on the `<body>` element.

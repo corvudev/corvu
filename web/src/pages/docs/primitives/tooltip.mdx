@@ -1,0 +1,159 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Tooltip
+description: A customizable, unstyled and accessible tooltip component for SolidJS
+image: https://corvu.dev/banner.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/tooltip/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/tooltip/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import CssTsx from '@examples/primitives/tooltip/basic/css/index?raw'
+import CssStyle from '@examples/primitives/tooltip/basic/css/index.css?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
+import Link from '@components/docs/Link.astro'
+
+# Tooltip
+
+A popup that displays information when its trigger receives keyboard focus or the mouse hovers over it. It uses the awesome <Link href="https://floating-ui.com/" text="Floating UI" newTab /> library in the background for positioning and allows you to fully customize its behavior.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Customizable positioning behavior',
+  'Safe area between the trigger and content for better usability',
+  'Custom open and close delays',
+  'Optional arrow component',
+]} />
+
+## Usage
+<Code code={`
+import Tooltip from 'corvu/tooltip'
+// Or
+// import { Root, Trigger, ... } from 'corvu/tooltip'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+<Tooltip.Root>
+  <Tooltip.Anchor>
+    <Tooltip.Trigger />
+  </Tooltip.Anchor>
+  <Tooltip.Portal>
+    <Tooltip.Content>
+      <Tooltip.Arrow />
+    </Tooltip.Content>
+  </Tooltip.Portal>
+</Tooltip.Root>
+`} lang="tsx" copyButton />
+
+The anchor component can optionally be used to make the tooltip anchor itself to another element than the trigger.
+
+## Floating UI
+The initial placement of the tooltip can be configured with the `placement` property on the `Root` component. Refer to the <Link href="https://floating-ui.com/docs/computePosition#placement" text="Floating UI placement option" newTab /> to see all available placements.
+
+You can configure the positioning strategy with the `strategy` property on the `Root` component. Valid options are `absolute` or `fixed`. In most cases, it's recommended to leave this property at the default setting `absolute`, as this requires the browser to do the least work when updating the position.
+
+### FloatingOptions
+Middlewares can be configured with the `floatingOptions` property on the `Root` component.
+
+<Code code={`
+export type FloatingOptions = {
+  offset?: OffsetOptions
+  shift?: boolean | ShiftOptions
+  flip?: boolean | FlipOptions
+  arrow?: Padding
+  size?: DetectOverflowOptions & {
+    matchSize?: boolean
+    fitViewPort?: boolean
+  }
+  autoPlacement?: boolean | AutoPlacementOptions
+  hide?: boolean | HideOptions
+  inline?: boolean | InlineOptions
+}
+`} lang="tsx" copyButton />
+
+If you want to enable a middleware with default options, you can pass `true` as the value.
+
+The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware" text="Floating UI's middleware documentation" newTab />.
+
+### FloatingState
+The tooltip also provides a you with a `floatingState` property that contains the current state of the tooltip. You can use this property to override a specific behavior according to your needs.
+
+<Code code={`
+export type FloatingState = {
+  placement: Placement
+  x: number
+  y: number
+  width: number | null
+  height: number | null
+  maxWidth: number | null
+  maxHeight: number | null
+  arrowX: number | null
+  arrowY: number | null
+}
+`} lang="tsx" copyButton />
+
+## Accessibility
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" text="Tooltip WAI-ARIA design pattern" newTab />.
+
+### Keyboard navigation
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Tab',
+    behavior: 'Opens/closes the tooltip without delay.'
+  },
+  {
+    key: 'Space',
+    behavior: 'Closes the tooltip without delay.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'Closes the tooltip without delay.'
+  },
+  {
+    key: 'Escape',
+    behavior: 'Closes the tooltip without delay.'
+  }
+]} />
+
+## API reference
+
+<GenerateApiDocs primitive="Tooltip" />

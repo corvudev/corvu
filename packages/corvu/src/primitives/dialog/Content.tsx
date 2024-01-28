@@ -20,9 +20,14 @@ export type DialogContentProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** Whether the dialog content should be forced to render. Useful when using third-party animation libraries. */
+    /**
+     * Whether the dialog content should be forced to render. Useful when using third-party animation libraries.
+     * @defaultValue `false`
+     */
     forceMount?: boolean
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void
@@ -108,14 +113,10 @@ const DialogContent = <
                     : ''
                 }
                 tabIndex="-1"
-                style={
-                  props.isLastLayer
-                    ? {
-                        'pointer-events': 'auto',
-                        ...localProps.style,
-                      }
-                    : localProps.style
-                }
+                style={{
+                  'pointer-events': props.isLastLayer ? 'auto' : undefined,
+                  ...localProps.style,
+                }}
                 {...otherProps}
               >
                 {memoizedChildren()}

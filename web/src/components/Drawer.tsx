@@ -41,7 +41,7 @@ const NavDrawer: FlowComponent = (props) => {
                   width={136}
                 />
               </a>
-              <div class="w-full overflow-auto pl-3 pr-8 pt-2">
+              <div class="w-full overflow-auto pl-3 pr-8 pt-2 nav-scrollbar">
                 {props.children}
               </div>
             </Drawer.Content>

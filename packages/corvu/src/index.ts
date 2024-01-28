@@ -13,6 +13,7 @@ export type {
   PolymorphicAttributes,
   PolymorphicProps,
 } from '@lib/components/Polymorphic'
+export type { FloatingOptions, FloatingState } from '@lib/create/floating'
 export type {
   MaybeAccessor,
   OverrideComponentProps,

@@ -12,7 +12,9 @@ export type DialogTriggerProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void

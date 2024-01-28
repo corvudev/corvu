@@ -12,7 +12,9 @@ export type DialogCloseProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
     /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>

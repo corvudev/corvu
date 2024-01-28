@@ -12,7 +12,9 @@ export type DisclosureTriggerProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** The `id` of the disclosure context to use. */
+    /**
+     * The `id` of the disclosure context to use.
+     */
     contextId?: string
     /** @hidden */
     onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>

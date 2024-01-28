@@ -1,0 +1,102 @@
+[data-corvu-popover-trigger] {
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 9999px;
+  background-color: rgb(230 226 253);
+  padding: 0.5rem;
+  color: rgb(24 15 35);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+}
+
+[data-corvu-tooltip-trigger]:hover {
+  background-color: rgb(212 203 251);
+}
+
+[data-corvu-tooltip-trigger]:active {
+  transform: translate(0, 0.125rem);
+}
+
+[data-corvu-tooltip-content] {
+  border-radius: 0.5rem;
+  background-color: rgb(12 8 18);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: rgb(242 240 254);
+}
+
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0))
+  }
+}
+
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0))
+  }
+}
+
+[data-corvu-tooltip-content][data-open] {
+  animation-name: enter;
+  animation-duration: 150ms;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  --tw-enter-translate-y: initial;
+  --tw-enter-opacity: 0.5;
+  --tw-enter-translate-y: -0.25rem;
+}
+
+[data-corvu-tooltip-content][data-closed] {
+  animation-name: exit;
+  animation-duration: 150ms;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+  --tw-exit-opacity: 0.5;
+  --tw-exit-translate-y: -0.25rem;
+}
+
+[data-corvu-popover-label] {
+  font-weight: 500;
+}
+
+[data-corvu-tooltip-arrow] {
+  background-color: rgb(12 8 18);
+}
+
+.input_grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+label {
+  grid-column: span 2 / span 2;
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+input {
+  margin-left: 2.5rem;
+  width: 5rem;
+  border-radius: 0.25rem;
+  border-width: 2px;
+  border-color: rgb(154 109 233);
+  background-color: rgb(12 8 18);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
