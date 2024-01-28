@@ -14,3 +14,8 @@ export type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
 
 export type Side = 'top' | 'right' | 'bottom' | 'left'
 export type Axis = 'x' | 'y'
+
+export type EventHandlerEvent<T, E extends Event> = E & {
+  currentTarget: T
+  target: Element
+}

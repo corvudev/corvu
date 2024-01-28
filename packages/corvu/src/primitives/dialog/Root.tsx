@@ -22,57 +22,126 @@ import createRegister from '@lib/create/register'
 import { isFunction } from '@lib/assertions'
 
 export type DialogRootProps = {
-  /** The `role` attribute of the dialog element. *Default = `'dialog'`* */
+  /**
+   * The `role` attribute of the dialog element.
+   * @defaultValue 'dialog'`
+   */
   role?: 'dialog' | 'alertdialog'
-  /** Whether the dialog is open. */
+  /**
+   * Whether the dialog is open.
+   */
   open?: boolean
-  /** Callback fired when the open state changes. */
+  /**
+   * Callback fired when the open state changes.
+   */
   onOpenChange?(open: boolean): void
-  /** Whether the dialog is open initially. *Default = `false`* */
+  /**
+   * Whether the dialog is open initially.
+   * @defaultValue `false`
+   */
   initialOpen?: boolean
-  /** Whether the dialog should be rendered as a modal. *Default = `true`* */
+  /**
+   * Whether the dialog should be rendered as a modal.
+   * @defaultValue `true`
+   */
   modal?: boolean
-  /** Whether the dialog should close when the user presses the `Escape` key. *Default = `true`* */
+  /**
+   * Whether the dialog should close when the user presses the `Escape` key.
+   * @defaultValue `true`
+   */
   closeOnEscapeKeyDown?: boolean
-  /** Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`.
+   */
   onEscapeKeyDown?(event: KeyboardEvent): void
-  /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`. *Default = `true` if `modal` is `true`, `false` otherwise* */
+  /**
+   * Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
+   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   */
   closeOnOutsidePointer?: boolean
-  /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. *Default = `pointerup` */
+  /**
+   * Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`.
+   * @defaultValue `'pointerup'`
+   */
   closeOnOutsidePointerStrategy?: 'pointerdown' | 'pointerup'
-  /** Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`.
+   */
   onOutsidePointer?(event: MouseEvent): void
-  /** Whether pointer events outside of `<Dialog.Content />` should be disabled. *Default = `true` if `modal` is `true`, `false` otherwise* */
+  /**
+   * Whether pointer events outside of `<Dialog.Content />` should be disabled.
+   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   */
   noOutsidePointerEvents?: boolean
-  /** Whether scroll outside of the dialog should be prevented. *Default = `true` if `modal` is `true`, `false` otherwise* */
+  /**
+   * Whether scroll outside of the dialog should be prevented.
+   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   */
   preventScroll?: boolean
-  /** Whether the scrollbar of the `<body>` element should be hidden. *Default = `true` if `modal` is `true`, `false` otherwise* */
+  /**
+   * Whether the scrollbar of the `<body>` element should be hidden. Only applies if `preventScroll` is `true`.
+   * @defaulValue `true`
+   */
   hideScrollbar?: boolean
-  /** Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`* */
+  /**
+   * Whether padding should be added to the `<body>` element to avoid layout shift.
+   * @defaulValue `true`
+   */
   preventScrollbarShift?: boolean
-  /**  Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`* */
+  /**
+   * Whether padding or margin should be used to avoid layout shift.
+   * @defaultValue `'padding'`
+   */
   preventScrollbarShiftMode?: 'padding' | 'margin'
-  /** Whether the dialog should allow pinch zoom while scroll is disabled. *Default = `true`* */
+  /**
+   * Whether the dialog should allow pinch zoom while scroll is disabled.
+   * @defaultValue `true`
+   */
   allowPinchZoom?: boolean
-  /** Whether the dialog should trap focus. *Default = `true`* */
+  /**
+   * Whether the dialog should trap focus.
+   * @defaultValue `true`
+   */
   trapFocus?: boolean
-  /** Whether the dialog should restore focus to the previous active element when it closes. *Default = `true`* */
+  /**
+   * Whether the dialog should restore focus to the previous active element when it closes.
+   * @defaultValue `true`
+   */
   restoreFocus?: boolean
-  /** The element to receive focus when the dialog opens. */
+  /**
+   * The element to receive focus when the dialog opens.
+   */
   initialFocusEl?: HTMLElement
-  /** Callback fired when focus moves into the dialog. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when focus moves into the dialog. Can be prevented by calling `event.preventDefault`.
+   */
   onInitialFocus?(event: Event): void
-  /** The element to receive focus when the dialog closes. */
+  /**
+   * The element to receive focus when the dialog closes.
+   */
   finalFocusEl?: HTMLElement
-  /** Callback fired when focus moves out of the dialog. Can be prevented by calling `event.preventDefault`. */
+  /**
+   * Callback fired when focus moves out of the dialog. Can be prevented by calling `event.preventDefault`.
+   */
   onFinalFocus?(event: Event): void
-  /** The `id` attribute of the dialog element. *Default = A unique id.* */
+  /**
+   * The `id` attribute of the dialog element.
+   * @defaultValue A unique id
+   */
   dialogId?: string
-  /** The `id` attribute of the dialog label element. *Default = A unique id.* */
+  /**
+   * The `id` attribute of the dialog label element.
+   * @defaultValue A unique id
+   */
   labelId?: string
-  /** The `id` attribute of the dialog description element. *Default = A unique id.* */
+  /**
+   * The `id` attribute of the dialog description element.
+   * @defaultValue A unique id
+   */
   descriptionId?: string
-  /** The `id` of the dialog context. Useful if you have nested dialogs and want to create components that belong to a dialog higher up in the tree. */
+  /**
+   * The `id` of the dialog context. Useful if you have nested dialogs and want to create components that belong to a dialog higher up in the tree.
+   */
   contextId?: string
   children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }

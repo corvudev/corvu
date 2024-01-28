@@ -8,6 +8,8 @@ export type ComponentSpecifications =
   | 'Drawer'
   | 'Disclosure'
   | 'Accordion'
+  | 'Tooltip'
+  | 'Popover'
 
 export const componentSpecifications: {
   [key in ComponentSpecifications]: {
@@ -334,6 +336,152 @@ export const componentSpecifications: {
       {
         name: 'ItemChildrenProps',
         forcedSorting: ['value', 'disabled', 'triggerId'],
+      },
+    ],
+  },
+  Tooltip: {
+    exportName: 'primitives/tooltip',
+    components: [
+      {
+        name: 'Root',
+        forcedSorting: [
+          'open',
+          'onOpenChange',
+          'initialOpen',
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'openDelay',
+          'closeDelay',
+          'skipDelayDuration',
+          'hoverableContent',
+          'group',
+          'openOnFocus',
+          'onFocus',
+          'onBlur',
+          'openOnHover',
+          'onHover',
+          'onLeave',
+          'closeOnEscapeKeyDown',
+          'onEscapeKeyDown',
+          'closeOnPointerDown',
+          'onPointerDown',
+          'tooltipId',
+          'triggerId',
+          'contextId',
+          'children',
+        ],
+      },
+      {
+        name: 'Anchor',
+        forcedSorting: ['as', 'asChild', 'contextId'],
+      },
+      {
+        name: 'Trigger',
+        forcedSorting: ['as', 'asChild', 'contextId'],
+      },
+      {
+        name: 'Portal',
+        forcedSorting: ['forceMount', 'contextId'],
+      },
+      {
+        name: 'Content',
+        forcedSorting: ['forceMount', 'as', 'asChild', 'contextId'],
+      },
+      {
+        name: 'Arrow',
+        forcedSorting: ['size', 'as', 'asChild', 'contextId'],
+      },
+    ],
+    contexts: [
+      {
+        name: 'useContext',
+        forcedSorting: [
+          'open',
+          'setOpen',
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
+          'openDelay',
+          'closeDelay',
+          'skipDelayDuration',
+          'hoverableContent',
+          'group',
+          'openOnFocus',
+          'openOnHover',
+          'closeOnEscapeKeyDown',
+          'closeOnPointerDown',
+          'contentPresent',
+          'contentRef',
+          'tooltipId',
+          'triggerId',
+        ],
+      },
+    ],
+    types: [
+      {
+        name: 'RootChildrenProps',
+        forcedSorting: [
+          'open',
+          'setOpen',
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
+          'openDelay',
+          'closeDelay',
+          'skipDelayDuration',
+          'hoverableContent',
+          'group',
+          'openOnFocus',
+          'openOnHover',
+          'closeOnEscapeKeyDown',
+          'closeOnPointerDown',
+          'contentPresent',
+          'contentRef',
+          'tooltipId',
+          'triggerId',
+        ],
+      },
+    ],
+  },
+  Popover: {
+    exportName: 'primitives/popover',
+    components: [
+      {
+        name: 'Root',
+        forcedSorting: ['placement', 'strategy', 'floatingOptions', 'children'],
+      },
+      {
+        name: 'Anchor',
+        forcedSorting: ['as', 'asChild', 'contextId'],
+      },
+      {
+        name: 'Arrow',
+        forcedSorting: ['size', 'as', 'asChild', 'contextId'],
+      },
+    ],
+    contexts: [
+      {
+        name: 'useContext',
+        forcedSorting: [
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
+        ],
+      },
+    ],
+    types: [
+      {
+        name: 'RootChildrenProps',
+        forcedSorting: [
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
+        ],
       },
     ],
   },

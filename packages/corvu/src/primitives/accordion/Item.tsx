@@ -32,11 +32,19 @@ export type AccordionItemProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** Value of the accordion item. If none is provided, `createUniqueId` will be used to create one. */
+    /**
+     * Value of the accordion item.
+     * @defaultValue A unique id
+     */
     value?: string
-    /** Whether the accordion item is disabled. Used to override the default provided by `<Accordion.Root>`. */
+    /**
+     * Whether the accordion item is disabled. Used to override the default provided by `<Accordion.Root>`.
+     */
     disabled?: boolean
-    /** The `id` attribute of the accordion item trigger element. *Default = A unique id.* */
+    /**
+     * The `id` attribute of the accordion item trigger element.
+     * @defaultValue A unique id
+     */
     triggerId?: string
     children: JSX.Element | ((props: AccordionItemChildrenProps) => JSX.Element)
   } & Omit<

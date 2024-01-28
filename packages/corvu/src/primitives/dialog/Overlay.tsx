@@ -19,9 +19,14 @@ export type DialogOverlayProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries. */
+    /**
+     * Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries.
+     * @defaultValue `false`
+     */
     forceMount?: boolean
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void

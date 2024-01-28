@@ -1,6 +1,6 @@
 import { createEffect, onCleanup } from 'solid-js'
 import { access } from '@lib/utils'
-import type { MaybeAccessor } from 'src'
+import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Modifies the given element's style and reverts it back to its original style when `onCleanup` is called.

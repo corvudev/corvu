@@ -27,7 +27,10 @@ type DismissibleContextValue = {
 const DismissibleContext = createContext<DismissibleContextValue>()
 
 type DismissibleProps = {
-  /** Whether the dismissible is enabled. *Default = `true`* */
+  /**
+   * Whether the dismissible is enabled.
+   * @defaultValue `true`
+   */
   enabled: boolean
   children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
 } & CreateDismissableProps

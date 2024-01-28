@@ -16,25 +16,52 @@ import createOnce from '@lib/create/once'
 import { isFunction } from '@lib/assertions'
 
 export type AccordionRootProps = {
-  /** Whether multiple accordion items can be expanded at the same time. *Default = `false`* */
+  /**
+   * Whether multiple accordion items can be expanded at the same time.
+   * @defaultValue `false`
+   */
   multiple?: boolean
-  /** The value of the accordion. */
+  /**
+   * The value of the accordion.
+   */
   value?: string | string[] | null
-  /** Callback fired when the value changes. */
+  /**
+   * Callback fired when the value changes.
+   */
   onValueChange?: (value: string | string[] | null) => void
-  /** The value of the accordion initially. *Default = `null`* */
+  /**
+   * The value of the accordion initially.
+   * @defaultValue `null`
+   */
   initialValue?: string | string[] | null
-  /** Whether the accordion can be fully collapsed. *Default = `true`* */
+  /**
+   * Whether the accordion can be fully collapsed.
+   * @defaultValue `true`
+   */
   collapsible?: boolean
-  /** Whether the accordion is disabled. *Default = `false`* */
+  /**
+   * Whether the accordion is disabled.
+   * @defaultValue `false`
+   */
   disabled?: boolean
-  /** The orientation of the accordion. *Default = `vertical`* */
+  /**
+   * The orientation of the accordion.
+   * @defaultValue `vertical`
+   */
   orientation?: 'vertical' | 'horizontal'
-  /** Whether the accordion should loop when navigating with the keyboard. *Default = `true`* */
+  /**
+   * Whether the accordion should loop when navigating with the keyboard.
+   * @defaultValue `true`
+   */
   loop?: boolean
-  /** Whether the accordion content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons. *Default = `remove`* */
+  /**
+   * Whether the accordion content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons.
+   * @defaultValue `remove`
+   */
   collapseBehavior?: 'remove' | 'hide'
-  /** The `id` of the accordion context. Useful if you have nested accordions and want to create components that belong to a accordion higher up in the tree. */
+  /**
+   * The `id` of the accordion context. Useful if you have nested accordions and want to create components that belong to a accordion higher up in the tree.
+   */
   contextId?: string
   children: JSX.Element | ((props: AccordionRootChildrenProps) => JSX.Element)
 }

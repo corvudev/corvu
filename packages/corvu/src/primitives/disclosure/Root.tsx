@@ -20,17 +20,32 @@ import createPresence from '@lib/create/presence'
 import { isFunction } from '@lib/assertions'
 
 export type DisclosureRootProps = {
-  /** Whether the disclosure is expanded. */
+  /**
+   * Whether the disclosure is expanded.
+   */
   expanded?: boolean
-  /** Callback fired when the expanded state changes. */
+  /**
+   * Callback fired when the expanded state changes.
+   */
   onExpandedChange?: (expanded: boolean) => void
-  /** Whether the disclosure is expanded initially. *Default = `false`* */
+  /**
+   * Whether the disclosure is expanded initially.
+   * @defaultValue `false`
+   */
   initialExpanded?: boolean
-  /** Whether the disclosure content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons. *Default = `remove`* */
+  /**
+   * Whether the disclosure content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons.
+   * @defaultValue `remove`
+   */
   collapseBehavior?: 'remove' | 'hide'
-  /** The `id` attribute of the disclosure content element. *Default = A unique id.* */
+  /**
+   * The `id` attribute of the disclosure content element.
+   * @defaultValue A unique id
+   */
   disclosureId?: string
-  /** The `id` of the disclosure context. Useful if you have nested disclosures and want to create components that belong to a disclosure higher up in the tree. */
+  /**
+   * The `id` of the disclosure context. Useful if you have nested disclosures and want to create components that belong to a disclosure higher up in the tree.
+   */
   contextId?: string
   children: JSX.Element | ((props: DisclosureRootChildrenProps) => JSX.Element)
 }

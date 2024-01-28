@@ -18,9 +18,14 @@ export type DisclosureContentProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** Whether the disclosure content should be forced to render. Useful when using third-party animation libraries. */
+    /**
+     * Whether the disclosure content should be forced to render. Useful when using third-party animation libraries.
+     * @defaultValue `false`
+     */
     forceMount?: boolean
-    /** The `id` of the disclosure context to use. */
+    /**
+     * The `id` of the disclosure context to use.
+     */
     contextId?: string
     /** @hidden */
     ref?: (element: HTMLElement) => void

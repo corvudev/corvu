@@ -22,7 +22,9 @@ export type AccordionTriggerProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** The `id` of the accordion context to use. */
+    /**
+     * The `id` of the accordion context to use.
+     */
     contextId?: string
     /** @hidden */
     onKeyDown?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>

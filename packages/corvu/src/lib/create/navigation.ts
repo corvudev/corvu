@@ -1,6 +1,6 @@
 import { createMemo, createSignal, mergeProps } from 'solid-js'
 import { access } from '@lib/utils'
-import type { MaybeAccessor } from 'src'
+import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Manages keyboard navigation between elements.

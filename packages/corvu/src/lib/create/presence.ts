@@ -7,7 +7,7 @@ import {
   untrack,
 } from 'solid-js'
 import { access } from '@lib/utils'
-import type { MaybeAccessor } from 'src'
+import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Manages the presence of an element in the DOM while being aware of pending animations.

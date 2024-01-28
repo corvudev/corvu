@@ -166,7 +166,7 @@ const createFocusTrap = (props: {
       return
     }
 
-    initialFocusElement.focus()
+    afterPaint(() => initialFocusElement.focus())
   }
 
   const onFirstFocusElementKeyDown = (event: KeyboardEvent) => {

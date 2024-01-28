@@ -1,0 +1,12 @@
+:root {
+  color-scheme: dark;
+}
+
+.nav-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.nav-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #7250ae;
+  border-radius: 5px;
+}

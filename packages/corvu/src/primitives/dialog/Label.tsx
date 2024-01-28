@@ -18,7 +18,9 @@ export type DialogLabelProps<
 > = OverrideComponentProps<
   T,
   PolymorphicAttributes<T> & {
-    /** The `id` of the dialog context to use. */
+    /**
+     * The `id` of the dialog context to use.
+     */
     contextId?: string
     /** @hidden */
     'data-corvu-dialog-label'?: string | undefined

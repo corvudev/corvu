@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/dosis'
 import '@fontsource-variable/rubik'
+import '@assets/global.css'
 import Background from '@components/Background'
 import Navigation from '@components/docs/nav/Navigation.astro'
 import Topbar from '@components/Topbar'
@@ -14,11 +15,6 @@ import Topbar from '@components/Topbar'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>corvu</title>
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-    </style>
   </head>
   <body class="flex h-full flex-col bg-corvu-1000 text-corvu-text antialiased">
     <Topbar client:load>
