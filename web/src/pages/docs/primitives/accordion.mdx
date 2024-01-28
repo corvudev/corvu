@@ -78,7 +78,7 @@ import Accordion from 'corvu/accordion'
 </Accordion.Root>
 `} lang="tsx" copyButton />
 
-The accordion item uses the [Disclosure](/docs/primitives/disclosure) component under the hood. It forwards the same props in the Item children callback and the disclosure context is re-exported as `Accordion.useDisclosureContext`.
+The accordion item uses the [Disclosure](/docs/primitives/disclosure/) component under the hood. It forwards the same props in the Item children callback and the disclosure context is re-exported as `Accordion.useDisclosureContext`.
 
 ### Animation
 Corvu sets the `--corvu-disclosure-content-height` and `--corvu-disclosure-content-width` css properties on every accordion item content that make it possible to animate the height/width.
@@ -183,6 +183,6 @@ If you don't want to use a heading element for some reason, you can instead use 
 
 ## API reference
 
-The disclosure context is re-exported as `Accordion.useDisclosureContext` and the item children callback also accepts all props of the disclosure root children callback, which are documented in the [Disclosure API reference](/docs/primitives/disclosure#Disclosure.RootChildrenProps).
+The disclosure context is re-exported as `Accordion.useDisclosureContext` and the item children callback also accepts all props of the disclosure root children callback, which are documented in the [Disclosure API reference](/docs/primitives/disclosure/#Disclosure.RootChildrenProps).
 
 <GenerateApiDocs primitive="Accordion" />

@@ -30,7 +30,7 @@ import Link from '@components/docs/Link.astro'
 
 # Drawer
 
-A drawer is a draggable dialog that is attached to any side of the viewport. It uses the [Dialog](/docs/primitives/dialog) primitive under the hood and adds dragging logic on top of it.
+A drawer is a draggable dialog that is attached to any side of the viewport. It uses the [Dialog](/docs/primitives/dialog/) primitive under the hood and adds dragging logic on top of it.
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -95,7 +95,7 @@ import Drawer from 'corvu/drawer'
 </Drawer.Root>
 `} lang="tsx" copyButton />
 
-Every component besides the `Root` and `Content` components are just re-exports from the Dialog primitive. You can find more information about them in the [Dialog documentation](/docs/primitives/dialog).
+Every component besides the `Root` and `Content` components are just re-exports from the Dialog primitive. You can find more information about them in the [Dialog documentation](/docs/primitives/dialog/).
 
 ### Animating the drawer
 The drawer content gets the `data-transitioning` data attribute applied when it is transitioning. Transitioning means that the drawer is either opening, closing or moving to a snap point after the user stops dragging.
@@ -313,8 +313,8 @@ Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal
 
 ## API reference
 
-Only components which are specific to the drawer are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog#api-reference).
+Only components which are specific to the drawer are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog/#api-reference).
 
-The dialog context is re-exported as `Drawer.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog#Dialog.RootChildrenProps).
+The dialog context is re-exported as `Drawer.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog/#Dialog.RootChildrenProps).
 
 <GenerateApiDocs primitive="Drawer" />

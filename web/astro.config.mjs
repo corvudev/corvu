@@ -17,23 +17,27 @@ export default defineConfig({
         } else {
           item.changefreq = 'daily'
           item.lastmod = new Date()
-          item.priority = 0.7
+          item.priority = 0.9
         }
         return item
       },
     }),
-    ,
     tailwind(),
     solid(),
   ],
   redirects: {
-    '/docs/usage': {
+    '/docs/usage/': {
       status: 307,
-      destination: '/docs/state',
+      destination: '/docs/state/',
+    },
+    '/docs/polymorphic/': {
+      status: 307,
+      destination: '/docs/polymorphism/',
     },
   },
   markdown: {
     syntaxHighlight: false,
   },
   site: 'https://corvu.dev',
+  trailingSlash: 'always',
 })

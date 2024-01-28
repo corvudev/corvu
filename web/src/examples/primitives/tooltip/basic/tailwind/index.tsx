@@ -16,7 +16,7 @@ const TooltipExample: VoidComponent = () => {
       <Tooltip.Trigger
         as="a"
         class="my-auto rounded-full bg-corvu-100 p-2 text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5"
-        href="https://github.com/corvudev/corvu"
+        href="https://github.com/corvudev/corvu/"
         target="_blank"
       >
         <Star size="20" />

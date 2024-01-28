@@ -45,13 +45,13 @@ const Topbar: FlowComponent = (props) => {
         </a>
         <div class="flex items-center space-x-2">
           <a
-            href="/docs"
+            href="/docs/"
             class="p-2 font-bold transition-colors hover:text-corvu-400"
           >
             Docs
           </a>
           <a
-            href="https://github.com/corvudev/corvu"
+            href="https://github.com/corvudev/corvu/"
             target="_blank"
             class="p-2"
           >

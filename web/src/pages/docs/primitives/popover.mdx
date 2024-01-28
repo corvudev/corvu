@@ -90,7 +90,7 @@ import Popover from 'corvu/popover'
 The anchor component can optionally be used to make the popover anchor itself to another element than the trigger.
 
 ## Floating UI
-The initial placement of the tooltip can be configured with the `placement` property on the `Root` component. Refer to the <Link href="https://floating-ui.com/docs/computePosition#placement" text="Floating UI placement option" newTab /> to see all available placements.
+The initial placement of the tooltip can be configured with the `placement` property on the `Root` component. Refer to the <Link href="https://floating-ui.com/docs/computePosition/#placement" text="Floating UI placement option" newTab /> to see all available placements.
 
 You can configure the positioning strategy with the `strategy` property on the `Root` component. Valid options are `absolute` or `fixed`. In most cases, it's recommended to leave this property at the default setting `absolute`, as this requires the browser to do the least work when updating the position.
 
@@ -115,7 +115,7 @@ export type FloatingOptions = {
 
 If you want to enable a middleware with default options, you can pass `true` as the value.
 
-The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware" text="Floating UI's middleware documentation" newTab />.
+The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware/" text="Floating UI's middleware documentation" newTab />.
 
 ### FloatingState
 The popover also provides a you with a `floatingState` property that contains the current state of the popover. You can use this property to override a specific behavior according to your needs.
@@ -139,8 +139,8 @@ Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal
 
 ## API reference
 
-Only components which are specific to the popover are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog#api-reference).
+Only components which are specific to the popover are documented here. For all other components, please refer to the [Dialog API reference](/docs/primitives/dialog/#api-reference).
 
-The dialog context is re-exported as `Popover.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog#Dialog.RootChildrenProps).
+The dialog context is re-exported as `Popover.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog/#Dialog.RootChildrenProps).
 
 <GenerateApiDocs primitive="Popover" />

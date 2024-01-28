@@ -8,5 +8,6 @@
       "source": "/plausible/api/event",
       "destination": "https://plausible.io/api/event"
     }
-  ]
+  ],
+  "trailingSlash": true
 }

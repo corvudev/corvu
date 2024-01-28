@@ -10,7 +10,7 @@ import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
 
 # Polymorphic
 
-The `<Polymorphic />` component is an extended version of Solid's <Link href="https://www.solidjs.com/docs/latest/api#dynamic" text="<Dynamic />" newTab /> component and allows you to additionally render as the first `<As />` component present in its children. It is used in all primitive components of corvu which render an element. Check out the [Dialog](/docs/primitives/dialog) primitive for examples.
+The `<Polymorphic />` component is an extended version of Solid's <Link href="https://www.solidjs.com/docs/latest/api/#dynamic" text="<Dynamic />" newTab /> component and allows you to additionally render as the first `<As />` component present in its children. It is used in all primitive components of corvu which render an element. Check out the [Dialog](/docs/primitives/dialog/) primitive for examples.
 
 ## Usage
 <Code code={`
@@ -28,7 +28,7 @@ const Button = <T extends ValidComponent = 'button'>(
   )
 }
 
-<Button as="a" href="https://corvu.dev">
+<Button as="a" href="https://corvu.dev/">
   corvu
 </Button>
 `} lang="tsx" copyButton />
@@ -36,7 +36,7 @@ const Button = <T extends ValidComponent = 'button'>(
 ### asChild
 If you happen to have a component that uses the `as` prop for itself, you can use the `<As />` component in combination with `asChild`:
 <Code code={`
-<Button asChild href="https://corvu.dev">
+<Button asChild href="https://corvu.dev/">
   <As component={MyCustomComponent} as="a">corvu</As>
 </Button>
 `} lang="tsx" copyButton />

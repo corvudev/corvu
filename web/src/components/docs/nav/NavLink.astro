@@ -6,7 +6,7 @@ interface Props {
 
 const { name, href } = Astro.props
 
-const isActive = href === Astro.url.pathname.replace(/\/$/, '')
+const isActive = href === Astro.url.pathname
 ---
 
 <a

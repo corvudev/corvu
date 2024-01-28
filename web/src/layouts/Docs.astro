@@ -23,7 +23,6 @@ interface Props {
 }
 
 const { frontmatter, headings } = Astro.props
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!doctype html>
@@ -34,7 +33,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <Head {...frontmatter} />
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={Astro.url} />
     <script
       defer
       data-domain="corvu.dev"
@@ -63,14 +62,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
             >
               <code
                 ><a
-                  href="https://www.npmjs.com/package/corvu"
+                  href="https://www.npmjs.com/package/corvu/"
                   target="_blank"
                   class="-m-2 p-2">corvu@{corvuVersion}</a
                 ></code
               >
               <p class="text-right">
                 Developed and designed by <a
-                  href="https://github.com/GiyoMoon"
+                  href="https://github.com/GiyoMoon/"
                   target="_blank"
                   class="-m-2 p-2 font-medium text-corvu-400 underline"
                   >Jasmin</a

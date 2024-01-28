@@ -15,7 +15,7 @@ const TooltipExample: VoidComponent = () => {
     >
       <Tooltip.Trigger
         as="a"
-        href="https://github.com/corvudev/corvu"
+        href="https://github.com/corvudev/corvu/"
         target="_blank"
       >
         <Star size="20" />
