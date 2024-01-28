@@ -1,5 +1,25 @@
 # corvu
 
+## 0.3.0
+
+### Minor Changes
+
+- Add `closeOnOutsidePointerStrategy` to dialog and use `corvu-drawer-*` data attributes for drawer components - [`629871f`](https://github.com/corvudev/corvu/commit/629871fdd57e290829fb8ac7560a0a1f4b0741e7) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add allowPinchZoom option to dialog primitive - [`5deb1c5`](https://github.com/corvudev/corvu/commit/5deb1c56655059e9878161892061db20c80e980c) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+### Patch Changes
+
+- Allow text selection on drawer content - [`9efcac5`](https://github.com/corvudev/corvu/commit/9efcac545ea9f76ea8e147fa19e8a508da571c44) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add popover and tooltip primitives - [#6](https://github.com/corvudev/corvu/pull/6) [`3e29aae`](https://github.com/corvudev/corvu/commit/3e29aaea2ac7f7c1a2ba3b47a454ff3a4eb6693d) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Fix drawer `open` not being controllable - [`617f95a`](https://github.com/corvudev/corvu/commit/617f95add007310f2271385a47c39ef57e046294) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Detect scrollable root elements in createPreventScroll - [`82504e9`](https://github.com/corvudev/corvu/commit/82504e963bfe47c6180084994b33efa2ff3f4516) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add `typesVersions` to package.json to support older `moduleResolution` strategies - [`705a538`](https://github.com/corvudev/corvu/commit/705a538011521eda940a3e692303898b6389e0c8) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.2.4
 
 ### Patch Changes
