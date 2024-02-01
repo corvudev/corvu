@@ -493,7 +493,6 @@ export type UtilitySpecifications =
   | 'createFocusTrap'
   | 'keyedContext'
   | 'createPresence'
-  | 'Polymorphic'
 
 export const titleToUtilitySpecification = (
   title:
@@ -501,8 +500,7 @@ export const titleToUtilitySpecification = (
     | 'Prevent Scroll'
     | 'Focus Trap'
     | 'Keyed Context'
-    | 'Presence'
-    | 'Polymorphic',
+    | 'Presence',
 ): UtilitySpecifications => {
   switch (title) {
     case 'Controllable Signal':
@@ -515,8 +513,6 @@ export const titleToUtilitySpecification = (
       return 'keyedContext'
     case 'Presence':
       return 'createPresence'
-    case 'Polymorphic':
-      return 'Polymorphic'
   }
 }
 
@@ -585,16 +581,6 @@ export const utilitySpecifications: {
       {
         name: 'createPresence',
         forcedSorting: ['show', 'element'],
-      },
-    ],
-  },
-  Polymorphic: {
-    components: [
-      {
-        name: 'Polymorphic',
-      },
-      {
-        name: 'As',
       },
     ],
   },

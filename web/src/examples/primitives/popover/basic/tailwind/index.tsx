@@ -11,8 +11,8 @@ const PopoverExample: VoidComponent = () => {
         shift: true,
       }}
     >
-      <Popover.Trigger class="my-auto rounded-full bg-corvu-100 p-2 text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
-        <Gear size="20" />
+      <Popover.Trigger class="my-auto rounded-full bg-corvu-100 p-3 text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
+        <Gear size="26" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content class="rounded-lg bg-corvu-1000 px-3 py-2 text-corvu-50 corvu-open:animate-in corvu-open:fade-in-50 corvu-open:slide-in-from-top-1 corvu-closed:animate-out corvu-closed:fade-out-50 corvu-closed:slide-out-to-top-1">

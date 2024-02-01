@@ -30,6 +30,8 @@ export type DialogContentProps<
      */
     contextId?: string
     /** @hidden */
+    children?: JSX.Element
+    /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties

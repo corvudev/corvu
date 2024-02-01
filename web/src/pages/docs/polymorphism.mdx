@@ -1,48 +1,79 @@
 ---
 layout: '@layouts/Docs.astro'
 title: Polymorphism
-description: The polymorphic component builds on top of the SolidJS Dynamic component, allowing for flexible UI primitives.
+description: Modify the DOM element or component a primitive component renders as.
 image: https://corvu.dev/banner.jpg
 ---
 import Code from '@components/docs/code/Code.astro'
 
 # Polymorphism
 
-All primitive components which render a DOM element, are polymorphic. This means that you can modify the element or the component they should render as. Corvu gives you two ways to accomplish this:
+All primitive components that render a DOM element, are polymorphic. This means that you can modify the element or the component they should render as.
 
-## The `as` prop
-This property accepts any `ValidComponent` (a string or a Solid component) and tells the primitive component to render it instead of the default one. For example, here's how to render a dialog label as a "p" element instead of the default "h2":
+## Native elements
 
+In most cases, you shouldn't need to change the DOM element that the primitive component renders. Corvu has sensible defaults for all components. But there are cases where it makes sense to change them. An example would be the `Tooltip` trigger which renders as a `button` element. You may want to render a tooltip on a link (`a` tag) instead. To do this, you have to specify the `as` property on the trigger component:
 <Code code={`
-<Dialog.Label as="p">My Dialog</Dialog.Label>
+<Tooltip.Trigger as="a" href="https://corvu.dev">
+  corvu.dev
+</Tooltip.Trigger>
 `} lang="tsx" />
 
-Or with a Solid component:
+## Solid components
 
+A much more common use case is to render a primitive component as a custom Solid component. This is useful to apply default styling or to add additional functionality.
+
+For example, you might have your own, custom-styled button component and want to use it as a trigger for a dialog:
 <Code code={`
-const MyCustomLabel = (props) => <p>{props.children}</p>
+const CustomButton = (props: {
+  variant: 'fill' | 'outline'
+  children: JSX.Element
+}) => {
+  const [local, rest] = splitProps(props, ['variant'])
+  // Apply your custom styling here
+  return <button class="..." {...rest} />
+}
 
-<Dialog.Label as={MyCustomLabel}>My Dialog</Dialog.Label>
+const DialogTrigger = () => (
+  <Dialog.Trigger as={CustomButton} variant="outline">
+    Open
+  </Dialog.Trigger>
+)
 `} lang="tsx" />
 
 Props not belonging to the primitive component will be passed to the component you defined.
 
-## The `asChild` prop
-The only case where you will have issues with the approach above is when your Solid component accepts an `as` property. Because we use this property already for our polymorphic component. For this case, you'll have to use the `asChild` property.
+> ❗ To ensure functionality and accessibility, your component needs to accept props defined by the primitive component. To do this, you need to spread the received props onto your element. Otherwise, things will break.
 
-By defining this property, you tell the polymorphic component to render as the first `<As />` component it finds in its children. This allows you to use the `as` property for your component.
+### Using the `as` prop for yourself
+
+On the rare occasion that your component itself requires the `as` prop, you can create a wrapper component around it like this:
 
 <Code code={`
-import { Dynamic } from 'solid-js/web'
-import { As } from 'corvu'
+type CustomButtonProps = {
+  as: string
+  variant: 'fill' | 'outline'
+  children: JSX.Element
+}
 
-const MyCustomLabel = (props) => (
-  <Dynamic component={props.as}>{props.children}</Dynamic>
-)
+const CustomButton = (props: CustomButtonProps) => {
+  const [local, rest] = splitProps(props, ['as', 'variant'])
+  // Apply your custom styling here
+  return <Dynamic component={local.as} {...rest} />
+}
 
-<Dialog.Label asChild>
-  <As component={MyCustomLabel}>My Dialog</As>
-</Dialog.Label>
+const DialogTrigger = () => {
+  return (
+    <Dialog.Trigger
+      as={(props: Omit<CustomButtonProps, 'as'>) => (
+        <CustomButton as="button" {...props} />
+      )}
+      variant="outline"
+    >
+      Open
+    </Dialog.Trigger>
+  )
+}
 `} lang="tsx" />
 
-> 💡 You might have seen react libraries accomplish the same without the need for an additional `<As />` component. Unfortunately, this isn't possible in SolidJS because children are generally just DOM elements.
+You need to type the `props` from the wrapper function to exclude the `as` prop and you're good to go!

@@ -12,7 +12,7 @@ const PopoverExample: VoidComponent = () => {
       }}
     >
       <Popover.Trigger>
-        <Gear size="20" />
+        <Gear size="26" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content>

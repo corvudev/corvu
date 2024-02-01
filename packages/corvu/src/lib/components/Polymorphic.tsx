@@ -1,15 +1,11 @@
 import {
-  children,
   createMemo,
-  For,
   type JSX,
-  type ResolvedJSXElement,
-  Show,
   splitProps,
+  untrack,
   type ValidComponent,
 } from 'solid-js'
-import { Dynamic, type DynamicProps } from 'solid-js/web'
-import { combineProps } from '@solid-primitives/props'
+import { Dynamic } from 'solid-js/web'
 import type { OverrideComponentProps } from '@lib/types'
 
 const DEFAULT_POLYMORPHIC_ELEMENT = 'div'
@@ -20,106 +16,30 @@ export type PolymorphicAttributes<T extends ValidComponent> = {
    * @defaultValue `div`
    */
   as?: T
-  /**
-   * Whether to render the polymorphic component as the first `<As />` component found in its children.
-   * @defaultValue `false`
-   */
-  asChild?: boolean
-  /** @hidden */
-  children?: JSX.Element
 }
 
-export type PolymorphicProps<
-  T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
-> = OverrideComponentProps<T, PolymorphicAttributes<T>>
-
-/** Component, which either renders as the component provided in the `as` prop or, if `asChild` is set to `true`, as the first `<As />` component found in its children. */
+/** Component that renders as the component provided in the `as` prop and passes all other properties. */
 const Polymorphic = <
   T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_ELEMENT,
 >(
-  props: PolymorphicProps<T>,
+  props: OverrideComponentProps<T, PolymorphicAttributes<T>>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
-    'asChild',
-    'children',
-  ])
+  const [localProps, otherProps] = splitProps(props, ['as'])
 
-  const resolvedChildren = children(() => localProps.children)
-
-  const asComponent = createMemo(() => {
-    return resolvedChildren.toArray().find(isAsComponent) as
-      | AsComponent
-      | undefined
-  })
-
-  const restChildren = createMemo(() => {
-    const _asComponent = asComponent()
-
-    return (
-      <For each={resolvedChildren.toArray()}>
-        {(child) => (
-          <Show when={child === _asComponent} fallback={child}>
-            {_asComponent?.props.children}
-          </Show>
-        )}
-      </For>
-    )
-  })
-
-  const resolvedPolymorphic = createMemo(() => {
-    if (!localProps.asChild) {
-      return (
-        <Dynamic
-          component={localProps.as ?? DEFAULT_POLYMORPHIC_ELEMENT}
-          {...otherProps}
-        >
-          {resolvedChildren()}
-        </Dynamic>
-      )
-    }
-
-    const _asComponent = asComponent()
-
-    if (!_asComponent) {
-      throw new Error(
-        '[corvu]: Polymorphic component with `asChild = true` must specify the child to render as with the `As` component.',
-      )
-    }
-
-    const asProps = _asComponent.props as DynamicProps<T>
-
-    const combinedProps = combineProps([otherProps, asProps], {
-      reverseEventHandlers: true,
-    })
-
-    // TODO: Fix type error
-    // @ts-expect-error: Typescript v5.3 broke this. Works in <=v5.2
-    return <Dynamic {...combinedProps}>{restChildren()}</Dynamic>
-  })
-
-  return resolvedPolymorphic as unknown as JSX.Element
-}
-
-const AS_COMPONENT_SYMBOL = Symbol('CorvuAsComponent')
-
-type AsComponent = {
-  [AS_COMPONENT_SYMBOL]: true
-  props: DynamicProps<ValidComponent>
-}
-
-/** Dynamic component which the parent <Polymorphic> component should render as. */
-export const As = <T extends ValidComponent>(props: DynamicProps<T>) => {
-  return {
-    [AS_COMPONENT_SYMBOL]: true,
-    props,
-  } as unknown as JSX.Element
-}
-
-const isAsComponent = (children: ResolvedJSXElement) => {
-  return (
-    !!children && !!(children as unknown as AsComponent)[AS_COMPONENT_SYMBOL]
+  const cached = createMemo<Function | string>(
+    () => localProps.as ?? DEFAULT_POLYMORPHIC_ELEMENT,
   )
+  const memoizedPolymorphic = createMemo(() => {
+    const component = cached()
+    switch (typeof component) {
+      case 'function':
+        return untrack(() => component(otherProps))
+      case 'string':
+        return <Dynamic component={component} {...otherProps} />
+    }
+  })
+
+  return memoizedPolymorphic as unknown as JSX.Element
 }
 
 export default Polymorphic
