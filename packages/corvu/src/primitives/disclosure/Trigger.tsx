@@ -1,17 +1,17 @@
 import { callEventHandler, dataIf } from '@lib/utils'
 import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
+import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDisclosureContext } from '@primitives/disclosure/context'
 
-export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
+export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT: ValidComponent = 'button'
 
 export type DisclosureTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the disclosure context to use.
      */
@@ -51,10 +51,8 @@ const DisclosureTrigger = <
   }
 
   return (
-    <PolymorphicButton
-      as={
-        localProps.as ?? (DEFAULT_DISCLOSURE_TRIGGER_ELEMENT as ValidComponent)
-      }
+    <DynamicButton
+      as={localProps.as ?? DEFAULT_DISCLOSURE_TRIGGER_ELEMENT}
       onClick={onClick}
       aria-expanded={context().expanded() ? 'true' : 'false'}
       aria-controls={context().disclosureId()}

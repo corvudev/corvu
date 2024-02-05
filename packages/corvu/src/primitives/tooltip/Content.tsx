@@ -12,20 +12,18 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { EventHandlerEvent, OverrideComponentProps } from '@lib/types'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
 import Dismissible from '@lib/components/Dismissible'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
-export const DEFAULT_TOOLTIP_CONTENT_ELEMENT = 'div'
+export const DEFAULT_TOOLTIP_CONTENT_ELEMENT: ValidComponent = 'div'
 
 export type TooltipContentProps<
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_CONTENT_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Whether the tooltip content should be forced to render. Useful when using third-party animation libraries.
      * @defaultValue `false`
@@ -97,12 +95,9 @@ const TooltipContent = <
 
           return (
             <Show when={show()}>
-              <Polymorphic
+              <Dynamic
                 ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={
-                  localProps.as ??
-                  (DEFAULT_TOOLTIP_CONTENT_ELEMENT as ValidComponent)
-                }
+                as={localProps.as ?? DEFAULT_TOOLTIP_CONTENT_ELEMENT}
                 role="tooltip"
                 id={context().tooltipId()}
                 onPointerDown={(
@@ -126,7 +121,7 @@ const TooltipContent = <
                 {...otherProps}
               >
                 {memoizedChildren()}
-              </Polymorphic>
+              </Dynamic>
             </Show>
           )
         }}

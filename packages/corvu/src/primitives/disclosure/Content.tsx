@@ -6,9 +6,8 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import { dataIf, mergeRefs, some } from '@lib/utils'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
-import Polymorphic from '@lib/components/Polymorphic'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalDisclosureContext } from '@primitives/disclosure/context'
 
 export const DEFAULT_DISCLOSURE_CONTENT_ELEMENT = 'div'
@@ -17,7 +16,7 @@ export type DisclosureContentProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_CONTENT_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Whether the disclosure content should be forced to render. Useful when using third-party animation libraries.
      * @defaultValue `false`
@@ -91,12 +90,9 @@ const DisclosureContent = <
     switch (collapseBehavior) {
       case 'hide':
         return (
-          <Polymorphic
+          <Dynamic
             ref={mergeRefs(context().setContentRef, localProps.ref)}
-            as={
-              localProps.as ??
-              (DEFAULT_DISCLOSURE_CONTENT_ELEMENT as ValidComponent)
-            }
+            as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
             id={context().disclosureId()}
             data-expanded={dataIf(context().expanded())}
             data-collapsed={dataIf(!context().expanded())}
@@ -114,7 +110,7 @@ const DisclosureContent = <
             {...otherProps}
           >
             {localProps.children}
-          </Polymorphic>
+          </Dynamic>
         )
       case 'remove':
         return (
@@ -124,12 +120,9 @@ const DisclosureContent = <
 
               return (
                 <Show when={show()}>
-                  <Polymorphic
+                  <Dynamic
                     ref={mergeRefs(context().setContentRef, localProps.ref)}
-                    as={
-                      localProps.as ??
-                      (DEFAULT_DISCLOSURE_CONTENT_ELEMENT as ValidComponent)
-                    }
+                    as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
                     id={context().disclosureId()}
                     data-expanded={dataIf(context().expanded())}
                     data-collapsed={dataIf(!context().expanded())}
@@ -147,7 +140,7 @@ const DisclosureContent = <
                     {...otherProps}
                   >
                     {memoizedChildren()}
-                  </Polymorphic>
+                  </Dynamic>
                 </Show>
               )
             })()}

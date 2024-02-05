@@ -3,16 +3,16 @@ import type {
   DEFAULT_FLOATING_ARROW_ELEMENT,
   FloatingArrowProps,
 } from '@lib/components/floating/FloatingArrow'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
 import FloatingArrow from '@lib/components/floating/FloatingArrow'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
 export type TooltipArrowProps<
   T extends ValidComponent = typeof DEFAULT_FLOATING_ARROW_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Size of the arrow in px.
      * @default 16

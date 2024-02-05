@@ -1,17 +1,17 @@
 import { callEventHandler, dataIf, mergeRefs } from '@lib/utils'
 import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
+import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
+const DEFAULT_DIALOG_TRIGGER_ELEMENT: ValidComponent = 'button'
 
 export type DialogTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the dialog context to use.
      */
@@ -54,9 +54,9 @@ const DialogTrigger = <
   }
 
   return (
-    <PolymorphicButton
+    <DynamicButton
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
+      as={localProps.as ?? DEFAULT_DIALOG_TRIGGER_ELEMENT}
       onClick={onClick}
       aria-haspopup="dialog"
       aria-expanded={context().open() ? 'true' : 'false'}

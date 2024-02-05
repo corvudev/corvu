@@ -32,7 +32,11 @@ export default defineConfig({
     },
     '/docs/polymorphic/': {
       status: 307,
-      destination: '/docs/polymorphism/',
+      destination: '/docs/dynamic-components/',
+    },
+    '/docs/polymorphism/': {
+      status: 307,
+      destination: '/docs/dynamic-components/',
     },
   },
   markdown: {

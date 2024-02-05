@@ -6,19 +6,17 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import { dataIf, mergeRefs, some } from '@lib/utils'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
+const DEFAULT_DIALOG_OVERLAY_ELEMENT: ValidComponent = 'div'
 
 export type DialogOverlayProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries.
      * @defaultValue `false`
@@ -81,11 +79,8 @@ const DialogOverlay = <
 
         return (
           <Show when={show()}>
-            <Polymorphic
-              as={
-                localProps.as ??
-                (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)
-              }
+            <Dynamic
+              as={localProps.as ?? DEFAULT_DIALOG_OVERLAY_ELEMENT}
               ref={mergeRefs(context().setOverlayRef, localProps.ref)}
               aria-hidden="true"
               data-open={dataIf(context().open())}
@@ -103,7 +98,7 @@ const DialogOverlay = <
               {...otherProps}
             >
               {memoizedChildren()}
-            </Polymorphic>
+            </Dynamic>
           </Show>
         )
       })()}

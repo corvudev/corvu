@@ -1,8 +1,8 @@
 import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
 import { callEventHandler } from '@lib/utils'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
+import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
 export const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
@@ -11,7 +11,7 @@ export type DialogCloseProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the dialog context to use.
      */
@@ -48,8 +48,8 @@ const DialogClose = <
   }
 
   return (
-    <PolymorphicButton
-      as={localProps.as ?? (DEFAULT_DIALOG_CLOSE_ELEMENT as ValidComponent)}
+    <DynamicButton
+      as={localProps.as ?? DEFAULT_DIALOG_CLOSE_ELEMENT}
       onClick={onClick}
       aria-label="close"
       data-corvu-dialog-close={

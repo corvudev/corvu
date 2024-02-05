@@ -12,8 +12,8 @@ import DisclosureTrigger, {
   DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
   type DisclosureTriggerProps,
 } from '@primitives/disclosure/Trigger'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalAccordionContext } from '@primitives/accordion/context'
 import { useInternalAccordionItemContext } from '@primitives/accordion/itemContext'
 
@@ -21,7 +21,7 @@ export type AccordionTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the accordion context to use.
      */

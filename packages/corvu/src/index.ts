@@ -8,7 +8,7 @@ export {
 } from '@lib/create/keyedContext'
 export { default as createPresence } from '@lib/create/presence'
 
-export type { PolymorphicAttributes } from '@lib/components/Polymorphic'
+export type { DynamicAttributes } from '@lib/components/Dynamic'
 export type { FloatingOptions, FloatingState } from '@lib/create/floating'
 export type {
   MaybeAccessor,

@@ -5,9 +5,7 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
@@ -17,7 +15,7 @@ export type DialogLabelProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the dialog context to use.
      */
@@ -53,8 +51,8 @@ const DialogLabel = <
   })
 
   return (
-    <Polymorphic
-      as={localProps.as ?? (DEFAULT_DIALOG_LABEL_ELEMENT as ValidComponent)}
+    <Dynamic
+      as={localProps.as ?? DEFAULT_DIALOG_LABEL_ELEMENT}
       id={context().labelId()}
       data-corvu-dialog-label={
         localProps.hasOwnProperty('data-corvu-dialog-label')

@@ -6,20 +6,18 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import { dataIf, mergeRefs, some } from '@lib/utils'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-export const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
+export const DEFAULT_DIALOG_CONTENT_ELEMENT: ValidComponent = 'div'
 
 export type DialogContentProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Whether the dialog content should be forced to render. Useful when using third-party animation libraries.
      * @defaultValue `false`
@@ -96,12 +94,9 @@ const DialogContent = <
 
           return (
             <Show when={show()}>
-              <Polymorphic
+              <Dynamic
                 ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={
-                  localProps.as ??
-                  (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
-                }
+                as={localProps.as ?? DEFAULT_DIALOG_CONTENT_ELEMENT}
                 role={context().role()}
                 id={context().dialogId()}
                 aria-labelledby={context().labelId()}
@@ -122,7 +117,7 @@ const DialogContent = <
                 {...otherProps}
               >
                 {memoizedChildren()}
-              </Polymorphic>
+              </Dynamic>
             </Show>
           )
         }}

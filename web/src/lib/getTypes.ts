@@ -204,8 +204,8 @@ const getComponent = (componentName: ComponentSpecifications) => {
 const resolveComponent = (component: DeclarationVariant) => {
   let defaultAs: string | undefined
 
-  // Generic components are Polymorphic components.
-  if (component.signatures![0].typeParameter && component.name !== 'As') {
+  // Generic components are Dynamic components.
+  if (component.signatures![0].typeParameter) {
     if (
       !component.signatures![0].typeParameter[0] ||
       !component.signatures![0].typeParameter[0].default
@@ -223,6 +223,13 @@ const resolveComponent = (component: DeclarationVariant) => {
       component.signatures![0].typeParameter[0].default.type === 'reference'
     ) {
       defaultAs = component.signatures![0].typeParameter[0].default.name
+    } else if (
+      component.signatures![0].typeParameter[0].default.type === 'union' &&
+      component.signatures![0].typeParameter[0].default.types[0].type ===
+        'literal'
+    ) {
+      defaultAs = component.signatures![0].typeParameter[0].default.types[0]
+        .value as string
     } else {
       throw new Error(
         `Missing default type parameter for the ${component.name} component`,

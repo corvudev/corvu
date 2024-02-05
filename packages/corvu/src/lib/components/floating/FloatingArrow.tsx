@@ -7,11 +7,10 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import { mergeRefs, PositionToDirection } from '@lib/utils'
 import type { FloatingState } from '@lib/create/floating'
 import type { OverrideComponentProps } from '@lib/types'
-import Polymorphic from '@lib/components/Polymorphic'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 
 export const DEFAULT_FLOATING_ARROW_ELEMENT = 'div'
 
@@ -35,7 +34,7 @@ export type FloatingArrowProps<
   T extends ValidComponent = typeof DEFAULT_FLOATING_ARROW_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Size of the arrow in px.
      * @default 16
@@ -100,8 +99,8 @@ const FloatingArrow = <
     !localProps.as && resolveChildren.toArray().length === 0
 
   return (
-    <Polymorphic
-      as={localProps.as ?? (DEFAULT_FLOATING_ARROW_ELEMENT as ValidComponent)}
+    <Dynamic
+      as={localProps.as ?? DEFAULT_FLOATING_ARROW_ELEMENT}
       ref={mergeRefs(localProps.setRef, localProps.ref)}
       style={{
         position: 'absolute',
@@ -125,7 +124,7 @@ const FloatingArrow = <
           />
         </svg>
       </Show>
-    </Polymorphic>
+    </Dynamic>
   )
 }
 

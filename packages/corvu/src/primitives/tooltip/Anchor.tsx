@@ -1,8 +1,7 @@
 import { createMemo, splitProps, type ValidComponent } from 'solid-js'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import { mergeRefs } from '@lib/utils'
 import type { OverrideComponentProps } from '@lib/types'
-import Polymorphic from '@lib/components/Polymorphic'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
 const DEFAULT_TOOLTIP_ANCHOR_ELEMENT = 'div'
@@ -11,7 +10,7 @@ export type TooltipAnchorProps<
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_ANCHOR_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the tooltip context to use.
      */
@@ -37,8 +36,8 @@ const TooltipAnchor = <
   )
 
   return (
-    <Polymorphic
-      as={localProps.as ?? (DEFAULT_TOOLTIP_ANCHOR_ELEMENT as ValidComponent)}
+    <Dynamic
+      as={localProps.as ?? DEFAULT_TOOLTIP_ANCHOR_ELEMENT}
       ref={mergeRefs(context().setAnchorRef, localProps.ref)}
       data-corvu-tooltip-anchor
       {...otherProps}

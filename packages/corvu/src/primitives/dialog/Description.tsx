@@ -5,9 +5,7 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
@@ -17,7 +15,7 @@ export type DialogDescriptionProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the dialog context to use.
      */
@@ -53,10 +51,8 @@ const DialogDescription = <
   })
 
   return (
-    <Polymorphic
-      as={
-        localProps.as ?? (DEFAULT_DIALOG_DESCRIPTION_ELEMENT as ValidComponent)
-      }
+    <Dynamic
+      as={localProps.as ?? DEFAULT_DIALOG_DESCRIPTION_ELEMENT}
       id={context().descriptionId()}
       data-corvu-dialog-description={
         localProps.hasOwnProperty('data-corvu-dialog-description')

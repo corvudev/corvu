@@ -14,9 +14,7 @@ import type {
   DisclosureRootChildrenProps,
   DisclosureRootProps,
 } from '@primitives/disclosure/Root'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import createOnce from '@lib/create/once'
 import createRegister from '@lib/create/register'
 import DisclosureRoot from '@primitives/disclosure/Root'
@@ -31,7 +29,7 @@ export type AccordionItemProps<
   T extends ValidComponent = typeof DEFAULT_ACCORDION_ITEM_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * Value of the accordion item.
      * @defaultValue A unique id
@@ -151,7 +149,7 @@ const AccordionItem = <
             unregisterTriggerId,
           }}
         >
-          <Polymorphic
+          <Dynamic
             as={localProps.as ?? DEFAULT_ACCORDION_ITEM_ELEMENT}
             {...otherProps}
           >
@@ -169,7 +167,7 @@ const AccordionItem = <
                 resolveChildren(disclosureChildrenProps)
               }
             </DisclosureRoot>
-          </Polymorphic>
+          </Dynamic>
         </InternalAccordionItemContext.Provider>
       </AccordionItemContext.Provider>
     )

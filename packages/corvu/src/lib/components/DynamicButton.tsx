@@ -4,31 +4,29 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import Polymorphic, {
-  type PolymorphicAttributes,
-} from '@lib/components/Polymorphic'
+import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import createTagName from '@lib/create/tagName'
 import { isButton } from '@lib/assertions'
 import { mergeRefs } from '@lib/utils'
 import type { OverrideComponentProps } from '@lib/types'
 
-const DEFAULT_POLYMORPHIC_BUTTON_ELEMENT = 'button'
+const DEFAULT_DYNAMIC_BUTTON_ELEMENT: ValidComponent = 'button'
 
-export type PolymorphicButtonProps<
-  T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_BUTTON_ELEMENT,
+export type DynamicButtonProps<
+  T extends ValidComponent = typeof DEFAULT_DYNAMIC_BUTTON_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     ref?: (element: HTMLElement) => void
     type?: string
   }
 >
 
 /** An accessible button that sets `type` and `role` properly based on if it's a native button. */
-const PolymorphicButton = <
-  T extends ValidComponent = typeof DEFAULT_POLYMORPHIC_BUTTON_ELEMENT,
+const DynamicButton = <
+  T extends ValidComponent = typeof DEFAULT_DYNAMIC_BUTTON_ELEMENT,
 >(
-  props: PolymorphicButtonProps<T>,
+  props: DynamicButtonProps<T>,
 ) => {
   const [ref, setRef] = createSignal<HTMLElement | null>(null)
 
@@ -36,7 +34,7 @@ const PolymorphicButton = <
 
   const tagName = createTagName({
     element: ref,
-    fallback: DEFAULT_POLYMORPHIC_BUTTON_ELEMENT,
+    fallback: DEFAULT_DYNAMIC_BUTTON_ELEMENT,
   })
 
   const isNativeButton = createMemo(() => {
@@ -44,10 +42,8 @@ const PolymorphicButton = <
   })
 
   return (
-    <Polymorphic
-      as={
-        localProps.as ?? (DEFAULT_POLYMORPHIC_BUTTON_ELEMENT as ValidComponent)
-      }
+    <Dynamic
+      as={localProps.as ?? DEFAULT_DYNAMIC_BUTTON_ELEMENT}
       ref={mergeRefs(setRef, localProps.ref)}
       type={isNativeButton() ? 'button' : undefined}
       role={!isNativeButton() ? 'button' : undefined}
@@ -56,4 +52,4 @@ const PolymorphicButton = <
   )
 }
 
-export default PolymorphicButton
+export default DynamicButton

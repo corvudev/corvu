@@ -1,17 +1,17 @@
 import { callEventHandler, dataIf, mergeRefs } from '@lib/utils'
 import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
+import type { DynamicAttributes } from '@lib/components/Dynamic'
+import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
-import type { PolymorphicAttributes } from '@lib/components/Polymorphic'
-import PolymorphicButton from '@lib/components/PolymorphicButton'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
-const DEFAULT_TOOLTIP_TRIGGER_ELEMENT = 'button'
+const DEFAULT_TOOLTIP_TRIGGER_ELEMENT: ValidComponent = 'button'
 
 export type TooltipTriggerProps<
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
 > = OverrideComponentProps<
   T,
-  PolymorphicAttributes<T> & {
+  DynamicAttributes<T> & {
     /**
      * The `id` of the tooltip context to use.
      */
@@ -94,9 +94,9 @@ const TooltipTrigger = <
   }
 
   return (
-    <PolymorphicButton
+    <DynamicButton
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? (DEFAULT_TOOLTIP_TRIGGER_ELEMENT as ValidComponent)}
+      as={localProps.as ?? DEFAULT_TOOLTIP_TRIGGER_ELEMENT}
       onFocus={onFocus}
       onBlur={onBlur}
       onPointerDown={onPointerDown}

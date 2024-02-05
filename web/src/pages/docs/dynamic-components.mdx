@@ -1,14 +1,14 @@
 ---
 layout: '@layouts/Docs.astro'
-title: Polymorphism
-description: Modify the DOM element or component a primitive component renders as.
+title: Dynamic Components
+description: Modify the DOM element or component a primitive component should render as.
 image: https://corvu.dev/banner.jpg
 ---
 import Code from '@components/docs/code/Code.astro'
 
-# Polymorphism
+# Dynamic Components
 
-All primitive components that render a DOM element, are polymorphic. This means that you can modify the element or the component they should render as.
+All primitive components that render a DOM element, are dynamic. This means that you can modify the element or the component they should render as.
 
 ## Native elements
 
@@ -45,9 +45,9 @@ Props not belonging to the primitive component will be passed to the component y
 
 > ❗ To ensure functionality and accessibility, your component needs to accept props defined by the primitive component. To do this, you need to spread the received props onto your element. Otherwise, things will break.
 
-### Using the `as` prop for yourself
+### Using corvu props for yourself
 
-On the rare occasion that your component itself requires the `as` prop, you can create a wrapper component around it like this:
+In the rare cases where your component accepts a property that the corvu primitive component itself uses (like the `as` property here), you can create a wrapper component around it, like this:
 
 <Code code={`
 type CustomButtonProps = {
@@ -76,4 +76,4 @@ const DialogTrigger = () => {
 }
 `} lang="tsx" />
 
-You need to type the `props` from the wrapper function to exclude the `as` prop and you're good to go!
+You need to type the `props` to omit all props you already define inside the wrapper function and you're good to go!
