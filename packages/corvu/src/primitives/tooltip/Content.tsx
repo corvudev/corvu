@@ -1,20 +1,14 @@
 import {
-  callEventHandler,
-  dataIf,
-  getFloatingStyle,
-  mergeRefs,
-  some,
-} from '@lib/utils'
-import {
   createMemo,
   type JSX,
   Show,
   splitProps,
   type ValidComponent,
 } from 'solid-js'
+import { dataIf, getFloatingStyle, mergeRefs, some } from '@lib/utils'
 import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
-import type { EventHandlerEvent, OverrideComponentProps } from '@lib/types'
 import Dismissible from '@lib/components/Dismissible'
+import type { OverrideComponentProps } from '@lib/types'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
 export const DEFAULT_TOOLTIP_CONTENT_ELEMENT: ValidComponent = 'div'
@@ -39,8 +33,6 @@ export type TooltipContentProps<
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
-    /** @hidden */
-    onPointerDown?: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
   }
 >
 
@@ -62,7 +54,6 @@ const TooltipContent = <
     'children',
     'ref',
     'style',
-    'onPointerDown',
   ])
 
   const context = createMemo(() =>
@@ -100,12 +91,6 @@ const TooltipContent = <
                 as={localProps.as ?? DEFAULT_TOOLTIP_CONTENT_ELEMENT}
                 role="tooltip"
                 id={context().tooltipId()}
-                onPointerDown={(
-                  event: EventHandlerEvent<HTMLElement, PointerEvent>,
-                ) => {
-                  !callEventHandler(localProps.onPointerDown, event) &&
-                    context().setTooltipState('hovered')
-                }}
                 aria-describedby={context().triggerId()}
                 data-open={dataIf(context().open())}
                 data-closed={dataIf(!context().open())}

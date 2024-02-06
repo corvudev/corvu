@@ -19,9 +19,9 @@ import type { Placement, Strategy } from '@floating-ui/dom'
 import { callEventHandler } from '@lib/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createFloating from '@lib/create/floating'
-import createHover from '@lib/create/hover'
 import createOnce from '@lib/create/once'
 import createPresence from '@lib/create/presence'
+import createTooltip from '@lib/create/tooltip'
 import type { EventHandlerEvent } from '@lib/types'
 import { isFunction } from '@lib/assertions'
 
@@ -287,20 +287,17 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     options: () => defaultedProps.floatingOptions,
   })
 
-  const [tooltipState, setTooltipState] = createSignal<
-    'hovered' | 'focused' | 'none'
-  >('none')
-
-  createHover({
-    enabled: () => defaultedProps.openOnHover,
+  createTooltip({
     trigger: triggerRef,
     content: contentRef,
-    hoverableContent: () => defaultedProps.hoverableContent && open(),
-    enterDelay: () => defaultedProps.openDelay,
-    leaveDelay: () => defaultedProps.closeDelay,
+    openOnFocus: () => defaultedProps.openOnFocus,
+    openOnHover: () => defaultedProps.openOnHover,
+    closeOnPointerDown: () => defaultedProps.closeOnPointerDown,
+    hoverableContent: () => defaultedProps.hoverableContent,
+    openDelay: () => defaultedProps.openDelay,
+    closeDelay: () => defaultedProps.closeDelay,
     skipDelayDuration: () => defaultedProps.skipDelayDuration,
-    onTriggerEnter: (event) => {
-      if (open() === true) return
+    onHover: (event: PointerEvent) => {
       if (
         callEventHandler(
           defaultedProps.onHover,
@@ -308,23 +305,9 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
         )
       )
         return
-      setTooltipState('hovered')
       setOpen(true)
     },
-    onContentEnter: (event) => {
-      if (open() === true) return
-      if (
-        callEventHandler(
-          defaultedProps.onHover,
-          event as EventHandlerEvent<HTMLElement, PointerEvent>,
-        )
-      )
-        return
-      setTooltipState('hovered')
-      setOpen(true)
-    },
-    onLeave: (event) => {
-      if (open() === false || tooltipState() !== 'hovered') return
+    onLeave: (event: PointerEvent) => {
       if (
         callEventHandler(
           defaultedProps.onLeave,
@@ -332,7 +315,36 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
         )
       )
         return
-      setTooltipState('none')
+      setOpen(false)
+    },
+    onFocus: (event: FocusEvent) => {
+      if (
+        callEventHandler(
+          defaultedProps.onFocus,
+          event as EventHandlerEvent<HTMLElement, FocusEvent>,
+        )
+      )
+        return
+      setOpen(true)
+    },
+    onBlur: (event: FocusEvent) => {
+      if (
+        callEventHandler(
+          defaultedProps.onBlur,
+          event as EventHandlerEvent<HTMLElement, FocusEvent>,
+        )
+      )
+        return
+      setOpen(false)
+    },
+    onPointerDown: (event: MouseEvent) => {
+      if (
+        callEventHandler(
+          defaultedProps.onPointerDown,
+          event as EventHandlerEvent<HTMLElement, MouseEvent>,
+        )
+      )
+        return
       setOpen(false)
     },
   })
@@ -404,6 +416,7 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     }
     return children
   }
+
   const memoizedTooltipRoot = createMemo(() => {
     const TooltipContext = createTooltipContext(defaultedProps.contextId)
     const InternalTooltipContext = createInternalTooltipContext(
@@ -463,8 +476,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
             setTriggerRef,
             setContentRef,
             setArrowRef,
-            tooltipState,
-            setTooltipState,
           }}
         >
           {untrack(() => resolveChildren())}

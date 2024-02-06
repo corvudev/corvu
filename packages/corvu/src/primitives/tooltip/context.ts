@@ -85,8 +85,6 @@ export type InternalTooltipContextValue = TooltipContextValue & {
   onFocus?(event: FocusEvent): void
   onBlur?(event: FocusEvent): void
   onPointerDown?(event: PointerEvent): void
-  tooltipState: Accessor<'hovered' | 'focused' | 'none'>
-  setTooltipState: Setter<'hovered' | 'focused' | 'none'>
 }
 
 const InternalTooltipContext = createContext<InternalTooltipContextValue>()
