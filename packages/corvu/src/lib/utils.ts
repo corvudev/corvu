@@ -39,7 +39,7 @@ const some = (...signals: Accessor<unknown>[]) => {
 }
 
 const chain = <Args extends [] | unknown[]>(callbacks: {
-  [Symbol.iterator](): IterableIterator<
+  [Symbol.iterator]: () => IterableIterator<
     ((...args: Args) => unknown) | undefined
   >
 }): ((...args: Args) => void) => {

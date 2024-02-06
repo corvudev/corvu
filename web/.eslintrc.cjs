@@ -27,6 +27,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/method-signature-style': 'error',
     '@typescript-eslint/triple-slash-reference': 'off',
     'prettier/prettier': [
       'error',

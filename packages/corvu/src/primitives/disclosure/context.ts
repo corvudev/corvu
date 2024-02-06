@@ -53,7 +53,7 @@ export const useDisclosureContext = (contextId?: string) => {
 }
 
 export type InternalDisclosureContextValue = DisclosureContextValue & {
-  setContentRef(element: HTMLElement): void
+  setContentRef: (element: HTMLElement) => void
 }
 
 const InternalDisclosureContext =

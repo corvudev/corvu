@@ -18,17 +18,17 @@ import { isFunction } from '@lib/assertions'
  */
 function createControllableSignal<T>(props: {
   value?: Accessor<T | undefined>
-  onChange?(value: T): void
+  onChange?: (value: T) => void
 }): Signal<T | undefined>
 function createControllableSignal<T>(props: {
   value?: Accessor<T | undefined>
   initialValue: T
-  onChange?(value: T): void
+  onChange?: (value: T) => void
 }): Signal<T>
 function createControllableSignal<T>(props: {
   value?: Accessor<T | undefined>
   initialValue?: T
-  onChange?(value: T): void
+  onChange?: (value: T) => void
 }): Signal<T | undefined> {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
     props.initialValue,

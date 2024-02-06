@@ -77,14 +77,14 @@ export const useTooltipContext = (contextId?: string) => {
 }
 
 export type InternalTooltipContextValue = TooltipContextValue & {
-  onEscapeKeyDown?(event: KeyboardEvent): void
-  setAnchorRef(element: HTMLElement): void
-  setTriggerRef(element: HTMLElement): void
-  setContentRef(element: HTMLElement): void
-  setArrowRef(element: HTMLElement): void
-  onFocus?(event: FocusEvent): void
-  onBlur?(event: FocusEvent): void
-  onPointerDown?(event: PointerEvent): void
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  setAnchorRef: (element: HTMLElement) => void
+  setTriggerRef: (element: HTMLElement) => void
+  setContentRef: (element: HTMLElement) => void
+  setArrowRef: (element: HTMLElement) => void
+  onFocus?: (event: FocusEvent) => void
+  onBlur?: (event: FocusEvent) => void
+  onPointerDown?: (event: PointerEvent) => void
 }
 
 const InternalTooltipContext = createContext<InternalTooltipContextValue>()

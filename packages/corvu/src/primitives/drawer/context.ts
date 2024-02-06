@@ -14,7 +14,7 @@ export type DrawerContextValue = {
   /** The active snap point. */
   activeSnapPoint: Accessor<string | number>
   /** Change the active snap point. */
-  setActiveSnapPoint(snapPoint: string | number): void
+  setActiveSnapPoint: (snapPoint: string | number) => void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
   side: Accessor<Side>
   /** Whether the drawer is currently being dragged by the user. */
@@ -70,10 +70,10 @@ export const useDrawerContext = (contextId?: string) => {
 }
 
 type InternalDrawerContextValue = DrawerContextValue & {
-  dampFunction(distance: number): number
-  velocityFunction(distance: number, time: number): number
-  setIsDragging(isDragging: boolean): void
-  setTranslate(translate: number): void
+  dampFunction: (distance: number) => number
+  velocityFunction: (distance: number, time: number) => number
+  setIsDragging: (isDragging: boolean) => void
+  setTranslate: (translate: number) => void
   drawerSize: Accessor<number>
   resolvedActiveSnapPoint: Accessor<ResolvedSnapPoint>
   drawerStyles: Accessor<CSSStyleDeclaration | undefined>
@@ -81,7 +81,7 @@ type InternalDrawerContextValue = DrawerContextValue & {
     'opening' | 'closing' | 'snapping' | 'resizing' | null
   >
   transitionSize: Accessor<number | null>
-  closeDrawer(): void
+  closeDrawer: () => void
 }
 
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()

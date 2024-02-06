@@ -83,16 +83,16 @@ export const useDialogContext = (contextId?: string) => {
 }
 
 export type InternalDialogContextValue = DialogContextValue & {
-  setContentRef(element: HTMLElement): void
-  setOverlayRef(element: HTMLElement): void
-  onEscapeKeyDown?(event: KeyboardEvent): void
-  onOutsidePointer?(event: MouseEvent): void
-  registerLabelId(): void
-  unregisterLabelId(): void
-  registerDescriptionId(): void
-  unregisterDescriptionId(): void
+  setContentRef: (element: HTMLElement) => void
+  setOverlayRef: (element: HTMLElement) => void
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onOutsidePointer?: (event: MouseEvent) => void
+  registerLabelId: () => void
+  unregisterLabelId: () => void
+  registerDescriptionId: () => void
+  unregisterDescriptionId: () => void
   triggerRef: Accessor<HTMLElement | null>
-  setTriggerRef(element: HTMLElement): void
+  setTriggerRef: (element: HTMLElement) => void
 }
 
 const InternalDialogContext = createContext<InternalDialogContextValue>()

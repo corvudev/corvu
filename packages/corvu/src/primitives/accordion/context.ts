@@ -56,10 +56,10 @@ export const useAccordionContext = (contextId?: string) => {
 
 export type InternalAccordionContextValue = AccordionContextValue & {
   internalValue: Accessor<string[]>
-  toggleValue(value: string): void
-  registerTrigger(element: HTMLElement): void
-  unregisterTrigger(element: HTMLElement): void
-  onTriggerKeyDown(event: KeyboardEvent): void
+  toggleValue: (value: string) => void
+  registerTrigger: (element: HTMLElement) => void
+  unregisterTrigger: (element: HTMLElement) => void
+  onTriggerKeyDown: (event: KeyboardEvent) => void
 }
 
 const InternalAccordionContext = createContext<InternalAccordionContextValue>()

@@ -14,7 +14,7 @@ const createStyle = (props: {
   element: HTMLElement
   style?: MaybeAccessor<Partial<CSSStyleDeclaration>>
   properties?: MaybeAccessor<{ key: string; value: string }[]>
-  cleanup?(): void
+  cleanup?: () => void
 }) => {
   createEffect(() => {
     const style = access(props.style) ?? {}

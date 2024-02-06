@@ -34,7 +34,7 @@ export type DialogRootProps = {
   /**
    * Callback fired when the open state changes.
    */
-  onOpenChange?(open: boolean): void
+  onOpenChange?: (open: boolean) => void
   /**
    * Whether the dialog is open initially.
    * @defaultValue `false`
@@ -53,7 +53,7 @@ export type DialogRootProps = {
   /**
    * Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`.
    */
-  onEscapeKeyDown?(event: KeyboardEvent): void
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
    * Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
    * @defaulValue `true` if `modal` is `true`, `false` otherwise
@@ -67,7 +67,7 @@ export type DialogRootProps = {
   /**
    * Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`.
    */
-  onOutsidePointer?(event: MouseEvent): void
+  onOutsidePointer?: (event: MouseEvent) => void
   /**
    * Whether pointer events outside of `<Dialog.Content />` should be disabled.
    * @defaulValue `true` if `modal` is `true`, `false` otherwise
@@ -115,7 +115,7 @@ export type DialogRootProps = {
   /**
    * Callback fired when focus moves into the dialog. Can be prevented by calling `event.preventDefault`.
    */
-  onInitialFocus?(event: Event): void
+  onInitialFocus?: (event: Event) => void
   /**
    * The element to receive focus when the dialog closes.
    */
@@ -123,7 +123,7 @@ export type DialogRootProps = {
   /**
    * Callback fired when focus moves out of the dialog. Can be prevented by calling `event.preventDefault`.
    */
-  onFinalFocus?(event: Event): void
+  onFinalFocus?: (event: Event) => void
   /**
    * The `id` attribute of the dialog element.
    * @defaultValue A unique id

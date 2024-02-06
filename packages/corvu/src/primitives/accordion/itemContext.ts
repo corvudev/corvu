@@ -45,8 +45,8 @@ export const useAccordionItemContext = (contextId?: string) => {
 }
 
 export type InternalAccordionItemContextValue = AccordionItemContextValue & {
-  registerTriggerId(): void
-  unregisterTriggerId(): void
+  registerTriggerId: () => void
+  unregisterTriggerId: () => void
 }
 
 const InternalAccordionItemContext =

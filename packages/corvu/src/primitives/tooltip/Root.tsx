@@ -33,7 +33,7 @@ export type TooltipRootProps = {
   /**
    * Callback fired when the open state changes.
    */
-  onOpenChange?(open: boolean): void
+  onOpenChange?: (open: boolean) => void
   /**
    * Whether the tooltip is open initially.
    * @defaultValue `false`
@@ -86,11 +86,11 @@ export type TooltipRootProps = {
   /**
    * Callback fired when the trigger is focused and `openOnFocus` is `true`. Can be prevented by calling `event.preventDefault`.
    */
-  onFocus?(event: FocusEvent): void
+  onFocus?: (event: FocusEvent) => void
   /**
    * Callback fired when the trigger is blurred and `openOnFocus` is `true`. Can be prevented by calling `event.preventDefault`.
    */
-  onBlur?(event: FocusEvent): void
+  onBlur?: (event: FocusEvent) => void
   /**
    * Whether the tooltip should open when the mouse pointer is moved over the trigger.
    * @defaultValue `true`
@@ -99,11 +99,11 @@ export type TooltipRootProps = {
   /**
    * Callback fired when the mouse pointer is moved over the trigger and `openOnHover` is `true`. Can be prevented by calling `event.preventDefault`.
    */
-  onHover?(event: MouseEvent): void
+  onHover?: (event: MouseEvent) => void
   /**
    * Callback fired when the mouse pointer leaves the tooltip and `openOnHover` is `true`. Can be prevented by calling `event.preventDefault`.
    */
-  onLeave?(event: MouseEvent): void
+  onLeave?: (event: MouseEvent) => void
   /**
    * Whether the tooltip should close when the user presses the `Escape` key.
    * @defaultValue `true`
@@ -112,7 +112,7 @@ export type TooltipRootProps = {
   /**
    * Callback fired when the user presses the `Escape` key. Can be prevented by calling `event.preventDefault`.
    */
-  onEscapeKeyDown?(event: KeyboardEvent): void
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
    * Whether the tooltip should close when the user presses on the trigger.
    * @defaultValue `true`
@@ -121,7 +121,7 @@ export type TooltipRootProps = {
   /**
    * Callback fired when the user presses on the trigger and `closeOnPointerDown` is `true`. Can be prevented by calling `event.preventDefault`.
    */
-  onPointerDown?(event: MouseEvent): void
+  onPointerDown?: (event: MouseEvent) => void
   /**
    * The `id` attribute of the tooltip element.
    * @defaultValue A unique id

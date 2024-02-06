@@ -14,11 +14,11 @@ const createTooltip = (props: {
   openDelay: MaybeAccessor<number>
   closeDelay: MaybeAccessor<number>
   skipDelayDuration: MaybeAccessor<number>
-  onHover?(event: PointerEvent): void
-  onLeave?(event: PointerEvent): void
-  onFocus?(event: FocusEvent): void
-  onBlur?(event: FocusEvent): void
-  onPointerDown?(event: PointerEvent): void
+  onHover?: (event: PointerEvent) => void
+  onLeave?: (event: PointerEvent) => void
+  onFocus?: (event: FocusEvent) => void
+  onBlur?: (event: FocusEvent) => void
+  onPointerDown?: (event: PointerEvent) => void
 }) => {
   let tooltipState: 'focus' | 'hover' | null = null
 

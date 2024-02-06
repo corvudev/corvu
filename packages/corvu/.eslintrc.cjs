@@ -27,6 +27,7 @@ module.exports = {
         extendDefaults: true,
       },
     ],
+    '@typescript-eslint/method-signature-style': 'error',
     'prettier/prettier': [
       'error',
       {

@@ -12,7 +12,7 @@ export type CreateDismissableProps = {
   /**
    * Callback fired when the element is being dismissed.
    */
-  onDismiss(reason: 'escapeKey' | 'pointerOutside'): void
+  onDismiss: (reason: 'escapeKey' | 'pointerOutside') => void
   /**
    * Whether to dismiss the element when the escape key is pressed.
    * @defaultValue `true`
@@ -40,11 +40,11 @@ export type CreateDismissableProps = {
   /**
    * Callback fired when the escape key is pressed. Can be prevented by calling `event.preventDefault`.
    */
-  onEscapeKeyDown?(event: KeyboardEvent): void
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
    * Callback fired when a pointer down event happens outside the element. Can be prevented by calling `event.preventDefault`.
    */
-  onOutsidePointer?(event: MouseEvent): void
+  onOutsidePointer?: (event: MouseEvent) => void
 }
 
 /**
