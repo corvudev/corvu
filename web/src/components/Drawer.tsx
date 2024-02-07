@@ -31,7 +31,15 @@ const NavDrawer: FlowComponent = (props) => {
             </svg>
           </Drawer.Trigger>
           <Drawer.Portal>
-            <Drawer.Content class="peer fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-1000 after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
+            <Drawer.Overlay
+              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              style={{
+                'background-color': `rgb(12 8 18 / ${
+                  0.6 * drawerProps.openPercentage
+                })`,
+              }}
+            />
+            <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-1000 after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
               <a href="/" class="mx-1 mt-[7px] flex rounded-lg py-2 pl-2 pr-4">
                 <span class="sr-only">Corvu home</span>
                 <img
@@ -45,14 +53,6 @@ const NavDrawer: FlowComponent = (props) => {
                 {props.children}
               </div>
             </Drawer.Content>
-            <Drawer.Overlay
-              class="fixed inset-0 z-40 bg-corvu-1000/60 corvu-peer-transitioning:transition-colors corvu-peer-transitioning:duration-500 corvu-peer-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
-              style={{
-                'background-color': `rgb(0 0 0 / ${
-                  0.5 * drawerProps.openPercentage
-                })`,
-              }}
-            />
           </Drawer.Portal>
         </>
       )}

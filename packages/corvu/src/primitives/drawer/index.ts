@@ -2,7 +2,6 @@ import {
   DrawerClose as Close,
   DrawerDescription as Description,
   DrawerLabel as Label,
-  DrawerOverlay as Overlay,
   DrawerTrigger as Trigger,
 } from '@primitives/drawer/DialogOverrides'
 import {
@@ -27,6 +26,7 @@ import Root, {
   type DrawerRootProps,
 } from '@primitives/drawer/Root'
 import Content from '@primitives/drawer/Content'
+import Overlay from '@primitives/drawer/Overlay'
 
 export type {
   DrawerContextValue as ContextValue,

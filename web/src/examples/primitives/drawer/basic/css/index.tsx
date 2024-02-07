@@ -15,7 +15,7 @@ const DrawerExample: VoidComponent = () => {
                 })`,
               }}
             />
-            <Drawer.Content class="peer">
+            <Drawer.Content>
               <div class="notch" />
               <Drawer.Label>I'm a drawer!</Drawer.Label>
               <Drawer.Description>Drag down to close me.</Drawer.Description>

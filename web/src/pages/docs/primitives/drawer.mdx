@@ -138,10 +138,10 @@ You can also use the `openPercentage` property returned by the `Drawer.useContex
 <Drawer.Root>
   {(props) => (
     <Drawer.Overlay
-      class="fixed inset-0 z-40 corvu-peer-transitioning:transition-colors corvu-peer-transitioning:duration-500 corvu-peer-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+      class="fixed inset-0 z-40 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
       style={{
-        'background-color': \`rgb(0 0 0 / \${
-          0.5 * props.openPercentage
+        'background-color': \`rgb(12 8 18 / \${
+          0.7 * props.openPercentage
         })\`,
       }}
     />

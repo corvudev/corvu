@@ -1,4 +1,4 @@
-[data-corvu-dialog-trigger] {
+[data-corvu-drawer-trigger] {
   border-radius: 0.5rem;
   background-color: rgb(230 226 253);
   padding-left: 1rem;
@@ -18,27 +18,27 @@
   animation-duration: 100ms;
 }
 
-[data-corvu-dialog-trigger]:hover {
+[data-corvu-drawer-trigger]:hover {
   background-color: rgb(212 203 251);
 }
 
-[data-corvu-dialog-trigger]:active {
+[data-corvu-drawer-trigger]:active {
   transform: translate(0px, 0.125rem);
 }
 
-[data-corvu-dialog-overlay] {
+[data-corvu-drawer-overlay] {
   position: fixed;
   inset: 0px;
   z-index: 40;
 }
 
-.peer[data-transitioning]~[data-corvu-dialog-overlay] {
+[data-corvu-drawer-overlay][data-transitioning] {
   transition-property: background-color;
   transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   transition-duration: 500ms;
 }
 
-[data-corvu-dialog-content] {
+[data-corvu-drawer-content] {
   position: fixed;
   left: 0px;
   right: 0px;
@@ -54,13 +54,13 @@
   padding-top: 0.75rem;
 }
 
-[data-corvu-dialog-content][data-transitioning] {
+[data-corvu-drawer-content][data-transitioning] {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   transition-duration: 500ms;
 }
 
-[data-corvu-dialog-content]::after {
+[data-corvu-drawer-content]::after {
   position: absolute;
   left: 0px;
   right: 0px;
@@ -70,13 +70,13 @@
 }
 
 @media (min-width: 1024px) {
-  [data-corvu-dialog-content] {
+  [data-corvu-drawer-content] {
     -webkit-user-select: none;
     user-select: none;
   }
 }
 
-[data-corvu-dialog-label] {
+[data-corvu-drawer-label] {
   margin-top: 0.5rem;
   text-align: center;
   font-size: 1.25rem;
@@ -84,7 +84,7 @@
   font-weight: 700;
 }
 
-[data-corvu-dialog-description] {
+[data-corvu-drawer-description] {
   margin-top: 1rem;
   text-align: center;
 }

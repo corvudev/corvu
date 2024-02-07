@@ -10,8 +10,6 @@ import DialogClose from '@primitives/dialog/Close'
 import DialogDescription from '@primitives/dialog/Description'
 import DialogLabel from '@primitives/dialog/Label'
 import type { DialogLabelProps } from '@primitives/dialog/Label'
-import DialogOverlay from '@primitives/dialog/Overlay'
-import type { DialogOverlayProps } from '@primitives/dialog/Overlay'
 import DialogTrigger from '@primitives/dialog/Trigger'
 import type { DialogTriggerProps } from '@primitives/dialog/Trigger'
 import type { ValidComponent } from 'solid-js'
@@ -58,20 +56,6 @@ const DrawerLabel = <
   )
 }
 
-const DrawerOverlay = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
->(
-  props: DialogOverlayProps<T>,
-) => {
-  return (
-    <DialogOverlay
-      data-corvu-dialog-overlay={undefined}
-      data-corvu-drawer-overlay=""
-      {...props}
-    />
-  )
-}
-
 const DrawerTrigger = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
 >(
@@ -86,10 +70,4 @@ const DrawerTrigger = <
   )
 }
 
-export {
-  DrawerClose,
-  DrawerDescription,
-  DrawerLabel,
-  DrawerOverlay,
-  DrawerTrigger,
-}
+export { DrawerClose, DrawerDescription, DrawerLabel, DrawerTrigger }

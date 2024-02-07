@@ -10,7 +10,7 @@ import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
+export const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 
 export type DialogOverlayProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,

@@ -16,14 +16,14 @@ const DrawerCommentsExample: VoidComponent = () => {
           </div>
           <Drawer.Portal>
             <Drawer.Overlay
-              class="fixed inset-0 z-40 corvu-peer-transitioning:transition-colors corvu-peer-transitioning:duration-500 corvu-peer-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
-                'background-color': `rgb(0 0 0 / ${
-                  0.5 * props.openPercentage
+                'background-color': `rgb(12 8 18 / ${
+                  0.7 * props.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="group peer fixed inset-x-0 bottom-0 z-50 h-full max-h-[95%] rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
+            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 h-full max-h-[95%] rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
               <div
                 class="flex flex-col corvu-group-transitioning:transition-[height] corvu-group-transitioning:duration-500 corvu-group-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
                 style={{

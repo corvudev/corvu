@@ -63,11 +63,11 @@ export const componentSpecifications: {
       },
       {
         name: 'Overlay',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
+        forcedSorting: ['as', 'forceMount', 'contextId'],
       },
       {
         name: 'Content',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
+        forcedSorting: ['as', 'forceMount', 'contextId'],
       },
       {
         name: 'Close',
@@ -165,7 +165,11 @@ export const componentSpecifications: {
       },
       {
         name: 'Content',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
+        forcedSorting: ['as', 'forceMount', 'contextId'],
+      },
+      {
+        name: 'Overlay',
+        forcedSorting: ['as', 'forceMount', 'contextId'],
       },
     ],
     contexts: [
@@ -233,7 +237,7 @@ export const componentSpecifications: {
       },
       {
         name: 'Content',
-        forcedSorting: ['as', 'asChild', 'forceMount', 'contextId'],
+        forcedSorting: ['as', 'forceMount', 'contextId'],
       },
     ],
     contexts: [
@@ -289,7 +293,6 @@ export const componentSpecifications: {
           'contextId',
           'children',
           'as',
-          'asChild',
         ],
       },
       {
@@ -297,7 +300,7 @@ export const componentSpecifications: {
       },
       {
         name: 'Content',
-        forcedSorting: ['forceMount', 'contextId', 'as', 'asChild'],
+        forcedSorting: ['forceMount', 'contextId', 'as'],
       },
     ],
     contexts: [
@@ -374,11 +377,11 @@ export const componentSpecifications: {
       },
       {
         name: 'Anchor',
-        forcedSorting: ['as', 'asChild', 'contextId'],
+        forcedSorting: ['as', 'contextId'],
       },
       {
         name: 'Trigger',
-        forcedSorting: ['as', 'asChild', 'contextId'],
+        forcedSorting: ['as', 'contextId'],
       },
       {
         name: 'Portal',
@@ -386,11 +389,11 @@ export const componentSpecifications: {
       },
       {
         name: 'Content',
-        forcedSorting: ['forceMount', 'as', 'asChild', 'contextId'],
+        forcedSorting: ['forceMount', 'as', 'contextId'],
       },
       {
         name: 'Arrow',
-        forcedSorting: ['size', 'as', 'asChild', 'contextId'],
+        forcedSorting: ['size', 'as', 'contextId'],
       },
     ],
     contexts: [
@@ -455,11 +458,11 @@ export const componentSpecifications: {
       },
       {
         name: 'Anchor',
-        forcedSorting: ['as', 'asChild', 'contextId'],
+        forcedSorting: ['as', 'contextId'],
       },
       {
         name: 'Arrow',
-        forcedSorting: ['size', 'as', 'asChild', 'contextId'],
+        forcedSorting: ['size', 'as', 'contextId'],
       },
     ],
     contexts: [
