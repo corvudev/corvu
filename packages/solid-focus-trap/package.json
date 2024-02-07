@@ -1,6 +1,6 @@
 {
   "name": "solid-focus-trap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "SolidJS utility that traps focus inside a given DOM element.",
   "keywords": [

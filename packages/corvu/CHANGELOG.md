@@ -1,5 +1,19 @@
 # corvu
 
+## 0.4.0
+
+### Minor Changes
+
+- Rename polymorphic to dynamic - [`1012fe7`](https://github.com/corvudev/corvu/commit/1012fe7112ece54fcac10ab737b7a5503f8664ed) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Simplify the polymorphic component - [`a5571fa`](https://github.com/corvudev/corvu/commit/a5571faeb620e29d8e755efe6b67924690d94dcf) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+### Patch Changes
+
+- Refactor tooltip logic - [`89af6fa`](https://github.com/corvudev/corvu/commit/89af6faf1704fdb6d1206985f08c94ef961dcca2) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add drawer data attributes to the overlay - [`f544083`](https://github.com/corvudev/corvu/commit/f544083e7c1f82fa4068ed75ce89e1fa6fdf0eca) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.3.0
 
 ### Minor Changes
