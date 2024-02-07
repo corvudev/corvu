@@ -1,5 +1,11 @@
 # corvu
 
+## 0.4.1
+
+### Patch Changes
+
+- Fix drawer and popover trigger data attributes - [`2659d1a`](https://github.com/corvudev/corvu/commit/2659d1a780a91f0bfd8ce4705e603e2c5938728c) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.0
 
 ### Minor Changes
