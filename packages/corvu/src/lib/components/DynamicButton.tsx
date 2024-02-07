@@ -10,7 +10,7 @@ import { isButton } from '@lib/assertions'
 import { mergeRefs } from '@lib/utils'
 import type { OverrideComponentProps } from '@lib/types'
 
-const DEFAULT_DYNAMIC_BUTTON_ELEMENT: ValidComponent = 'button'
+const DEFAULT_DYNAMIC_BUTTON_ELEMENT = 'button'
 
 export type DynamicButtonProps<
   T extends ValidComponent = typeof DEFAULT_DYNAMIC_BUTTON_ELEMENT,
@@ -43,7 +43,7 @@ const DynamicButton = <
 
   return (
     <Dynamic
-      as={localProps.as ?? DEFAULT_DYNAMIC_BUTTON_ELEMENT}
+      as={localProps.as ?? (DEFAULT_DYNAMIC_BUTTON_ELEMENT as ValidComponent)}
       ref={mergeRefs(setRef, localProps.ref)}
       type={isNativeButton() ? 'button' : undefined}
       role={!isNativeButton() ? 'button' : undefined}

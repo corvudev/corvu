@@ -13,6 +13,7 @@ const PopoverExample: VoidComponent = () => {
     >
       <Popover.Trigger>
         <Gear size="26" />
+        <span class="sr-only">Settings</span>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content>

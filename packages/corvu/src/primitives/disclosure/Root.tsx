@@ -40,7 +40,7 @@ export type DisclosureRootProps = {
   collapseBehavior?: 'remove' | 'hide'
   /**
    * The `id` attribute of the disclosure content element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   disclosureId?: string
   /**

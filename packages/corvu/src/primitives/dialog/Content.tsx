@@ -11,7 +11,7 @@ import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-export const DEFAULT_DIALOG_CONTENT_ELEMENT: ValidComponent = 'div'
+export const DEFAULT_DIALOG_CONTENT_ELEMENT = 'div'
 
 export type DialogContentProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_CONTENT_ELEMENT,
@@ -96,7 +96,10 @@ const DialogContent = <
             <Show when={show()}>
               <Dynamic
                 ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={localProps.as ?? DEFAULT_DIALOG_CONTENT_ELEMENT}
+                as={
+                  localProps.as ??
+                  (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
+                }
                 role={context().role()}
                 id={context().dialogId()}
                 aria-labelledby={context().labelId()}

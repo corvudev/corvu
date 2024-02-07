@@ -6,65 +6,140 @@ interface Props extends ApiReference {}
 const { type, name, descriptionHtml, parts } = Astro.props
 ---
 
-<div class="py-4 prose-code:bg-corvu-200">
-  <div class="not-prose flex items-start justify-between">
-    <div class="inline-flex space-x-2 text-xl font-bold">
-      <h3 id={encodeURIComponent(name)} class="scroll-mt-24">{name}</h3><p
-        class="rounded-md bg-corvu-500 px-1 pb-0.5 pt-1 text-sm font-bold text-corvu-dark"
-      >
-        {type === 'component' && 'Component'}
-        {type === 'context' && 'Context'}
-        {type === 'type' && 'Type'}
-        {type === 'function' && 'Function'}
-      </p>
-    </div>
+<div>
+  <div class="not-prose inline-flex items-center space-x-2">
+    <h3 id={encodeURIComponent(name)} class="scroll-mt-20 text-xl font-bold">
+      {name}
+    </h3><p
+      class="rounded-md border-2 border-corvu-500 bg-corvu-dark px-2 py-0.5 text-sm font-bold text-corvu-50"
+    >
+      {type === 'component' && 'Component'}
+      {type === 'context' && 'Context'}
+      {type === 'type' && 'Type'}
+      {type === 'function' && 'Function'}
+    </p>
   </div>
-  <p class="mt-1" set:html={descriptionHtml} />
-  <div class="mt-3">
+  <p class="mt-3" set:html={descriptionHtml} />
+  <div class="mt-4">
     {
       parts.map((part) => (
-        <div>
-          <p class="font-bold">{part.name}</p>
-          {part.description && <p class="mt-1">{part.description}</p>}
-          <div class="divide-y divide-corvu-400/50 text-sm">
-            {part.props.map((property) => (
-              <div class="pt-2">
-                <div class="md:flex md:items-start md:justify-between">
-                  {property.name && (
-                    <p
-                      class:list={[
-                        'not-prose max-w-fit rounded px-1 py-0.5 font-mono text-base font-bold text-corvu-dark',
-                        {
-                          'bg-corvu-400':
-                            !property.displayType ||
-                            property.displayType === 'property',
-                          'bg-cyan-500': property.displayType === 'function',
-                          'bg-orange-400': property.displayType === 'data',
-                        },
-                      ]}
-                    >
-                      {property.name}
-                    </p>
+        <div class="mb-4">
+          <h4 class="not-prose text-lg font-bold">{part.name}</h4>
+          {part.description && <p class="mt-2">{part.description}</p>}
+          <div class="overflow-y-auto">
+            {part.name === 'Props' && (
+              <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+                <tr class="not-prose border-b border-corvu-500/20">
+                  <th class="w-1/4 pb-3">Property</th>
+                  {part.props.some((prop) => prop.defaultHtml) && (
+                    <th class="w-1/4 pb-3">Default</th>
                   )}
-                  {property.type && (
-                    <div class="mt-1 md:mt-0 md:text-right">
-                      <code class="not-prose col-span-2 font-mono">
-                        {property.type}
-                      </code>
-                    </div>
+                  <th class="w-1/2 pb-3">Type/Description</th>
+                </tr>
+                {part.props.map((prop) => (
+                  <tr class="border-b border-corvu-500/20">
+                    <td class="not-prose py-5 pr-5 align-top">
+                      <p
+                        class:list={[
+                          'inline whitespace-nowrap rounded font-bold px-1 py-0.5 font-mono text-corvu-dark text-sm',
+                          {
+                            'bg-corvu-400': prop.displayType === 'property',
+                            'bg-sky-500': prop.displayType === 'function',
+                          },
+                        ]}
+                      >
+                        {prop.name}
+                      </p>
+                    </td>
+                    {part.props.some((prop) => prop.defaultHtml) && (
+                      <td class="py-5 pr-5 align-top">
+                        {prop.defaultHtml ? (
+                          <div
+                            class="prose inline prose-code:rounded prose-code:bg-corvu-light prose-code:px-1 prose-code:py-0.5 prose-code:text-corvu-dark"
+                            set:html={prop.defaultHtml}
+                          />
+                        ) : (
+                          <p class="text-corvu-50">-</p>
+                        )}
+                      </td>
+                    )}
+                    <td class="py-5 pr-5 align-top text-sm">
+                      <p class="not-prose inline rounded bg-[#222124] px-1 py-0.5 font-mono text-white">
+                        {prop.type}
+                      </p>
+                      <div class="prose mt-3" set:html={prop.descriptionHtml} />
+                    </td>
+                  </tr>
+                ))}
+              </table>
+            )}
+            {part.name === 'Returns' && (
+              <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+                <tr class="not-prose border-b border-corvu-500/20">
+                  {part.props.some((prop) => prop.name) && (
+                    <th class="w-1/4 pb-3">Property</th>
                   )}
-                </div>
-                {property.defaultHtml && (
-                  <p class="prose prose-code:whitespace-normal">
-                    Default: <span set:html={property.defaultHtml} />
-                  </p>
-                )}
-                <p
-                  class="prose col-span-4 col-start-2 mt-1"
-                  set:html={property.descriptionHtml}
-                />
-              </div>
-            ))}
+                  <th class="w-1/2 pb-3">Type/Description</th>
+                </tr>
+                {part.props.map((prop) => (
+                  <tr class="border-b border-corvu-500/20">
+                    {part.props.some((prop) => prop.name) && (
+                      <td class="not-prose py-5 pr-5 align-top">
+                        {prop.name ? (
+                          <p
+                            class:list={[
+                              'inline whitespace-nowrap rounded font-bold px-1 py-0.5 font-mono text-corvu-dark text-sm',
+                              {
+                                'bg-corvu-400': prop.displayType === 'property',
+                                'bg-sky-500': prop.displayType === 'function',
+                              },
+                            ]}
+                          >
+                            {prop.name}
+                          </p>
+                        ) : (
+                          <p class="text-corvu-50">-</p>
+                        )}
+                      </td>
+                    )}
+                    <td class="py-5 pr-5 align-top text-sm">
+                      <p class="not-prose inline rounded bg-[#222124] px-1 py-0.5 font-mono text-white">
+                        {prop.type}
+                      </p>
+                      <div class="prose mt-3" set:html={prop.descriptionHtml} />
+                    </td>
+                  </tr>
+                ))}
+              </table>
+            )}
+            {part.name !== 'Props' && part.name !== 'Returns' && (
+              <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+                <tr class="not-prose border-b border-corvu-400/50">
+                  <th class="w-1/2 pb-3">Property</th>
+                  <th class="w-1/2 pb-3">Description</th>
+                </tr>
+                {part.props.map((prop) => (
+                  <tr class="border-b border-corvu-400/50">
+                    <td class="not-prose py-5 pr-5 align-top">
+                      <p
+                        class:list={[
+                          'inline whitespace-nowrap rounded font-bold px-1 py-0.5 font-mono text-corvu-dark text-sm',
+                          {
+                            'bg-emerald-500': prop.displayType === 'data',
+                            'bg-teal-500': prop.displayType === 'css',
+                          },
+                        ]}
+                      >
+                        {prop.name}
+                      </p>
+                    </td>
+                    <td class="py-5 pr-5 align-top text-sm">
+                      <div class="prose" set:html={prop.descriptionHtml} />
+                    </td>
+                  </tr>
+                ))}
+              </table>
+            )}
           </div>
         </div>
       ))

@@ -37,7 +37,7 @@ type ApiType = {
   type?: string
   defaultHtml?: string
   descriptionHtml: string
-  displayType?: 'property' | 'function' | 'data' | 'children'
+  displayType?: 'property' | 'function' | 'data' | 'css'
 }
 
 const getComponent = (componentName: ComponentSpecifications) => {
@@ -460,6 +460,13 @@ const getUtility = (utilityName: UtilitySpecifications) => {
       apiTypes = apiTypes.map((apiType) => {
         apiType.defaultHtml = replaceElements(apiType.defaultHtml)
         apiType.descriptionHtml = replaceElements(apiType.descriptionHtml)!
+        if (apiType.descriptionHtml.includes('*Default = ')) {
+          apiType.defaultHtml = apiType.descriptionHtml
+            .split('*Default = ')[1]
+            .split('*')[0]
+          apiType.descriptionHtml =
+            apiType.descriptionHtml.split('*Default = ')[0]
+        }
         return apiType
       })
 
@@ -680,7 +687,7 @@ const getCssTags = (comment?: DeclarationVariant['comment']) => {
     return {
       name: dataTag.content[0].text.slice(1, -1),
       descriptionHtml: formatText(dataTag.content.slice(1)).replace(' - ', ''),
-      displayType: 'data',
+      displayType: 'css',
     }
   }) as ApiType[]
 }

@@ -42,7 +42,6 @@ export type DrawerRootProps = {
   snapPoints?: (string | number)[]
   /**
    * Optionally override the default breakpoints between snap points. This list has to be the length of `snapPoints.length - 1`. Use `Drawer.DefaultBreakpoint` or `undefined` for breakpoints you don't want to override.
-   * @defaultValue `[Drawer.DefaultBreakpoint]`
    */
   breakPoints?: (string | number | typeof DefaultBreakpoint)[]
   /**

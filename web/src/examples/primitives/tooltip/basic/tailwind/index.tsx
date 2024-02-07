@@ -20,6 +20,7 @@ const TooltipExample: VoidComponent = () => {
         target="_blank"
       >
         <Star size="26" />
+        <span class="sr-only">Corvu on GitHub</span>
       </Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content class="rounded-lg bg-corvu-1000 px-3 py-2 font-medium text-corvu-50 corvu-open:animate-in corvu-open:fade-in-50 corvu-open:slide-in-from-bottom-1 corvu-closed:animate-out corvu-closed:fade-out-50 corvu-closed:slide-out-to-bottom-1">

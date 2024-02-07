@@ -124,12 +124,12 @@ export type TooltipRootProps = {
   onPointerDown?: (event: MouseEvent) => void
   /**
    * The `id` attribute of the tooltip element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   tooltipId?: string
   /**
    * The `id` attribute of the tooltip trigger element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   triggerId?: string
   /**

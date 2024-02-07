@@ -11,7 +11,7 @@ import Dismissible from '@lib/components/Dismissible'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
-export const DEFAULT_TOOLTIP_CONTENT_ELEMENT: ValidComponent = 'div'
+export const DEFAULT_TOOLTIP_CONTENT_ELEMENT = 'div'
 
 export type TooltipContentProps<
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_CONTENT_ELEMENT,
@@ -88,7 +88,10 @@ const TooltipContent = <
             <Show when={show()}>
               <Dynamic
                 ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={localProps.as ?? DEFAULT_TOOLTIP_CONTENT_ELEMENT}
+                as={
+                  localProps.as ??
+                  (DEFAULT_TOOLTIP_CONTENT_ELEMENT as ValidComponent)
+                }
                 role="tooltip"
                 id={context().tooltipId()}
                 aria-describedby={context().triggerId()}

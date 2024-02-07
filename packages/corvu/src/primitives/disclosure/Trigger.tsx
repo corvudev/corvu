@@ -5,7 +5,7 @@ import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDisclosureContext } from '@primitives/disclosure/context'
 
-export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT: ValidComponent = 'button'
+export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
 
 export type DisclosureTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
@@ -52,7 +52,9 @@ const DisclosureTrigger = <
 
   return (
     <DynamicButton
-      as={localProps.as ?? DEFAULT_DISCLOSURE_TRIGGER_ELEMENT}
+      as={
+        localProps.as ?? (DEFAULT_DISCLOSURE_TRIGGER_ELEMENT as ValidComponent)
+      }
       onClick={onClick}
       aria-expanded={context().expanded() ? 'true' : 'false'}
       aria-controls={context().disclosureId()}

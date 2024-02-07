@@ -37,7 +37,7 @@ export type FloatingArrowProps<
   DynamicAttributes<T> & {
     /**
      * Size of the arrow in px.
-     * @default 16
+     * @defaultValue 16
      */
     size?: number
     /** @hidden */

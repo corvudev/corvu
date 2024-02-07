@@ -95,8 +95,8 @@ export const findClosestSnapPoint = (
   )
 
   // If there is only one snap point, return it.
-  if (!upperSnapPoint) return lowerSnapPoint as ResolvedSnapPointWithBreakPoints
-  if (!lowerSnapPoint) return upperSnapPoint as ResolvedSnapPointWithBreakPoints
+  if (!upperSnapPoint) return lowerSnapPoint!
+  if (!lowerSnapPoint) return upperSnapPoint
 
   // If there are no custom break points, return the closest snap point.
   if (

@@ -11,8 +11,18 @@ const DisclosureExample: VoidComponent = () => {
             <div class="header">
               <p class="header_title">Jasmin starred 3 repositories</p>
               <Disclosure.Trigger>
-                {props.expanded && <X size="20" />}
-                {!props.expanded && <CaretUpDown size="20" />}
+                {props.expanded && (
+                  <>
+                    <X size="20" />
+                    <span class="sr-only">Collapse</span>
+                  </>
+                )}
+                {!props.expanded && (
+                  <>
+                    <CaretUpDown size="20" />
+                    <span class="sr-only">Expand</span>
+                  </>
+                )}
               </Disclosure.Trigger>
             </div>
             <div class="repository_card">corvudev/corvu</div>

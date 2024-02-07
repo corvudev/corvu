@@ -19,6 +19,7 @@ const TooltipExample: VoidComponent = () => {
         target="_blank"
       >
         <Star size="26" />
+        <span class="sr-only">Corvu on GitHub</span>
       </Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content>

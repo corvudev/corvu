@@ -5,7 +5,7 @@ import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalTooltipContext } from '@primitives/tooltip/context'
 
-const DEFAULT_TOOLTIP_TRIGGER_ELEMENT: ValidComponent = 'button'
+const DEFAULT_TOOLTIP_TRIGGER_ELEMENT = 'button'
 
 export type TooltipTriggerProps<
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
@@ -41,7 +41,7 @@ const TooltipTrigger = <
   return (
     <DynamicButton
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? DEFAULT_TOOLTIP_TRIGGER_ELEMENT}
+      as={localProps.as ?? (DEFAULT_TOOLTIP_TRIGGER_ELEMENT as ValidComponent)}
       aria-expanded={context().open() ? 'true' : 'false'}
       aria-describedby={context().tooltipId()}
       data-open={dataIf(context().open())}

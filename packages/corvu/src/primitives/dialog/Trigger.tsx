@@ -5,7 +5,7 @@ import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_TRIGGER_ELEMENT: ValidComponent = 'button'
+const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
 
 export type DialogTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
@@ -56,7 +56,7 @@ const DialogTrigger = <
   return (
     <DynamicButton
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? DEFAULT_DIALOG_TRIGGER_ELEMENT}
+      as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
       onClick={onClick}
       aria-haspopup="dialog"
       aria-expanded={context().open() ? 'true' : 'false'}

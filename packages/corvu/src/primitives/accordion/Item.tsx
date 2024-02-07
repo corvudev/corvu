@@ -32,7 +32,7 @@ export type AccordionItemProps<
   DynamicAttributes<T> & {
     /**
      * Value of the accordion item.
-     * @defaultValue A unique id
+     * @defaultValue `createUniqueId()`
      */
     value?: string
     /**
@@ -41,7 +41,7 @@ export type AccordionItemProps<
     disabled?: boolean
     /**
      * The `id` attribute of the accordion item trigger element.
-     * @defaultValue A unique id
+     * @defaultValue `createUniqueId()`
      */
     triggerId?: string
     children: JSX.Element | ((props: AccordionItemChildrenProps) => JSX.Element)

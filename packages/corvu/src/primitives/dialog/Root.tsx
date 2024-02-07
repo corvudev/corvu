@@ -24,7 +24,7 @@ import { isFunction } from '@lib/assertions'
 export type DialogRootProps = {
   /**
    * The `role` attribute of the dialog element.
-   * @defaultValue 'dialog'`
+   * @defaultValue `'dialog'`
    */
   role?: 'dialog' | 'alertdialog'
   /**
@@ -56,7 +56,7 @@ export type DialogRootProps = {
   onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
    * Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
-   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   closeOnOutsidePointer?: boolean
   /**
@@ -70,22 +70,22 @@ export type DialogRootProps = {
   onOutsidePointer?: (event: MouseEvent) => void
   /**
    * Whether pointer events outside of `<Dialog.Content />` should be disabled.
-   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   noOutsidePointerEvents?: boolean
   /**
    * Whether scroll outside of the dialog should be prevented.
-   * @defaulValue `true` if `modal` is `true`, `false` otherwise
+   * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
   preventScroll?: boolean
   /**
    * Whether the scrollbar of the `<body>` element should be hidden. Only applies if `preventScroll` is `true`.
-   * @defaulValue `true`
+   * @defaultValue `true`
    */
   hideScrollbar?: boolean
   /**
    * Whether padding should be added to the `<body>` element to avoid layout shift.
-   * @defaulValue `true`
+   * @defaultValue `true`
    */
   preventScrollbarShift?: boolean
   /**
@@ -126,17 +126,17 @@ export type DialogRootProps = {
   onFinalFocus?: (event: Event) => void
   /**
    * The `id` attribute of the dialog element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   dialogId?: string
   /**
    * The `id` attribute of the dialog label element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   labelId?: string
   /**
    * The `id` attribute of the dialog description element.
-   * @defaultValue A unique id
+   * @defaultValue `createUniqueId()`
    */
   descriptionId?: string
   /**

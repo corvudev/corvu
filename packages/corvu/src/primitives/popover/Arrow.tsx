@@ -15,7 +15,7 @@ export type PopoverArrowProps<
   DynamicAttributes<T> & {
     /**
      * Size of the arrow in px.
-     * @default 16
+     * @defaultValue 16
      */
     size?: number
     /**

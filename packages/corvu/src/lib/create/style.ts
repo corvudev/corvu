@@ -34,8 +34,8 @@ const createStyle = (props: {
 
     onCleanup(() => {
       originalStyles.forEach((originalStyle) => {
-        props.element.style[originalStyle[0] as never] =
-          originalStyle[1] as never
+        // @ts-expect-error: Some types of CSSStyleDeclaration can not be used as an index type and I'm not sure how to type this.
+        props.element.style[originalStyle[0]] = originalStyle[1]
       })
       for (const property of properties) {
         props.element.style.removeProperty(property.key)
