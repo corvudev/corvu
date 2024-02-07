@@ -80,7 +80,7 @@ const PopoverTrigger = <
   return (
     <DialogTrigger
       data-corvu-dialog-trigger={undefined}
-      data-corvu-popover-PopoverTrigger=""
+      data-corvu-popover-trigger=""
       {...props}
     />
   )

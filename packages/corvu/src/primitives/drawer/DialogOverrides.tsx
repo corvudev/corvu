@@ -64,7 +64,7 @@ const DrawerTrigger = <
   return (
     <DialogTrigger
       data-corvu-dialog-trigger={undefined}
-      data-corvu-drawer-DrawerTrigger=""
+      data-corvu-drawer-trigger=""
       {...props}
     />
   )
