@@ -231,10 +231,5 @@ export default {
         },
       },
     ),
-    plugin(({ addUtilities }) => {
-      addUtilities({
-        '.nav-scrollbar': {},
-      })
-    }),
   ],
 }
