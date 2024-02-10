@@ -1,7 +1,7 @@
-import { DefaultBreakpoint } from '@primitives/drawer'
+import type { Size } from '@lib/types'
 
 export type ResolvedSnapPoint = {
-  value: string | number
+  value: Size
   offset: number
 }
 
@@ -20,10 +20,10 @@ type ResolvedSnapPointWithBreakPoints = ResolvedSnapPoint & {
  * @returns The resolved snap point.
  */
 export const resolveSnapPoint = (
-  snapPoint: string | number,
+  snapPoint: Size,
   drawerSize: number,
   index?: number,
-  breakPoints?: (string | number | typeof DefaultBreakpoint)[],
+  breakPoints?: (Size | null)[],
 ): ResolvedSnapPointWithBreakPoints => {
   if (index === undefined || breakPoints === undefined) {
     return {
@@ -56,10 +56,7 @@ export const resolveSnapPoint = (
  * @throws If the point is not a number or a string ending with 'px'.
  *
  */
-export const resolvePoint = (
-  point: number | string,
-  drawerSize: number,
-): number => {
+export const resolvePoint = (point: Size, drawerSize: number): number => {
   if (typeof point === 'number') return drawerSize - point * drawerSize
   if (!point.endsWith('px')) {
     throw new Error(
