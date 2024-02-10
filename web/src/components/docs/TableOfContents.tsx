@@ -117,6 +117,7 @@ const TocItem: VoidComponent<{ heading: Heading; headingsInView: string[] }> = (
           document
             .getElementById(props.heading.slug)
             ?.scrollIntoView({ behavior: 'smooth' })
+          history.pushState({}, '', `#${props.heading.slug}`)
         }}
       >
         {props.heading.text}
