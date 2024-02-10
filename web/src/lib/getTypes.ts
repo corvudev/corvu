@@ -867,6 +867,10 @@ const resolveTypeTopLevel = (type: Type, parameters?: ParamVariant[]) => {
         typeName += resolveTypeTopLevel(type.elementType)
         typeName += ']'
         break
+      } else if (type.elementType.type === 'reference') {
+        typeName += resolveTypeTopLevel(type.elementType)
+        typeName += '[]'
+        break
       } else {
         throw new Error(
           `Unexpected array element type ${type.elementType.type}`,

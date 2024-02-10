@@ -1,20 +1,19 @@
 import { type Accessor, createContext, type Setter, useContext } from 'solid-js'
 import { createKeyedContext, useKeyedContext } from '@lib/create/keyedContext'
-import { DefaultBreakpoint } from '@primitives/drawer'
+import type { Side, Size } from '@lib/types'
 import type { ResolvedSnapPoint } from '@primitives/drawer/lib'
-import type { Side } from '@lib/types'
 
 export type DrawerContextValue = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
-  snapPoints: Accessor<(string | number)[]>
+  snapPoints: Accessor<Size[]>
   /** Breakpoints between snap points. */
-  breakPoints: Accessor<(string | number | typeof DefaultBreakpoint)[]>
+  breakPoints: Accessor<(Size | null)[]>
   /** The point to snap to when the drawer opens. */
-  defaultSnapPoint: Accessor<string | number>
+  defaultSnapPoint: Accessor<Size>
   /** The active snap point. */
-  activeSnapPoint: Accessor<string | number>
+  activeSnapPoint: Accessor<Size>
   /** Change the active snap point. */
-  setActiveSnapPoint: (snapPoint: string | number) => void
+  setActiveSnapPoint: (snapPoint: Size) => void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
   side: Accessor<Side>
   /** Whether the drawer is currently being dragged by the user. */

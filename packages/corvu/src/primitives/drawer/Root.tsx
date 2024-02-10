@@ -22,6 +22,7 @@ import {
   type InternalDialogContextValue,
   useInternalDialogContext,
 } from '@primitives/dialog/context'
+import type { Side, Size } from '@lib/types'
 import { afterPaint } from '@corvu/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
@@ -29,34 +30,30 @@ import createTransitionSize from 'solid-transition-size'
 import { createWritableMemo } from '@solid-primitives/memo'
 import { isFunction } from '@lib/assertions'
 import { resolveSnapPoint } from '@primitives/drawer/lib'
-import type { Side } from '@lib/types'
-
-/** Alternative placeholder to not override a certain breakpoint. */
-export const DefaultBreakpoint = undefined
 
 export type DrawerRootProps = {
   /**
    * An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values.
    * @defaultValue `[0, 1]`
    */
-  snapPoints?: (string | number)[]
+  snapPoints?: Size[]
   /**
-   * Optionally override the default breakpoints between snap points. This list has to be the length of `snapPoints.length - 1`. Use `Drawer.DefaultBreakpoint` or `undefined` for breakpoints you don't want to override.
+   * Optionally override the default breakpoints between snap points. This list has to be the length of `snapPoints.length - 1`. Provide `null` for breakpoints you don't want to override.
    */
-  breakPoints?: (string | number | typeof DefaultBreakpoint)[]
+  breakPoints?: (Size | null)[]
   /**
    * The point to snap to when the drawer opens.
    * @defaultValue `1`
    */
-  defaultSnapPoint?: string | number
+  defaultSnapPoint?: Size
   /**
    * The active snap point.
    */
-  activeSnapPoint?: string | number
+  activeSnapPoint?: Size
   /**
    * Callback fired when the active snap point changes.
    */
-  onActiveSnapPointChange?: (activeSnapPoint: string | number) => void
+  onActiveSnapPointChange?: (activeSnapPoint: Size) => void
   /**
    * The side of the viewport the drawer appears. Is used to properly calculate dragging.
    * @defaultValue `'bottom'`
@@ -100,15 +97,15 @@ export type DrawerRootProps = {
 /** Props that are passed to the Root component children callback. */
 export type DrawerRootChildrenProps = {
   /** An array of points to snap to. Can be either percentages of the total drawer height or CSS pixel values. */
-  snapPoints: (string | number)[]
+  snapPoints: Size[]
   /** Breakpoints between snap points. */
-  breakPoints: (string | number | typeof DefaultBreakpoint)[]
+  breakPoints: (Size | null)[]
   /** The point to snap to when the drawer opens. */
-  defaultSnapPoint: string | number
+  defaultSnapPoint: Size
   /** The active snap point. */
-  activeSnapPoint: string | number
+  activeSnapPoint: Size
   /** Set the current active snap point. */
-  setActiveSnapPoint: (snapPoint: string | number) => void
+  setActiveSnapPoint: (snapPoint: Size) => void
   /** The side of the viewport the drawer appears. Is used to properly calculate dragging. */
   side: Side
   /** Whether the drawer is currently being dragged by the user. */
@@ -137,7 +134,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     {
       initialOpen: false,
       snapPoints: [0, 1],
-      breakPoints: [DefaultBreakpoint],
+      breakPoints: [null],
       defaultSnapPoint: 1,
       side: 'bottom' as const,
       dampFunction: (distance: number) => 6 * Math.log(distance + 1),
