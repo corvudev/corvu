@@ -1,5 +1,11 @@
 # corvu
 
+## 0.4.2
+
+### Patch Changes
+
+- Add key to createStyle to group corresponding calls - [`0f0d9eb`](https://github.com/corvudev/corvu/commit/0f0d9eb877d884db285884938efee5dfb89d4a0c) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.1
 
 ### Patch Changes
