@@ -22,6 +22,7 @@ const createNoPointerEvents = (props: { enabled?: MaybeAccessor<boolean> }) => {
     if (!access(defaultedProps.enabled)) return
 
     createStyle({
+      key: 'no-pointer-events',
       element: body,
       style: {
         pointerEvents: 'none',

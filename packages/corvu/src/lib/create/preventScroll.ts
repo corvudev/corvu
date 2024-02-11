@@ -80,44 +80,50 @@ const createPreventScroll = (props: {
 
     const scrollbarWidth = window.innerWidth - body.offsetWidth
 
-    const style: Partial<CSSStyleDeclaration> = {
-      overflow: 'hidden',
-    }
-    const properties: {
-      key: string
-      value: string
-    }[] = []
-
-    if (access(defaultedProps.preventScrollbarShift) && scrollbarWidth > 0) {
-      if (access(defaultedProps.preventScrollbarShiftMode) === 'padding') {
-        style.paddingRight = `calc(${
-          window.getComputedStyle(body).paddingRight
-        } + ${scrollbarWidth}px)`
-      } else {
-        style.marginRight = `calc(${
-          window.getComputedStyle(body).marginRight
-        } + ${scrollbarWidth}px)`
-      }
-
-      properties.push({
-        key: '--scrollbar-width',
-        value: `${scrollbarWidth}px`,
-      })
-    }
-
-    const offsetTop = window.scrollY
-    const offsetLeft = window.scrollX
-
     createStyle({
+      key: 'prevent-scroll-overflow',
       element: body,
-      style,
-      properties,
-      cleanup: () => {
-        if (scrollbarWidth > 0) {
-          window.scrollTo(offsetLeft, offsetTop)
-        }
+      style: {
+        overflow: 'hidden',
       },
     })
+
+    if (access(defaultedProps.preventScrollbarShift)) {
+      const style: Partial<CSSStyleDeclaration> = {}
+      const properties: { key: string; value: string }[] = []
+
+      if (scrollbarWidth > 0) {
+        if (access(defaultedProps.preventScrollbarShiftMode) === 'padding') {
+          style.paddingRight = `calc(${
+            window.getComputedStyle(body).paddingRight
+          } + ${scrollbarWidth}px)`
+        } else {
+          style.marginRight = `calc(${
+            window.getComputedStyle(body).marginRight
+          } + ${scrollbarWidth}px)`
+        }
+
+        properties.push({
+          key: '--scrollbar-width',
+          value: `${scrollbarWidth}px`,
+        })
+      }
+
+      const offsetTop = window.scrollY
+      const offsetLeft = window.scrollX
+
+      createStyle({
+        key: 'prevent-scroll-scrollbar',
+        element: body,
+        style,
+        properties,
+        cleanup: () => {
+          if (scrollbarWidth > 0) {
+            window.scrollTo(offsetLeft, offsetTop)
+          }
+        },
+      })
+    }
   })
 
   createEffect(() => {
