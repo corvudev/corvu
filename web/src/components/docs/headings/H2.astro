@@ -2,15 +2,16 @@
 const props = Astro.props
 ---
 
-<h2 {...props} class="group relative">
+<h2 {...props} class="group flex items-center space-x-1">
+  <span><slot /></span>
   <a
     href={`#${props.id}`}
-    class="absolute inset-y-0 -left-7 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
+    class="not-prose text-corvu-50/70 transition-opacity hover:text-corvu-400 group-hover:opacity-100 md:opacity-0"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 256"
-      class="mr-1 size-6"
+      class="size-6"
     >
       <rect width="256" height="256" fill="none"></rect>
       <path
@@ -28,6 +29,6 @@ const props = Astro.props
         stroke-linejoin="round"
         stroke-width="24"></path>
     </svg>
+    <span class="sr-only">Section titled <slot /></span>
   </a>
-  <slot />
 </h2>
