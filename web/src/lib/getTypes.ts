@@ -1,10 +1,10 @@
-import apiJson from '@assets/api.json'
 import {
   type ComponentSpecifications,
   componentSpecifications,
   utilitySpecifications,
   type UtilitySpecifications,
 } from '@lib/apiSpecifications'
+import apiJson from '../../../packages/corvu/api.json'
 import type {
   CorvuApi,
   DeclarationVariant,

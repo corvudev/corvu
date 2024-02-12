@@ -68,9 +68,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm lint && tsup",
+    "build": "tsup",
+    "clean": "rm -rf .turbo dist node_modules api.json",
+    "dev": "tsup --watch",
     "lint": "eslint --max-warnings=0 .",
-    "watch": "tsup --watch"
+    "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts --entryPoints ./src/primitives/*/index.ts"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.1",
@@ -86,6 +88,7 @@
     "prettier": "^3.2.5",
     "solid-js": "^1.8.14",
     "tsup": "^8.0.1",
+    "typedoc": "0.25.4",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {

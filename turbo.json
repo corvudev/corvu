@@ -1,0 +1,43 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build",
+        "^typedoc"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "clean": {},
+    "dev": {
+      "dependsOn": [
+        "^build"
+      ],
+      "persistent": true
+    },
+    "@corvu/web#dev": {
+      "dependsOn": [
+        "^build",
+        "^typedoc"
+      ],
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "preview": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "typedoc": {
+      "outputs": [
+        "api.json"
+      ]
+    }
+  }
+}

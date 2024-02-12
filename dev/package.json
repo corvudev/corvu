@@ -1,6 +1,5 @@
 {
   "name": "@corvu/dev",
-  "version": "0.0.0",
   "private": true,
   "description": "corvu development environment",
   "homepage": "https://corvu.dev",
@@ -13,7 +12,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite dev --host",
+    "clean": "rm -rf .turbo dist node_modules",
+    "dev": "vite dev",
     "lint": "eslint --max-warnings=0 .",
     "preview": "vite preview"
   },

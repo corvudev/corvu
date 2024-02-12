@@ -1,6 +1,5 @@
 {
   "name": "@corvu/web",
-  "version": "0.1.0",
   "private": true,
   "description": "corvu.dev website",
   "homepage": "https://corvu.dev",
@@ -11,9 +10,10 @@
     "url": "https://github.com/GiyoMoon"
   },
   "scripts": {
-    "build": "pnpm lint && astro build",
+    "build": "astro build",
+    "clean": "rm -rf .turbo dist node_modules",
     "dev": "astro dev",
-    "lint": "eslint --max-warnings=0 ./src",
+    "lint": "eslint --max-warnings=0 .",
     "preview": "astro preview"
   },
   "devDependencies": {

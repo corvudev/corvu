@@ -41,9 +41,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm lint && tsup",
-    "lint": "eslint --max-warnings=0 .",
-    "watch": "tsup --watch"
+    "build": "tsup",
+    "clean": "rm -rf .turbo dist node_modules",
+    "lint": "eslint --max-warnings=0 ."
   },
   "dependencies": {
     "corvu": "workspace:~"
