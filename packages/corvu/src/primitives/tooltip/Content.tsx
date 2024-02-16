@@ -95,7 +95,6 @@ const TooltipContent = <
                 }
                 role="tooltip"
                 id={context().tooltipId()}
-                aria-describedby={context().triggerId()}
                 data-open={dataIf(context().open())}
                 data-closed={dataIf(!context().open())}
                 data-placement={context().floatingState().placement}
