@@ -41,6 +41,7 @@ export type TooltipContentProps<
  * @data `data-corvu-tooltip-content` - Present on every tooltip content element.
  * @data `data-open` - Present when the tooltip is open.
  * @data `data-closed` - Present when the tooltip is closed.
+ * @data `data-placement` - Current placement of the tooltip.
  */
 const TooltipContent = <
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_CONTENT_ELEMENT,
@@ -97,6 +98,7 @@ const TooltipContent = <
                 aria-describedby={context().triggerId()}
                 data-open={dataIf(context().open())}
                 data-closed={dataIf(!context().open())}
+                data-placement={context().floatingState().placement}
                 data-corvu-tooltip-content=""
                 style={{
                   ...getFloatingStyle({

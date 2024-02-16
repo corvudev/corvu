@@ -12,6 +12,7 @@ const DEFAULT_POPOVER_CONTENT_ELEMENT = 'div'
  * @data `data-corvu-popover-content` - Present on every popover content element.
  * @data `data-open` - Present when the popover is open.
  * @data `data-closed` - Present when the popover is closed.
+ * @data `data-placement` - Current placement of the popover.
  */
 const PopoverContent = <
   T extends ValidComponent = typeof DEFAULT_POPOVER_CONTENT_ELEMENT,
@@ -39,6 +40,7 @@ const PopoverContent = <
         })(),
         ...localProps.style,
       }}
+      data-placement={context().floatingState().placement}
       data-corvu-dialog-content={undefined}
       data-corvu-popover-content=""
       {...(otherProps as DialogContentProps<T>)}
