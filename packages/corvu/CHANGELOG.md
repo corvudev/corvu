@@ -1,5 +1,13 @@
 # corvu
 
+## 0.4.3
+
+### Patch Changes
+
+- Only add aria-describedby to the tooltip trigger while it's open - [`e2ae647`](https://github.com/corvudev/corvu/commit/e2ae64754d4f1d67d776ae1879ec6e81a30eebb3) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add data-placement to the popover and tooltip content - [`a7ccadf`](https://github.com/corvudev/corvu/commit/a7ccadf6db2ea6829ac75d5b3561920f22aefe4b) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.2
 
 ### Patch Changes
