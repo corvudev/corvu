@@ -9,7 +9,7 @@ import Dynamic, { type DynamicAttributes } from '@lib/components/Dynamic'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
+export const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
 
 export type DialogLabelProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,

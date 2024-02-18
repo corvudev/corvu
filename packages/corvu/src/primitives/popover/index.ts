@@ -5,7 +5,6 @@ import {
   PopoverDescription as Description,
   PopoverLabel as Label,
   PopoverOverlay as Overlay,
-  PopoverTrigger as Trigger,
 } from '@primitives/popover/DialogOverrides'
 import {
   type CloseProps,
@@ -28,6 +27,7 @@ import Root, {
   type PopoverRootProps,
 } from '@primitives/popover/Root'
 import Content from '@primitives/popover/Content'
+import Trigger from '@primitives/popover/Trigger'
 
 export type {
   PopoverContextValue as ContextValue,

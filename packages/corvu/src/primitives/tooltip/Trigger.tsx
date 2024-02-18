@@ -26,6 +26,7 @@ export type TooltipTriggerProps<
  * @data `data-corvu-tooltip-trigger` - Present on every tooltip trigger element.
  * @data `data-open` - Present when the tooltip is open.
  * @data `data-closed` - Present when the tooltip is closed.
+ * @data `data-placement` - Current placement of the tooltip. Only present when the tooltip is open.
  */
 const TooltipTrigger = <
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
@@ -46,6 +47,9 @@ const TooltipTrigger = <
       aria-describedby={context().open() ? context().tooltipId() : undefined}
       data-open={dataIf(context().open())}
       data-closed={dataIf(!context().open())}
+      data-placement={
+        context().open() ? context().floatingState().placement : undefined
+      }
       data-corvu-tooltip-trigger=""
       {...otherProps}
     />

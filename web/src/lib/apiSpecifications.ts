@@ -461,6 +461,10 @@ export const componentSpecifications: {
         forcedSorting: ['as', 'contextId'],
       },
       {
+        name: 'Trigger',
+        forcedSorting: ['as', 'contextId'],
+      },
+      {
         name: 'Content',
         forcedSorting: ['forceMount', 'as', 'contextId'],
       },

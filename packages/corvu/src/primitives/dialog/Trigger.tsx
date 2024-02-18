@@ -5,7 +5,7 @@ import DynamicButton from '@lib/components/DynamicButton'
 import type { OverrideComponentProps } from '@lib/types'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 
-const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
+export const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
 
 export type DialogTriggerProps<
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,

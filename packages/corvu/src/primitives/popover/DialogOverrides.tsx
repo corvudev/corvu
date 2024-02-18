@@ -6,14 +6,18 @@ import type {
   DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
   DialogDescriptionProps,
 } from '@primitives/dialog/Description'
+import type {
+  DEFAULT_DIALOG_LABEL_ELEMENT,
+  DialogLabelProps,
+} from '@primitives/dialog/Label'
+import type {
+  DEFAULT_DIALOG_OVERLAY_ELEMENT,
+  DialogOverlayProps,
+} from '@primitives/dialog/Overlay'
 import DialogClose from '@primitives/dialog/Close'
 import DialogDescription from '@primitives/dialog/Description'
 import DialogLabel from '@primitives/dialog/Label'
-import type { DialogLabelProps } from '@primitives/dialog/Label'
 import DialogOverlay from '@primitives/dialog/Overlay'
-import type { DialogOverlayProps } from '@primitives/dialog/Overlay'
-import DialogTrigger from '@primitives/dialog/Trigger'
-import type { DialogTriggerProps } from '@primitives/dialog/Trigger'
 import type { ValidComponent } from 'solid-js'
 
 const PopoverClose = <
@@ -45,7 +49,7 @@ const PopoverDescription = <
 }
 
 const PopoverLabel = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
 >(
   props: DialogLabelProps<T>,
 ) => {
@@ -59,7 +63,7 @@ const PopoverLabel = <
 }
 
 const PopoverOverlay = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
 >(
   props: DialogOverlayProps<T>,
 ) => {
@@ -72,24 +76,4 @@ const PopoverOverlay = <
   )
 }
 
-const PopoverTrigger = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
->(
-  props: DialogTriggerProps<T>,
-) => {
-  return (
-    <DialogTrigger
-      data-corvu-dialog-trigger={undefined}
-      data-corvu-popover-trigger=""
-      {...props}
-    />
-  )
-}
-
-export {
-  PopoverClose,
-  PopoverDescription,
-  PopoverLabel,
-  PopoverOverlay,
-  PopoverTrigger,
-}
+export { PopoverClose, PopoverDescription, PopoverLabel, PopoverOverlay }

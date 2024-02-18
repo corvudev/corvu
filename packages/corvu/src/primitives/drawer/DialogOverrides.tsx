@@ -6,12 +6,18 @@ import type {
   DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
   DialogDescriptionProps,
 } from '@primitives/dialog/Description'
+import type {
+  DEFAULT_DIALOG_LABEL_ELEMENT,
+  DialogLabelProps,
+} from '@primitives/dialog/Label'
+import type {
+  DEFAULT_DIALOG_TRIGGER_ELEMENT,
+  DialogTriggerProps,
+} from '@primitives/dialog/Trigger'
 import DialogClose from '@primitives/dialog/Close'
 import DialogDescription from '@primitives/dialog/Description'
 import DialogLabel from '@primitives/dialog/Label'
-import type { DialogLabelProps } from '@primitives/dialog/Label'
 import DialogTrigger from '@primitives/dialog/Trigger'
-import type { DialogTriggerProps } from '@primitives/dialog/Trigger'
 import type { ValidComponent } from 'solid-js'
 
 const DrawerClose = <
@@ -43,7 +49,7 @@ const DrawerDescription = <
 }
 
 const DrawerLabel = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
 >(
   props: DialogLabelProps<T>,
 ) => {
@@ -57,7 +63,7 @@ const DrawerLabel = <
 }
 
 const DrawerTrigger = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
+  T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
 >(
   props: DialogTriggerProps<T>,
 ) => {
