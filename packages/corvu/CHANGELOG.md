@@ -1,5 +1,13 @@
 # corvu
 
+## 0.4.4
+
+### Patch Changes
+
+- Close tooltip on scroll - [`277bb86`](https://github.com/corvudev/corvu/commit/277bb868738afdd09ffc8bebb2bfd7731ce14eff) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Add data-placement to the popover and tooltip trigger - [`f5de215`](https://github.com/corvudev/corvu/commit/f5de215cce7ba4185c4ef6b6a89ef7d4d9867d09) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.3
 
 ### Patch Changes
