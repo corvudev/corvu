@@ -10,6 +10,7 @@ const createTooltip = (props: {
   openOnFocus: MaybeAccessor<boolean>
   openOnHover: MaybeAccessor<boolean>
   closeOnPointerDown: MaybeAccessor<boolean>
+  closeOnScroll: MaybeAccessor<boolean>
   hoverableContent: MaybeAccessor<boolean>
   openDelay: MaybeAccessor<number>
   closeDelay: MaybeAccessor<number>
@@ -19,6 +20,7 @@ const createTooltip = (props: {
   onFocus?: (event: FocusEvent) => void
   onBlur?: (event: FocusEvent) => void
   onPointerDown?: (event: PointerEvent) => void
+  onScroll?: (event: Event) => void
 }) => {
   let tooltipState: 'focus' | 'hover' | null = null
 
@@ -94,6 +96,10 @@ const createTooltip = (props: {
       case 'focus':
         tooltipState = 'focus'
         props.onFocus?.(event)
+        insideSafeArea = true
+        if (access(props.closeOnScroll)) {
+          document.addEventListener('scroll', onScroll, { capture: true })
+        }
         document.addEventListener('pointermove', onSafeAreaMove)
         break
 
@@ -106,12 +112,20 @@ const createTooltip = (props: {
         if (openDelay <= 0 || skipDelay) {
           tooltipState = 'hover'
           props.onHover?.(pointerEvent)
+          insideSafeArea = true
+          if (access(props.closeOnScroll)) {
+            document.addEventListener('scroll', onScroll, { capture: true })
+          }
           document.addEventListener('pointermove', onSafeAreaMove)
         } else {
           timeout = setTimeout(() => {
             timeout = null
             tooltipState = 'hover'
             props.onHover?.(pointerEvent)
+            insideSafeArea = true
+            if (access(props.closeOnScroll)) {
+              document.addEventListener('scroll', onScroll, { capture: true })
+            }
             document.addEventListener('pointermove', onSafeAreaMove)
           }, openDelay)
         }
@@ -120,8 +134,8 @@ const createTooltip = (props: {
   }
 
   const closeTooltip = (
-    reason: 'blur' | 'leave' | 'click',
-    event: FocusEvent | PointerEvent,
+    reason: 'blur' | 'leave' | 'click' | 'scroll',
+    event: FocusEvent | PointerEvent | Event,
   ) => {
     resetTimeout()
 
@@ -132,7 +146,7 @@ const createTooltip = (props: {
           return
         }
         tooltipState = null
-        props.onBlur?.(event)
+        props.onBlur?.(event as FocusEvent)
         break
 
       case 'leave':
@@ -158,6 +172,11 @@ const createTooltip = (props: {
         if (!access(props.closeOnPointerDown)) return
         tooltipState = null
         props.onPointerDown?.(event as PointerEvent)
+        break
+
+      case 'scroll':
+        tooltipState = null
+        props.onScroll?.(event)
         break
     }
   }
@@ -195,6 +214,19 @@ const createTooltip = (props: {
     } else {
       insideSafeArea = true
     }
+  }
+
+  const onScroll = (event: Event) => {
+    const trigger = access(props.trigger)
+
+    if (tooltipState === null || !trigger) {
+      document.removeEventListener('scroll', onScroll)
+      return
+    }
+
+    if (!(event.target as HTMLElement).contains(trigger)) return
+
+    closeTooltip('scroll', event)
   }
 
   const resetTimeout = () => {

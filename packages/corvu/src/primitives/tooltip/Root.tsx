@@ -123,6 +123,15 @@ export type TooltipRootProps = {
    */
   onPointerDown?: (event: MouseEvent) => void
   /**
+   * Whether the tooltip should close when the user scrolls.
+   * @defaultValue `true`
+   */
+  closeOnScroll?: boolean
+  /**
+   * Callback fired when the user scrolls and the tooltip is about to close. Can be prevented by calling `event.preventDefault`.
+   */
+  onScroll?: (event: Event) => void
+  /**
    * The `id` attribute of the tooltip element.
    * @defaultValue `createUniqueId()`
    */
@@ -236,6 +245,7 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
       openOnHover: true,
       closeOnEscapeKeyDown: true,
       closeOnPointerDown: true,
+      closeOnScroll: true,
       tooltipId: createUniqueId(),
       triggerId: createUniqueId(),
     },
@@ -293,6 +303,7 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     openOnFocus: () => defaultedProps.openOnFocus,
     openOnHover: () => defaultedProps.openOnHover,
     closeOnPointerDown: () => defaultedProps.closeOnPointerDown,
+    closeOnScroll: () => defaultedProps.closeOnScroll,
     hoverableContent: () => defaultedProps.hoverableContent,
     openDelay: () => defaultedProps.openDelay,
     closeDelay: () => defaultedProps.closeDelay,
@@ -342,6 +353,16 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
         callEventHandler(
           defaultedProps.onPointerDown,
           event as EventHandlerEvent<HTMLElement, MouseEvent>,
+        )
+      )
+        return
+      setOpen(false)
+    },
+    onScroll: (event: Event) => {
+      if (
+        callEventHandler(
+          defaultedProps.onScroll,
+          event as EventHandlerEvent<HTMLElement, Event>,
         )
       )
         return

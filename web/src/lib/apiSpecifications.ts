@@ -369,6 +369,8 @@ export const componentSpecifications: {
           'onEscapeKeyDown',
           'closeOnPointerDown',
           'onPointerDown',
+          'closeOnScroll',
+          'onScroll',
           'tooltipId',
           'triggerId',
           'contextId',
