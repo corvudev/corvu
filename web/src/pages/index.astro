@@ -3,7 +3,6 @@ import '@fontsource-variable/dosis'
 import '@fontsource-variable/rubik'
 import '@assets/global.css'
 import Background from '@components/Background'
-import Navigation from '@components/docs/nav/Navigation.astro'
 import Head from '@components/Head.astro'
 import Topbar from '@components/Topbar'
 ---
@@ -28,9 +27,7 @@ import Topbar from '@components/Topbar'
       src="/plausible/js/script.js"></script>
   </head>
   <body class="flex h-full flex-col bg-corvu-1000 text-corvu-text antialiased">
-    <Topbar client:load>
-      <Navigation />
-    </Topbar>
+    <Topbar client:load />
     <main class="mx-auto h-16 w-full max-w-7xl px-4">
       <div class="flex grow flex-col items-center pt-40">
         <Background type="home" client:load />
@@ -70,7 +67,7 @@ import Topbar from '@components/Topbar'
             ></path></svg
           >
           <h1 class="mt-5 text-center text-2xl font-medium md:text-3xl">
-            <span class="font-dosis text-4xl font-bold md:text-5xl">corvu</span>
+            <span class="text-3xl font-bold md:text-4xl">corvu</span>
             - powerful UI primitives for SolidJS
           </h1>
           <p class="mt-6 max-w-2xl text-center text-lg font-normal">

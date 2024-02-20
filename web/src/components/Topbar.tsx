@@ -1,10 +1,18 @@
 import HeaderLogo from '@assets/header_logo.svg'
 import Drawer from '@components/Drawer'
 import clsx from 'clsx'
-import { createEffect, createSignal, type FlowComponent } from 'solid-js'
+import {
+  createEffect,
+  createSignal,
+  Show,
+  type FlowComponent,
+  children,
+} from 'solid-js'
 
 const Topbar: FlowComponent = (props) => {
   const [scrolled, setScrolled] = createSignal(false)
+
+  const resolvedChildren = children(() => props.children)
 
   createEffect(() => {
     const scrolled = () => {
@@ -45,12 +53,6 @@ const Topbar: FlowComponent = (props) => {
         </a>
         <div class="flex items-center space-x-2">
           <a
-            href="/docs/"
-            class="p-2 font-bold transition-colors hover:text-corvu-400"
-          >
-            Docs
-          </a>
-          <a
             href="https://github.com/corvudev/corvu/"
             target="_blank"
             class="p-2"
@@ -71,7 +73,9 @@ const Topbar: FlowComponent = (props) => {
               ></path>
             </svg>
           </a>
-          <Drawer>{props.children}</Drawer>
+          <Show when={resolvedChildren()}>
+            <Drawer>{resolvedChildren()}</Drawer>
+          </Show>
         </div>
       </div>
     </header>
