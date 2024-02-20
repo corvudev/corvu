@@ -19,12 +19,12 @@ const DrawerSnapPointExample: VoidComponent = () => {
               class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
                 'background-color': `rgb(12 8 18 / ${
-                  0.7 * props.openPercentage
+                  0.5 * props.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="fixed inset-x-0 bottom-0 z-50 flex h-full max-h-[500px] flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-1000 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
-              <div class="h-1 w-10 self-center rounded-full bg-corvu-50" />
+            <Drawer.Content class="fixed inset-x-0 bottom-0 z-50 flex h-full max-h-[500px] flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 text-corvu-dark after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
+              <div class="h-1 w-10 self-center rounded-full bg-corvu-dark" />
               <Drawer.Label class="mt-2 text-center text-xl font-bold">
                 I'm a drawer!
               </Drawer.Label>

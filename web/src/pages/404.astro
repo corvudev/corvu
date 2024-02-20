@@ -3,6 +3,7 @@ import '@fontsource-variable/rubik'
 import '@assets/global.css'
 import Background from '@components/Background'
 import Navigation from '@components/docs/nav/Navigation.astro'
+import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar'
 ---
 
@@ -14,8 +15,11 @@ import Topbar from '@components/Topbar'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>corvu</title>
+    <ThemeScript />
   </head>
-  <body class="flex h-full flex-col bg-corvu-1000 text-corvu-text antialiased">
+  <body
+    class="flex h-full flex-col bg-corvu-50 text-corvu-dark antialiased dark:bg-corvu-1000 dark:text-corvu-text"
+  >
     <Topbar client:load>
       <Navigation />
     </Topbar>
@@ -70,6 +74,6 @@ import Topbar from '@components/Topbar'
           >
         </div>
       </div>
-    </main></body
-  >
+    </main>
+  </body>
 </html>

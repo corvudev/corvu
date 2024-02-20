@@ -47,6 +47,9 @@
   display: flex;
   height: 100%;
   max-height: 500px;
+  border-color: rgb(168 136 241);
+  color: rgb(24 15 35);
+  background-color: rgb(242 240 254);
   flex-direction: column;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
@@ -95,6 +98,7 @@
   width: 2.5rem;
   align-self: center;
   border-radius: 9999px;
+  background-color: rgb(24 15 35);
 }
 
 .hidden_frog {

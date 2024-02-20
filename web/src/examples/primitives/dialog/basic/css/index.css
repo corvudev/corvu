@@ -43,7 +43,8 @@
   border-radius: 0.5rem;
   border-width: 2px;
   border-color: rgb(168 136 241);
-  background-color: rgb(12 8 18);
+  color: rgb(24 15 35);
+  background-color: rgb(242 240 254);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1.25rem;
@@ -109,7 +110,7 @@ textarea {
   border-radius: 0.25rem;
   border-width: 2px;
   border-color: rgb(154 109 233);
-  background-color: rgb(24 15 35);
+  background-color: rgb(242 240 254);
 }
 
 textarea:focus {

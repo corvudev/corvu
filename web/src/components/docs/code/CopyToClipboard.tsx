@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import {
   createEffect,
   createSignal,
@@ -25,15 +24,12 @@ const CopyToClipboard: VoidComponent<{ code: string }> = (props) => {
   return (
     <>
       {copied() && (
-        <p class="absolute right-8 top-0 bg-corvu-1000 p-2 text-sm text-corvu-400/90 opacity-100 animate-in slide-in-from-right-3">
+        <p class="absolute right-9 top-0 bg-corvu-50 p-2.5 text-sm text-corvu-600 opacity-100 animate-in slide-in-from-right-3 dark:bg-corvu-1000 dark:text-corvu-400">
           copied!
         </p>
       )}
       <button
-        class={clsx('absolute right-1 top-0 bg-corvu-1000 p-2', {
-          'text-corvu-400/80': !copied(),
-          'text-corvu-400': copied(),
-        })}
+        class="absolute right-1 top-0 p-2.5 text-corvu-600 first-letter:bg-corvu-50 dark:bg-corvu-1000 dark:text-corvu-400"
         onClick={copyToClipboard}
       >
         <span class="sr-only">{copied() ? 'Code copied' : 'Copy code'}</span>

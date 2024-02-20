@@ -4,6 +4,7 @@ import plugin from 'tailwindcss/plugin'
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,md,mdx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     typography: {
       DEFAULT: {
@@ -53,8 +54,10 @@ export default {
         },
       },
       backgroundImage: {
-        caret:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none'%3E%3Cpath fill='%23f2f0fe' d='m16.6922 7.9422-6.25 6.25a.6256.6256 0 0 1-.8844 0l-6.25-6.25A.625.625 0 0 1 3.75 6.875h12.5a.6251.6251 0 0 1 .4422 1.0672Z'/%3E%3C/svg%3E\")",
+        'caret-light':
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='20' height='20'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='%23f2f0fe' stroke-linecap='round' stroke-linejoin='round' stroke-width='24' d='m208 96-80 80-80-80'/%3E%3C/svg%3E\")",
+        'caret-dark':
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='20' height='20'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='%23180f23' stroke-linecap='round' stroke-linejoin='round' stroke-width='24' d='m208 96-80 80-80-80'/%3E%3C/svg%3E\")",
       },
       animation: {
         expand: 'expand 250ms cubic-bezier(0.32,0.72,0,0.75)',

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
   createEffect,
   createSignal,
@@ -44,7 +45,14 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
             }}
           />
           <div class="absolute inset-0 -z-20 bg-corvu-accent/40" />
-          <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,_transparent_2px,_#0C0812_0)] bg-[length:28px_28px] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_50%_35%,#0C0812_80px,transparent_100%)]" />
+          <div
+            class={clsx([
+              'fixed inset-0 -z-10 bg-[length:28px_28px]',
+              'bg-[radial-gradient(circle_at_center,_transparent_2px,_#f2f0fe_0)] dark:bg-[radial-gradient(circle_at_center,_transparent_2px,_#0C0812_0)]',
+              'after:absolute after:inset-0',
+              'after:bg-[radial-gradient(circle_at_50%_35%,#f2f0fe_80px,transparent_100%)] dark:after:bg-[radial-gradient(circle_at_50%_35%,#0C0812_80px,transparent_100%)]',
+            ])}
+          />
         </div>
       </Match>
       <Match when={props.type === 'docs'}>
@@ -58,7 +66,15 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
             }}
           />
           <div class="absolute inset-0 -z-20 bg-corvu-accent/40" />
-          <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_transparent_2px,_#0C0812_0)] bg-[length:28px_28px] after:absolute after:inset-0 after:bg-[linear-gradient(to_right,transparent,20%,#0C0812_calc(50%))] lg:after:bg-[linear-gradient(to_right,transparent,20%,#0C0812_calc(50%),80%,transparent)]" />
+          <div
+            class={clsx([
+              'absolute inset-0 -z-10 bg-[length:28px_28px]',
+              'bg-[radial-gradient(circle_at_center,_transparent_2px,_#f2f0fe_0)] dark:bg-[radial-gradient(circle_at_center,_transparent_2px,_#0C0812_0)] ',
+              'after:absolute after:inset-0',
+              'after:bg-[linear-gradient(to_right,transparent,20%,#f2f0fe_calc(50%))] dark:after:bg-[linear-gradient(to_right,transparent,20%,#0C0812_calc(50%))]',
+              'lg:after:bg-[linear-gradient(to_right,transparent,20%,#f2f0fe_calc(50%),80%,transparent)] dark:lg:after:bg-[linear-gradient(to_right,transparent,20%,#0C0812_calc(50%),80%,transparent)]',
+            ])}
+          />
         </div>
       </Match>
     </Switch>

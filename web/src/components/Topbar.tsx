@@ -1,5 +1,7 @@
-import HeaderLogo from '@assets/header_logo.svg'
+import HeaderLogoDark from '@assets/header_logo_dark.svg'
+import HeaderLogoLight from '@assets/header_logo_light.svg'
 import Drawer from '@components/Drawer'
+import ThemeSelect from '@components/ThemeSelect'
 import clsx from 'clsx'
 import {
   createEffect,
@@ -43,15 +45,29 @@ const Topbar: FlowComponent = (props) => {
           'mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-b-xl border-b-4 px-3',
           {
             'border-transparent': !scrolled(),
-            'bg-corvu-1000 border-corvu-600': scrolled(),
+            'bg-corvu-50 dark:bg-corvu-1000 border-corvu-600': scrolled(),
           },
         )}
       >
         <a href="/">
           <span class="sr-only">Corvu home</span>
-          <img src={HeaderLogo.src} alt="Corvu logo" height={42} width={136} />
+          <img
+            src={HeaderLogoDark.src}
+            alt="Corvu logo"
+            height={42}
+            width={136}
+            class="dark:hidden"
+          />
+          <img
+            src={HeaderLogoLight.src}
+            alt="Corvu logo"
+            height={42}
+            width={136}
+            class="hidden dark:block"
+          />
         </a>
         <div class="flex items-center space-x-2">
+          <ThemeSelect />
           <a
             href="https://github.com/corvudev/corvu/"
             target="_blank"

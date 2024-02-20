@@ -1,4 +1,5 @@
-import HeaderLogo from '@assets/header_logo.svg'
+import HeaderLogoDark from '@assets/header_logo_dark.svg'
+import HeaderLogoLight from '@assets/header_logo_light.svg'
 import Drawer from 'corvu/drawer'
 import type { FlowComponent } from 'solid-js'
 
@@ -39,14 +40,22 @@ const NavDrawer: FlowComponent = (props) => {
                 })`,
               }}
             />
-            <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-1000 after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
+            <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-50 after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-[50%] after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] dark:bg-corvu-1000">
               <a href="/" class="mx-1 mt-[7px] flex rounded-lg py-2 pl-2 pr-4">
                 <span class="sr-only">Corvu home</span>
                 <img
-                  src={HeaderLogo.src}
+                  src={HeaderLogoDark.src}
                   alt="Corvu logo"
-                  height={48}
+                  height={42}
                   width={136}
+                  class="dark:hidden"
+                />
+                <img
+                  src={HeaderLogoLight.src}
+                  alt="Corvu logo"
+                  height={42}
+                  width={136}
+                  class="hidden dark:block"
                 />
               </a>
               <div class="w-full overflow-auto pl-3 pr-8 pt-2">

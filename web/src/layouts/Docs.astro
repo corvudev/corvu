@@ -1,10 +1,12 @@
 ---
 import '@fontsource-variable/rubik'
 import '@assets/global.css'
+import '@assets/shiki.css'
 import Background from '@components/Background'
 import Navigation from '@components/docs/nav/Navigation.astro'
 import TableOfContents from '@components/docs/TableOfContents'
 import Head from '@components/Head.astro'
+import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar'
 import { corvuVersion } from '@lib/getMeta'
 
@@ -33,13 +35,16 @@ const { frontmatter, headings } = Astro.props
     <meta name="generator" content={Astro.generator} />
     <Head {...frontmatter} />
     <link rel="canonical" href={Astro.url} />
+    <ThemeScript />
     <script
       defer
       data-domain="corvu.dev"
       data-api="/plausible/api/event/"
       src="/plausible/js/script.js"></script>
   </head>
-  <body class="flex h-full flex-col bg-corvu-1000 text-corvu-text antialiased">
+  <body
+    class="flex h-full flex-col bg-corvu-50 text-corvu-dark antialiased dark:bg-corvu-1000 dark:text-corvu-text"
+  >
     <Background type="docs" client:load />
     <div class="mx-auto h-16 w-full max-w-7xl">
       <Topbar client:load>
@@ -53,7 +58,7 @@ const { frontmatter, headings } = Astro.props
         </div>
         <div class="-mt-1 mb-6 grow">
           <article
-            class="prose max-w-[800px] @container prose-headings:scroll-mt-20 prose-h1:mb-4 prose-h1:text-4xl prose-h1:font-black prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-2xl prose-h2:font-extrabold prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-xl prose-h3:font-bold prose-p:mb-2 prose-p:max-w-3xl prose-p:!leading-7 prose-a:font-medium prose-a:text-corvu-400 prose-a:underline hover:prose-a:text-corvu-300 prose-blockquote:rounded-md prose-blockquote:border-2 prose-blockquote:border-corvu-400 prose-blockquote:bg-corvu-1000 prose-blockquote:px-4 prose-blockquote:py-2 prose-ol:mb-3 prose-ol:ml-[21px] prose-ol:list-outside prose-ol:list-decimal prose-ul:mb-3 prose-ul:ml-[21px] prose-ul:list-outside prose-ul:list-disc prose-li:mb-1 md:ml-60"
+            class="prose max-w-[800px] @container prose-headings:scroll-mt-20 prose-h1:mb-4 prose-h1:text-4xl prose-h1:font-black prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-2xl prose-h2:font-extrabold prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-xl prose-h3:font-bold prose-p:mb-2 prose-p:max-w-3xl prose-p:!leading-7 prose-a:font-medium prose-a:text-corvu-700 prose-a:underline hover:prose-a:text-corvu-600 prose-blockquote:rounded-md prose-blockquote:border-2 prose-blockquote:border-corvu-600 prose-blockquote:bg-corvu-50 prose-blockquote:px-4 prose-blockquote:py-2 prose-ol:mb-3 prose-ol:ml-[21px] prose-ol:list-outside prose-ol:list-decimal prose-ul:mb-3 prose-ul:ml-[21px] prose-ul:list-outside prose-ul:list-disc prose-li:mb-1 dark:prose-a:text-corvu-400 dark:hover:prose-a:text-corvu-300 dark:prose-blockquote:border-corvu-400 dark:prose-blockquote:bg-corvu-1000 md:ml-60"
           >
             <slot />
             <div
@@ -70,7 +75,7 @@ const { frontmatter, headings } = Astro.props
                 Developed and designed by <a
                   href="https://github.com/GiyoMoon/"
                   target="_blank"
-                  class="-m-2 p-2 font-medium text-corvu-400 underline"
+                  class="-m-2 p-2 font-medium text-corvu-700 underline dark:text-corvu-400"
                   >Jasmin</a
                 >
               </p>

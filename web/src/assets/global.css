@@ -1,3 +1,8 @@
-:root {
+.dark {
   color-scheme: dark;
+}
+
+.changing-theme,
+.changing-theme * {
+  transition: none !important;
 }

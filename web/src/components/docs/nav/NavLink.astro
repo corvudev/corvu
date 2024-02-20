@@ -14,8 +14,8 @@ const isActive = href === Astro.url.pathname
   class:list={[
     'block rounded-lg px-4 py-2 transition-colors duration-75',
     {
-      'hover:bg-corvu-600': !isActive,
-      'bg-corvu-1000 ring-4 ring-corvu-600': isActive,
+      'hover:bg-corvu-600 hover:text-corvu-50': !isActive,
+      'bg-corvu-50 dark:bg-corvu-1000 ring-4 ring-corvu-600': isActive,
     },
   ]}
 >

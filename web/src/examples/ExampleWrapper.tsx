@@ -21,7 +21,7 @@ const ExampleWrapper: FlowComponent<{
 
   return (
     <div class="not-prose my-3">
-      <div class="flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-1000 p-2">
+      <div class="flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-50 p-2 dark:bg-corvu-1000">
         <Show
           when={viewCode() && props.codeSnippets.length > 1}
           fallback={<div />}
@@ -33,7 +33,7 @@ const ExampleWrapper: FlowComponent<{
                 setActiveExample(parseInt(e.currentTarget.value, 10))
                 setActiveTab(0)
               }}
-              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-1000 !bg-caret py-1.5 pl-3 pr-10 text-sm text-corvu-text"
+              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-50 !bg-caret-dark bg-[length:16px_16px] pb-1 pl-3 pr-10 pt-[7px] text-sm text-corvu-dark dark:bg-corvu-1000 dark:!bg-caret-light dark:text-corvu-text"
               aria-label="Select template"
             >
               <For each={props.codeSnippets}>
@@ -45,9 +45,8 @@ const ExampleWrapper: FlowComponent<{
           </div>
         </Show>
         <button
-          class={clsx('rounded p-2 transition-all hover:bg-corvu-400', {
-            '': !viewCode(),
-            'bg-corvu-400': viewCode(),
+          class={clsx('rounded p-2 hover:bg-corvu-400 hover:text-corvu-dark', {
+            'bg-corvu-400 text-corvu-dark': viewCode(),
           })}
           onClick={() => setViewCode((viewCode) => !viewCode)}
         >
@@ -89,15 +88,14 @@ const ExampleWrapper: FlowComponent<{
         </div>
       </Show>
       <Show when={viewCode()}>
-        <div class="space-x-2 border-x-4 border-corvu-400 bg-corvu-1000 px-2">
+        <div class="space-x-2 border-x-4 border-corvu-400 bg-corvu-50 px-2 dark:bg-corvu-1000">
           <For each={props.codeSnippets[activeExample()].files}>
             {(file, index) => (
               <button
                 class={clsx(
-                  'rounded-t-md p-2 font-mono text-xs transition-all',
+                  'rounded-t-md p-2 font-mono text-xs hover:bg-corvu-400 hover:text-corvu-dark',
                   {
-                    'bg-corvu-400': activeTab() === index(),
-                    'hover:bg-corvu-400/50': activeTab() !== index(),
+                    'bg-corvu-400 text-corvu-dark': activeTab() === index(),
                   },
                 )}
                 onClick={() => setActiveTab(index())}
@@ -107,7 +105,7 @@ const ExampleWrapper: FlowComponent<{
             )}
           </For>
         </div>
-        <div class="rounded-b-xl border-4 border-corvu-400 bg-corvu-1000 text-sm [&>astro-slot>div>pre]:max-h-[655px] [&>astro-slot]:grid">
+        <div class="rounded-b-xl border-4 border-corvu-400 bg-corvu-50 text-sm dark:bg-corvu-1000 [&>astro-slot>div>pre]:max-h-[655px] [&>astro-slot]:grid">
           {
             props[
               props.codeSnippets[activeExample()].files[activeTab()].slotName

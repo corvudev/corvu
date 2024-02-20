@@ -86,6 +86,7 @@ module.exports = {
       },
       rules: {
         'solid/prefer-for': 'off',
+        'prettier/prettier': 'off',
       },
     },
   ],
