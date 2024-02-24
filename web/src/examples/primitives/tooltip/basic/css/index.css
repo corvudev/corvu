@@ -2,16 +2,15 @@
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 9999px;
-  background-color: rgb(230 226 253);
+  background-color: hsl(249, 87%, 94%);
   padding: 0.75rem;
-  color: rgb(24 15 35);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 100ms;
 }
 
 [data-corvu-tooltip-trigger]:hover {
-  background-color: rgb(212 203 251);
+  background-color: hsl(251, 86%, 89%);
 }
 
 [data-corvu-tooltip-trigger]:active {
@@ -32,13 +31,12 @@
 
 [data-corvu-tooltip-content] {
   border-radius: 0.5rem;
-  background-color: rgb(12 8 18);
+  background-color: hsl(249, 87%, 94%);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-weight: 500;
-  color: rgb(242 240 254);
 }
 
 @keyframes enter {
@@ -80,5 +78,5 @@
 }
 
 [data-corvu-tooltip-arrow] {
-  background-color: rgb(12 8 18);
+  color: hsl(249, 87%, 94%);
 }

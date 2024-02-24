@@ -10,7 +10,7 @@ const DisclosureExample: VoidComponent = () => {
           <>
             <div class="mb-2 flex items-center justify-between space-x-4">
               <p class="font-medium">Jasmin starred 3 repositories</p>
-              <Disclosure.Trigger class="rounded-lg bg-corvu-100 p-1 text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
+              <Disclosure.Trigger class="rounded-lg bg-corvu-100 p-1 transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
                 {props.expanded && (
                   <>
                     <X size="20" />
@@ -25,14 +25,10 @@ const DisclosureExample: VoidComponent = () => {
                 )}
               </Disclosure.Trigger>
             </div>
-            <div class="rounded-lg bg-corvu-100 px-3 py-2 text-corvu-dark">
-              corvudev/corvu
-            </div>
+            <div class="rounded-lg bg-corvu-100 px-3 py-2">corvudev/corvu</div>
             <Disclosure.Content class="mt-1 space-y-1 overflow-hidden corvu-expanded:animate-expand corvu-collapsed:animate-collapse">
-              <div class="rounded-lg bg-corvu-100 px-3 py-2 text-corvu-dark">
-                solidjs/solid
-              </div>
-              <div class="rounded-lg bg-corvu-100 px-3 py-2 text-corvu-dark">
+              <div class="rounded-lg bg-corvu-100 px-3 py-2">solidjs/solid</div>
+              <div class="rounded-lg bg-corvu-100 px-3 py-2">
                 nitropage/nitropage
               </div>
             </Disclosure.Content>

@@ -15,7 +15,7 @@ const TooltipExample: VoidComponent = () => {
     >
       <Tooltip.Trigger
         as="a"
-        class="my-auto rounded-full bg-corvu-100 p-3 text-corvu-dark transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5"
+        class="my-auto rounded-full bg-corvu-100 p-3 transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5"
         href="https://github.com/corvudev/corvu/"
         target="_blank"
       >
@@ -23,9 +23,9 @@ const TooltipExample: VoidComponent = () => {
         <span class="sr-only">Corvu on GitHub</span>
       </Tooltip.Trigger>
       <Tooltip.Portal>
-        <Tooltip.Content class="rounded-lg bg-corvu-1000 px-3 py-2 font-medium text-corvu-50 corvu-open:animate-in corvu-open:fade-in-50 corvu-open:slide-in-from-bottom-1 corvu-closed:animate-out corvu-closed:fade-out-50 corvu-closed:slide-out-to-bottom-1">
+        <Tooltip.Content class="rounded-lg bg-corvu-100 px-3 py-2 font-medium corvu-open:animate-in corvu-open:fade-in-50 corvu-open:slide-in-from-bottom-1 corvu-closed:animate-out corvu-closed:fade-out-50 corvu-closed:slide-out-to-bottom-1">
           Give corvu a star! ⭐️
-          <Tooltip.Arrow class="text-corvu-1000" />
+          <Tooltip.Arrow class="text-corvu-100" />
         </Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip.Root>

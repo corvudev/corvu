@@ -3,35 +3,12 @@ import HeaderLogoLight from '@assets/header_logo_light.svg'
 import Drawer from '@components/Drawer'
 import ThemeSelect from '@components/ThemeSelect'
 import clsx from 'clsx'
-import {
-  createEffect,
-  createSignal,
-  Show,
-  type FlowComponent,
-  children,
-} from 'solid-js'
+import { Show, children, type ParentComponent } from 'solid-js'
 
-const Topbar: FlowComponent = (props) => {
-  const [scrolled, setScrolled] = createSignal(false)
-
+const Topbar: ParentComponent<{
+  floating: boolean
+}> = (props) => {
   const resolvedChildren = children(() => props.children)
-
-  createEffect(() => {
-    const scrolled = () => {
-      const bodyTop = getComputedStyle(document.body).top
-      if (bodyTop !== 'auto') {
-        setScrolled(-parseInt(bodyTop, 10) > 20)
-      } else {
-        setScrolled(window.scrollY > 20)
-      }
-    }
-
-    scrolled()
-
-    window.addEventListener('scroll', scrolled, { passive: true })
-
-    return () => window.removeEventListener('scroll', scrolled)
-  })
 
   return (
     <header
@@ -44,8 +21,9 @@ const Topbar: FlowComponent = (props) => {
         class={clsx(
           'mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-b-xl border-b-4 px-3',
           {
-            'border-transparent': !scrolled(),
-            'bg-corvu-50 dark:bg-corvu-1000 border-corvu-600': scrolled(),
+            'border-corvu-200 bg-corvu-bg lg:border-transparent lg:bg-transparent':
+              !props.floating,
+            'border-transparent': props.floating,
           },
         )}
       >

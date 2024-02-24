@@ -1,5 +1,29 @@
-.dark {
+html {
+  --corvu-text-dark: 267 40% 10%;
+  --corvu-text: 267 40% 10%;
+  --corvu-bg: 249 88% 97%;
+  --corvu-100: 249 87% 94%;
+  --corvu-200: 251 86% 89%;
+  --corvu-300: 253 80% 82%;
+  --corvu-400: 258 79% 74%;
+  --corvu-blue: 203 80% 82%;
+  --corvu-pink: 303 80% 82%;
+  --corvu-link: 258 49% 54%;
+  --corvu-link-hover: 258 59% 44%;
+}
+
+html.dark {
   color-scheme: dark;
+  --corvu-text: 266 41% 90%;
+  --corvu-bg: 262 22% 10%;
+  --corvu-100: 253 26% 17%;
+  --corvu-200: 263 39% 30%;
+  --corvu-300: 260 44% 40%;
+  --corvu-400: 258 39% 64%;
+  --corvu-blue: 210 54% 30%;
+  --corvu-pink: 310 44% 40%;
+  --corvu-link: 258 55% 69%;
+  --corvu-link-hover: 258 45% 76%;
 }
 
 .changing-theme,

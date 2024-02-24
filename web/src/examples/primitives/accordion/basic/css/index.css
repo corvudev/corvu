@@ -10,15 +10,14 @@
 [data-corvu-accordion-trigger] {
   width: 100%;
   border-bottom-width: 1px;
-  border-color: rgb(212 203 251);
-  background-color: rgb(242 240 254);
+  border-color: hsl(253, 80%, 82%);
+  background-color: hsl(249, 87%, 94%);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   text-align: left;
   font-weight: 500;
-  color: rgb(24 15 35);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -26,20 +25,20 @@
 }
 
 [data-corvu-accordion-trigger]:hover {
-  background-color: rgb(230 226 253);
+  background-color: hsl(251, 86%, 89%);
 }
 
 [data-corvu-accordion-trigger]:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  background-color: rgb(212 203 251);
+  background-color: hsl(251, 86%, 89%);
 }
 
 [data-corvu-accordion-content] {
   border-bottom-width: 1px;
   overflow: hidden;
-  border-color: rgb(212 203 251);
-  background-color: rgb(230 226 253);
+  border-color: hsl(253, 80%, 82%);
+  background-color: hsl(249, 87%, 94%);
 }
 
 [data-corvu-accordion-content][data-collapsed] {

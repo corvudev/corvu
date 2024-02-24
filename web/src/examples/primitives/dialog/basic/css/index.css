@@ -1,16 +1,15 @@
 [data-corvu-dialog-trigger] {
+  margin-top: auto;
+  margin-bottom: auto;
   border-radius: 0.5rem;
-  background-color: rgb(230 226 253);
+  background-color: hsl(249, 87%, 94%);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  margin-top: auto;
-  margin-bottom: auto;
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: rgb(24 15 35);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -19,7 +18,7 @@
 }
 
 [data-corvu-dialog-trigger]:hover {
-  background-color: rgb(212 203 251);
+  background-color: hsl(251, 86%, 89%);
 }
 
 [data-corvu-dialog-trigger]:active {
@@ -30,7 +29,7 @@
   position: fixed;
   inset: 0px;
   z-index: 50;
-  background-color: rgb(12 8 18 / 0.6);
+  background-color: rgb(0 0 0 / 0.5);
 }
 
 [data-corvu-dialog-content] {
@@ -42,9 +41,8 @@
   transform: translate(-50%, -50%);
   border-radius: 0.5rem;
   border-width: 2px;
-  border-color: rgb(168 136 241);
-  color: rgb(24 15 35);
-  background-color: rgb(242 240 254);
+  border-color: hsl(258, 79%, 74%);
+  background-color: hsl(249, 87%, 94%);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1.25rem;
@@ -109,8 +107,8 @@ textarea {
   width: 100%;
   border-radius: 0.25rem;
   border-width: 2px;
-  border-color: rgb(154 109 233);
-  background-color: rgb(242 240 254);
+  border-color: hsl(258, 79%, 74%);
+  background-color: hsl(249, 87%, 94%);
 }
 
 textarea:focus {
@@ -130,13 +128,12 @@ textarea:focus {
   padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  color: rgb(24 15 35)
 }
 
 .cancel_button {
-  background-color: rgb(212 203 251);
+  background-color: hsl(251, 86%, 89%);
 }
 
 .submit_button {
-  background-color: rgb(168 136 241);
+  background-color: hsl(253, 80%, 82%);
 }

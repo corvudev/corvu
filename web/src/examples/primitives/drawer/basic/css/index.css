@@ -1,16 +1,15 @@
 [data-corvu-drawer-trigger] {
+  margin-top: auto;
+  margin-bottom: auto;
   border-radius: 0.5rem;
-  background-color: rgb(230 226 253);
+  background-color: hsl(249, 87%, 94%);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  margin-top: auto;
-  margin-bottom: auto;
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: rgb(24 15 35);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -19,7 +18,7 @@
 }
 
 [data-corvu-drawer-trigger]:hover {
-  background-color: rgb(212 203 251);
+  background-color: hsl(251, 86%, 89%);
 }
 
 [data-corvu-drawer-trigger]:active {
@@ -47,20 +46,13 @@
   display: flex;
   height: 100%;
   max-height: 500px;
-  border-color: rgb(168 136 241);
-  color: rgb(24 15 35);
-  background-color: rgb(242 240 254);
   flex-direction: column;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   border-top-width: 4px;
+  border-color: hsl(258, 79%, 74%);
+  background-color: hsl(249, 87%, 94%);
   padding-top: 0.75rem;
-}
-
-[data-corvu-drawer-content][data-transitioning] {
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-  transition-duration: 500ms;
 }
 
 [data-corvu-drawer-content]::after {
@@ -72,11 +64,26 @@
   background-color: inherit;
 }
 
+[data-corvu-drawer-content][data-transitioning] {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  transition-duration: 500ms;
+}
+
 @media (min-width: 1024px) {
   [data-corvu-drawer-content] {
     -webkit-user-select: none;
     user-select: none;
   }
+}
+
+.notch {
+  margin-top: 0.5rem;
+  height: 0.25rem;
+  width: 2.5rem;
+  align-self: center;
+  border-radius: 9999px;
+  background-color: TOOD;
 }
 
 [data-corvu-drawer-label] {
@@ -90,15 +97,6 @@
 [data-corvu-drawer-description] {
   margin-top: 1rem;
   text-align: center;
-}
-
-.notch {
-  margin-top: 0.5rem;
-  height: 0.25rem;
-  width: 2.5rem;
-  align-self: center;
-  border-radius: 9999px;
-  background-color: rgb(24 15 35);
 }
 
 .hidden_frog {

@@ -2,7 +2,6 @@
 import '@fontsource-variable/rubik'
 import '@assets/global.css'
 import Background from '@components/Background'
-import Navigation from '@components/docs/nav/Navigation.astro'
 import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar'
 ---
@@ -18,14 +17,12 @@ import Topbar from '@components/Topbar'
     <ThemeScript />
   </head>
   <body
-    class="flex h-full flex-col bg-corvu-50 text-corvu-dark antialiased dark:bg-corvu-1000 dark:text-corvu-text"
+    class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased"
   >
-    <Topbar client:load>
-      <Navigation />
-    </Topbar>
+    <Background type="home" client:load />
+    <Topbar floating client:load />
     <main class="mx-auto h-16 w-full max-w-7xl px-4">
       <div class="flex grow flex-col items-center pt-40">
-        <Background type="home" client:load />
         <div class="flex flex-col items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +66,7 @@ import Topbar from '@components/Topbar'
           </h1>
           <a
             href="/"
-            class="mt-6 rounded-lg bg-corvu-400 px-4 py-3 text-lg font-medium text-corvu-dark transition-all duration-100 hover:bg-corvu-500 active:translate-y-0.5"
+            class="mt-6 rounded-lg bg-corvu-300 px-4 py-3 text-lg font-medium transition-all duration-100 hover:translate-y-0.5"
             >Go back</a
           >
         </div>

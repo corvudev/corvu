@@ -26,7 +26,7 @@ const codeHtml = await codeToHtml(trimmedCode, {
 ---
 
 <div
-  class="contents [&>pre]:overflow-auto [&>pre]:rounded-md [&>pre]:py-2 [&>pre]:pl-2 [&>pre]:pr-11 [&>pre]:md:pr-2"
+  class="contents [&>pre]:overflow-auto [&>pre]:rounded-md [&>pre]:py-2 [&>pre]:pl-2 [&>pre]:pr-12 [&>pre]:md:pr-2"
   set:html={codeHtml}
 />
 {copyButton && <CopyToClipboard code={trimmedCode} client:visible />}

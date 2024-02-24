@@ -21,7 +21,15 @@ const ExampleWrapper: FlowComponent<{
 
   return (
     <div class="not-prose my-3">
-      <div class="flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 bg-corvu-50 p-2 dark:bg-corvu-1000">
+      <div
+        class={clsx(
+          'flex h-14 items-center justify-between rounded-t-xl border-x-4 border-t-4 border-corvu-400 p-2',
+          {
+            'bg-corvu-bg': viewCode(),
+            'bg-corvu-100': !viewCode(),
+          },
+        )}
+      >
         <Show
           when={viewCode() && props.codeSnippets.length > 1}
           fallback={<div />}
@@ -33,7 +41,7 @@ const ExampleWrapper: FlowComponent<{
                 setActiveExample(parseInt(e.currentTarget.value, 10))
                 setActiveTab(0)
               }}
-              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-50 !bg-caret-dark bg-[length:16px_16px] pb-1 pl-3 pr-10 pt-[7px] text-sm text-corvu-dark dark:bg-corvu-1000 dark:!bg-caret-light dark:text-corvu-text"
+              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-bg !bg-caret-dark bg-[length:16px_16px] pb-1 pl-3 pr-10 pt-[7px] text-sm dark:!bg-caret-light"
               aria-label="Select template"
             >
               <For each={props.codeSnippets}>
@@ -45,7 +53,7 @@ const ExampleWrapper: FlowComponent<{
           </div>
         </Show>
         <button
-          class={clsx('rounded p-2 hover:bg-corvu-400 hover:text-corvu-dark', {
+          class={clsx('rounded p-2 hover:bg-corvu-400', {
             'bg-corvu-400 text-corvu-dark': viewCode(),
           })}
           onClick={() => setViewCode((viewCode) => !viewCode)}
@@ -75,7 +83,7 @@ const ExampleWrapper: FlowComponent<{
       <Show when={!viewCode()}>
         <div
           class={clsx(
-            'relative rounded-b-xl bg-corvu-400 text-corvu-1000 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
+            'relative rounded-b-xl bg-corvu-400 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
             {
               'h-[300px] @xl:h-[400px]': props.heading,
               'h-[200px]': !props.heading,
@@ -88,14 +96,14 @@ const ExampleWrapper: FlowComponent<{
         </div>
       </Show>
       <Show when={viewCode()}>
-        <div class="space-x-2 border-x-4 border-corvu-400 bg-corvu-50 px-2 dark:bg-corvu-1000">
+        <div class="space-x-2 border-x-4 border-corvu-400 bg-corvu-bg px-2">
           <For each={props.codeSnippets[activeExample()].files}>
             {(file, index) => (
               <button
                 class={clsx(
-                  'rounded-t-md p-2 font-mono text-xs hover:bg-corvu-400 hover:text-corvu-dark',
+                  'rounded-t-md p-2 font-mono text-xs hover:bg-corvu-400',
                   {
-                    'bg-corvu-400 text-corvu-dark': activeTab() === index(),
+                    'bg-corvu-400': activeTab() === index(),
                   },
                 )}
                 onClick={() => setActiveTab(index())}
@@ -105,7 +113,7 @@ const ExampleWrapper: FlowComponent<{
             )}
           </For>
         </div>
-        <div class="rounded-b-xl border-4 border-corvu-400 bg-corvu-50 text-sm dark:bg-corvu-1000 [&>astro-slot>div>pre]:max-h-[655px] [&>astro-slot]:grid">
+        <div class="overflow-hidden rounded-b-xl border-4 border-corvu-400 text-sm [&>astro-slot>div>pre]:max-h-[655px] [&>astro-slot]:grid">
           {
             props[
               props.codeSnippets[activeExample()].files[activeTab()].slotName

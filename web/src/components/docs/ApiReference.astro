@@ -11,7 +11,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
     <h3 id={encodeURIComponent(name)} class="scroll-mt-20 text-xl font-bold">
       {name}
     </h3><p
-      class="rounded-md border-2 border-corvu-500 bg-corvu-100 px-2 py-0.5 text-sm font-bold dark:bg-corvu-dark"
+      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
     >
       {type === 'component' && 'Component'}
       {type === 'context' && 'Context'}
@@ -29,7 +29,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
           <div class="overflow-y-auto">
             {(part.name === 'Props' || part.name === 'Returns') && (
               <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
-                <tr class="not-prose border-b border-corvu-500/20">
+                <tr class="not-prose border-b border-corvu-100">
                   {part.props.some((prop) => prop.name) && (
                     <th class="w-1/4 pb-3">Property</th>
                   )}
@@ -39,15 +39,15 @@ const { type, name, descriptionHtml, parts } = Astro.props
                   <th class="w-1/2 pb-3">Type/Description</th>
                 </tr>
                 {part.props.map((prop) => (
-                  <tr class="border-b border-corvu-500/20">
+                  <tr class="border-b border-corvu-100">
                     {part.props.some((prop) => prop.name) && (
                       <td class="not-prose py-5 pr-5 align-top">
                         <p
                           class:list={[
-                            'inline whitespace-nowrap rounded font-bold px-1 py-0.5 font-mono text-corvu-dark text-sm',
+                            'inline whitespace-nowrap rounded px-1.5 py-0.5 font-mono',
                             {
-                              'bg-corvu-400': prop.displayType === 'property',
-                              'bg-sky-400 dark:bg-sky-500':
+                              'bg-corvu-300': prop.displayType === 'property',
+                              'bg-corvu-blue':
                                 prop.displayType === 'function',
                             },
                           ]}
@@ -60,19 +60,19 @@ const { type, name, descriptionHtml, parts } = Astro.props
                       <td class="py-5 pr-5 align-top">
                         {prop.defaultHtml ? (
                           <div
-                            class="prose inline prose-code:rounded prose-code:bg-corvu-light prose-code:px-1 prose-code:py-0.5 prose-code:text-corvu-dark"
+                            class="prose"
                             set:html={prop.defaultHtml}
                           />
                         ) : (
-                          <p class="text-corvu-50">-</p>
+                          <p>-</p>
                         )}
                       </td>
                     )}
                     <td class="py-5 pr-5 align-top text-sm">
-                      <p class="not-prose inline rounded bg-corvu-100 px-1 py-0.5 font-mono dark:bg-corvu-dark">
+                      <p class="not-prose inline rounded border border-corvu-300 bg-corvu-100 px-1.5 py-0.5">
                         {prop.type}
                       </p>
-                      <div class="prose mt-3" set:html={prop.descriptionHtml} />
+                      <div class="prose mt-3 prose-code:border-none prose-code:bg-transparent prose-code:!p-0" set:html={prop.descriptionHtml} />
                     </td>
                   </tr>
                 ))}
@@ -80,23 +80,15 @@ const { type, name, descriptionHtml, parts } = Astro.props
             )}
             {part.name !== 'Props' && part.name !== 'Returns' && (
               <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
-                <tr class="not-prose border-b border-corvu-400/50">
+                <tr class="not-prose border-b border-corvu-100">
                   <th class="w-1/2 pb-3">Property</th>
                   <th class="w-1/2 pb-3">Description</th>
                 </tr>
                 {part.props.map((prop) => (
-                  <tr class="border-b border-corvu-400/50">
+                  <tr class="border-b border-corvu-100">
                     <td class="not-prose py-5 pr-5 align-top">
                       <p
-                        class:list={[
-                          'inline whitespace-nowrap rounded font-bold px-1 py-0.5 font-mono text-corvu-dark text-sm',
-                          {
-                            'bg-emerald-400 dark:bg-emerald-500':
-                              prop.displayType === 'data',
-                            'bg-teal-400 dark:bg-teal-500':
-                              prop.displayType === 'css',
-                          },
-                        ]}
+                        class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 py-0.5 font-mono"
                       >
                         {prop.name}
                       </p>

@@ -14,7 +14,7 @@ const trimmedCode = code.trim()
 ---
 
 <div
-  class="not-prose relative mb-6 mt-4 grid rounded-md border-2 border-corvu-400 bg-corvu-50 dark:bg-corvu-1000"
+  class="not-prose relative mb-6 mt-4 grid rounded-md border-2 border-corvu-200"
 >
   <RawCode code={trimmedCode} lang={lang} />
   {copyButton && <CopyToClipboard code={trimmedCode} client:visible />}
