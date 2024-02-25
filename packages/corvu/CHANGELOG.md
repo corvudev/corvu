@@ -1,5 +1,11 @@
 # corvu
 
+## 0.4.5
+
+### Patch Changes
+
+- Fix hydration error with <Portal> - [`67b25b8`](https://github.com/corvudev/corvu/commit/67b25b8f200b58dec550f87816afb77eab08bf82) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.4
 
 ### Patch Changes
