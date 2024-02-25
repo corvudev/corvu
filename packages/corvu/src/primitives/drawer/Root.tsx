@@ -221,9 +221,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     return getComputedStyle(contentRef)
   })
 
-  const [transitionAwareOpen, setTransitionAwareOpen] = createSignal(
-    defaultedProps.initialOpen,
-  )
+  const [transitionAwareOpen, setTransitionAwareOpen] = createSignal(false)
 
   createEffect(() => {
     const _open = open()
