@@ -1,0 +1,40 @@
+diff --git a/dist/changesets-cli.cjs.js b/dist/changesets-cli.cjs.js
+index 02083f394e874d25ca5ec9e7faaab83fe06e3761..85e36d3760f3ad3ba245bc26431932517b56d84b 100644
+--- a/dist/changesets-cli.cjs.js
++++ b/dist/changesets-cli.cjs.js
+@@ -607,6 +607,7 @@ async function version(cwd, options, config) {
+   }
+ 
+   let packages = await getPackages.getPackages(cwd);
++  packages.packages = packages.packages.filter(pkg => pkg.packageJson.private !== true);
+   let releasePlan = assembleReleasePlan__default["default"](changesets, packages, releaseConfig, preState, options.snapshot ? {
+     tag: options.snapshot === true ? undefined : options.snapshot,
+     commit: (_config$snapshot$prer = config.snapshot.prereleaseTemplate) !== null && _config$snapshot$prer !== void 0 && _config$snapshot$prer.includes("{commit}") ? await git.getCurrentCommitId({
+@@ -1252,6 +1253,7 @@ async function run$1(cwd) {
+   const allExistingTags = await git__namespace.getAllTags(cwd);
+ 
+   for (const pkg of packages) {
++    if (pkg.packageJson.private) continue;
+     const tag = tool !== "root" ? `${pkg.packageJson.name}@${pkg.packageJson.version}` : `v${pkg.packageJson.version}`;
+ 
+     if (allExistingTags.has(tag)) {
+diff --git a/dist/changesets-cli.esm.js b/dist/changesets-cli.esm.js
+index 6b0c2cecd33c4ed89bfc964daf3ca5d1e482c1db..ce6eed3803aee4d673a14ed5457a725c69b44fb1 100644
+--- a/dist/changesets-cli.esm.js
++++ b/dist/changesets-cli.esm.js
+@@ -566,6 +566,7 @@ async function version(cwd, options, config) {
+   }
+ 
+   let packages = await getPackages(cwd);
++  packages.packages = packages.packages.filter(pkg => pkg.packageJson.private !== true);
+   let releasePlan = assembleReleasePlan(changesets, packages, releaseConfig, preState, options.snapshot ? {
+     tag: options.snapshot === true ? undefined : options.snapshot,
+     commit: (_config$snapshot$prer = config.snapshot.prereleaseTemplate) !== null && _config$snapshot$prer !== void 0 && _config$snapshot$prer.includes("{commit}") ? await getCurrentCommitId({
+@@ -1211,6 +1212,7 @@ async function run$1(cwd) {
+   const allExistingTags = await git.getAllTags(cwd);
+ 
+   for (const pkg of packages) {
++    if (pkg.packageJson.private) continue;
+     const tag = tool !== "root" ? `${pkg.packageJson.name}@${pkg.packageJson.version}` : `v${pkg.packageJson.version}`;
+ 
+     if (allExistingTags.has(tag)) {

@@ -1,20 +1,21 @@
-name: Lint
+name: Changeset
 
 on:
   push:
     branches:
-      - '**'
-  pull_request:
+      - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  lint:
-    name: Lint
+  changeset:
+    name: Changeset
     runs-on: ubuntu-latest
     steps:
       - name: Check out
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install nodejs
         uses: actions/setup-node@v4
@@ -45,6 +46,13 @@ jobs:
         run: |
           pnpm install
 
-      - name: Lint
-        run: |
-          pnpm lint
+      - name: Create release pull request or publish to npm
+        uses: changesets/action@v1
+        with:
+          publish: pnpm ci:publish
+          version: pnpm ci:version
+          commit: "build(release): bump versions"
+          title: "build(release): bump versions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

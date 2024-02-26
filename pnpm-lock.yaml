@@ -8,6 +8,9 @@ patchedDependencies:
   '@changesets/changelog-github@0.5.0':
     hash: ajc3yu4dut4tzg6iceydi32rky
     path: patches/@changesets__changelog-github@0.5.0.patch
+  '@changesets/cli@2.27.1':
+    hash: 3m4f6pk5xlfiux2nef4wiaxizu
+    path: patches/@changesets__cli@2.27.1.patch
 
 importers:
 
@@ -18,7 +21,7 @@ importers:
         version: 0.5.0(patch_hash=ajc3yu4dut4tzg6iceydi32rky)
       '@changesets/cli':
         specifier: ^2.27.1
-        version: 2.27.1
+        version: 2.27.1(patch_hash=3m4f6pk5xlfiux2nef4wiaxizu)
       turbo:
         specifier: ^1.12.4
         version: 1.12.4
@@ -993,7 +996,7 @@ packages:
     dev: true
     patched: true
 
-  /@changesets/cli@2.27.1:
+  /@changesets/cli@2.27.1(patch_hash=3m4f6pk5xlfiux2nef4wiaxizu):
     resolution: {integrity: sha512-iJ91xlvRnnrJnELTp4eJJEOPjgpF3NOh4qeQehM6Ugiz9gJPRZ2t+TsXun6E3AMN4hScZKjqVXl0TX+C7AB3ZQ==}
     hasBin: true
     dependencies:
@@ -1030,6 +1033,7 @@ packages:
       term-size: 2.2.1
       tty-table: 4.2.3
     dev: true
+    patched: true
 
   /@changesets/config@3.0.0:
     resolution: {integrity: sha512-o/rwLNnAo/+j9Yvw9mkBQOZySDYyOr/q+wptRLcAVGlU6djOeP9v1nlalbL9MFsobuBVQbZCTp+dIzdq+CLQUA==}
