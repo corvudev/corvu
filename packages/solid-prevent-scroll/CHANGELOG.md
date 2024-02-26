@@ -1,5 +1,11 @@
 # solid-prevent-scroll
 
+## 0.1.4
+
+### Patch Changes
+
+- Export `MaybeAccessor` type - [`66b0cff`](https://github.com/corvudev/corvu/commit/66b0cffdb21ab99f5aedc3606a9f9144b217c5a6) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.3
 
 ### Patch Changes
