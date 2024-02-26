@@ -16,7 +16,7 @@ import {
 } from '@primitives/disclosure/context'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
-import createPresence from '@lib/create/presence'
+import createPresence from 'solid-presence'
 import { isFunction } from '@lib/assertions'
 
 export type DisclosureRootProps = {

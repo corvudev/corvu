@@ -1,7 +1,7 @@
 import createEscapeKeyDown from '@lib/create/escapeKeyDown'
 import createNoPointerEvents from '@lib/create/noPointerEvents'
 import createOutsidePointer from '@lib/create/outsidePointer'
-import type { MaybeAccessor } from '@lib/types'
+import type { MaybeAccessor } from '@corvu/utils'
 import { mergeProps } from 'solid-js'
 
 export type CreateDismissableProps = {

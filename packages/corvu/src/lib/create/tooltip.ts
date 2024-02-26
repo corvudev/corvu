@@ -1,6 +1,5 @@
+import { access, type MaybeAccessor } from '@corvu/utils'
 import { createEffect, onCleanup } from 'solid-js'
-import { access } from '@lib/utils'
-import type { MaybeAccessor } from '@lib/types'
 
 type Point = { x: number; y: number }
 

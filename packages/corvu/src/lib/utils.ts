@@ -5,13 +5,10 @@
  * https://github.com/solidjs-community/solid-primitives
  */
 
+import { access, type MaybeAccessor } from '@corvu/utils'
 import { type Accessor, createMemo, type JSX } from 'solid-js'
 import type { Alignment, Side } from '@floating-ui/dom'
-import type {
-  EventHandlerEvent,
-  MaybeAccessor,
-  MaybeAccessorValue,
-} from '@lib/types'
+import type { EventHandlerEvent } from '@lib/types'
 import type { FloatingState } from '@lib/create/floating'
 import { isFunction } from '@lib/assertions'
 
@@ -29,10 +26,6 @@ const callEventHandler = <T, E extends Event>(
 
   return event.defaultPrevented
 }
-
-const access = <T extends MaybeAccessor<unknown>>(
-  v: T,
-): MaybeAccessorValue<T> => (typeof v === 'function' ? v() : v)
 
 const some = (...signals: Accessor<unknown>[]) => {
   return signals.some((signal) => !!signal())
@@ -55,9 +48,6 @@ const mergeRefs = <T>(
 }
 
 const dataIf = (condition: boolean) => (condition ? '' : undefined)
-
-const afterPaint = (fn: () => void) =>
-  requestAnimationFrame(() => requestAnimationFrame(fn))
 
 const getFloatingStyle = (props: {
   strategy: MaybeAccessor<'absolute' | 'fixed'>
@@ -114,12 +104,10 @@ const PositionToDirection = {
 
 export {
   callEventHandler,
-  access,
   some,
   chain,
   mergeRefs,
   dataIf,
-  afterPaint,
   getFloatingStyle,
   PositionToDirection,
 }

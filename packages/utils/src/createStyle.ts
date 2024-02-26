@@ -1,6 +1,6 @@
 import { createEffect, onCleanup } from 'solid-js'
-import { access } from '@lib/utils'
-import type { MaybeAccessor } from '@lib/types'
+import { access } from '@src/utils'
+import type { MaybeAccessor } from '@src/types'
 
 const activeStyles = new Map<
   string,

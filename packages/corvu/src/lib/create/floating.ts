@@ -1,3 +1,4 @@
+import { access, type MaybeAccessor } from '@corvu/utils'
 import {
   arrow,
   autoPlacement,
@@ -22,9 +23,7 @@ import {
   type Strategy,
 } from '@floating-ui/dom'
 import { createSignal, mergeProps, onCleanup } from 'solid-js'
-import { access } from '@lib/utils'
 import { createEffect } from 'solid-js'
-import type { MaybeAccessor } from '@lib/types'
 
 export type FloatingOptions = {
   offset?: OffsetOptions

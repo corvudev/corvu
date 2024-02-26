@@ -533,6 +533,7 @@ export const utilitySpecifications: {
   [key in UtilitySpecifications]: {
     components?: TypeSpecification[]
     functions?: TypeSpecification[]
+    api: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll'
   }
 } = {
   createControllableSignal: {
@@ -542,6 +543,7 @@ export const utilitySpecifications: {
         forcedSorting: ['value', 'onChange', 'initialValue'],
       },
     ],
+    api: 'corvu',
   },
   createPreventScroll: {
     functions: [
@@ -557,6 +559,7 @@ export const utilitySpecifications: {
         ],
       },
     ],
+    api: 'preventScroll',
   },
   createFocusTrap: {
     functions: [
@@ -574,6 +577,7 @@ export const utilitySpecifications: {
         ],
       },
     ],
+    api: 'focusTrap',
   },
   keyedContext: {
     functions: [
@@ -588,6 +592,7 @@ export const utilitySpecifications: {
         name: 'useKeyedContext',
       },
     ],
+    api: 'corvu',
   },
   createPresence: {
     functions: [
@@ -596,5 +601,6 @@ export const utilitySpecifications: {
         forcedSorting: ['show', 'element'],
       },
     ],
+    api: 'presence',
   },
 }

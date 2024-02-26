@@ -1,4 +1,4 @@
-import type { Axis } from '@lib/types'
+import type { Axis } from '@src/types'
 
 /**
  * Returns the scroll dimensions of the given element on the given axis.
@@ -36,66 +36,6 @@ const isScrollContainer = (element: HTMLElement, axis: Axis | 'both') => {
     // The HTML element is a scroll container if it has overflow visible
     (element.tagName === 'HTML' && overflow === 'visible')
   )
-}
-
-/**
- * Returns true if the given element is scrollable on the given axis. Scrollable elements are scroll containers that have `clientSize` < `scrollSize`.
- *
- * @param element - The element to check.
- * @param axis - The axis to check for.
- * @returns Whether the element is scrollable.
- */
-const isScrollable = (element: HTMLElement, axis: Axis | 'both') => {
-  if (!isScrollContainer(element, axis)) return false
-
-  if (axis === 'both') {
-    const scrollDimensionsX = getScrollDimensions(element, 'x')
-    const scrollDimensionsY = getScrollDimensions(element, 'y')
-    if (
-      scrollDimensionsX[0] < scrollDimensionsX[2] ||
-      scrollDimensionsY[0] < scrollDimensionsY[2]
-    )
-      return true
-  } else {
-    const scrollDimensions = getScrollDimensions(element, axis)
-    if (scrollDimensions[0] < scrollDimensions[2]) return true
-  }
-
-  return false
-}
-
-/**
- * Returns all scrollable elements at the given location.
- *
- * @param location - The HTMLElement to check.
- * @param axis - The axis to check for.
- * @param stopAt - The HTMLElement to stop at when searching up the tree for scrollable elements. Defaults to the body element.
- * @returns A list of all scrollable elements at the given location.
- */
-const getScrollablesAtLocation = (
-  location: HTMLElement,
-  axis: Axis | 'both',
-  stopAt?: HTMLElement,
-) => {
-  let currentElement: HTMLElement | null = location
-
-  let stopReached = false
-
-  const scrollables = []
-
-  do {
-    if (isScrollable(currentElement, axis)) {
-      scrollables.push(currentElement)
-    }
-
-    if (currentElement === (stopAt ?? document.documentElement)) {
-      stopReached = true
-    } else {
-      currentElement = currentElement.parentElement
-    }
-  } while (currentElement && !stopReached)
-
-  return scrollables
 }
 
 /**
@@ -146,10 +86,4 @@ const getScrollAtLocation = (
   return [availableScroll, availableScrollTop] as [number, number]
 }
 
-export {
-  getScrollDimensions,
-  isScrollContainer,
-  isScrollable,
-  getScrollablesAtLocation,
-  getScrollAtLocation,
-}
+export { getScrollAtLocation }

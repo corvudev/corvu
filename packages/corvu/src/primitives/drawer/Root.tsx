@@ -22,7 +22,7 @@ import {
   type InternalDialogContextValue,
   useInternalDialogContext,
 } from '@primitives/dialog/context'
-import { afterPaint } from '@lib/utils'
+import { afterPaint } from '@corvu/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
 import createTransitionSize from '@lib/create/transitionSize'

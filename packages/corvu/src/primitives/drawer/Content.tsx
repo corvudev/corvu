@@ -15,9 +15,9 @@ import {
   locationIsDraggable,
   resolveSnapPoint,
 } from '@primitives/drawer/lib'
-import type { Axis } from '@lib/types'
+import type { Axis } from '@corvu/utils'
 import { dataIf } from '@lib/utils'
-import { getScrollAtLocation } from '@lib/scroll'
+import { getScrollAtLocation } from '@corvu/utils/scroll'
 import { useInternalDialogContext } from '@primitives/dialog/context'
 import { useInternalDrawerContext } from '@primitives/drawer/context'
 

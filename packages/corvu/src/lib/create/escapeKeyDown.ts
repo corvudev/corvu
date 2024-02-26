@@ -1,6 +1,5 @@
+import { access, type MaybeAccessor } from '@corvu/utils'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
-import { access } from '@lib/utils'
-import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Listens for the escape key to be pressed and calls the `onEscapeKeyDown` callback.

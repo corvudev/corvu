@@ -35,4 +35,4 @@ const DialogContent: Component<{
 ```
 
 ## Further Reading
-This utility is a re-export of the `createPresence` function from [corvu](https://corvu.dev). For more information, see [Presence](https://corvu.dev/docs/utilities/presence) in the corvu docs.
+This utility is from the maintainers of [corvu](https://corvu.dev), a collection of unstyled, accessible and customizable UI primitives for SolidJS. It is also documented in the corvu docs under [Presence](https://corvu.dev/docs/utilities/presence).

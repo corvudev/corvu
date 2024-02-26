@@ -58,4 +58,4 @@ Use the `--scrollbar-width` CSS variable to add padding to fixed elements to pre
 ```
 
 ## Further Reading
-This utility is a re-export of the `createPreventScroll` function from [corvu](https://corvu.dev). For more information, see [Prevent Scroll](https://corvu.dev/docs/utilities/prevent-scroll) in the corvu docs.
+This utility is from the maintainers of [corvu](https://corvu.dev), a collection of unstyled, accessible and customizable UI primitives for SolidJS. It is also documented in the corvu docs under [Prevent Scroll](https://corvu.dev/docs/utilities/prevent-scroll).

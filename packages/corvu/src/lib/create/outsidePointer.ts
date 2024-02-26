@@ -1,6 +1,5 @@
+import { access, type MaybeAccessor } from '@corvu/utils'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
-import { access } from '@lib/utils'
-import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Calls the `onPointer` callback when a `pointerdown` or `pointerup` event occurs outside of the given element.

@@ -1,6 +1,5 @@
+import { access, type MaybeAccessor } from '@corvu/utils'
 import { createMemo, createSignal, mergeProps } from 'solid-js'
-import { access } from '@lib/utils'
-import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Creates a memo which can be registered/unregistered with the returned `register` and `unregister` functions.

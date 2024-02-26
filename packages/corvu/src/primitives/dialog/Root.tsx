@@ -12,12 +12,12 @@ import {
   createDialogContext,
   createInternalDialogContext,
 } from '@primitives/dialog/context'
-import { access } from '@lib/utils'
+import { access } from '@corvu/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
-import createFocusTrap from '@lib/create/focusTrap'
+import createFocusTrap from 'solid-focus-trap'
 import createOnce from '@lib/create/once'
-import createPresence from '@lib/create/presence'
-import createPreventScroll from '@lib/create/preventScroll'
+import createPresence from 'solid-presence'
+import createPreventScroll from 'solid-prevent-scroll'
 import createRegister from '@lib/create/register'
 import { isFunction } from '@lib/assertions'
 

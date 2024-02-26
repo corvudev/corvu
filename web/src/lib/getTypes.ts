@@ -4,9 +4,12 @@ import {
   utilitySpecifications,
   type UtilitySpecifications,
 } from '@lib/apiSpecifications'
-import apiJson from '../../../packages/corvu/api.json'
+import corvuApiJson from '../../../packages/corvu/api.json'
+import focusTrapApiJson from '../../../packages/solid-focus-trap/api.json'
+import presenceApiJson from '../../../packages/solid-presence/api.json'
+import preventScrollApiJson from '../../../packages/solid-prevent-scroll/api.json'
 import type {
-  CorvuApi,
+  ApiDeclaration,
   DeclarationVariant,
   ParamVariant,
   ReferenceType,
@@ -18,7 +21,10 @@ import type {
   LiteralType,
 } from 'src/@types/api'
 
-const corvuApi = apiJson as CorvuApi
+const corvuApi = corvuApiJson as ApiDeclaration
+const focusTrapApi = focusTrapApiJson as ApiDeclaration
+const presenceApi = presenceApiJson as ApiDeclaration
+const preventScrollApi = preventScrollApiJson as ApiDeclaration
 const corvuApiIndex = corvuApi.children.find((child) => child.name === 'index')!
 
 export type ApiReference = {
@@ -387,7 +393,7 @@ const resolveType = (type: DeclarationVariant) => {
 }
 
 const getUtility = (utilityName: UtilitySpecifications) => {
-  const { components, functions } = utilitySpecifications[utilityName]
+  const { components, functions, api } = utilitySpecifications[utilityName]
 
   const apiReferences: ApiReference[] = []
 
@@ -446,12 +452,7 @@ const getUtility = (utilityName: UtilitySpecifications) => {
 
   if (functions) {
     for (const functionSpec of functions) {
-      let typeDeclaration = corvuApiIndex.children!.find(
-        (c) => c.name === functionSpec.name,
-      )
-      if (!typeDeclaration) {
-        throw new Error(`${functionSpec.name} not found`)
-      }
+      let typeDeclaration = getDeclaration(functionSpec.name, api)
 
       typeDeclaration = typeDeclaration as DeclarationVariant
 
@@ -528,6 +529,22 @@ const getUtility = (utilityName: UtilitySpecifications) => {
     }
   }
   return apiReferences
+}
+
+const getDeclaration = (
+  name: string,
+  apiName: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll',
+) => {
+  switch (apiName) {
+    case 'corvu':
+      return findDeclaration(corvuApiIndex, name)
+    case 'focusTrap':
+      return focusTrapApi.children[0]
+    case 'presence':
+      return presenceApi.children[0]
+    case 'preventScroll':
+      return preventScrollApi.children[0]
+  }
 }
 
 const resolveFunctionProps = (functionVariant: DeclarationVariant) => {

@@ -1,2 +1,2 @@
-import { createPreventScroll } from 'corvu'
+import createPreventScroll from './preventScroll'
 export default createPreventScroll

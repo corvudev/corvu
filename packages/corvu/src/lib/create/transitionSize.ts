@@ -1,4 +1,4 @@
-import { access, afterPaint } from '@lib/utils'
+import { access, afterPaint, type MaybeAccessor } from '@corvu/utils'
 import {
   type Accessor,
   batch,
@@ -7,7 +7,6 @@ import {
   mergeProps,
   onCleanup,
 } from 'solid-js'
-import type { MaybeAccessor } from '@lib/types'
 
 /**
  * Utility that uses a `ResizeObserver` to provide the size of an element before and after resize. Used to transition the width/height of elements that don't have a fixed size applied.

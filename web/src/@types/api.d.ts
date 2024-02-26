@@ -1,6 +1,6 @@
-export type CorvuApi = {
+export type ApiDeclaration = {
   id: 0
-  name: 'corvu'
+  name: string
   variant: 'project'
   kind: 1
   flags: object
@@ -9,7 +9,7 @@ export type CorvuApi = {
     title: string
     children: number[]
   }[]
-  packageName: 'corvu'
+  packageName: string
   readme: Text[]
   symbolIdMap: {
     [key: string]: {

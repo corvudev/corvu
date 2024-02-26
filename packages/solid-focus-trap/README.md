@@ -68,4 +68,4 @@ const DialogContent: Component<{
 ```
 
 ## Further Reading
-This utility is a re-export of the `createFocusTrap` function from [corvu](https://corvu.dev). For more information, see [Focus Trap](https://corvu.dev/docs/utilities/focus-trap) in the corvu docs.
+This utility is from the maintainers of [corvu](https://corvu.dev), a collection of unstyled, accessible and customizable UI primitives for SolidJS. It is also documented in the corvu docs under [Focus Trap](https://corvu.dev/docs/utilities/focus-trap).

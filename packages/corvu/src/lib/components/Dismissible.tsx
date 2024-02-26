@@ -15,7 +15,7 @@ import {
 import createDismissible, {
   type CreateDismissableProps,
 } from '@lib/create/dismissible'
-import { access } from '@lib/utils'
+import { access } from '@corvu/utils'
 import { isFunction } from '@lib/assertions'
 
 type DismissibleContextValue = {

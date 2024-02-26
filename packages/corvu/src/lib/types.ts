@@ -7,13 +7,7 @@ export type OverrideComponentProps<
 
 export type OverrideProps<T, P> = Omit<T, keyof P> & P
 
-export type MaybeAccessor<T> = T | (() => T)
-
-export type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
-  T extends () => unknown ? ReturnType<T> : T
-
 export type Side = 'top' | 'right' | 'bottom' | 'left'
-export type Axis = 'x' | 'y'
 
 export type EventHandlerEvent<T, E extends Event> = E & {
   currentTarget: T
