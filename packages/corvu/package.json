@@ -75,12 +75,12 @@
     "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts --entryPoints ./src/primitives/*/index.ts"
   },
   "dependencies": {
-    "@corvu/utils": "workspace:^",
+    "@corvu/utils": "workspace:~0.1",
     "@floating-ui/dom": "^1.6.3",
     "@solid-primitives/memo": "^1.3.6",
-    "solid-focus-trap": "workspace:^",
-    "solid-presence": "workspace:^",
-    "solid-prevent-scroll": "workspace:^"
+    "solid-focus-trap": "workspace:~0.1",
+    "solid-presence": "workspace:~0.1",
+    "solid-prevent-scroll": "workspace:~0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.0.2",

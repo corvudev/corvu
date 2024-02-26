@@ -87,7 +87,7 @@ importers:
   packages/corvu:
     dependencies:
       '@corvu/utils':
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../utils
       '@floating-ui/dom':
         specifier: ^1.6.3
@@ -96,13 +96,13 @@ importers:
         specifier: ^1.3.6
         version: 1.3.6(solid-js@1.8.15)
       solid-focus-trap:
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../solid-focus-trap
       solid-presence:
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../solid-presence
       solid-prevent-scroll:
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../solid-prevent-scroll
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -142,7 +142,7 @@ importers:
   packages/solid-focus-trap:
     dependencies:
       '@corvu/utils':
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../utils
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -182,7 +182,7 @@ importers:
   packages/solid-presence:
     dependencies:
       '@corvu/utils':
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../utils
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -222,7 +222,7 @@ importers:
   packages/solid-prevent-scroll:
     dependencies:
       '@corvu/utils':
-        specifier: workspace:^
+        specifier: workspace:~0.1
         version: link:../utils
     devDependencies:
       '@typescript-eslint/eslint-plugin':

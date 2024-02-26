@@ -45,7 +45,7 @@
     "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts"
   },
   "dependencies": {
-    "@corvu/utils": "workspace:^"
+    "@corvu/utils": "workspace:~0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.0.2",
