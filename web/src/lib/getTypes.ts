@@ -539,11 +539,17 @@ const getDeclaration = (
     case 'corvu':
       return findDeclaration(corvuApiIndex, name)
     case 'focusTrap':
-      return focusTrapApi.children[0]
+      return focusTrapApi.children.find(
+        (declaration) => declaration.name === 'default',
+      )
     case 'presence':
-      return presenceApi.children[0]
+      return presenceApi.children.find(
+        (declaration) => declaration.name === 'default',
+      )
     case 'preventScroll':
-      return preventScrollApi.children[0]
+      return preventScrollApi.children.find(
+        (declaration) => declaration.name === 'default',
+      )
   }
 }
 
