@@ -41,7 +41,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                 {part.props.map((prop) => (
                   <tr class="border-b border-corvu-100">
                     {part.props.some((prop) => prop.name) && (
-                      <td class="not-prose py-5 pr-5 align-top">
+                      <td class="not-prose py-5 pr-5 align-top text-sm">
                         <p
                           class:list={[
                             'inline whitespace-nowrap rounded px-1.5 py-0.5 font-mono',
@@ -86,7 +86,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                 </tr>
                 {part.props.map((prop) => (
                   <tr class="border-b border-corvu-100">
-                    <td class="not-prose py-5 pr-5 align-top">
+                    <td class="not-prose py-5 pr-5 align-top text-sm">
                       <p
                         class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 py-0.5 font-mono"
                       >
