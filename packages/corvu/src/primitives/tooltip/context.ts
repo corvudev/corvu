@@ -40,8 +40,6 @@ export type TooltipContextValue = {
   contentRef: Accessor<HTMLElement | null>
   /** The `id` of the tooltip element. */
   tooltipId: Accessor<string>
-  /** The `id` of the tooltip trigger element. */
-  triggerId: Accessor<string>
 }
 
 const TooltipContext = createContext<TooltipContextValue>()

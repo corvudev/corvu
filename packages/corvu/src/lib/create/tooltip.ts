@@ -1,9 +1,59 @@
-import { access, type MaybeAccessor } from '@corvu/utils'
-import { createEffect, onCleanup } from 'solid-js'
+import { access, afterPaint, type MaybeAccessor } from '@corvu/utils'
+import { type Accessor, createEffect, onCleanup, untrack } from 'solid-js'
 
 type Point = { x: number; y: number }
 
+const tooltipGroups = new Map<
+  boolean | string,
+  {
+    skipDelay: boolean
+    skipDelayTimeout: number | null
+    tooltips: {
+      id: string
+      close: () => void
+    }[]
+  }
+>()
+
+const registerTooltip = (
+  group: boolean | string,
+  id: string,
+  close: () => void,
+) => {
+  if (!tooltipGroups.has(group)) {
+    tooltipGroups.set(group, {
+      skipDelay: false,
+      skipDelayTimeout: null,
+      tooltips: [],
+    })
+  }
+  tooltipGroups.get(group)!.tooltips.push({ id, close })
+}
+
+const unregisterTooltip = (group: boolean | string, id: string) => {
+  const tooltipGroup = tooltipGroups.get(group)
+  if (!tooltipGroup) return
+  const index = tooltipGroup.tooltips.findIndex((tooltip) => tooltip.id === id)
+  if (index !== -1) {
+    tooltipGroup.tooltips.splice(index, 1)
+  }
+}
+
+const closeTooltipGroup = (group: boolean | string, id: string) => {
+  const tooltipGroup = tooltipGroups.get(group)
+  if (!tooltipGroup) return
+  tooltipGroup.tooltips.forEach((tooltip) => {
+    if (tooltip.id !== id) {
+      tooltip.close()
+    }
+  })
+}
+
 const createTooltip = (props: {
+  id: MaybeAccessor<string>
+  group: MaybeAccessor<boolean | string | null>
+  open: Accessor<boolean>
+  close: () => void
   trigger: MaybeAccessor<HTMLElement | null>
   content: MaybeAccessor<HTMLElement | null>
   openOnFocus: MaybeAccessor<boolean>
@@ -22,19 +72,70 @@ const createTooltip = (props: {
   onScroll?: (event: Event) => void
 }) => {
   let tooltipState: 'focus' | 'hover' | null = null
+  let clickedTrigger = false
 
   let timeout: number | null = null
-  let skipDelay = false
-  let skipDelayTimeout: number | null = null
   let insideSafeArea = false
+
+  // Local skip delay state for tooltips without a group
+  let localSkipDelay = false
+  let localSkipDelayTimeout: number | null = null
+
+  const getSkipDelay = () => {
+    const group = access(props.group)
+    if (!group) return localSkipDelay
+    return tooltipGroups.get(group)!.skipDelay
+  }
+  const setSkipDelay = (value: boolean) => {
+    const group = access(props.group)
+    if (!group) return (localSkipDelay = value)
+    tooltipGroups.get(group)!.skipDelay = value
+  }
+  const setSkipDelayTimeout = (value: number | null) => {
+    const group = access(props.group)
+    if (!group) return (localSkipDelayTimeout = value)
+    tooltipGroups.get(group)!.skipDelayTimeout = value
+  }
+  const getSkipDelayTimeout = () => {
+    const group = access(props.group)
+    if (!group) return localSkipDelayTimeout
+    return tooltipGroups.get(group)!.skipDelayTimeout
+  }
+
+  createEffect(() => {
+    const group = access(props.group)
+    const id = access(props.id)
+    if (!group) return
+    // eslint-disable-next-line solid/reactivity
+    registerTooltip(group, id, () => {
+      tooltipState = null
+      props.close()
+    })
+    onCleanup(() => {
+      unregisterTooltip(group, id)
+    })
+  })
+
+  createEffect(() => {
+    if (!props.open()) return
+    untrack(() => {
+      const group = access(props.group)
+      if (!group) return
+      closeTooltipGroup(group, access(props.id))
+    })
+  })
 
   createEffect(() => {
     if (!access(props.openOnHover)) return
     const trigger = access(props.trigger)
     if (!trigger) return
 
-    const onPointerEnter = (event: PointerEvent) => openTooltip('hover', event)
-    const onPointerDown = (event: PointerEvent) => closeTooltip('click', event)
+    const onPointerEnter = (event: PointerEvent) =>
+      afterPaint(() => openTooltip('hover', event))
+    const onPointerDown = (event: PointerEvent) => {
+      clickedTrigger = true
+      closeTooltip('click', event)
+    }
     const onPointerLeave = (event: PointerEvent) => {
       if (tooltipState === 'hover') return
       closeTooltip('leave', event)
@@ -93,9 +194,9 @@ const createTooltip = (props: {
 
     switch (reason) {
       case 'focus':
+        if (clickedTrigger) return
         tooltipState = 'focus'
         props.onFocus?.(event)
-        insideSafeArea = true
         if (access(props.closeOnScroll)) {
           document.addEventListener('scroll', onScroll, { capture: true })
         }
@@ -108,7 +209,7 @@ const createTooltip = (props: {
         if (tooltipState === 'focus' || tooltipState === 'hover') return
 
         const openDelay = access(props.openDelay)
-        if (openDelay <= 0 || skipDelay) {
+        if (openDelay <= 0 || getSkipDelay()) {
           tooltipState = 'hover'
           props.onHover?.(pointerEvent)
           insideSafeArea = true
@@ -140,6 +241,7 @@ const createTooltip = (props: {
 
     switch (reason) {
       case 'blur':
+        clickedTrigger = false
         if (insideSafeArea) {
           tooltipState = 'hover'
           return
@@ -152,7 +254,7 @@ const createTooltip = (props: {
         if (tooltipState !== 'hover') return
 
         const closeDelay = access(props.closeDelay)
-        if (closeDelay <= 0 || skipDelay) {
+        if (closeDelay <= 0) {
           initSkipDelay()
           tooltipState = null
           props.onLeave?.(event as PointerEvent)
@@ -238,15 +340,18 @@ const createTooltip = (props: {
   const initSkipDelay = () => {
     const skipDelayDuration = access(props.skipDelayDuration)
     if (skipDelayDuration > 0) {
+      const skipDelayTimeout = getSkipDelayTimeout()
       if (skipDelayTimeout) {
         clearTimeout(skipDelayTimeout)
-        skipDelayTimeout = null
+        setSkipDelayTimeout(null)
       }
-      skipDelay = true
-      setTimeout(() => {
-        skipDelayTimeout = null
-        skipDelay = false
-      }, skipDelayDuration)
+      setSkipDelay(true)
+      setSkipDelayTimeout(
+        setTimeout(() => {
+          setSkipDelayTimeout(null)
+          setSkipDelay(false)
+        }, skipDelayDuration),
+      )
     }
   }
 }

@@ -1,12 +1,10 @@
 import {
   type Component,
-  createEffect,
   createMemo,
   createSignal,
   createUniqueId,
   type JSX,
   mergeProps,
-  onCleanup,
   type Setter,
   untrack,
 } from 'solid-js'
@@ -137,11 +135,6 @@ export type TooltipRootProps = {
    */
   tooltipId?: string
   /**
-   * The `id` attribute of the tooltip trigger element.
-   * @defaultValue `createUniqueId()`
-   */
-  triggerId?: string
-  /**
    * The `id` of the tooltip context. Useful if you have nested tooltips and want to create components that belong to a tooltip higher up in the tree.
    */
   contextId?: string
@@ -186,43 +179,6 @@ export type TooltipRootChildrenProps = {
   contentRef: HTMLElement | null
   /** The `id` of the tooltip element. */
   tooltipId: string
-  /** The `id` of the tooltip trigger element. */
-  triggerId: string
-}
-
-const tooltipGroups = new Map<
-  boolean | string,
-  {
-    id: string
-    close: () => void
-  }[]
->()
-const registerTooltip = (
-  group: boolean | string,
-  id: string,
-  close: () => void,
-) => {
-  if (!tooltipGroups.has(group)) {
-    tooltipGroups.set(group, [])
-  }
-  tooltipGroups.get(group)!.push({ id, close })
-}
-const unregisterTooltip = (group: boolean | string, id: string) => {
-  const tooltips = tooltipGroups.get(group)
-  if (!tooltips) return
-  const index = tooltips.findIndex((tooltip) => tooltip.id === id)
-  if (index !== -1) {
-    tooltips.splice(index, 1)
-  }
-}
-const closeTooltipGroup = (group: boolean | string, id: string) => {
-  const tooltips = tooltipGroups.get(group)
-  if (!tooltips) return
-  tooltips.forEach((tooltip) => {
-    if (tooltip.id !== id) {
-      tooltip.close()
-    }
-  })
 }
 
 /** Context wrapper for the tooltip. Is required for every tooltip you create. */
@@ -247,7 +203,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
       closeOnPointerDown: true,
       closeOnScroll: true,
       tooltipId: createUniqueId(),
-      triggerId: createUniqueId(),
     },
     props,
   )
@@ -256,25 +211,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     value: () => defaultedProps.open,
     initialValue: defaultedProps.initialOpen,
     onChange: defaultedProps.onOpenChange,
-  })
-
-  createEffect(() => {
-    const group = defaultedProps.group
-    const id = defaultedProps.tooltipId
-    if (!group) return
-    registerTooltip(group, id, () => setOpen(false))
-    onCleanup(() => {
-      unregisterTooltip(group, id)
-    })
-  })
-
-  createEffect(() => {
-    if (!open()) return
-    untrack(() => {
-      const group = defaultedProps.group
-      if (!group) return
-      closeTooltipGroup(group, defaultedProps.tooltipId)
-    })
   })
 
   const [anchorRef, setAnchorRef] = createSignal<HTMLElement | null>(null)
@@ -298,6 +234,10 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
   })
 
   createTooltip({
+    id: () => defaultedProps.tooltipId,
+    group: () => defaultedProps.group,
+    open,
+    close: () => setOpen(false),
     trigger: triggerRef,
     content: contentRef,
     openOnFocus: () => defaultedProps.openOnFocus,
@@ -423,9 +363,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     get tooltipId() {
       return defaultedProps.tooltipId
     },
-    get triggerId() {
-      return defaultedProps.triggerId
-    },
   }
 
   const memoizedChildren = createOnce(() => defaultedProps.children)
@@ -465,7 +402,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
           contentPresent,
           contentRef,
           tooltipId: () => defaultedProps.tooltipId,
-          triggerId: () => defaultedProps.triggerId,
         }}
       >
         <InternalTooltipContext.Provider
@@ -488,7 +424,6 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
             contentPresent,
             contentRef,
             tooltipId: () => defaultedProps.tooltipId,
-            triggerId: () => defaultedProps.triggerId,
             onFocus: defaultedProps.onFocus,
             onBlur: defaultedProps.onBlur,
             onPointerDown: defaultedProps.onPointerDown,
