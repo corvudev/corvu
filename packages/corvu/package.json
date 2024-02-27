@@ -78,9 +78,9 @@
     "@corvu/utils": "workspace:~0.1",
     "@floating-ui/dom": "^1.6.3",
     "@solid-primitives/memo": "^1.3.6",
-    "solid-focus-trap": "workspace:~0.1.5",
-    "solid-presence": "workspace:~0.1.5",
-    "solid-prevent-scroll": "workspace:~0.1.5"
+    "solid-focus-trap": "workspace:~0.1",
+    "solid-presence": "workspace:~0.1",
+    "solid-prevent-scroll": "workspace:~0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.0",

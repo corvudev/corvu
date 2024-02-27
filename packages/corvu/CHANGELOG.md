@@ -6,11 +6,6 @@
 
 - Bind skip delay to tooltip group and dismiss properly on click - [`afc41e5`](https://github.com/corvudev/corvu/commit/afc41e53dfa609b070d820fd66f9d7e7ce627813) ([@GiyoMoon](https://github.com/GiyoMoon))
 
-- Updated dependencies [[`8bba6ec`](https://github.com/corvudev/corvu/commit/8bba6ecde79589b53a064de82f54e4c78a98d027)]:
-  - solid-prevent-scroll@0.1.5
-  - solid-focus-trap@0.1.5
-  - solid-presence@0.1.5
-
 ## 0.4.6
 
 ### Patch Changes
