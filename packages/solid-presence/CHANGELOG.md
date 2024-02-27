@@ -1,5 +1,11 @@
 # solid-presence
 
+## 0.1.5
+
+### Patch Changes
+
+- Remove solid export - [`8bba6ec`](https://github.com/corvudev/corvu/commit/8bba6ecde79589b53a064de82f54e4c78a98d027) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.4
 
 ### Patch Changes

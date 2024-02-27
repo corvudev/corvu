@@ -1,5 +1,11 @@
 # corvu
 
+## 0.4.7
+
+### Patch Changes
+
+- Bind skip delay to tooltip group and dismiss properly on click - [`afc41e5`](https://github.com/corvudev/corvu/commit/afc41e53dfa609b070d820fd66f9d7e7ce627813) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.6
 
 ### Patch Changes
