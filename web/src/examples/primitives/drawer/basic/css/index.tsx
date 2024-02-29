@@ -1,3 +1,4 @@
+import './index.css'
 import Drawer from 'corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 

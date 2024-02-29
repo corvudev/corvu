@@ -47,8 +47,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                             'inline whitespace-nowrap rounded px-1.5 py-0.5 font-mono',
                             {
                               'bg-corvu-300': prop.displayType === 'property',
-                              'bg-corvu-blue':
-                                prop.displayType === 'function',
+                              'bg-corvu-blue': prop.displayType === 'function',
                             },
                           ]}
                         >
@@ -59,10 +58,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                     {part.props.some((prop) => prop.defaultHtml) && (
                       <td class="py-5 pr-5 align-top">
                         {prop.defaultHtml ? (
-                          <div
-                            class="prose"
-                            set:html={prop.defaultHtml}
-                          />
+                          <div class="prose" set:html={prop.defaultHtml} />
                         ) : (
                           <p>-</p>
                         )}
@@ -72,7 +68,10 @@ const { type, name, descriptionHtml, parts } = Astro.props
                       <p class="not-prose inline rounded border border-corvu-300 bg-corvu-100 px-1.5 py-0.5">
                         {prop.type}
                       </p>
-                      <div class="prose mt-3 prose-code:border-none prose-code:bg-transparent prose-code:!p-0" set:html={prop.descriptionHtml} />
+                      <div
+                        class="prose mt-3 prose-code:border-none prose-code:bg-transparent prose-code:!p-0"
+                        set:html={prop.descriptionHtml}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -87,9 +86,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                 {part.props.map((prop) => (
                   <tr class="border-b border-corvu-100">
                     <td class="not-prose py-5 pr-5 align-top text-sm">
-                      <p
-                        class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 py-0.5 font-mono"
-                      >
+                      <p class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 py-0.5 font-mono">
                         {prop.name}
                       </p>
                     </td>

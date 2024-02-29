@@ -1,5 +1,5 @@
-import Drawer from 'corvu/drawer'
 import { createSignal, type VoidComponent } from 'solid-js'
+import Drawer from 'corvu/drawer'
 
 const heightSequence = [500, 400, 300, 400]
 

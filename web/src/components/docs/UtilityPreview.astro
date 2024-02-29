@@ -1,6 +1,6 @@
 ---
-import UtilityPicture from '@assets/previews/utility.jpg'
 import { Image } from 'astro:assets'
+import UtilityPicture from '@assets/previews/utility.jpg'
 
 const utilities = [
   {
@@ -40,9 +40,7 @@ const utilities = [
           class="overflow-hidden rounded-xl border-[5px] border-corvu-400 bg-corvu-100"
         >
           <Image src={utility.image} alt={utility.name} width={500} />
-          <span class="block px-2 py-1 text-lg font-bold">
-            {utility.name}
-          </span>
+          <span class="block px-2 py-1 text-lg font-bold">{utility.name}</span>
         </a>
       ))
     }

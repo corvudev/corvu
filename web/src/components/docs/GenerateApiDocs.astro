@@ -1,14 +1,14 @@
 ---
-import ApiReference from '@components/docs/ApiReference.astro'
 import {
+  type ApiReference as ApiReferenceType,
   getComponent,
   getUtility,
-  type ApiReference as ApiReferenceType,
 } from '@lib/getTypes'
 import type {
   ComponentSpecifications,
   UtilitySpecifications,
 } from '@lib/apiSpecifications'
+import ApiReference from '@components/docs/ApiReference.astro'
 
 interface Props {
   primitive?: ComponentSpecifications

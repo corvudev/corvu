@@ -1,3 +1,15 @@
+import type {
+  ApiDeclaration,
+  DeclarationVariant,
+  DeclarationVariantWithSignature,
+  LiteralType,
+  ParamVariant,
+  ReferenceType,
+  ReferenceVariant,
+  ReflectionType,
+  Text,
+  Type,
+} from 'src/@types/api'
 import {
   type ComponentSpecifications,
   componentSpecifications,
@@ -8,18 +20,6 @@ import corvuApiJson from '../../../packages/corvu/api.json'
 import focusTrapApiJson from '../../../packages/solid-focus-trap/api.json'
 import presenceApiJson from '../../../packages/solid-presence/api.json'
 import preventScrollApiJson from '../../../packages/solid-prevent-scroll/api.json'
-import type {
-  ApiDeclaration,
-  DeclarationVariant,
-  ParamVariant,
-  ReferenceType,
-  Type,
-  Text,
-  ReflectionType,
-  ReferenceVariant,
-  DeclarationVariantWithSignature,
-  LiteralType,
-} from 'src/@types/api'
 
 const corvuApi = corvuApiJson as ApiDeclaration
 const focusTrapApi = focusTrapApiJson as ApiDeclaration

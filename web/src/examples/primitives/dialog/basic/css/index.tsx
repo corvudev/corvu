@@ -1,6 +1,6 @@
+import './index.css'
 import Dialog from 'corvu/dialog'
 import type { VoidComponent } from 'solid-js'
-import './index.css'
 
 const DialogExample: VoidComponent = () => {
   return (

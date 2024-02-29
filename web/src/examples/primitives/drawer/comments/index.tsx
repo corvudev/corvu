@@ -1,5 +1,5 @@
-import Drawer from 'corvu/drawer'
 import { For, type VoidComponent } from 'solid-js'
+import Drawer from 'corvu/drawer'
 
 const DrawerCommentsExample: VoidComponent = () => {
   return (

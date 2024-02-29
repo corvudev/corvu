@@ -3,13 +3,22 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'plugin:solid/typescript',
+    // Must be last
+    // See: https://github.com/prettier/eslint-plugin-prettier#configuration-legacy-eslintrc
+    'plugin:prettier/recommended',
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'solid'],
-  ignorePatterns: ['dist', 'node_modules'],
+  ignorePatterns: ['!.*', 'dist', 'node_modules'],
   rules: {
     'no-console': 'warn',
+
+    'sort-imports': [
+      'warn',
+      {
+        ignoreCase: true,
+      },
+    ],
+
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -18,6 +27,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/method-signature-style': 'error',
     '@typescript-eslint/ban-types': [
       'error',
       {
@@ -27,7 +37,7 @@ module.exports = {
         extendDefaults: true,
       },
     ],
-    '@typescript-eslint/method-signature-style': 'error',
+
     'prettier/prettier': [
       'error',
       {
@@ -36,17 +46,10 @@ module.exports = {
         semi: false,
       },
     ],
-    'sort-imports': [
-      'warn',
-      {
-        ignoreCase: true,
-      },
-    ],
   },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      parser: '@typescript-eslint/parser',
       parserOptions: {
         project: true,
       },

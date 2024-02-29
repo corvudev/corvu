@@ -1,6 +1,6 @@
-import getApiHeadings from '@lib/getApiHeadings'
+import { createEffect, createSignal, For, onCleanup } from 'solid-js'
 import clsx from 'clsx'
-import { For, createEffect, createSignal, onCleanup } from 'solid-js'
+import getApiHeadings from '@lib/getApiHeadings'
 import type { VoidComponent } from 'solid-js'
 
 type Heading = {

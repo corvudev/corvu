@@ -1,12 +1,12 @@
-import clsx from 'clsx'
 import {
   createEffect,
   createSignal,
   Match,
   onCleanup,
-  type VoidComponent,
   Switch,
+  type VoidComponent,
 } from 'solid-js'
+import clsx from 'clsx'
 
 const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
   const [x, setX] = createSignal<number | null>(null)

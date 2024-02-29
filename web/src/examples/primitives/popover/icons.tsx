@@ -1,4 +1,4 @@
-import { splitProps, type JSX } from 'solid-js'
+import { type JSX, splitProps } from 'solid-js'
 
 export const Gear = (
   props: Omit<JSX.SvgSVGAttributes<SVGSVGElement>, 'style'> & { size: string },

@@ -1,7 +1,7 @@
-import HeaderLogoDark from '@assets/header_logo_dark.svg'
-import HeaderLogoLight from '@assets/header_logo_light.svg'
 import Drawer from 'corvu/drawer'
 import type { FlowComponent } from 'solid-js'
+import HeaderLogoDark from '@assets/header_logo_dark.svg'
+import HeaderLogoLight from '@assets/header_logo_light.svg'
 
 const NavDrawer: FlowComponent = (props) => {
   return (

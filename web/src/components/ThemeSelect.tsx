@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { createEffect, onCleanup, type VoidComponent } from 'solid-js'
+import clsx from 'clsx'
 
 const ThemeSelect: VoidComponent = () => {
   const toggleTheme = () => {

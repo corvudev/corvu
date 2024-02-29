@@ -1,5 +1,5 @@
+import { createSignal, type FlowComponent, For, type JSX, Show } from 'solid-js'
 import clsx from 'clsx'
-import { createSignal, For, Show, type JSX, type FlowComponent } from 'solid-js'
 
 type CodeSnippets = {
   name: string

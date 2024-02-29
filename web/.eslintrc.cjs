@@ -3,22 +3,24 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'plugin:tailwindcss/recommended',
     'plugin:solid/typescript',
+    // Must be last
+    // See: https://github.com/prettier/eslint-plugin-prettier#configuration-legacy-eslintrc
+    'plugin:prettier/recommended',
     'plugin:astro/recommended',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'prettier',
-    'tailwindcss',
-    'solid',
-    'astro',
-  ],
-  ignorePatterns: ['dist', 'node_modules'],
+  ignorePatterns: ['!.*', 'dist', 'node_modules'],
   rules: {
     'no-console': 'warn',
+
+    'sort-imports': [
+      'warn',
+      {
+        ignoreCase: true,
+      },
+    ],
+
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -29,54 +31,14 @@ module.exports = {
     ],
     '@typescript-eslint/method-signature-style': 'error',
     '@typescript-eslint/triple-slash-reference': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        jsxSingleQuote: false,
-        semi: false,
-      },
-    ],
+
     'tailwindcss/classnames-order': 'error',
     'tailwindcss/enforces-negative-arbitrary-values': 'error',
     'tailwindcss/enforces-shorthand': 'error',
     'tailwindcss/migration-from-tailwind-2': 'error',
     'tailwindcss/no-custom-classname': 'error',
-    'import/first': 'error',
-    'import/no-duplicates': 'error',
-    'import/newline-after-import': 'error',
-    'import/order': [
-      2,
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          'object',
-          'type',
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
-    'solid/self-closing-comp': 'off',
   },
   overrides: [
-    {
-      files: ['*.ts', '*.tsx', '*.astro'],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        project: true,
-      },
-      rules: {
-        '@typescript-eslint/no-unnecessary-condition': 'error',
-      },
-    },
     {
       files: ['*.astro'],
       parser: 'astro-eslint-parser',
@@ -86,7 +48,16 @@ module.exports = {
       },
       rules: {
         'solid/prefer-for': 'off',
-        'prettier/prettier': 'off',
+        'solid/self-closing-comp': 'off',
+      },
+    },
+    {
+      files: ['*.ts', '*.tsx', '*.astro'],
+      parserOptions: {
+        project: true,
+      },
+      rules: {
+        '@typescript-eslint/no-unnecessary-condition': 'error',
       },
     },
   ],

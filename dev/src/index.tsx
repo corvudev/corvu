@@ -1,9 +1,9 @@
-import { render } from 'solid-js/web'
 import './index.css'
 import Accordion from './accordion'
 import Dialog from './dialog'
 import Drawer from './drawer'
 import Popover from './popover'
+import { render } from 'solid-js/web'
 import Tooltip from './tooltip'
 
 function App() {

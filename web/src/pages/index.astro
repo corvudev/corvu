@@ -28,10 +28,8 @@ import Topbar from '@components/Topbar'
       data-api="/plausible/api/event/"
       src="/plausible/js/script.js"></script>
   </head>
-  <body
-    class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased"
-  >
-  <Background type="home" client:load />
+  <body class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased">
+    <Background type="home" client:load />
     <Topbar floating client:load />
     <main class="mx-auto h-16 w-full max-w-7xl px-4">
       <div class="flex grow flex-col items-center pt-40">

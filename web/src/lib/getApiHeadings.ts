@@ -1,9 +1,9 @@
 import {
+  type ComponentSpecifications,
   componentSpecifications,
   titleToUtilitySpecification,
-  utilitySpecifications,
-  type ComponentSpecifications,
   type UtilitySpecifications,
+  utilitySpecifications,
 } from '@lib/apiSpecifications'
 
 const getApiHeadings = (name: string) => {

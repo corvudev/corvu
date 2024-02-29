@@ -3,12 +3,12 @@ import '@fontsource-variable/rubik'
 import '@assets/global.css'
 import '@assets/shiki.css'
 import Background from '@components/Background'
+import { corvuVersion } from '@lib/getMeta'
+import Head from '@components/Head.astro'
 import Navigation from '@components/docs/nav/Navigation.astro'
 import TableOfContents from '@components/docs/TableOfContents'
-import Head from '@components/Head.astro'
 import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar'
-import { corvuVersion } from '@lib/getMeta'
 
 interface Props {
   frontmatter: {
@@ -42,9 +42,7 @@ const { frontmatter, headings } = Astro.props
       data-api="/plausible/api/event/"
       src="/plausible/js/script.js"></script>
   </head>
-  <body
-    class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased"
-  >
+  <body class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased">
     <Background type="docs" client:load />
     <Topbar floating={false} client:load>
       <Navigation />
