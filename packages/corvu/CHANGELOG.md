@@ -1,5 +1,11 @@
 # corvu
 
+## 0.4.8
+
+### Patch Changes
+
+- Extract `transition-size` into its own package - [`4bd5090`](https://github.com/corvudev/corvu/commit/4bd509083afb6611a1cb69fffda05265287cdd51) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.7
 
 ### Patch Changes
