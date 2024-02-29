@@ -25,7 +25,7 @@ import {
 import { afterPaint } from '@corvu/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
-import createTransitionSize from '@lib/create/transitionSize'
+import createTransitionSize from 'solid-transition-size'
 import { createWritableMemo } from '@solid-primitives/memo'
 import { isFunction } from '@lib/assertions'
 import { resolveSnapPoint } from '@primitives/drawer/lib'
@@ -195,7 +195,7 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     createTransitionSize({
       element: () => dialogContext()?.contentRef() ?? null,
       enabled: () => open() && localProps.transitionResize,
-      property: () => {
+      dimension: () => {
         switch (localProps.side) {
           case 'top':
           case 'bottom':

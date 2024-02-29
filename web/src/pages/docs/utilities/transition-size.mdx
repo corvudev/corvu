@@ -1,0 +1,62 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Transition Size
+description: SolidJS utility which makes it possible to transition the width and height of elements that don't have a fixed size applied.
+image: https://corvu.dev/banner.jpg
+---
+import Features from '@components/docs/Features.astro'
+import Code from '@components/docs/code/Code.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# Transition Size
+
+Utility which makes it possible to transition the width and height of elements that don't have a fixed size applied.
+
+## Features
+<Features features={[
+  'Works with any CSS transition configuration',
+  'Specify which dimension to observe (width, height, or both)',
+  'Uses a ResizeObserver to detect changes in the size of the element',
+]} />
+
+## Usage
+
+The utility returns two signals: `transitioning` and `transitionSize`. `transitioning` can be used to know when the transition is happening, and `transitionSize` returns the fixed size of the element while transitioning. You **have** to use it to style the element you want to transition.
+
+<Code code={`
+import createTransitionSize from 'solid-transition-size';
+`} lang="tsx" copyButton />
+<Code code={`
+const Details = () => {
+  const [ref, setRef] = createSignal<HTMLElement | null>(null)
+  const { transitionSize } = createTransitionSize({
+    element: ref,
+    dimension: 'height',
+  })
+
+  const height = () => {
+    if (!transitionSize()) return undefined
+    return transitionSize() + 'px'
+  }
+
+  return (
+    <details
+      ref={setRef}
+      class="transition-[height]"
+      style={{
+        height: height(),
+      }}
+    >
+      <summary>Show detail</summary>
+      Detail
+    </details>
+  )
+}
+`} lang="tsx" copyButton />
+
+## API reference
+
+<GenerateApiDocs utility="createTransitionSize" />

@@ -501,6 +501,7 @@ export type UtilitySpecifications =
   | 'createControllableSignal'
   | 'createPreventScroll'
   | 'createFocusTrap'
+  | 'createTransitionSize'
   | 'keyedContext'
   | 'createPresence'
 
@@ -509,6 +510,7 @@ export const titleToUtilitySpecification = (
     | 'Controllable Signal'
     | 'Prevent Scroll'
     | 'Focus Trap'
+    | 'Transition Size'
     | 'Keyed Context'
     | 'Presence',
 ): UtilitySpecifications => {
@@ -519,6 +521,8 @@ export const titleToUtilitySpecification = (
       return 'createPreventScroll'
     case 'Focus Trap':
       return 'createFocusTrap'
+    case 'Transition Size':
+      return 'createTransitionSize'
     case 'Keyed Context':
       return 'keyedContext'
     case 'Presence':
@@ -530,7 +534,7 @@ export const utilitySpecifications: {
   [key in UtilitySpecifications]: {
     components?: TypeSpecification[]
     functions?: TypeSpecification[]
-    api: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll'
+    api: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll' | 'transitionSize'
   }
 } = {
   createControllableSignal: {
@@ -575,6 +579,15 @@ export const utilitySpecifications: {
       },
     ],
     api: 'focusTrap',
+  },
+  createTransitionSize: {
+    functions: [
+      {
+        name: 'createTransitionSize',
+        forcedSorting: ['element', 'enabled', 'dimension'],
+      },
+    ],
+    api: 'transitionSize',
   },
   keyedContext: {
     functions: [

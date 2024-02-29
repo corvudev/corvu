@@ -13,7 +13,7 @@ import {
  *
  * @param props.element - The element to transition.
  * @param props.enabled - Whether the utility is enabled. *Default = `true`*
- * @param props.property - The size property to transition. *Default = `'both'`*
+ * @param props.dimension - The dimension to transition. *Default = `'both'`*
  * @returns ```typescript
  * {
  *   transitioning: () => boolean
@@ -31,7 +31,7 @@ function createTransitionSize(props: {
 function createTransitionSize(props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-  property?: MaybeAccessor<'both'>
+  dimension?: MaybeAccessor<'both'>
 }): {
   transitioning: Accessor<boolean>
   transitionSize: Accessor<[number, number] | null>
@@ -39,7 +39,7 @@ function createTransitionSize(props: {
 function createTransitionSize(props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-  property?: MaybeAccessor<'width' | 'height'>
+  dimension?: MaybeAccessor<'width' | 'height'>
 }): {
   transitioning: Accessor<boolean>
   transitionSize: Accessor<number | null>
@@ -47,7 +47,7 @@ function createTransitionSize(props: {
 function createTransitionSize(props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-  property?: MaybeAccessor<'width' | 'height' | 'both'>
+  dimension?: MaybeAccessor<'width' | 'height' | 'both'>
 }): {
   transitioning: Accessor<boolean>
   transitionSize: Accessor<number | [number, number] | null>
@@ -55,7 +55,7 @@ function createTransitionSize(props: {
   const defaultedProps = mergeProps(
     {
       enabled: true,
-      property: 'both' as const,
+      dimension: 'both' as const,
     },
     props,
   )
@@ -92,8 +92,8 @@ function createTransitionSize(props: {
         target.offsetWidth,
         target.offsetHeight,
       ]
-      const property = access(defaultedProps.property)
-      if (property === 'both') {
+      const dimension = access(defaultedProps.dimension)
+      if (dimension === 'both') {
         if (!startSize) {
           startSize = currentSize
         } else if (
@@ -118,15 +118,15 @@ function createTransitionSize(props: {
         if (!startSize) {
           startSize = currentSize
         } else if (
-          getSizeProperty(property, startSize) !==
-          getSizeProperty(property, currentSize)
+          getSizeOfDimension(dimension, startSize) !==
+          getSizeOfDimension(dimension, currentSize)
         ) {
           batch(() => {
-            setTransitionSize(getSizeProperty(property, startSize!))
+            setTransitionSize(getSizeOfDimension(dimension, startSize!))
             setTransitioning(true)
           })
           afterPaint(() => {
-            setTransitionSize(getSizeProperty(property, currentSize))
+            setTransitionSize(getSizeOfDimension(dimension, currentSize))
             const transitionDuration = parseFloat(
               getComputedStyle(entry.target).transitionDuration,
             )
@@ -154,16 +154,16 @@ function createTransitionSize(props: {
   }
 
   return {
-    transitioning: () => transitioning() === true,
+    transitioning,
     transitionSize,
   }
 }
 
-const getSizeProperty = (
-  property: 'width' | 'height',
+const getSizeOfDimension = (
+  dimension: 'width' | 'height',
   size: [number, number],
 ) => {
-  switch (property) {
+  switch (dimension) {
     case 'width':
       return size[0]
     case 'height':

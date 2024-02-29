@@ -20,11 +20,13 @@ import corvuApiJson from '../../../packages/corvu/api.json'
 import focusTrapApiJson from '../../../packages/solid-focus-trap/api.json'
 import presenceApiJson from '../../../packages/solid-presence/api.json'
 import preventScrollApiJson from '../../../packages/solid-prevent-scroll/api.json'
+import transitionSizeApiJson from '../../../packages/solid-transition-size/api.json'
 
 const corvuApi = corvuApiJson as ApiDeclaration
 const focusTrapApi = focusTrapApiJson as ApiDeclaration
 const presenceApi = presenceApiJson as ApiDeclaration
 const preventScrollApi = preventScrollApiJson as ApiDeclaration
+const transitionSizeApi = transitionSizeApiJson as ApiDeclaration
 const corvuApiIndex = corvuApi.children.find((child) => child.name === 'index')!
 
 export type ApiReference = {
@@ -533,7 +535,12 @@ const getUtility = (utilityName: UtilitySpecifications) => {
 
 const getDeclaration = (
   name: string,
-  apiName: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll',
+  apiName:
+    | 'corvu'
+    | 'focusTrap'
+    | 'presence'
+    | 'preventScroll'
+    | 'transitionSize',
 ) => {
   switch (apiName) {
     case 'corvu':
@@ -548,6 +555,10 @@ const getDeclaration = (
       )
     case 'preventScroll':
       return preventScrollApi.children.find(
+        (declaration) => declaration.name === 'default',
+      )
+    case 'transitionSize':
+      return transitionSizeApi.children.find(
         (declaration) => declaration.name === 'default',
       )
   }

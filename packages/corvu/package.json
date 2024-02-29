@@ -80,7 +80,8 @@
     "@solid-primitives/memo": "^1.3.6",
     "solid-focus-trap": "workspace:~0.1",
     "solid-presence": "workspace:~0.1",
-    "solid-prevent-scroll": "workspace:~0.1"
+    "solid-prevent-scroll": "workspace:~0.1",
+    "solid-transition-size": "workspace:~0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.0",
