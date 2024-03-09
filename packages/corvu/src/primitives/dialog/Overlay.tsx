@@ -27,8 +27,6 @@ export type DialogOverlayProps<
      */
     contextId?: string
     /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
@@ -52,7 +50,6 @@ const DialogOverlay = <
     'as',
     'forceMount',
     'contextId',
-    'children',
     'ref',
     'style',
     'data-corvu-dialog-overlay',
@@ -70,41 +67,26 @@ const DialogOverlay = <
       context().overlayPresent,
     )
 
-  const keepAlive = createMemo((prev) => prev || show(), false)
-
   return (
-    <Show when={keepAlive()}>
-      {(() => {
-        const memoizedChildren = createMemo(() => localProps.children)
-
-        return (
-          <Show when={show()}>
-            <Dynamic
-              as={
-                localProps.as ??
-                (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)
-              }
-              ref={mergeRefs(context().setOverlayRef, localProps.ref)}
-              aria-hidden="true"
-              data-open={dataIf(context().open())}
-              data-closed={dataIf(!context().open())}
-              data-corvu-dialog-overlay={
-                localProps.hasOwnProperty('data-corvu-dialog-overlay')
-                  ? localProps['data-corvu-dialog-overlay']
-                  : ''
-              }
-              tabIndex="-1"
-              style={{
-                'pointer-events': 'auto',
-                ...localProps.style,
-              }}
-              {...otherProps}
-            >
-              {memoizedChildren()}
-            </Dynamic>
-          </Show>
-        )
-      })()}
+    <Show when={show()}>
+      <Dynamic
+        as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
+        ref={mergeRefs(context().setOverlayRef, localProps.ref)}
+        aria-hidden="true"
+        data-open={dataIf(context().open())}
+        data-closed={dataIf(!context().open())}
+        data-corvu-dialog-overlay={
+          localProps.hasOwnProperty('data-corvu-dialog-overlay')
+            ? localProps['data-corvu-dialog-overlay']
+            : ''
+        }
+        tabIndex="-1"
+        style={{
+          'pointer-events': 'auto',
+          ...localProps.style,
+        }}
+        {...otherProps}
+      />
     </Show>
   )
 }

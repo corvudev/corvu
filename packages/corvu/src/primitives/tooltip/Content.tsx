@@ -28,8 +28,6 @@ export type TooltipContentProps<
      */
     contextId?: string
     /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
@@ -52,7 +50,6 @@ const TooltipContent = <
     'as',
     'forceMount',
     'contextId',
-    'children',
     'ref',
     'style',
   ])
@@ -69,53 +66,43 @@ const TooltipContent = <
       context().contentPresent,
     )
 
-  const keepAlive = createMemo((prev) => prev || show(), false)
-
   return (
-    <Show when={keepAlive()}>
-      <Dismissible
-        element={context().contentRef}
-        enabled={context().open() || context().contentPresent()}
-        onDismiss={() => context().setOpen(false)}
-        dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
-        dismissOnOutsidePointer={false}
-        noOutsidePointerEvents={false}
-        onEscapeKeyDown={context().onEscapeKeyDown}
-      >
-        {(props) => {
-          const memoizedChildren = createMemo(() => localProps.children)
-
-          return (
-            <Show when={show()}>
-              <Dynamic
-                ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={
-                  localProps.as ??
-                  (DEFAULT_TOOLTIP_CONTENT_ELEMENT as ValidComponent)
-                }
-                role="tooltip"
-                id={context().tooltipId()}
-                data-open={dataIf(context().open())}
-                data-closed={dataIf(!context().open())}
-                data-placement={context().floatingState().placement}
-                data-corvu-tooltip-content=""
-                style={{
-                  ...getFloatingStyle({
-                    strategy: () => context().strategy(),
-                    floatingState: () => context().floatingState(),
-                  })(),
-                  'pointer-events': props.isLastLayer ? 'auto' : undefined,
-                  ...localProps.style,
-                }}
-                {...otherProps}
-              >
-                {memoizedChildren()}
-              </Dynamic>
-            </Show>
-          )
-        }}
-      </Dismissible>
-    </Show>
+    <Dismissible
+      element={context().contentRef}
+      enabled={context().open() || context().contentPresent()}
+      onDismiss={() => context().setOpen(false)}
+      dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+      dismissOnOutsidePointer={false}
+      noOutsidePointerEvents={false}
+      onEscapeKeyDown={context().onEscapeKeyDown}
+    >
+      {(props) => (
+        <Show when={show()}>
+          <Dynamic
+            ref={mergeRefs(context().setContentRef, localProps.ref)}
+            as={
+              localProps.as ??
+              (DEFAULT_TOOLTIP_CONTENT_ELEMENT as ValidComponent)
+            }
+            role="tooltip"
+            id={context().tooltipId()}
+            data-open={dataIf(context().open())}
+            data-closed={dataIf(!context().open())}
+            data-placement={context().floatingState().placement}
+            data-corvu-tooltip-content=""
+            style={{
+              ...getFloatingStyle({
+                strategy: () => context().strategy(),
+                floatingState: () => context().floatingState(),
+              })(),
+              'pointer-events': props.isLastLayer ? 'auto' : undefined,
+              ...localProps.style,
+            }}
+            {...otherProps}
+          />
+        </Show>
+      )}
+    </Dismissible>
   )
 }
 

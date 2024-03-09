@@ -1,5 +1,4 @@
 import { createMemo, Show, splitProps } from 'solid-js'
-import createIsClient from '@lib/create/isClient'
 import type { OverrideComponentProps } from '@lib/types'
 import { Portal } from 'solid-js/web'
 import { some } from '@lib/utils'
@@ -25,7 +24,6 @@ const DialogPortal = (props: DialogPortalProps) => {
   const [localProps, otherProps] = splitProps(props, [
     'forceMount',
     'contextId',
-    'children',
   ])
 
   const context = createMemo(() =>
@@ -41,20 +39,9 @@ const DialogPortal = (props: DialogPortalProps) => {
       context().overlayPresent,
     )
 
-  const isClient = createIsClient()
-  const keepAlive = createMemo((prev) => prev || (show() && isClient()), false)
-
   return (
-    <Show when={keepAlive()}>
-      {(() => {
-        const memoizedChildren = createMemo(() => localProps.children)
-
-        return (
-          <Show when={show()}>
-            <Portal {...otherProps}>{memoizedChildren()}</Portal>
-          </Show>
-        )
-      })()}
+    <Show when={show()}>
+      <Portal {...otherProps} />
     </Show>
   )
 }

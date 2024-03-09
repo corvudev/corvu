@@ -22,7 +22,6 @@ const PopoverContent = <
   const [localProps, otherProps] = splitProps(props, [
     'forceMount',
     'contextId',
-    'children',
     'style',
   ])
 
@@ -44,9 +43,7 @@ const PopoverContent = <
       data-corvu-dialog-content={undefined}
       data-corvu-popover-content=""
       {...(otherProps as DialogContentProps<T>)}
-    >
-      {localProps.children}
-    </DialogContent>
+    />
   )
 }
 
