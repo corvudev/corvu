@@ -8,6 +8,7 @@ import {
   createUniqueId,
   type JSX,
   mergeProps,
+  onCleanup,
   splitProps,
   untrack,
   useContext,
@@ -96,6 +97,10 @@ const Dismissible: Component<DismissibleProps> = (props) => {
   const context = useContext(DismissibleContext) as DismissibleContextValue
 
   const layerId = createUniqueId()
+
+  onCleanup(() => {
+    context.onLayerDismiss(layerId)
+  })
 
   createEffect(() => {
     if (localProps.enabled) {

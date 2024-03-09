@@ -28,8 +28,6 @@ export type DialogContentProps<
      */
     contextId?: string
     /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
     ref?: (element: HTMLElement) => void
     /** @hidden */
     style?: JSX.CSSProperties
@@ -53,7 +51,6 @@ const DialogContent = <
     'as',
     'forceMount',
     'contextId',
-    'children',
     'ref',
     'style',
     'data-corvu-dialog-content',
@@ -71,61 +68,49 @@ const DialogContent = <
       context().contentPresent,
     )
 
-  const keepAlive = createMemo((prev) => prev || show(), false)
-
   return (
-    <Show when={keepAlive()}>
-      <Dismissible
-        element={context().contentRef}
-        enabled={context().open() || context().contentPresent()}
-        onDismiss={() => context().setOpen(false)}
-        dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
-        dismissOnOutsidePointer={context().closeOnOutsidePointer}
-        dismissOnOutsidePointerStrategy={
-          context().closeOnOutsidePointerStrategy
-        }
-        dismissOnOutsidePointerIgnore={context().triggerRef}
-        noOutsidePointerEvents={context().noOutsidePointerEvents}
-        onEscapeKeyDown={context().onEscapeKeyDown}
-        onOutsidePointer={context().onOutsidePointer}
-      >
-        {(props) => {
-          const memoizedChildren = createMemo(() => localProps.children)
-
-          return (
-            <Show when={show()}>
-              <Dynamic
-                ref={mergeRefs(context().setContentRef, localProps.ref)}
-                as={
-                  localProps.as ??
-                  (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
-                }
-                role={context().role()}
-                id={context().dialogId()}
-                aria-labelledby={context().labelId()}
-                aria-describedby={context().descriptionId()}
-                aria-modal={context().modal() ? 'true' : 'false'}
-                data-open={dataIf(context().open())}
-                data-closed={dataIf(!context().open())}
-                data-corvu-dialog-content={
-                  localProps.hasOwnProperty('data-corvu-dialog-content')
-                    ? localProps['data-corvu-dialog-content']
-                    : ''
-                }
-                tabIndex="-1"
-                style={{
-                  'pointer-events': props.isLastLayer ? 'auto' : undefined,
-                  ...localProps.style,
-                }}
-                {...otherProps}
-              >
-                {memoizedChildren()}
-              </Dynamic>
-            </Show>
-          )
-        }}
-      </Dismissible>
-    </Show>
+    <Dismissible
+      element={context().contentRef}
+      enabled={context().open() || context().contentPresent()}
+      onDismiss={() => context().setOpen(false)}
+      dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+      dismissOnOutsidePointer={context().closeOnOutsidePointer}
+      dismissOnOutsidePointerStrategy={context().closeOnOutsidePointerStrategy}
+      dismissOnOutsidePointerIgnore={context().triggerRef}
+      noOutsidePointerEvents={context().noOutsidePointerEvents}
+      onEscapeKeyDown={context().onEscapeKeyDown}
+      onOutsidePointer={context().onOutsidePointer}
+    >
+      {(props) => (
+        <Show when={show()}>
+          <Dynamic
+            ref={mergeRefs(context().setContentRef, localProps.ref)}
+            as={
+              localProps.as ??
+              (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
+            }
+            role={context().role()}
+            id={context().dialogId()}
+            aria-labelledby={context().labelId()}
+            aria-describedby={context().descriptionId()}
+            aria-modal={context().modal() ? 'true' : 'false'}
+            data-open={dataIf(context().open())}
+            data-closed={dataIf(!context().open())}
+            data-corvu-dialog-content={
+              localProps.hasOwnProperty('data-corvu-dialog-content')
+                ? localProps['data-corvu-dialog-content']
+                : ''
+            }
+            tabIndex="-1"
+            style={{
+              'pointer-events': props.isLastLayer ? 'auto' : undefined,
+              ...localProps.style,
+            }}
+            {...otherProps}
+          />
+        </Show>
+      )}
+    </Dismissible>
   )
 }
 

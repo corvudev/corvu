@@ -31,8 +31,6 @@ export type DisclosureContentProps<
     /** @hidden */
     style?: JSX.CSSProperties
     /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
     'data-corvu-disclosure-content'?: string | undefined
   }
 >
@@ -56,7 +54,6 @@ const DisclosureContent = <
     'contextId',
     'ref',
     'style',
-    'children',
     'data-corvu-disclosure-content',
   ])
 
@@ -82,8 +79,6 @@ const DisclosureContent = <
     return contentSize ? contentSize[1] : undefined
   })
 
-  const keepAlive = createMemo((prev) => prev || show(), false)
-
   const memoizedDisclosureContent = createMemo(() => {
     const collapseBehavior = context().collapseBehavior()
 
@@ -108,42 +103,30 @@ const DisclosureContent = <
               ...localProps.style,
             }}
             {...otherProps}
-          >
-            {localProps.children}
-          </Dynamic>
+          />
         )
       case 'remove':
         return (
-          <Show when={keepAlive()}>
-            {(() => {
-              const memoizedChildren = createMemo(() => localProps.children)
-
-              return (
-                <Show when={show()}>
-                  <Dynamic
-                    ref={mergeRefs(context().setContentRef, localProps.ref)}
-                    as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
-                    id={context().disclosureId()}
-                    data-expanded={dataIf(context().expanded())}
-                    data-collapsed={dataIf(!context().expanded())}
-                    data-corvu-disclosure-content={
-                      localProps.hasOwnProperty('data-corvu-disclosure-content')
-                        ? localProps['data-corvu-disclosure-content']
-                        : ''
-                    }
-                    style={{
-                      display: !show() ? 'none' : undefined,
-                      '--corvu-disclosure-content-width': `${contentWidth()}px`,
-                      '--corvu-disclosure-content-height': `${contentHeight()}px`,
-                      ...localProps.style,
-                    }}
-                    {...otherProps}
-                  >
-                    {memoizedChildren()}
-                  </Dynamic>
-                </Show>
-              )
-            })()}
+          <Show when={show()}>
+            <Dynamic
+              ref={mergeRefs(context().setContentRef, localProps.ref)}
+              as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
+              id={context().disclosureId()}
+              data-expanded={dataIf(context().expanded())}
+              data-collapsed={dataIf(!context().expanded())}
+              data-corvu-disclosure-content={
+                localProps.hasOwnProperty('data-corvu-disclosure-content')
+                  ? localProps['data-corvu-disclosure-content']
+                  : ''
+              }
+              style={{
+                display: !show() ? 'none' : undefined,
+                '--corvu-disclosure-content-width': `${contentWidth()}px`,
+                '--corvu-disclosure-content-height': `${contentHeight()}px`,
+                ...localProps.style,
+              }}
+              {...otherProps}
+            />
           </Show>
         )
     }
