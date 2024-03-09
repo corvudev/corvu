@@ -58,7 +58,7 @@ const NavDrawer: FlowComponent = (props) => {
                   class="hidden dark:block"
                 />
               </a>
-              <div class="w-full overflow-auto pb-4 pl-3 pr-8 pt-2">
+              <div class="w-full overflow-y-auto pb-4 pl-3 pr-8 pt-2 scrollbar-thin">
                 {props.children}
               </div>
             </Drawer.Content>

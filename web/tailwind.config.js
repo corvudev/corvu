@@ -71,6 +71,13 @@ export default {
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-thin': {
+          'scrollbar-width': 'thin',
+        },
+      })
+    }),
     plugin(
       ({ addUtilities, matchUtilities, theme }) => {
         addUtilities({

@@ -10,6 +10,8 @@ html {
   --corvu-pink: 303 80% 82%;
   --corvu-link: 258 49% 54%;
   --corvu-link-hover: 258 59% 44%;
+
+  scrollbar-color: hsl(var(--corvu-300)) hsl(var(--corvu-100));
 }
 
 html.dark {
