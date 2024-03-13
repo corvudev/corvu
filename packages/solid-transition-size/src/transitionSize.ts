@@ -24,13 +24,6 @@ import {
 function createTransitionSize(props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-}): {
-  transitioning: Accessor<boolean>
-  transitionSize: Accessor<[number, number] | null>
-}
-function createTransitionSize(props: {
-  element: MaybeAccessor<HTMLElement | null>
-  enabled?: MaybeAccessor<boolean>
   dimension?: MaybeAccessor<'both'>
 }): {
   transitioning: Accessor<boolean>
@@ -39,7 +32,7 @@ function createTransitionSize(props: {
 function createTransitionSize(props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
-  dimension?: MaybeAccessor<'width' | 'height'>
+  dimension: MaybeAccessor<'width' | 'height'>
 }): {
   transitioning: Accessor<boolean>
   transitionSize: Accessor<number | null>
