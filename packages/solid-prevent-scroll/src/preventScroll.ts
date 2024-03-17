@@ -161,10 +161,10 @@ const createPreventScroll = (props: {
 
     const resultsInScroll = wouldScroll(target, axis, axisDelta, wrapper)
     let shouldCancel: boolean
-    if (wrapper && wrapper.contains(target)) {
+    if (wrapper && contains(wrapper, target)) {
       shouldCancel = !resultsInScroll
     } else {
-      shouldCancel = resultsInScroll
+      shouldCancel = true
     }
     if (shouldCancel && event.cancelable) {
       event.preventDefault()
@@ -201,10 +201,10 @@ const createPreventScroll = (props: {
           currentTouchStartDelta,
           wrapper,
         )
-        if (wrapper && wrapper.contains(target)) {
+        if (wrapper && contains(wrapper, target)) {
           shouldCancel = !wouldResultInScroll
         } else {
-          shouldCancel = wouldResultInScroll
+          shouldCancel = true
         }
       }
     }
@@ -240,7 +240,7 @@ const wouldScroll = (
   delta: number,
   wrapper: HTMLElement | null,
 ) => {
-  const targetInWrapper = wrapper && wrapper.contains(target)
+  const targetInWrapper = wrapper && contains(wrapper, target)
 
   const [availableScroll, availableScrollTop] = getScrollAtLocation(
     target,
@@ -257,6 +257,25 @@ const wouldScroll = (
   }
 
   return true
+}
+
+/**
+ * Checks whether an element contains another element.
+ * Works with SolidJS portals by using their `_$host` property.
+ *
+ * @param wrapper - The wrapper element that should contain the target element.
+ * @param target - The target element.
+ * @returns Whether the wrapper contains the target element.
+ */
+const contains = (wrapper: HTMLElement, target: HTMLElement) => {
+  if (wrapper.contains(target)) return true
+  let currentElement: HTMLElement | null = target
+  while (currentElement) {
+    if (currentElement === wrapper) return true
+    // @ts-expect-error: _$host is a custom SolidJS property
+    currentElement = currentElement._$host ?? currentElement.parentElement
+  }
+  return false
 }
 
 export default createPreventScroll

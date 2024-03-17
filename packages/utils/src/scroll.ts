@@ -43,7 +43,7 @@ const isScrollContainer = (element: HTMLElement, axis: Axis | 'both') => {
  *
  * @param location - The HTMLElement to check.
  * @param axis - The axis to check for.
- * @param stopAt - The HTMLElement to stop at when searching up the tree for scrollable elements. Defaults to the body element.
+ * @param stopAt - The HTMLElement to stop at when searching up the tree for scrollable elements. Defaults to the body element. Works with SolidJS portals by using their `_$host` property.
  * @returns The total scroll available at the given location. `[availableScroll, availableScrollTop]`
  */
 const getScrollAtLocation = (
@@ -79,7 +79,8 @@ const getScrollAtLocation = (
     if (currentElement === (stopAt ?? document.documentElement)) {
       wrapperReached = true
     } else {
-      currentElement = currentElement.parentElement
+      // @ts-expect-error: _$host is a custom SolidJS property
+      currentElement = currentElement._$host ?? currentElement.parentElement
     }
   } while (currentElement && !wrapperReached)
 
