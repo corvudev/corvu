@@ -1,6 +1,6 @@
 {
   "name": "solid-transition-size",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "SolidJS utility which makes it possible to transition the width and height of elements that don't have a fixed size applied.",
   "keywords": [
