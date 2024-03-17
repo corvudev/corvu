@@ -210,7 +210,7 @@ importers:
   packages/solid-prevent-scroll:
     dependencies:
       '@corvu/utils':
-        specifier: workspace:~0.1
+        specifier: workspace:~0.1.1
         version: link:../utils
     devDependencies:
       '@typescript-eslint/eslint-plugin':
