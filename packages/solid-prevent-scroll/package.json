@@ -1,6 +1,6 @@
 {
   "name": "solid-prevent-scroll",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "description": "SolidJS utility that prevents scrolling outside of a given DOM element. Works by preventing events that else would lead to scrolling.",
   "keywords": [
@@ -46,7 +46,7 @@
     "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts"
   },
   "dependencies": {
-    "@corvu/utils": "workspace:~0.1"
+    "@corvu/utils": "workspace:~0.1.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.0",
