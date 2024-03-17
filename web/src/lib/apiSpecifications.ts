@@ -498,33 +498,21 @@ export const componentSpecifications: {
 }
 
 export type UtilitySpecifications =
-  | 'createControllableSignal'
   | 'createPreventScroll'
   | 'createFocusTrap'
   | 'createTransitionSize'
-  | 'keyedContext'
   | 'createPresence'
 
 export const titleToUtilitySpecification = (
-  title:
-    | 'Controllable Signal'
-    | 'Prevent Scroll'
-    | 'Focus Trap'
-    | 'Transition Size'
-    | 'Keyed Context'
-    | 'Presence',
+  title: 'Prevent Scroll' | 'Focus Trap' | 'Transition Size' | 'Presence',
 ): UtilitySpecifications => {
   switch (title) {
-    case 'Controllable Signal':
-      return 'createControllableSignal'
     case 'Prevent Scroll':
       return 'createPreventScroll'
     case 'Focus Trap':
       return 'createFocusTrap'
     case 'Transition Size':
       return 'createTransitionSize'
-    case 'Keyed Context':
-      return 'keyedContext'
     case 'Presence':
       return 'createPresence'
   }
@@ -537,15 +525,6 @@ export const utilitySpecifications: {
     api: 'corvu' | 'focusTrap' | 'presence' | 'preventScroll' | 'transitionSize'
   }
 } = {
-  createControllableSignal: {
-    functions: [
-      {
-        name: 'createControllableSignal',
-        forcedSorting: ['value', 'onChange', 'initialValue'],
-      },
-    ],
-    api: 'corvu',
-  },
   createPreventScroll: {
     functions: [
       {
@@ -588,21 +567,6 @@ export const utilitySpecifications: {
       },
     ],
     api: 'transitionSize',
-  },
-  keyedContext: {
-    functions: [
-      {
-        name: 'createKeyedContext',
-        forcedSorting: ['key', 'defaultValue'],
-      },
-      {
-        name: 'getKeyedContext',
-      },
-      {
-        name: 'useKeyedContext',
-      },
-    ],
-    api: 'corvu',
   },
   createPresence: {
     functions: [
