@@ -6,7 +6,6 @@ import {
   createSignal,
   type JSX,
   mergeProps,
-  onCleanup,
   splitProps,
   untrack,
 } from 'solid-js'
@@ -26,6 +25,7 @@ import type { Side, Size } from '@lib/types'
 import { afterPaint } from '@corvu/utils'
 import createControllableSignal from '@lib/create/controllableSignal'
 import createOnce from '@lib/create/once'
+import createSize from '@lib/create/size'
 import createTransitionSize from 'solid-transition-size'
 import { createWritableMemo } from '@solid-primitives/memo'
 import { isFunction } from '@lib/assertions'
@@ -268,43 +268,19 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
     })
   }
 
-  const [drawerSize, setDrawerSize] = createSignal(0)
-
-  createEffect(() => {
-    const element = dialogContext()?.contentRef()
-    if (!element) return
-
-    syncDrawerSize(element)
-
-    const observer = new ResizeObserver(resizeObserverCallback)
-    observer.observe(element)
-    onCleanup(() => {
-      observer.disconnect()
-    })
+  const drawerSize = createSize({
+    element: () => dialogContext()?.contentRef() ?? null,
+    dimension: () => {
+      switch (localProps.side) {
+        case 'top':
+        case 'bottom':
+          return 'height'
+        case 'left':
+        case 'right':
+          return 'width'
+      }
+    },
   })
-
-  const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-    for (const entry of entries) {
-      if (entry.target !== dialogContext()?.contentRef()) continue
-      syncDrawerSize(entry.target as HTMLElement)
-    }
-  }
-
-  const syncDrawerSize = (element: HTMLElement) => {
-    const previousDrawerSize = untrack(() => drawerSize())
-    switch (localProps.side) {
-      case 'top':
-      case 'bottom':
-        if (previousDrawerSize === element.offsetHeight) return
-        setDrawerSize(element.offsetHeight)
-        break
-      case 'left':
-      case 'right':
-        if (previousDrawerSize === element.offsetWidth) return
-        setDrawerSize(element.offsetWidth)
-        break
-    }
-  }
 
   const resolvedActiveSnapPoint = createMemo(() =>
     resolveSnapPoint(activeSnapPoint(), drawerSize()),

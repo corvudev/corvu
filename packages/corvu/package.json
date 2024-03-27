@@ -59,6 +59,9 @@
       "popover": [
         "./dist/primitives/popover/index.d.ts"
       ],
+      "resizable": [
+        "./dist/primitives/resizable/index.d.ts"
+      ],
       "tooltip": [
         "./dist/primitives/tooltip/index.d.ts"
       ]
