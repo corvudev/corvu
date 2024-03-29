@@ -37,7 +37,10 @@ const TooltipAnchor = <
 
   return (
     <Dynamic
-      as={localProps.as ?? DEFAULT_TOOLTIP_ANCHOR_ELEMENT}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_TOOLTIP_ANCHOR_ELEMENT
+      }
       ref={mergeRefs(context().setAnchorRef, localProps.ref)}
       data-corvu-tooltip-anchor
       {...otherProps}

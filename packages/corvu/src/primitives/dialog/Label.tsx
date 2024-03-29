@@ -52,7 +52,10 @@ const DialogLabel = <
 
   return (
     <Dynamic
-      as={localProps.as ?? DEFAULT_DIALOG_LABEL_ELEMENT}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DIALOG_LABEL_ELEMENT
+      }
       id={context().labelId()}
       data-corvu-dialog-label={
         localProps.hasOwnProperty('data-corvu-dialog-label')

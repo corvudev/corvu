@@ -41,8 +41,11 @@ const TooltipTrigger = <
 
   return (
     <DynamicButton
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_TOOLTIP_TRIGGER_ELEMENT
+      }
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? (DEFAULT_TOOLTIP_TRIGGER_ELEMENT as ValidComponent)}
       aria-expanded={context().open() ? 'true' : 'false'}
       aria-describedby={context().open() ? context().tooltipId() : undefined}
       data-open={dataIf(context().open())}

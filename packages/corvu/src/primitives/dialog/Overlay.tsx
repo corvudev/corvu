@@ -70,7 +70,10 @@ const DialogOverlay = <
   return (
     <Show when={show()}>
       <Dynamic
-        as={localProps.as ?? (DEFAULT_DIALOG_OVERLAY_ELEMENT as ValidComponent)}
+        as={
+          (localProps.as as ValidComponent | undefined) ??
+          DEFAULT_DIALOG_OVERLAY_ELEMENT
+        }
         ref={mergeRefs(context().setOverlayRef, localProps.ref)}
         aria-hidden="true"
         data-open={dataIf(context().open())}

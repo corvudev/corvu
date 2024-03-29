@@ -52,7 +52,10 @@ const DialogDescription = <
 
   return (
     <Dynamic
-      as={localProps.as ?? DEFAULT_DIALOG_DESCRIPTION_ELEMENT}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DIALOG_DESCRIPTION_ELEMENT
+      }
       id={context().descriptionId()}
       data-corvu-dialog-description={
         localProps.hasOwnProperty('data-corvu-dialog-description')

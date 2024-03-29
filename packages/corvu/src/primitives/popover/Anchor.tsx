@@ -37,7 +37,10 @@ const PopoverAnchor = <
 
   return (
     <Dynamic
-      as={localProps.as ?? DEFAULT_POPOVER_ANCHOR_ELEMENT}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_POPOVER_ANCHOR_ELEMENT
+      }
       ref={mergeRefs(context().setAnchorRef, localProps.ref)}
       data-corvu-popover-anchor
       {...otherProps}

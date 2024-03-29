@@ -53,7 +53,8 @@ const DisclosureTrigger = <
   return (
     <DynamicButton
       as={
-        localProps.as ?? (DEFAULT_DISCLOSURE_TRIGGER_ELEMENT as ValidComponent)
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DISCLOSURE_TRIGGER_ELEMENT
       }
       onClick={onClick}
       aria-expanded={context().expanded() ? 'true' : 'false'}

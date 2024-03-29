@@ -79,11 +79,11 @@ const TooltipContent = <
       {(props) => (
         <Show when={show()}>
           <Dynamic
-            ref={mergeRefs(context().setContentRef, localProps.ref)}
             as={
-              localProps.as ??
-              (DEFAULT_TOOLTIP_CONTENT_ELEMENT as ValidComponent)
+              (localProps.as as ValidComponent | undefined) ??
+              DEFAULT_TOOLTIP_CONTENT_ELEMENT
             }
+            ref={mergeRefs(context().setContentRef, localProps.ref)}
             role="tooltip"
             id={context().tooltipId()}
             data-open={dataIf(context().open())}

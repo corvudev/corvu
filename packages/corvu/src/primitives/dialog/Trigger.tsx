@@ -55,8 +55,11 @@ const DialogTrigger = <
 
   return (
     <DynamicButton
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DIALOG_TRIGGER_ELEMENT
+      }
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      as={localProps.as ?? (DEFAULT_DIALOG_TRIGGER_ELEMENT as ValidComponent)}
       onClick={onClick}
       aria-haspopup="dialog"
       aria-expanded={context().open() ? 'true' : 'false'}

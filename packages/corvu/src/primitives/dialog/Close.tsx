@@ -49,7 +49,10 @@ const DialogClose = <
 
   return (
     <DynamicButton
-      as={localProps.as ?? DEFAULT_DIALOG_CLOSE_ELEMENT}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DIALOG_CLOSE_ELEMENT
+      }
       onClick={onClick}
       aria-label="close"
       data-corvu-dialog-close={

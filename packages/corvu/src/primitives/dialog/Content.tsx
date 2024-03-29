@@ -84,11 +84,11 @@ const DialogContent = <
       {(props) => (
         <Show when={show()}>
           <Dynamic
-            ref={mergeRefs(context().setContentRef, localProps.ref)}
             as={
-              localProps.as ??
-              (DEFAULT_DIALOG_CONTENT_ELEMENT as ValidComponent)
+              (localProps.as as ValidComponent | undefined) ??
+              DEFAULT_DIALOG_CONTENT_ELEMENT
             }
+            ref={mergeRefs(context().setContentRef, localProps.ref)}
             role={context().role()}
             id={context().dialogId()}
             aria-labelledby={context().labelId()}

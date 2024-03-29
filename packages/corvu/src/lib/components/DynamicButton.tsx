@@ -43,7 +43,10 @@ const DynamicButton = <
 
   return (
     <Dynamic
-      as={localProps.as ?? (DEFAULT_DYNAMIC_BUTTON_ELEMENT as ValidComponent)}
+      as={
+        (localProps.as as ValidComponent | undefined) ??
+        DEFAULT_DYNAMIC_BUTTON_ELEMENT
+      }
       ref={mergeRefs(setRef, localProps.ref)}
       type={isNativeButton() ? 'button' : undefined}
       role={!isNativeButton() ? 'button' : undefined}

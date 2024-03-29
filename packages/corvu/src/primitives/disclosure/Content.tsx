@@ -86,8 +86,11 @@ const DisclosureContent = <
       case 'hide':
         return (
           <Dynamic
+            as={
+              (localProps.as as ValidComponent | undefined) ??
+              DEFAULT_DISCLOSURE_CONTENT_ELEMENT
+            }
             ref={mergeRefs(context().setContentRef, localProps.ref)}
-            as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
             id={context().disclosureId()}
             data-expanded={dataIf(context().expanded())}
             data-collapsed={dataIf(!context().expanded())}
@@ -109,8 +112,11 @@ const DisclosureContent = <
         return (
           <Show when={show()}>
             <Dynamic
+              as={
+                (localProps.as as ValidComponent | undefined) ??
+                DEFAULT_DISCLOSURE_CONTENT_ELEMENT
+              }
               ref={mergeRefs(context().setContentRef, localProps.ref)}
-              as={localProps.as ?? DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
               id={context().disclosureId()}
               data-expanded={dataIf(context().expanded())}
               data-collapsed={dataIf(!context().expanded())}
