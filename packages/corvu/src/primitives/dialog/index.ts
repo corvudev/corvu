@@ -41,9 +41,8 @@ export {
   Close,
 }
 
-export default {
+export const Dialog = Object.assign(Root, {
   useContext,
-  Root,
   Trigger,
   Portal,
   Overlay,
@@ -51,4 +50,4 @@ export default {
   Label,
   Description,
   Close,
-}
+})

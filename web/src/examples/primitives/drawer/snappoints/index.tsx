@@ -1,9 +1,9 @@
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
 const DrawerSnapPointExample: VoidComponent = () => {
   return (
-    <Drawer.Root snapPoints={[0, 0.5, 1]} allowSkippingSnapPoints={false}>
+    <Drawer snapPoints={[0, 0.5, 1]} allowSkippingSnapPoints={false}>
       {(props) => (
         <>
           <div class="my-auto flex flex-col items-center">
@@ -39,7 +39,7 @@ const DrawerSnapPointExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

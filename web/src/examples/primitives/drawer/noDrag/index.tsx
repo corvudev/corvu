@@ -1,9 +1,9 @@
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
 const DrawerNoDragExample: VoidComponent = () => {
   return (
-    <Drawer.Root>
+    <Drawer>
       {(props) => (
         <>
           <div class="my-auto flex flex-col items-center">
@@ -40,7 +40,7 @@ const DrawerNoDragExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

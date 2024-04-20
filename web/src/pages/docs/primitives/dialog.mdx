@@ -68,7 +68,7 @@ A window overlaid on either the primary window or another dialog window.
 
 ## Usage
 <Code code={`
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 // Or
 // import { Root, Trigger, ... } from 'corvu/dialog'
 `} lang="tsx" copyButton />
@@ -76,7 +76,7 @@ import Dialog from 'corvu/dialog'
 ### Anatomy
 
 <Code code={`
-<Dialog.Root>
+<Dialog>
   <Dialog.Trigger />
   <Dialog.Portal>
     <Dialog.Overlay />
@@ -86,7 +86,7 @@ import Dialog from 'corvu/dialog'
       <Dialog.Description />
     </Dialog.Content>
   </Dialog.Portal>
-</Dialog.Root>
+</Dialog>
 `} lang="tsx" copyButton />
 
 ### Scrolling

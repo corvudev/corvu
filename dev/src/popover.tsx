@@ -1,10 +1,10 @@
-import Popover from 'corvu/popover'
+import { Popover } from 'corvu/popover'
 import { type VoidComponent } from 'solid-js'
 
 const PopoverExample: VoidComponent = () => {
   return (
     <div class="@xl:max-w-[400px] relative my-auto w-full max-w-[250px] overflow-hidden rounded-lg">
-      <Popover.Root
+      <Popover
         floatingOptions={{
           offset: 12,
           flip: true,
@@ -95,7 +95,7 @@ const PopoverExample: VoidComponent = () => {
             </div>
           </Popover.Content>
         </Popover.Portal>
-      </Popover.Root>
+      </Popover>
     </div>
   )
 }

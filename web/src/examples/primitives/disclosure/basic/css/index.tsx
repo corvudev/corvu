@@ -1,12 +1,12 @@
 import './index.css'
 import { CaretUpDown, X } from '@examples/primitives/disclosure/icons'
-import Disclosure from 'corvu/disclosure'
+import { Disclosure } from 'corvu/disclosure'
 import type { VoidComponent } from 'solid-js'
 
 const DisclosureExample: VoidComponent = () => {
   return (
     <div>
-      <Disclosure.Root collapseBehavior="hide">
+      <Disclosure collapseBehavior="hide">
         {(props) => (
           <>
             <div class="header">
@@ -33,7 +33,7 @@ const DisclosureExample: VoidComponent = () => {
             </Disclosure.Content>
           </>
         )}
-      </Disclosure.Root>
+      </Disclosure>
     </div>
   )
 }

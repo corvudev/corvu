@@ -1,10 +1,10 @@
 import { Gear } from '@examples/primitives/popover/icons'
-import Popover from 'corvu/popover'
+import { Popover } from 'corvu/popover'
 import type { VoidComponent } from 'solid-js'
 
 const PopoverExample: VoidComponent = () => {
   return (
-    <Popover.Root
+    <Popover
       floatingOptions={{
         offset: 13,
         flip: true,
@@ -39,7 +39,7 @@ const PopoverExample: VoidComponent = () => {
           <Popover.Arrow class="text-corvu-100" />
         </Popover.Content>
       </Popover.Portal>
-    </Popover.Root>
+    </Popover>
   )
 }
 

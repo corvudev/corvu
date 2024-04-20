@@ -1,10 +1,10 @@
 import './index.css'
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 import type { VoidComponent } from 'solid-js'
 
 const DialogExample: VoidComponent = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       <Dialog.Trigger>Open Dialog</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
@@ -20,7 +20,7 @@ const DialogExample: VoidComponent = () => {
           </div>
         </Dialog.Content>
       </Dialog.Portal>
-    </Dialog.Root>
+    </Dialog>
   )
 }
 

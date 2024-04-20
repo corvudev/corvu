@@ -1,11 +1,11 @@
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 import type { FlowComponent } from 'solid-js'
 import HeaderLogoDark from '@assets/header_logo_dark.svg'
 import HeaderLogoLight from '@assets/header_logo_light.svg'
 
 const NavDrawer: FlowComponent = (props) => {
   return (
-    <Drawer.Root side="left" breakPoints={[0.75]}>
+    <Drawer side="left" breakPoints={[0.75]}>
       {(drawerProps) => (
         <>
           <Drawer.Trigger class="p-1.5 md:hidden">
@@ -65,7 +65,7 @@ const NavDrawer: FlowComponent = (props) => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

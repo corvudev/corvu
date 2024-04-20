@@ -23,9 +23,8 @@ export type {
 
 export { useContext, Root, Trigger, Content }
 
-export default {
+export const Disclosure = Object.assign(Root, {
   useContext,
-  Root,
   Trigger,
   Content,
-}
+})

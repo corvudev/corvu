@@ -46,12 +46,11 @@ export {
   Content,
 }
 
-export default {
+export const Accordion = Object.assign(Root, {
   useContext,
   useItemContext,
   useDisclosureContext,
-  Root,
   Item,
   Trigger,
   Content,
-}
+})

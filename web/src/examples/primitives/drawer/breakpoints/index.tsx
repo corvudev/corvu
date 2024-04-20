@@ -1,9 +1,9 @@
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
 const DrawerBreakPointExample: VoidComponent = () => {
   return (
-    <Drawer.Root breakPoints={[0.75]} velocityFunction={() => 1}>
+    <Drawer breakPoints={[0.75]} velocityFunction={() => 1}>
       {(props) => (
         <>
           <div class="my-auto flex flex-col items-center">
@@ -39,7 +39,7 @@ const DrawerBreakPointExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

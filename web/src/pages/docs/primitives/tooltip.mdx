@@ -66,7 +66,7 @@ A popup that displays information when its trigger receives keyboard focus or th
 
 ## Usage
 <Code code={`
-import Tooltip from 'corvu/tooltip'
+import { Tooltip } from 'corvu/tooltip'
 // Or
 // import { Root, Trigger, ... } from 'corvu/tooltip'
 `} lang="tsx" copyButton />
@@ -74,7 +74,7 @@ import Tooltip from 'corvu/tooltip'
 ### Anatomy
 
 <Code code={`
-<Tooltip.Root>
+<Tooltip>
   <Tooltip.Anchor>
     <Tooltip.Trigger />
   </Tooltip.Anchor>
@@ -83,7 +83,7 @@ import Tooltip from 'corvu/tooltip'
       <Tooltip.Arrow />
     </Tooltip.Content>
   </Tooltip.Portal>
-</Tooltip.Root>
+</Tooltip>
 `} lang="tsx" copyButton />
 
 The anchor component can optionally be used to make the tooltip anchor itself to another element than the trigger.

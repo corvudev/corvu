@@ -78,14 +78,14 @@ A drawer is a draggable dialog that is attached to any side of the viewport. It 
 
 ## Usage
 <Code code={`
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 // Or
 // import { Root, Trigger, ... } from 'corvu/drawer'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 <Code code={`
-<Drawer.Root>
+<Drawer>
   <Drawer.Trigger />
   <Drawer.Portal>
     <Drawer.Overlay />
@@ -95,7 +95,7 @@ import Drawer from 'corvu/drawer'
       <Drawer.Description />
     </Drawer.Content>
   </Drawer.Portal>
-</Drawer.Root>
+</Drawer>
 `} lang="tsx" copyButton />
 
 Every component besides the `Root` and `Content` components are just re-exports from the Dialog primitive. You can find more information about them in the [Dialog documentation](/docs/primitives/dialog/).

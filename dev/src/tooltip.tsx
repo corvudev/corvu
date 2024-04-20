@@ -1,10 +1,10 @@
-import Tooltip from 'corvu/tooltip'
+import { Tooltip } from 'corvu/tooltip'
 import { type VoidComponent } from 'solid-js'
 
 const TooltipExample: VoidComponent = () => {
   return (
     <div class="@xl:max-w-[400px] relative my-auto w-full max-w-[250px] overflow-hidden rounded-lg">
-      <Tooltip.Root
+      <Tooltip
         placement="top"
         floatingOptions={{
           offset: 12,
@@ -93,7 +93,7 @@ const TooltipExample: VoidComponent = () => {
             <p>Some very cool tooltip!</p>
           </Tooltip.Content>
         </Tooltip.Portal>
-      </Tooltip.Root>
+      </Tooltip>
     </div>
   )
 }

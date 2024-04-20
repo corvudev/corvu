@@ -60,10 +60,9 @@ export {
   Close,
 }
 
-export default {
+export const Popover = Object.assign(Root, {
   useContext,
   useDialogContext,
-  Root,
   Anchor,
   Trigger,
   Portal,
@@ -73,4 +72,4 @@ export default {
   Label,
   Description,
   Close,
-}
+})

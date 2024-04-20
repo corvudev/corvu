@@ -1,10 +1,10 @@
-import Accordion from 'corvu/accordion'
+import { Accordion } from 'corvu/accordion'
 import type { VoidComponent } from 'solid-js'
 
 const AccordionExample: VoidComponent = () => {
   return (
     <div class="wrapper">
-      <Accordion.Root collapseBehavior="hide">
+      <Accordion collapseBehavior="hide">
         <Accordion.Item>
           <h2>
             <Accordion.Trigger>What is corvu?</Accordion.Trigger>
@@ -36,7 +36,7 @@ const AccordionExample: VoidComponent = () => {
             </div>
           </Accordion.Content>
         </Accordion.Item>
-      </Accordion.Root>
+      </Accordion>
     </div>
   )
 }

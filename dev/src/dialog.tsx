@@ -1,6 +1,6 @@
 import { createSignal, For, type VoidComponent } from 'solid-js'
 import clsx from 'clsx'
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 
 const DialogDev: VoidComponent = () => {
   return (
@@ -15,9 +15,9 @@ const DialogDev: VoidComponent = () => {
       </div>
       <div class="space-y-1 text-center">
         <p class="font-bold">Context</p>
-        <Dialog.Root>
+        <Dialog>
           <Context />
-        </Dialog.Root>
+        </Dialog>
       </div>
       <div class="space-y-1 text-center">
         <p class="font-bold">Children props</p>
@@ -29,7 +29,7 @@ const DialogDev: VoidComponent = () => {
 
 const Uncontrolled: VoidComponent = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       <Dialog.Trigger class="rounded bg-white px-3 py-2 text-sm text-purple-600 shadow transition-colors hover:bg-gray-100">
         Open
       </Dialog.Trigger>
@@ -53,7 +53,7 @@ const Uncontrolled: VoidComponent = () => {
           </div>
         </Dialog.Content>
       </Dialog.Portal>
-    </Dialog.Root>
+    </Dialog>
   )
 }
 
@@ -61,7 +61,7 @@ const Controlled: VoidComponent = () => {
   const [open, setOpen] = createSignal(false)
 
   return (
-    <Dialog.Root open={open()} onOpenChange={setOpen}>
+    <Dialog open={open()} onOpenChange={setOpen}>
       <p class="text-sm">
         Controlled state:{' '}
         <span class="font-mono">{open() ? 'open' : 'closed'}</span>
@@ -80,7 +80,7 @@ const Controlled: VoidComponent = () => {
           <p class="text-xs">Random text</p>
         </Dialog.Content>
       </Dialog.Portal>
-    </Dialog.Root>
+    </Dialog>
   )
 }
 
@@ -115,7 +115,7 @@ const Context: VoidComponent = () => {
 
 const Children: VoidComponent = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       {(props) => (
         <>
           <p class="text-sm">
@@ -138,7 +138,7 @@ const Children: VoidComponent = () => {
           </Dialog.Portal>
         </>
       )}
-    </Dialog.Root>
+    </Dialog>
   )
 }
 

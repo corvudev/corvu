@@ -1,5 +1,5 @@
 import { createSignal, type VoidComponent } from 'solid-js'
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 
 const heightSequence = [500, 400, 300, 400]
 
@@ -7,7 +7,7 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
   const [currentHeight, setCurrentHeight] = createSignal(400)
 
   return (
-    <Drawer.Root transitionResize>
+    <Drawer transitionResize>
       {(props) => (
         <>
           <div class="my-auto flex flex-col items-center">
@@ -59,7 +59,7 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

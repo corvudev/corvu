@@ -1,9 +1,9 @@
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 import type { VoidComponent } from 'solid-js'
 
 const DialogExample: VoidComponent = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       <Dialog.Trigger class="my-auto rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
         Open Dialog
       </Dialog.Trigger>
@@ -27,7 +27,7 @@ const DialogExample: VoidComponent = () => {
           </div>
         </Dialog.Content>
       </Dialog.Portal>
-    </Dialog.Root>
+    </Dialog>
   )
 }
 

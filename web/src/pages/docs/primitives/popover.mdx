@@ -66,7 +66,7 @@ A popup that displays an anchored interactive dialog on click. It uses the aweso
 
 ## Usage
 <Code code={`
-import Popover from 'corvu/popover'
+import { Popover } from 'corvu/popover'
 // Or
 // import { Root, Trigger, ... } from 'corvu/popover'
 `} lang="tsx" copyButton />
@@ -74,7 +74,7 @@ import Popover from 'corvu/popover'
 ### Anatomy
 
 <Code code={`
-<Popover.Root>
+<Popover>
   <Popover.Anchor>
     <Popover.Trigger />
   </Popover.Anchor>
@@ -87,7 +87,7 @@ import Popover from 'corvu/popover'
       <Popover.Description />
     </Popover.Content>
   </Popover.Portal>
-</Popover.Root>
+</Popover>
 `} lang="tsx" copyButton />
 
 The anchor component can optionally be used to make the popover anchor itself to another element than the trigger.

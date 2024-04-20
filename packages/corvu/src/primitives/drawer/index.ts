@@ -54,10 +54,9 @@ export {
   Close,
 }
 
-export default {
+export const Drawer = Object.assign(Root, {
   useContext,
   useDialogContext,
-  Root,
   Trigger,
   Portal,
   Overlay,
@@ -65,4 +64,4 @@ export default {
   Label,
   Description,
   Close,
-}
+})

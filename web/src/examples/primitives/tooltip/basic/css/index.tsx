@@ -1,11 +1,11 @@
 import './index.css'
 import { Star } from '@examples/primitives/tooltip/icons'
-import Tooltip from 'corvu/tooltip'
+import { Tooltip } from 'corvu/tooltip'
 import type { VoidComponent } from 'solid-js'
 
 const TooltipExample: VoidComponent = () => {
   return (
-    <Tooltip.Root
+    <Tooltip
       placement="top"
       openDelay={200}
       floatingOptions={{
@@ -28,7 +28,7 @@ const TooltipExample: VoidComponent = () => {
           <Tooltip.Arrow />
         </Tooltip.Content>
       </Tooltip.Portal>
-    </Tooltip.Root>
+    </Tooltip>
   )
 }
 

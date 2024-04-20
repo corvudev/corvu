@@ -1,6 +1,6 @@
 import { For, type VoidComponent } from 'solid-js'
 import clsx from 'clsx'
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 
 const DrawerDev: VoidComponent = () => {
   return (
@@ -29,7 +29,7 @@ const Uncontrolled: VoidComponent<{
   side: 'top' | 'right' | 'bottom' | 'left'
 }> = (props) => {
   return (
-    <Drawer.Root side={props.side}>
+    <Drawer side={props.side}>
       {(props) => (
         <>
           <Drawer.Trigger class="rounded bg-white px-3 py-2 text-sm text-purple-600 shadow transition-colors hover:bg-gray-100">
@@ -83,7 +83,7 @@ const Uncontrolled: VoidComponent<{
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

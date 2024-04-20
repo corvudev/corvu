@@ -1,10 +1,10 @@
 import { For, type VoidComponent } from 'solid-js'
 import clsx from 'clsx'
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 
 const DrawerScrollableExample: VoidComponent = () => {
   return (
-    <Drawer.Root>
+    <Drawer>
       {(props) => (
         <>
           <div class="my-auto flex flex-col items-center">
@@ -46,7 +46,7 @@ const DrawerScrollableExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

@@ -25,12 +25,11 @@ export type {
 
 export { useContext, Root, Anchor, Trigger, Portal, Content, Arrow }
 
-export default {
+export const Tooltip = Object.assign(Root, {
   useContext,
-  Root,
   Anchor,
   Trigger,
   Portal,
   Content,
   Arrow,
-}
+})

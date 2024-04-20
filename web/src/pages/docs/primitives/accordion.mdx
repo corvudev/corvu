@@ -65,7 +65,7 @@ A component that consists of multiple collapsible sections.
 
 ## Usage
 <Code code={`
-import Accordion from 'corvu/accordion'
+import { Accordion }  from 'corvu/accordion'
 // Or
 // import { Root, Trigger, ... } from 'corvu/accordion'
 `} lang="tsx" copyButton />
@@ -73,12 +73,12 @@ import Accordion from 'corvu/accordion'
 ### Anatomy
 
 <Code code={`
-<Accordion.Root>
+<Accordion>
   <Accordion.Item>
     <Accordion.Trigger />
     <Accordion.Content />
   </Accordion.Item>
-</Accordion.Root>
+</Accordion>
 `} lang="tsx" copyButton />
 
 The accordion item uses the [Disclosure](/docs/primitives/disclosure/) component under the hood. It forwards the same props in the Item children callback and the disclosure context is re-exported as `Accordion.useDisclosureContext`.

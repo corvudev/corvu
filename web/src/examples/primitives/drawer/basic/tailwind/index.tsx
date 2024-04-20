@@ -1,9 +1,9 @@
-import Drawer from 'corvu/drawer'
+import { Drawer } from 'corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
 const DrawerExample: VoidComponent = () => {
   return (
-    <Drawer.Root breakPoints={[0.75]}>
+    <Drawer breakPoints={[0.75]}>
       {(props) => (
         <>
           <Drawer.Trigger class="my-auto rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
@@ -33,7 +33,7 @@ const DrawerExample: VoidComponent = () => {
           </Drawer.Portal>
         </>
       )}
-    </Drawer.Root>
+    </Drawer>
   )
 }
 

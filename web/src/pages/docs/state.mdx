@@ -20,18 +20,18 @@ Corvu aims to be very customizable and provides various ways to control a primit
 The easiest way to control a primitive's state is by passing your own defined state to its `Root` component. Most of the time, this consists of a getter and setter property like in this example, where we control the open state of a dialog:
 
 <Code code={`
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 import { createSignal } from 'solid-js'
 
 const MyDialog = () => {
   const [open, setOpen] = createSignal(false)
   return (
-    <Dialog.Root open={open()} onOpenChange={setOpen}>
+    <Dialog open={open()} onOpenChange={setOpen}>
       <Dialog.Trigger>Open Dialog</Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Label>Label</Dialog.Label>
       </Dialog.Content>
-    </Dialog.Root>
+    </Dialog>
   )
 }
 `} lang="tsx" />
@@ -43,14 +43,14 @@ This allows you to use the open state anywhere in your code and alter it freely.
 It's also possible to access the context of every primitive. This allows you to get the internal state of a primitive from anywhere in your code, as long as it's under the `Root` component, where the context gets provided. Accessing the context of a dialog looks like this:
 
 <Code code={`
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 import { createSignal } from 'solid-js'
 
 const DialogRoot = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       <DialogContent />
-    </Dialog.Root>
+    </Dialog>
   )
 }
 
@@ -77,12 +77,12 @@ Every primitive provides different properties in its context, have a look at the
 The `Root` component of every primitive (and in a few cases others) also accepts a function as its children. By doing this, we can pass the internal state to the children for you to access. An example of this looks like this:
 
 <Code code={`
-import Dialog from 'corvu/dialog'
+import { Dialog } from 'corvu/dialog'
 import { createSignal } from 'solid-js'
 
 const MyDialog = () => {
   return (
-    <Dialog.Root>
+    <Dialog>
       {(props) => (
         <>
           <p>The dialog is {props.open() ? 'open' : 'closed'}</p>
@@ -95,7 +95,7 @@ const MyDialog = () => {
           </Dialog.Content>
         </>
       )}
-    </Dialog.Root>
+    </Dialog>
   )
 }
 `} lang="tsx" />
