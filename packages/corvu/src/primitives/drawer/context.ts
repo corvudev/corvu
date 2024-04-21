@@ -41,7 +41,7 @@ export type DrawerContextValue = {
 const DrawerContext = createContext<DrawerContextValue>()
 
 export const createDrawerContext = (contextId?: string) => {
-  if (!contextId) return DrawerContext
+  if (contextId === undefined) return DrawerContext
 
   const context = createKeyedContext<DrawerContextValue>(`drawer-${contextId}`)
   return context
@@ -49,7 +49,7 @@ export const createDrawerContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the drawer. Optionally provide a contextId to access a keyed context. */
 export const useDrawerContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(DrawerContext)
     if (!context) {
       throw new Error(
@@ -86,7 +86,7 @@ type InternalDrawerContextValue = DrawerContextValue & {
 const InternalDrawerContext = createContext<InternalDrawerContextValue>()
 
 export const createInternalDrawerContext = (contextId?: string) => {
-  if (!contextId) return InternalDrawerContext
+  if (contextId === undefined) return InternalDrawerContext
 
   const context = createKeyedContext<InternalDrawerContextValue>(
     `drawer-internal-${contextId}`,
@@ -96,7 +96,7 @@ export const createInternalDrawerContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the drawer. Optionally provide a contextId to access a keyed context. */
 export const useInternalDrawerContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalDrawerContext)
     if (!context) {
       throw new Error(

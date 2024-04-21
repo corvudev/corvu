@@ -21,7 +21,7 @@ export type DisclosureContextValue = {
 const DisclosureContext = createContext<DisclosureContextValue>()
 
 export const createDisclosureContext = (contextId?: string) => {
-  if (!contextId) return DisclosureContext
+  if (contextId === undefined) return DisclosureContext
 
   const context = createKeyedContext<DisclosureContextValue>(
     `disclosure-${contextId}`,
@@ -31,7 +31,7 @@ export const createDisclosureContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the disclosure. Optionally provide a contextId to access a keyed context. */
 export const useDisclosureContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(DisclosureContext)
     if (!context) {
       throw new Error(
@@ -60,7 +60,7 @@ const InternalDisclosureContext =
   createContext<InternalDisclosureContextValue>()
 
 export const createInternalDisclosureContext = (contextId?: string) => {
-  if (!contextId) return InternalDisclosureContext
+  if (contextId === undefined) return InternalDisclosureContext
 
   const context = createKeyedContext<InternalDisclosureContextValue>(
     `disclosure-internal-${contextId}`,
@@ -69,7 +69,7 @@ export const createInternalDisclosureContext = (contextId?: string) => {
 }
 
 export const useInternalDisclosureContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalDisclosureContext)
     if (!context) {
       throw new Error(

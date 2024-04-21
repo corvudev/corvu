@@ -38,7 +38,7 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
               <button
                 onClick={() => {
                   const nextHeight = heightSequence.shift()
-                  if (nextHeight) {
+                  if (nextHeight !== undefined) {
                     setCurrentHeight(nextHeight)
                     heightSequence.push(nextHeight)
                   }

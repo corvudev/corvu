@@ -51,7 +51,7 @@ const closeTooltipGroup = (group: boolean | string, id: string) => {
 
 const createTooltip = (props: {
   id: MaybeAccessor<string>
-  group: MaybeAccessor<boolean | string | null>
+  group: MaybeAccessor<true | string | null>
   open: Accessor<boolean>
   close: () => void
   trigger: MaybeAccessor<HTMLElement | null>
@@ -83,29 +83,29 @@ const createTooltip = (props: {
 
   const getSkipDelay = () => {
     const group = access(props.group)
-    if (!group) return localSkipDelay
+    if (group === null) return localSkipDelay
     return tooltipGroups.get(group)!.skipDelay
   }
   const setSkipDelay = (value: boolean) => {
     const group = access(props.group)
-    if (!group) return (localSkipDelay = value)
+    if (group === null) return (localSkipDelay = value)
     tooltipGroups.get(group)!.skipDelay = value
   }
   const setSkipDelayTimeout = (value: number | null) => {
     const group = access(props.group)
-    if (!group) return (localSkipDelayTimeout = value)
+    if (group === null) return (localSkipDelayTimeout = value)
     tooltipGroups.get(group)!.skipDelayTimeout = value
   }
   const getSkipDelayTimeout = () => {
     const group = access(props.group)
-    if (!group) return localSkipDelayTimeout
+    if (group === null) return localSkipDelayTimeout
     return tooltipGroups.get(group)!.skipDelayTimeout
   }
 
   createEffect(() => {
     const group = access(props.group)
     const id = access(props.id)
-    if (!group) return
+    if (group === null) return
     // eslint-disable-next-line solid/reactivity
     registerTooltip(group, id, () => {
       tooltipState = null
@@ -120,7 +120,7 @@ const createTooltip = (props: {
     if (!props.open()) return
     untrack(() => {
       const group = access(props.group)
-      if (!group) return
+      if (group === null) return
       closeTooltipGroup(group, access(props.id))
     })
   })
@@ -331,7 +331,7 @@ const createTooltip = (props: {
   }
 
   const resetTimeout = () => {
-    if (timeout) {
+    if (timeout !== null) {
       clearTimeout(timeout)
       timeout = null
     }
@@ -341,7 +341,7 @@ const createTooltip = (props: {
     const skipDelayDuration = access(props.skipDelayDuration)
     if (skipDelayDuration > 0) {
       const skipDelayTimeout = getSkipDelayTimeout()
-      if (skipDelayTimeout) {
+      if (skipDelayTimeout !== null) {
         clearTimeout(skipDelayTimeout)
         setSkipDelayTimeout(null)
       }

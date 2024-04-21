@@ -75,7 +75,7 @@ export type TooltipRootProps = {
   /**
    * Optionally add this tooltip to a group. With the same `group` property will close when another tooltip in the same group opens.
    */
-  group?: boolean | string
+  group?: true | string
   /**
    * Whether the tooltip should open when the trigger is focused.
    * @defaultValue `true`
@@ -164,7 +164,7 @@ export type TooltipRootChildrenProps = {
   /** Whether the tooltip content should be hoverable. */
   hoverableContent: boolean
   /** The group this tooltip is in. */
-  group: boolean | string | null
+  group: true | string | null
   /** Whether the tooltip should open when the trigger is focused. */
   openOnFocus: boolean
   /** Whether the tooltip should open when the mouse pointer is moved over the trigger. */

@@ -161,7 +161,7 @@ const createFocusTrap = (props: {
       container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
     }
 
-    if (event?.defaultPrevented) {
+    if (event?.defaultPrevented === true) {
       return
     }
 
@@ -208,7 +208,7 @@ const createFocusTrap = (props: {
       container.removeEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
     }
 
-    if (event?.defaultPrevented) {
+    if (event?.defaultPrevented === true) {
       return
     }
 

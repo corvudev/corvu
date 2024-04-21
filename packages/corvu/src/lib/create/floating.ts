@@ -92,10 +92,10 @@ const createFloating = (props: {
     const middleware: Middleware[] = []
     const options = access(defaultedProps.options)
 
-    if (options?.offset) {
+    if (options?.offset !== undefined) {
       middleware.push(offset(options.offset))
     }
-    if (options?.shift) {
+    if (options?.shift !== undefined && options.shift !== false) {
       const shiftOptions = options.shift === true ? undefined : options.shift
       middleware.push(shift(shiftOptions))
     }
@@ -109,7 +109,7 @@ const createFloating = (props: {
       )
     }
 
-    const flipEnabled = !!options?.flip
+    const flipEnabled = options?.flip !== undefined && options.flip !== false
     const flipOptions =
       typeof options?.flip === 'boolean' ? undefined : options?.flip
 
@@ -123,7 +123,7 @@ const createFloating = (props: {
           apply: ({ availableWidth, availableHeight, ...state }) => {
             const newFloatingState: Partial<FloatingState> = {}
 
-            if (options.size!.matchSize) {
+            if (options.size!.matchSize === true) {
               if (
                 state.placement.startsWith('top') ||
                 state.placement.startsWith('bottom')
@@ -133,7 +133,7 @@ const createFloating = (props: {
                 newFloatingState.height = state.rects.reference.height
               }
             }
-            if (options.size!.fitViewPort) {
+            if (options.size!.fitViewPort === true) {
               if (
                 state.placement.startsWith('top') ||
                 state.placement.startsWith('bottom')
@@ -157,18 +157,22 @@ const createFloating = (props: {
       middleware.push(flip(flipOptions))
     }
 
-    if (!flipEnabled && options?.autoPlacement) {
+    if (
+      !flipEnabled &&
+      options?.autoPlacement !== undefined &&
+      options.autoPlacement !== false
+    ) {
       const autoPlacementOptions =
         options.autoPlacement === true ? undefined : options.autoPlacement
       middleware.push(autoPlacement(autoPlacementOptions))
     }
 
-    if (options?.hide) {
+    if (options?.hide !== undefined && options.hide !== false) {
       const hideOptions = options.hide === true ? undefined : options.hide
       middleware.push(hide(hideOptions))
     }
 
-    if (options?.inline) {
+    if (options?.inline !== undefined && options.inline !== false) {
       const inlineOptions = options.inline === true ? undefined : options.inline
       middleware.push(inline(inlineOptions))
     }

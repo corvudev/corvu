@@ -25,7 +25,7 @@ export type TooltipContextValue = {
   /** Whether the tooltip content should be hoverable. */
   hoverableContent: Accessor<boolean>
   /** The group this tooltip is in. */
-  group: Accessor<boolean | string | null>
+  group: Accessor<true | string | null>
   /** Whether the tooltip should open when the trigger is focused. */
   openOnFocus: Accessor<boolean>
   /** Whether the tooltip should open when the mouse pointer is moved over the trigger. */
@@ -45,7 +45,7 @@ export type TooltipContextValue = {
 const TooltipContext = createContext<TooltipContextValue>()
 
 export const createTooltipContext = (contextId?: string) => {
-  if (!contextId) return TooltipContext
+  if (contextId === undefined) return TooltipContext
 
   const context = createKeyedContext<TooltipContextValue>(
     `tooltip-${contextId}`,
@@ -55,7 +55,7 @@ export const createTooltipContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the tooltip. Optionally provide a contextId to access a keyed context. */
 export const useTooltipContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(TooltipContext)
     if (!context) {
       throw new Error(
@@ -88,7 +88,7 @@ export type InternalTooltipContextValue = TooltipContextValue & {
 const InternalTooltipContext = createContext<InternalTooltipContextValue>()
 
 export const createInternalTooltipContext = (contextId?: string) => {
-  if (!contextId) return InternalTooltipContext
+  if (contextId === undefined) return InternalTooltipContext
 
   const context = createKeyedContext<InternalTooltipContextValue>(
     `tooltip-internal-${contextId}`,
@@ -97,7 +97,7 @@ export const createInternalTooltipContext = (contextId?: string) => {
 }
 
 export const useInternalTooltipContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalTooltipContext)
     if (!context) {
       throw new Error(

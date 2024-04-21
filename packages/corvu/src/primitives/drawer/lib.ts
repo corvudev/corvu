@@ -32,13 +32,15 @@ export const resolveSnapPoint = (
     }
   }
 
-  const upperBreakPoint = breakPoints[index - 1]
-    ? resolvePoint(breakPoints[index - 1]!, drawerSize)
-    : undefined
+  const upperBreakPoint =
+    breakPoints[index - 1] !== undefined && breakPoints[index - 1] !== null
+      ? resolvePoint(breakPoints[index - 1]!, drawerSize)
+      : undefined
 
-  const lowerBreakPoint = breakPoints[index]
-    ? resolvePoint(breakPoints[index]!, drawerSize)
-    : undefined
+  const lowerBreakPoint =
+    breakPoints[index] !== undefined && breakPoints[index] !== null
+      ? resolvePoint(breakPoints[index]!, drawerSize)
+      : undefined
 
   return {
     value: snapPoint,

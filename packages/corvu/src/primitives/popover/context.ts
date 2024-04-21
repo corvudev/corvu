@@ -17,7 +17,7 @@ export type PopoverContextValue = {
 const PopoverContext = createContext<PopoverContextValue>()
 
 export const createPopoverContext = (contextId?: string) => {
-  if (!contextId) return PopoverContext
+  if (contextId === undefined) return PopoverContext
 
   const context = createKeyedContext<PopoverContextValue>(
     `popover-${contextId}`,
@@ -27,7 +27,7 @@ export const createPopoverContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the popover. Optionally provide a contextId to access a keyed context. */
 export const usePopoverContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(PopoverContext)
     if (!context) {
       throw new Error(
@@ -54,7 +54,7 @@ type InternalPopoverContextValue = PopoverContextValue & {
 const InternalPopoverContext = createContext<InternalPopoverContextValue>()
 
 export const createInternalPopoverContext = (contextId?: string) => {
-  if (!contextId) return InternalPopoverContext
+  if (contextId === undefined) return InternalPopoverContext
 
   const context = createKeyedContext<InternalPopoverContextValue>(
     `popover-internal-${contextId}`,
@@ -64,7 +64,7 @@ export const createInternalPopoverContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the popover. Optionally provide a contextId to access a keyed context. */
 export const useInternalPopoverContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalPopoverContext)
     if (!context) {
       throw new Error(

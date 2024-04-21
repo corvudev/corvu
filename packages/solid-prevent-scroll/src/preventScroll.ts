@@ -240,7 +240,7 @@ const wouldScroll = (
   delta: number,
   wrapper: HTMLElement | null,
 ) => {
-  const targetInWrapper = wrapper && contains(wrapper, target)
+  const targetInWrapper = wrapper !== null && contains(wrapper, target)
 
   const [availableScroll, availableScrollTop] = getScrollAtLocation(
     target,

@@ -14,7 +14,7 @@ const isFunction = <T extends Function = Function>(
 const buttonInputTypes = ['button', 'color', 'file', 'image', 'reset', 'submit']
 const isButton = (tagName: string, type?: string) => {
   if (tagName === 'button') return true
-  if (tagName === 'input' && type) {
+  if (tagName === 'input' && type !== undefined) {
     return buttonInputTypes.indexOf(type) !== -1
   }
   return false

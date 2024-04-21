@@ -96,7 +96,7 @@ const FloatingArrow = <
   const resolveChildren = children(() => localProps.children)
 
   const defaultArrow = () =>
-    !localProps.as && resolveChildren.toArray().length === 0
+    localProps.as === undefined && resolveChildren.toArray().length === 0
 
   return (
     <Dynamic

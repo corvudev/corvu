@@ -84,7 +84,7 @@ const DrawerContent = <
 
   const transitionHeight = createMemo(() => {
     const transitionSize = drawerContext().transitionSize()
-    if (!transitionSize) return undefined
+    if (transitionSize === null) return undefined
 
     switch (drawerContext().side()) {
       case 'top':
@@ -96,7 +96,7 @@ const DrawerContent = <
 
   const transitionWidth = createMemo(() => {
     const transitionSize = drawerContext().transitionSize()
-    if (!transitionSize) return undefined
+    if (transitionSize === null) return undefined
 
     switch (drawerContext().side()) {
       case 'left':

@@ -94,7 +94,9 @@ const AccordionItem = <
   const value = createMemo(() => localProps.value ?? createUniqueId())
 
   const expanded = createMemo(() => context().internalValue().includes(value()))
-  const disabled = createMemo(() => localProps.disabled ?? context().disabled())
+  const disabled = createMemo(
+    () => (localProps.disabled ?? context().disabled()) as boolean,
+  )
   const collapseBehavior = createMemo(
     () => localProps.collapseBehavior ?? context().collapseBehavior(),
   )

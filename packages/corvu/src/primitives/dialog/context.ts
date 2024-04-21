@@ -55,7 +55,7 @@ export type DialogContextValue = {
 const DialogContext = createContext<DialogContextValue>()
 
 export const createDialogContext = (contextId?: string) => {
-  if (!contextId) return DialogContext
+  if (contextId === undefined) return DialogContext
 
   const context = createKeyedContext<DialogContextValue>(`dialog-${contextId}`)
   return context
@@ -63,7 +63,7 @@ export const createDialogContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the dialog. Optionally provide a contextId to access a keyed context. */
 export const useDialogContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(DialogContext)
     if (!context) {
       throw new Error(
@@ -98,7 +98,7 @@ export type InternalDialogContextValue = DialogContextValue & {
 const InternalDialogContext = createContext<InternalDialogContextValue>()
 
 export const createInternalDialogContext = (contextId?: string) => {
-  if (!contextId) return InternalDialogContext
+  if (contextId === undefined) return InternalDialogContext
 
   const context = createKeyedContext<InternalDialogContextValue>(
     `dialog-internal-${contextId}`,
@@ -107,7 +107,7 @@ export const createInternalDialogContext = (contextId?: string) => {
 }
 
 export const useInternalDialogContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalDialogContext)
     if (!context) {
       throw new Error(

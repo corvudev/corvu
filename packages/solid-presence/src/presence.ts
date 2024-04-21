@@ -63,7 +63,7 @@ const createPresence = (props: {
       } else {
         const isAnimating = prevAnimationName !== currentAnimationName
 
-        if (prevShow && isAnimating) {
+        if (prevShow === true && isAnimating) {
           setPresentState('hiding')
         } else {
           setPresentState('hidden')

@@ -23,7 +23,7 @@ export type AccordionContextValue = {
 const AccordionContext = createContext<AccordionContextValue>()
 
 export const createAccordionContext = (contextId?: string) => {
-  if (!contextId) return AccordionContext
+  if (contextId === undefined) return AccordionContext
 
   const context = createKeyedContext<AccordionContextValue>(
     `accordion-${contextId}`,
@@ -33,7 +33,7 @@ export const createAccordionContext = (contextId?: string) => {
 
 /** Context which exposes various properties to interact with the accordion. Optionally provide a contextId to access a keyed context. */
 export const useAccordionContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(AccordionContext)
     if (!context) {
       throw new Error(
@@ -65,7 +65,7 @@ export type InternalAccordionContextValue = AccordionContextValue & {
 const InternalAccordionContext = createContext<InternalAccordionContextValue>()
 
 export const createInternalAccordionContext = (contextId?: string) => {
-  if (!contextId) return InternalAccordionContext
+  if (contextId === undefined) return InternalAccordionContext
 
   const context = createKeyedContext<InternalAccordionContextValue>(
     `accordion-internal-${contextId}`,
@@ -74,7 +74,7 @@ export const createInternalAccordionContext = (contextId?: string) => {
 }
 
 export const useInternalAccordionContext = (contextId?: string) => {
-  if (!contextId) {
+  if (contextId === undefined) {
     const context = useContext(InternalAccordionContext)
     if (!context) {
       throw new Error(

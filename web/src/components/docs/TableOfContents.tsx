@@ -56,7 +56,7 @@ const TableOfContents: VoidComponent<{
     const observer = new IntersectionObserver((sections) => {
       sections.forEach((section) => {
         const id = section.target.getAttribute('id')
-        if (!id) return
+        if (id === null) return
 
         if (section.isIntersecting && !headingsInView().includes(id)) {
           setHeadingsInView([...headingsInView(), id])

@@ -25,7 +25,9 @@ const { type, name, descriptionHtml, parts } = Astro.props
       parts.map((part) => (
         <div class="mb-4">
           <h4 class="not-prose text-lg font-bold">{part.name}</h4>
-          {part.description && <p class="mt-2">{part.description}</p>}
+          {part.description !== undefined && (
+            <p class="mt-2">{part.description}</p>
+          )}
           <div class="overflow-y-auto">
             {(part.name === 'Props' || part.name === 'Returns') && (
               <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
@@ -57,7 +59,7 @@ const { type, name, descriptionHtml, parts } = Astro.props
                     )}
                     {part.props.some((prop) => prop.defaultHtml) && (
                       <td class="py-5 pr-5 align-top">
-                        {prop.defaultHtml ? (
+                        {prop.defaultHtml !== undefined ? (
                           <div class="prose" set:html={prop.defaultHtml} />
                         ) : (
                           <p>-</p>

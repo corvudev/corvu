@@ -215,6 +215,7 @@ const resolveComponent = (component: DeclarationVariant) => {
   // Generic components are Dynamic components.
   if (component.signatures![0].typeParameter) {
     if (
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       !component.signatures![0].typeParameter[0] ||
       !component.signatures![0].typeParameter[0].default
     ) {
@@ -224,7 +225,7 @@ const resolveComponent = (component: DeclarationVariant) => {
     }
     if (
       component.signatures![0].typeParameter[0].default.type === 'literal' &&
-      component.signatures![0].typeParameter[0].default.value
+      component.signatures![0].typeParameter[0].default.value !== null
     ) {
       defaultAs = component.signatures![0].typeParameter[0].default.value
     } else if (
@@ -743,6 +744,7 @@ const findDeclaration = (parent: DeclarationVariant, name: string) => {
     ) as DeclarationVariant
   }
 
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (!contextDeclaration.signatures![0]) {
     throw new Error(`${parent.name}.${name} has no signatures`)
   }

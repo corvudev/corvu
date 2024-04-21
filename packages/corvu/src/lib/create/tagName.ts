@@ -15,7 +15,7 @@ const createTagName = (props: {
   fallback: string
 }) => {
   const tagName = createMemo(
-    () => access(props.element)?.tagName.toLowerCase() || props.fallback,
+    () => access(props.element)?.tagName.toLowerCase() ?? props.fallback,
   )
 
   return tagName

@@ -28,6 +28,7 @@ const callEventHandler = <T, E extends Event>(
 }
 
 const some = (...signals: Accessor<unknown>[]) => {
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   return signals.some((signal) => !!signal())
 }
 
