@@ -1,5 +1,23 @@
 # corvu
 
+## 0.5.0
+
+### Minor Changes
+
+- Don't memoize detachable elements - [`25d7989`](https://github.com/corvudev/corvu/commit/25d798914d0a6c70f02439e1f9d0e0fe7e19695a) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Remove the `createControllableSignal` and `keyedContext` utilities - [`59057a7`](https://github.com/corvudev/corvu/commit/59057a7cae43f489b140cdb280ea6909abfee81c) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Type drawer snap and breakpoints as `Size` - [`921827f`](https://github.com/corvudev/corvu/commit/921827f4800304b23ed4f27401f98e5718852230) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Use named exports for primitives - [`320e331`](https://github.com/corvudev/corvu/commit/320e33101987860a3fcf739596563ad43e9c56de) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+### Patch Changes
+
+- Add resizable primitive - [#13](https://github.com/corvudev/corvu/pull/13) [`b77a5d2`](https://github.com/corvudev/corvu/commit/b77a5d2404da37a5f2e0402a082aaddbdab6b5e0) ([@GiyoMoon](https://github.com/GiyoMoon))
+
+- Improve autocomplete of the `as` property for dynamic components - [`16597b8`](https://github.com/corvudev/corvu/commit/16597b8edaa0de1a61d98427688c675981ffdb55) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.4.8
 
 ### Patch Changes

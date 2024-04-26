@@ -1,5 +1,11 @@
 # @corvu/tailwind
 
+## 0.1.4
+
+### Patch Changes
+
+- Add resizable primitive - [#13](https://github.com/corvudev/corvu/pull/13) [`b77a5d2`](https://github.com/corvudev/corvu/commit/b77a5d2404da37a5f2e0402a082aaddbdab6b5e0) ([@GiyoMoon](https://github.com/GiyoMoon))
+
 ## 0.1.3
 
 ### Patch Changes
