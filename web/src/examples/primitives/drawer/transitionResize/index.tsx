@@ -27,7 +27,7 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
                 })`,
               }}
             />
-            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-full after:h-[50%] after:bg-inherit corvu-transitioning:transition-[transform,height] corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
+            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit corvu-transitioning:transition-[transform,height] corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
               <div class="h-1 w-10 self-center rounded-full bg-corvu-400" />
               <Drawer.Label class="mt-2 text-center text-xl font-bold">
                 Dynamic content height example

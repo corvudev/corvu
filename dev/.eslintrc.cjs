@@ -44,6 +44,8 @@ module.exports = {
     'tailwindcss/enforces-shorthand': 'error',
     'tailwindcss/migration-from-tailwind-2': 'error',
     'tailwindcss/no-custom-classname': 'error',
+
+    'solid/reactivity': 'off',
   },
   overrides: [
     {

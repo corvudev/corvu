@@ -22,7 +22,7 @@ jobs:
           node-version: lts/*
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: latest
           run_install: false

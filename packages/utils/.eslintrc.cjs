@@ -38,6 +38,8 @@ module.exports = {
       },
     ],
 
+    'solid/reactivity': 'off',
+
     'prettier/prettier': [
       'error',
       {
