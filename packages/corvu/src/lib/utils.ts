@@ -103,6 +103,23 @@ const PositionToDirection = {
   right: 'left',
 }
 
+const sortByDocumentPosition = (a: HTMLElement, b: HTMLElement) => {
+  const relativePosition = a.compareDocumentPosition(b)
+  if (
+    relativePosition & Node.DOCUMENT_POSITION_PRECEDING ||
+    relativePosition & Node.DOCUMENT_POSITION_CONTAINS
+  ) {
+    return 1
+  }
+  if (
+    relativePosition & Node.DOCUMENT_POSITION_FOLLOWING ||
+    relativePosition & Node.DOCUMENT_POSITION_CONTAINED_BY
+  ) {
+    return -1
+  }
+  return 0
+}
+
 export {
   callEventHandler,
   some,
@@ -111,4 +128,5 @@ export {
   dataIf,
   getFloatingStyle,
   PositionToDirection,
+  sortByDocumentPosition,
 }

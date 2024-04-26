@@ -1,0 +1,65 @@
+---
+import AccordionSvg from '@components/docs/primitives/Accordion.svg?raw'
+import DialogSvg from '@components/docs/primitives/Dialog.svg?raw'
+import DisclosureSvg from '@components/docs/primitives/Disclosure.svg?raw'
+import DrawerSvg from '@components/docs/primitives/Drawer.svg?raw'
+import PopoverSvg from '@components/docs/primitives/Popover.svg?raw'
+import ResizableSvg from '@components/docs/primitives/Resizable.svg?raw'
+import TooltipSvg from '@components/docs/primitives/Tooltip.svg?raw'
+
+const primitives = [
+  {
+    illustration: AccordionSvg,
+    name: 'Accordion',
+    href: '/docs/primitives/accordion/',
+  },
+  {
+    illustration: DialogSvg,
+    name: 'Dialog',
+    href: '/docs/primitives/dialog/',
+  },
+  {
+    illustration: DisclosureSvg,
+    name: 'Disclosure',
+    href: '/docs/primitives/disclosure/',
+  },
+  {
+    illustration: DrawerSvg,
+    name: 'Drawer',
+    href: '/docs/primitives/drawer/',
+  },
+  {
+    illustration: PopoverSvg,
+    name: 'Popover',
+    href: '/docs/primitives/popover/',
+  },
+  {
+    illustration: ResizableSvg,
+    name: 'Resizable',
+    href: '/docs/primitives/resizable/',
+  },
+  {
+    illustration: TooltipSvg,
+    name: 'Tooltip',
+    href: '/docs/primitives/tooltip/',
+  },
+]
+---
+
+<div class="not-prose mt-5 @container">
+  <div class="grid gap-4 @md:grid-cols-2 @3xl:grid-cols-3">
+    {
+      primitives.map((primitive) => (
+        <a
+          href={primitive.href}
+          class="overflow-hidden rounded-xl border-[5px] border-corvu-400 bg-corvu-400 transition-transform active:translate-y-0.5 md:hover:scale-[1.02]"
+        >
+          <Fragment set:html={primitive.illustration} />
+          <span class="block bg-corvu-100 px-2 py-1 text-lg font-bold">
+            {primitive.name}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</div>

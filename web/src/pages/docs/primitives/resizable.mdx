@@ -1,0 +1,355 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Resizable/Splitter
+description: A customizable, unstyled and accessible resizable component for SolidJS
+image: https://corvu.dev/primitives/resizable.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/resizable/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/resizable/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import CssTsx from '@examples/primitives/resizable/basic/css/index?raw'
+import CssStyle from '@examples/primitives/resizable/basic/css/index.css?raw'
+import AltKeyExample from '@examples/primitives/resizable/altKey/tailwind/index'
+import AltKeyTailwindTsx from '@examples/primitives/resizable/altKey/tailwind/index?raw'
+import NestedExample from '@examples/primitives/resizable/nested/tailwind/index'
+import NestedTailwindTsx from '@examples/primitives/resizable/nested/tailwind/index?raw'
+import PersistentExample from '@examples/primitives/resizable/persistent/tailwind/index'
+import PersistentTailwindTsx from '@examples/primitives/resizable/persistent/tailwind/index?raw'
+import CollapsibleExample from '@examples/primitives/resizable/collapsible/tailwind/index'
+import CollapsibleTailwindTsx from '@examples/primitives/resizable/collapsible/tailwind/index?raw'
+import HoistingExample from '@examples/primitives/resizable/hoisting/tailwind/index'
+import HoistingTailwindTsx from '@examples/primitives/resizable/hoisting/tailwind/index?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
+import Link from '@components/docs/Link.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# Resizable
+
+SolidJS components for building resizable panels and splitters.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Intersectable resize handles for bidirectional resizing',
+  'Alt key resize mode',
+  'Keyboard resizing',
+  'Optional management of the cursor style while resizing',
+  'Full control from userland with access to the state, resize and collapse functions',
+]} />
+
+## Usage
+<Code code={`
+import { Resizable } from 'corvu/resizable'
+// Or
+// import { Root, Panel, Handle } from 'corvu/resizable'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+<Resizable>
+  <Resizable.Panel />
+  <Resizable.Handle />
+  <Resizable.Panel />
+</Resizable>
+`} lang="tsx" copyButton />
+
+### Vertical orientation
+
+The resizable primitive is aligned horizontally per default. To make it vertical, set `orientation` to `vertical`:
+
+<Code code={`
+<Resizable orientation="vertical">
+  <Resizable.Panel />
+  <Resizable.Handle />
+  <Resizable.Panel />
+</Resizable>
+`} lang="tsx" copyButton />
+
+### Preventing panel overflow
+
+By default, the panels could overflow if the content doesn't fit. You should prevent this by setting `overflow: hidden` on `<Panel />` components.
+
+This isn't the default behavior because panels that nest panels shouldn't have their overflow hidden as it breaks intersecting handles.
+
+### Alt key resizing
+
+Resizing while holding down the Alt key changes the size of a panel from both sides. The implementation attempts to replicate the behavior on macOS and in VS Code:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <AltKeyExample client:load />
+  <RawCode slot="tailwindTsx" code={AltKeyTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+You can also disable this behavior by setting `altKey={false}` on the `<Handle />` component. Or you can make this the default and only way to resize on a Handle by setting `altKey="only"`.
+
+### Nested resizables
+
+You can nest resizables to create more complex layouts. Resize handles automatically detect intesecting handles and allow resizing in both directions at once. You can disable these intersections if you'd like to. Check out the [Handle API](#Resizable.Handle) for more information.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <NestedExample client:load />
+  <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Persistent layout
+
+Corvu itself doesn't provide a first party way to persist the layout of resizable panels. However, you can achieve this easily with something like the <Link href="https://primitives.solidjs.community/package/storage" text="makePersisted" /> utility from Solid Primitives:
+
+<Code code={`
+import { createSignal } from 'solid-js'
+import { makePersisted } from '@solid-primitives/storage'
+import { Resizable } from 'corvu/resizable'
+
+const PersistentResizable = () => {
+  const [sizes, setSizes] = makePersisted(createSignal([]), {
+    name: 'resizable-sizes'
+  })
+
+  return (
+    <Resizable sizes={sizes()} onSizesChange={setSizes}>
+      <Resizable.Panel />
+      <Resizable.Handle />
+      <Resizable.Panel />
+    </Resizable>
+  )
+}
+`} lang="tsx" copyButton />
+
+Edit the layout below and refresh the page to see how the panel sizes persist.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <PersistentExample client:only />
+  <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Collapsible panel
+
+A Panel can be configured to be collapsible by setting the `collapsible` prop to true. Per default, this will collapse the panel to a size of 0, but you can define the collapsible size with the `collapsedSize` property. It's important that you configure a `minSize` or it'll never collapse as it can shrink to 0 normally.
+
+Additionally, there is the `collapseThreshold` property that you can use to define how much the user has to "overdrag" before the panel collapses. Default is `0.05`.
+
+Here, the left Panel is collapsible with `minSize={0.3}` and `collapsedSize={0.15}`:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <CollapsibleExample client:only />
+  <RawCode slot="tailwindTsx" code={CollapsibleTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Userland
+
+The resizable primitive provides many ways to interact and get information about its state from userland. There are `resize()`, `collapse()` and `expand()` functions on both the `<Root />` and `<Panel />` components that allow you to alter panel state from userland. Please have a look at the API documentation below!
+
+### Hoisting the context
+
+A common use case is to have expand or collapse buttons outside of your resizable layout, in a toolbar for example. There are two common and easy ways to get access to the context outside of `<Resizable />`:
+
+One approach is to use the `as` prop to provide a custom component where you can access the context:
+
+<Code code={`
+const ResizableWrapper = (props: object) => {
+  const context = Resizable.useContext()
+  // Access to the context outside of <Resizable />
+
+  return <div {...props} />
+}
+
+const Component = () => {
+  return (
+    <Resizable as={ResizableWrapper}>
+      <Resizable.Panel />
+      <Resizable.Handle />
+      <Resizable.Panel />
+    </Resizable>
+  )
+}
+`} lang="tsx" copyButton />
+
+Here is an example that uses this approach:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:load>
+  <HoistingExample client:only />
+  <RawCode slot="tailwindTsx" code={HoistingTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+The other approach is to use a signal to hoist the context:
+
+<Code code={`
+const Component = () => {
+  const [resizableContext, setResizableContext] =
+    createSignal<ContextValue | null>(null)
+  // Access to the context outside of <Resizable />
+  return (
+    <Resizable>
+      {() => {
+        const context = Resizable.useContext()
+        setResizableContext(context)
+
+        return (
+          <>
+            <Resizable.Panel />
+            <Resizable.Handle />
+            <Resizable.Panel />
+          </>
+        )
+      }}
+    </Resizable>
+  )
+}
+`} lang="tsx" copyButton />
+
+## Accessibility
+
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/" text="Window Splitter WAI-ARIA design pattern" newTab />.
+
+### Ensuring handles are accessible
+
+`<Handle />` components already include required and supported aria attributes for the `separator` role. Additionally, you should define a label that describes their purpose. This can be done by setting the `aria-label` attribute:
+
+<Code code={`
+  <Resizable.Handle aria-label="Resize panels" />
+`} lang="tsx" copyButton />
+
+### Keyboard navigation
+
+Handles can be resized with the keyboard. Here is a list of all implemented keyboard shortcuts:
+
+Pressing shift while resizing with arrow keys will expand/contract the panel fully.
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Home',
+    behavior: 'Collapse preceding panels fully.'
+  },
+  {
+    key: 'End',
+    behavior: 'Expand preceding panels fully.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'Collapse/Expand the preceding panel (Panel has to be collapsible).'
+  },
+  {
+    key: 'ArrowLeft',
+    behavior: '[Horizontal] Resize to the left.'
+  },
+  {
+    key: 'ArrowRight',
+    behavior: '[Horizontal] Resize to the right.'
+  },
+  {
+    key: 'ArrowUp',
+    behavior: '[Vertical] Resize to the top.'
+  },
+  {
+    key: 'ArrowDown',
+    behavior: '[Vertical] Resize to the bottom.'
+  },
+]} />
+
+## API reference
+
+<GenerateApiDocs primitive="Resizable" />

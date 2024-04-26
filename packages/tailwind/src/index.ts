@@ -11,6 +11,8 @@ const dataStates = [
   'snapping',
   'resizing',
   'disabled',
+  'active',
+  'dragging',
 ]
 
 export type PluginOptions = {

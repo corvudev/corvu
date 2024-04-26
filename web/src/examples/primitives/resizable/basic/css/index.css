@@ -1,0 +1,53 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 2.5rem;
+}
+
+@container (min-width: 36rem) {
+  .wrapper {
+    padding: 5rem;
+  }
+}
+
+[data-corvu-resizable-root] {
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  border-radius: 0.5rem;
+  background-color: hsl(249, 87%, 94%);
+}
+
+[data-corvu-resizable-handle] {
+  flex-basis: 0.75rem;
+}
+
+[data-corvu-resizable-handle][data-orientation="horizontal"] {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+[data-corvu-resizable-handle][data-orientation="vertical"] {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.inner_handle {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+[data-corvu-resizable-handle][data-active] .inner_handle { 
+  border-color: hsl(253, 80%, 82%);
+}
+
+[data-corvu-resizable-handle][data-dragging] .inner_handle { 
+  background-color: hsl(249, 87%, 94%);
+}
+

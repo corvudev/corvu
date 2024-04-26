@@ -108,8 +108,8 @@ There may be situations where you want to use nested instances of the same primi
 Here's how two nested dialogs would look like:
 
 <Code code={`
-<Dialog.Root contextId="dialog-1">
-  <Dialog.Root contextId="dialog-2">
+<Dialog contextId="dialog-1">
+  <Dialog contextId="dialog-2">
 
     <Dialog.Trigger contextId="dialog-1">Open Dialog 1</Dialog.Trigger>
     <Dialog.Trigger contextId="dialog-2">Open Dialog 2</Dialog.Trigger>
@@ -122,8 +122,8 @@ Here's how two nested dialogs would look like:
       <Dialog.Label contextId="dialog-2">Dialog 2</Dialog.Label>
     </Dialog.Content>
 
-  </Dialog.Root>
-</Dialog.Root>
+  </Dialog>
+</Dialog>
 `} lang="tsx" />
 
 When using keyed contexts, you can pass the same key to the `useContext()` function to access the context of the respective primitive.

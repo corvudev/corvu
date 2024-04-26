@@ -42,7 +42,7 @@ const NavDrawer: FlowComponent = (props) => {
             />
             <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-bg after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-1/2 after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
               <a href="/" class="mx-1 mt-[7px] flex rounded-lg py-2 pl-2 pr-4">
-                <span class="sr-only">Corvu home</span>
+                <span class="sr-only">corvu</span>
                 <img
                   src={HeaderLogoDark.src}
                   alt="Corvu logo"
@@ -58,7 +58,7 @@ const NavDrawer: FlowComponent = (props) => {
                   class="hidden dark:block"
                 />
               </a>
-              <div class="w-full overflow-y-auto pb-4 pl-3 pr-8 pt-2 scrollbar-thin">
+              <div class="w-full overflow-y-auto pb-10 pl-3 pr-8 pt-2 scrollbar-thin">
                 {props.children}
               </div>
             </Drawer.Content>

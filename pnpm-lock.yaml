@@ -364,6 +364,9 @@ importers:
       '@fontsource-variable/rubik':
         specifier: ^5.0.22
         version: 5.0.22
+      '@solid-primitives/storage':
+        specifier: ^3.4.0
+        version: 3.4.0(solid-js@1.8.17)
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@3.4.3)
@@ -2150,13 +2153,28 @@ packages:
       solid-js: 1.8.17
     dev: false
 
+  /@solid-primitives/storage@3.4.0(solid-js@1.8.17):
+    resolution: {integrity: sha512-1DUlBBX97qxv1w2Wb0XDidT+yuG43kNAdZvw4R7N8XLlE9XYtyGdplguYgEOBxyhpoR6vK5TvpdT2A5lUv8mPg==}
+    peerDependencies:
+      '@tauri-apps/plugin-store': '*'
+      solid-js: ^1.6.12
+      solid-start: '*'
+    peerDependenciesMeta:
+      '@tauri-apps/plugin-store':
+        optional: true
+      solid-start:
+        optional: true
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.17)
+      solid-js: 1.8.17
+    dev: true
+
   /@solid-primitives/utils@6.2.3(solid-js@1.8.17):
     resolution: {integrity: sha512-CqAwKb2T5Vi72+rhebSsqNZ9o67buYRdEJrIFzRXz3U59QqezuuxPsyzTSVCacwS5Pf109VRsgCJQoxKRoECZQ==}
     peerDependencies:
       solid-js: ^1.6.12
     dependencies:
       solid-js: 1.8.17
-    dev: false
 
   /@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.3):
     resolution: {integrity: sha512-8QPrypskfBa7QIMuKHg2TA7BqES6vhBrDLOv8Unb6FcFyd3TjKbc6lcmb9UPQHxfl24sXoJ41ux/H7qQQvfaSQ==}

@@ -138,7 +138,7 @@ This allows you to apply different transitions based on the transition state of 
 You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children callback and use it to animate the background for example:
 
 <Code code={`
-<Drawer.Root>
+<Drawer>
   {(props) => (
     <Drawer.Overlay
       class="fixed inset-0 z-40 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
@@ -149,16 +149,16 @@ You can also use the `openPercentage` property returned by the `Drawer.useContex
       }}
     />
   )}
-</Drawer.Root>
+</Drawer>
 `} lang="tsx" copyButton />
 
 ### Snap- and breakpoints
 The drawer root accepts a `snapPoints` array to customize the points to snap to. Valid values are either percentages or pixel values. The drawer will snap to the closest snap point when the user stops dragging (With the `velocityFunction` in mind. See the [API Reference](#api-reference) for more information)
 
 <Code code={`
-<Drawer.Root snapPoints={[0, 0.5, 1]}>
+<Drawer snapPoints={[0, 0.5, 1]}>
   ...
-</Drawer.Root>
+</Drawer>
 `} lang="tsx" copyButton />
 
 Here, the drawer additionally snaps to 50% of its height.
@@ -184,9 +184,9 @@ Here, the drawer additionally snaps to 50% of its height.
 Per default, the drawer will snap to the closest snap point. You can change this behavior by providing custom `breakPoints` to the root component:
 
 <Code code={`
-<Drawer.Root breakPoints={[0.75]}>
+<Drawer breakPoints={[0.75]}>
   ...
-</Drawer.Root>
+</Drawer>
 `} lang="tsx" copyButton />
 
 Here, the drawer will close when the user drags below 75% of the drawer's height.

@@ -38,6 +38,14 @@ export default defineConfig({
       status: 307,
       destination: '/docs/dynamic-components/',
     },
+    '/docs/primitives/': {
+      status: 307,
+      destination: '/docs/overview/',
+    },
+    '/docs/utilities/': {
+      status: 307,
+      destination: '/docs/overview/',
+    },
   },
   markdown: {
     syntaxHighlight: false,

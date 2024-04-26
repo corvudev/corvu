@@ -1,5 +1,6 @@
 import { access, type MaybeAccessor } from '@corvu/utils'
 import { createMemo, createSignal, mergeProps } from 'solid-js'
+import { sortByDocumentPosition } from '@lib/utils'
 
 /**
  * Manages keyboard navigation between elements.
@@ -28,22 +29,7 @@ const createNavigation = (props: {
   const sortedElements = createMemo(() => {
     return elements()
       .filter((element) => !element.hasAttribute('disabled'))
-      .sort((a, b) => {
-        const relativePosition = a.compareDocumentPosition(b)
-        if (
-          relativePosition & Node.DOCUMENT_POSITION_PRECEDING ||
-          relativePosition & Node.DOCUMENT_POSITION_CONTAINS
-        ) {
-          return 1
-        }
-        if (
-          relativePosition & Node.DOCUMENT_POSITION_FOLLOWING ||
-          relativePosition & Node.DOCUMENT_POSITION_CONTAINED_BY
-        ) {
-          return -1
-        }
-        return 0
-      })
+      .sort(sortByDocumentPosition)
   })
 
   const register = (element: HTMLElement) => {
