@@ -24,12 +24,12 @@ const CopyToClipboard: VoidComponent<{ code: string }> = (props) => {
   return (
     <>
       {copied() && (
-        <p class="absolute right-9 top-0 bg-corvu-100 p-2.5 text-sm text-corvu-400 animate-in slide-in-from-right-3">
+        <p class="absolute right-9 top-0 bg-corvu-100 p-2.5 text-sm animate-in slide-in-from-right-3">
           copied!
         </p>
       )}
       <button
-        class="absolute right-1 top-0 bg-corvu-100 p-2.5 text-corvu-400"
+        class="absolute right-1 top-0 bg-corvu-100 p-2.5"
         onClick={copyToClipboard}
       >
         <span class="sr-only">{copied() ? 'Code copied' : 'Copy code'}</span>
