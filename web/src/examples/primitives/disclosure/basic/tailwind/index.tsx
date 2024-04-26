@@ -9,7 +9,9 @@ const DisclosureExample: VoidComponent = () => {
         {(props) => (
           <>
             <div class="mb-2 flex items-center justify-between space-x-4">
-              <p class="font-medium">Jasmin starred 3 repositories</p>
+              <p class="font-medium text-corvu-text-dark">
+                Jasmin starred 3 repositories
+              </p>
               <Disclosure.Trigger class="rounded-lg bg-corvu-100 p-1 transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
                 {props.expanded && (
                   <>
