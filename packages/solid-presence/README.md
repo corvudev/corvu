@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/corvudev/corvu/main/assets/solid-presence.png" width=1000 alt="Solid Presence" />
+  <a href="https://corvu.dev/docs/utilities/presence">
+    <img src="https://corvu.dev/readme/solid-presence.png" width=1000 alt="Solid Presence" />
+  </a>
 </div>
 <br />
 

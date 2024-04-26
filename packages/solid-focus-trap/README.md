@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/corvudev/corvu/main/assets/solid-focus-trap.png" width=1000 alt="Solid Focus Trap" />
+  <a href="https://corvu.dev/docs/utilities/focus-trap">
+    <img src="https://corvu.dev/readme/solid-focus-trap.png" width=1000 alt="Solid Focus Trap" />
+  </a>
 </div>
 <br />
 

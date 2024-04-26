@@ -8,7 +8,10 @@ const { type, name, descriptionHtml, parts } = Astro.props
 
 <div>
   <div class="not-prose inline-flex items-center space-x-2">
-    <h3 id={encodeURIComponent(name)} class="scroll-mt-20 text-xl font-bold">
+    <h3
+      id={encodeURIComponent(name)}
+      class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
+    >
       {name}
     </h3><p
       class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"

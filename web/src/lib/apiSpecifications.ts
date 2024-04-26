@@ -4,12 +4,13 @@ type TypeSpecification = {
 }
 
 export type ComponentSpecifications =
-  | 'Dialog'
-  | 'Drawer'
-  | 'Disclosure'
   | 'Accordion'
-  | 'Tooltip'
+  | 'Dialog'
+  | 'Disclosure'
+  | 'Drawer'
   | 'Popover'
+  | 'Resizable'
+  | 'Tooltip'
 
 export const componentSpecifications: {
   [key in ComponentSpecifications]: {
@@ -19,6 +20,88 @@ export const componentSpecifications: {
     types: TypeSpecification[]
   }
 } = {
+  Accordion: {
+    exportName: 'primitives/accordion',
+    components: [
+      {
+        name: 'Root',
+        forcedSorting: [
+          'multiple',
+          'value',
+          'onValueChange',
+          'initialValue',
+          'collapsible',
+          'disabled',
+          'orientation',
+          'loop',
+          'collapseBehavior',
+          'contextId',
+          'children',
+        ],
+      },
+      {
+        name: 'Item',
+        forcedSorting: [
+          'value',
+          'disabled',
+          'triggerId',
+          'expanded',
+          'onExpandedChange',
+          'initialExpanded',
+          'collapseBehavior',
+          'disclosureId',
+          'contextId',
+          'children',
+          'as',
+        ],
+      },
+      {
+        name: 'Trigger',
+      },
+      {
+        name: 'Content',
+        forcedSorting: ['forceMount', 'contextId', 'as'],
+      },
+    ],
+    contexts: [
+      {
+        name: 'useContext',
+        forcedSorting: [
+          'multiple',
+          'value',
+          'setValue',
+          'collapsible',
+          'disabled',
+          'orientation',
+          'loop',
+          'collapseBehavior',
+        ],
+      },
+      {
+        name: 'useItemContext',
+        forcedSorting: ['value', 'disabled', 'triggerId'],
+      },
+    ],
+    types: [
+      {
+        name: 'RootChildrenProps',
+        forcedSorting: [
+          'multiple',
+          'value',
+          'setValue',
+          'collapsible',
+          'disabled',
+          'orientation',
+          'loop',
+          'collapseBehavior',
+        ],
+      },
+      {
+        name: 'ItemChildrenProps',
+        forcedSorting: ['value', 'disabled', 'triggerId'],
+      },
+    ],
+  },
   Dialog: {
     exportName: 'primitives/dialog',
     components: [
@@ -142,6 +225,49 @@ export const componentSpecifications: {
       },
     ],
   },
+  Disclosure: {
+    exportName: 'primitives/disclosure',
+    components: [
+      {
+        name: 'Root',
+        forcedSorting: [
+          'expanded',
+          'onExpandedChange',
+          'initialExpanded',
+          'collapseBehavior',
+          'disclosureId',
+          'contextId',
+          'children',
+        ],
+      },
+      {
+        name: 'Trigger',
+      },
+      {
+        name: 'Content',
+        forcedSorting: ['as', 'forceMount', 'contextId'],
+      },
+    ],
+    contexts: [
+      {
+        name: 'useContext',
+        forcedSorting: [
+          'expanded',
+          'setExpanded',
+          'collapseBehavior',
+          'disclosureId',
+          'contentPresent',
+          'contentRef',
+          'contentSize',
+        ],
+      },
+    ],
+    types: [
+      {
+        name: 'RootChildrenProps',
+      },
+    ],
+  },
   Drawer: {
     exportName: 'primitives/drawer',
     components: [
@@ -217,128 +343,160 @@ export const componentSpecifications: {
       },
     ],
   },
-  Disclosure: {
-    exportName: 'primitives/disclosure',
+  Popover: {
+    exportName: 'primitives/popover',
     components: [
       {
         name: 'Root',
-        forcedSorting: [
-          'expanded',
-          'onExpandedChange',
-          'initialExpanded',
-          'collapseBehavior',
-          'disclosureId',
-          'contextId',
-          'children',
-        ],
+        forcedSorting: ['placement', 'strategy', 'floatingOptions', 'children'],
+      },
+      {
+        name: 'Anchor',
+        forcedSorting: ['as', 'contextId'],
       },
       {
         name: 'Trigger',
+        forcedSorting: ['as', 'contextId'],
       },
       {
         name: 'Content',
-        forcedSorting: ['as', 'forceMount', 'contextId'],
+        forcedSorting: ['forceMount', 'as', 'contextId'],
+      },
+      {
+        name: 'Arrow',
+        forcedSorting: ['size', 'as', 'contextId'],
       },
     ],
     contexts: [
       {
         name: 'useContext',
         forcedSorting: [
-          'expanded',
-          'setExpanded',
-          'collapseBehavior',
-          'disclosureId',
-          'contentPresent',
-          'contentRef',
-          'contentSize',
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
         ],
       },
     ],
     types: [
       {
         name: 'RootChildrenProps',
+        forcedSorting: [
+          'placement',
+          'strategy',
+          'floatingOptions',
+          'floatingState',
+        ],
       },
     ],
   },
-  Accordion: {
-    exportName: 'primitives/accordion',
+  Resizable: {
+    exportName: 'primitives/resizable',
     components: [
       {
         name: 'Root',
         forcedSorting: [
-          'multiple',
-          'value',
-          'onValueChange',
-          'initialValue',
-          'collapsible',
-          'disabled',
           'orientation',
-          'loop',
-          'collapseBehavior',
-          'contextId',
-          'children',
-        ],
-      },
-      {
-        name: 'Item',
-        forcedSorting: [
-          'value',
-          'disabled',
-          'triggerId',
-          'expanded',
-          'onExpandedChange',
-          'initialExpanded',
-          'collapseBehavior',
-          'disclosureId',
-          'contextId',
-          'children',
+          'sizes',
+          'onSizesChange',
+          'initialSizes',
+          'keyboardDelta',
+          'handleCursorStyle',
           'as',
+          'children',
+          'contextId',
         ],
       },
       {
-        name: 'Trigger',
+        name: 'Panel',
+        forcedSorting: [
+          'initialSize',
+          'minSize',
+          'maxSize',
+          'collapsible',
+          'collapsedSize',
+          'collapseThreshold',
+          'onResize',
+          'onCollapse',
+          'onExpand',
+          'as',
+          'children',
+          'contextId',
+          'panelId',
+        ],
       },
       {
-        name: 'Content',
-        forcedSorting: ['forceMount', 'contextId', 'as'],
+        name: 'Handle',
+        forcedSorting: [
+          'startIntersection',
+          'endIntersection',
+          'altKey',
+          'onDrag',
+          'as',
+          'contextId',
+        ],
       },
     ],
     contexts: [
       {
         name: 'useContext',
         forcedSorting: [
-          'multiple',
-          'value',
-          'setValue',
-          'collapsible',
-          'disabled',
           'orientation',
-          'loop',
-          'collapseBehavior',
+          'sizes',
+          'setSizes',
+          'keyboardDelta',
+          'handleCursorStyle',
+          'resize',
+          'collapse',
+          'expand',
         ],
       },
       {
-        name: 'useItemContext',
-        forcedSorting: ['value', 'disabled', 'triggerId'],
+        name: 'usePanelContext',
+        forcedSorting: [
+          'size',
+          'minSize',
+          'maxSize',
+          'collapsible',
+          'collapsedSize',
+          'collapseThreshold',
+          'collapsed',
+          'resize',
+          'collapse',
+          'expand',
+          'panelId',
+        ],
       },
     ],
     types: [
       {
         name: 'RootChildrenProps',
         forcedSorting: [
-          'multiple',
-          'value',
-          'setValue',
-          'collapsible',
-          'disabled',
           'orientation',
-          'loop',
-          'collapseBehavior',
+          'sizes',
+          'setSizes',
+          'keyboardDelta',
+          'handleCursorStyle',
+          'resize',
+          'collapse',
+          'expand',
         ],
       },
       {
-        name: 'ItemChildrenProps',
-        forcedSorting: ['value', 'disabled', 'triggerId'],
+        name: 'PanelChildrenProps',
+        forcedSorting: [
+          'size',
+          'minSize',
+          'maxSize',
+          'collapsible',
+          'collapsedSize',
+          'collapseThreshold',
+          'collapsed',
+          'resize',
+          'collapse',
+          'expand',
+          'panelId',
+        ],
       },
     ],
   },
@@ -444,53 +602,6 @@ export const componentSpecifications: {
           'contentPresent',
           'contentRef',
           'tooltipId',
-        ],
-      },
-    ],
-  },
-  Popover: {
-    exportName: 'primitives/popover',
-    components: [
-      {
-        name: 'Root',
-        forcedSorting: ['placement', 'strategy', 'floatingOptions', 'children'],
-      },
-      {
-        name: 'Anchor',
-        forcedSorting: ['as', 'contextId'],
-      },
-      {
-        name: 'Trigger',
-        forcedSorting: ['as', 'contextId'],
-      },
-      {
-        name: 'Content',
-        forcedSorting: ['forceMount', 'as', 'contextId'],
-      },
-      {
-        name: 'Arrow',
-        forcedSorting: ['size', 'as', 'contextId'],
-      },
-    ],
-    contexts: [
-      {
-        name: 'useContext',
-        forcedSorting: [
-          'placement',
-          'strategy',
-          'floatingOptions',
-          'floatingState',
-        ],
-      },
-    ],
-    types: [
-      {
-        name: 'RootChildrenProps',
-        forcedSorting: [
-          'placement',
-          'strategy',
-          'floatingOptions',
-          'floatingState',
         ],
       },
     ],

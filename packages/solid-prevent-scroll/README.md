@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/corvudev/corvu/main/assets/solid-prevent-scroll.png" width=1000 alt="Solid Prevent Scroll" />
+  <a href="https://corvu.dev/docs/utilities/prevent-scroll">
+    <img src="https://corvu.dev/readme/solid-prevent-scroll.png" width=1000 alt="Solid Prevent Scroll" />
+  </a>
 </div>
 <br />
 

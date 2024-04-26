@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/corvudev/corvu/main/assets/banner.png" width=1000 alt="corvu banner" />
+  <a href="https://corvu.dev">
+    <img src="https://corvu.dev/readme/corvu.png" width=1000 alt="corvu banner" />
+  </a>
 </div>
 <br />
 <div align="center">
@@ -8,7 +10,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/corvu)](https://www.npmjs.com/package/corvu)
 [![License](https://img.shields.io/github/license/corvudev/corvu)](https://github.com/corvudev/corvu/blob/main/LICENSE)
 
-**[Documentation](https://corvu.dev/) • [Discussions](https://github.com/corvudev/corvu/discussions)**
+**[Documentation](https://corvu.dev/) • [Discussions](https://github.com/corvudev/corvu/discussions) • [Discord](https://discord.com/invite/solidjs)**
 </div>
 
 ## About
@@ -30,21 +32,60 @@ Install corvu with the package manager of your choice:
 npm install corvu
 ```
 
-Import a primitive and use it in your app:
+## Primitives
 
-```jsx
-import Dialog from 'corvu/dialog';
-
-const App = () => {
-  return (
-    <Dialog.Root>
-      <Dialog.Trigger>Open</Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Content>
-          <Dialog.Label>Hey 👋</Dialog.Label>
-          <Dialog.Description>This is a basic dialog</Dialog.Description>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
-  )
-}
+<table>
+  <tr>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/accordion/">
+        <img src="https://corvu.dev/primitives/accordion.jpg" alt="SolidJS Accordion">
+        <p>Accordion</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/dialog/">
+        <img src="https://corvu.dev/primitives/dialog.jpg" alt="SolidJS Dialog">
+        <p>Dialog</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/disclosure/">
+        <img src="https://corvu.dev/primitives/disclosure.jpg" alt="SolidJS Disclosure">
+        <p>Disclosure</p>
+      </a>
+    </td>
+   </tr> 
+   <tr>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/drawer/">
+        <img src="https://corvu.dev/primitives/drawer.jpg" alt="SolidJS Drawer">
+        <p>Drawer</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/popover/">
+        <img src="https://corvu.dev/primitives/popover.jpg" alt="SolidJS Popover">
+        <p>Popover</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/resizable/">
+        <img src="https://corvu.dev/primitives/resizable.jpg" alt="SolidJS Resizable/Splitter">
+        <p>Resizable</p>
+      </a>
+    </td>
+  </td>
+   <tr>
+    <td align="center" width=33%>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/tooltip/">
+        <img src="https://corvu.dev/primitives/tooltip.jpg" alt="SolidJS Tooltip">
+        <p>Tooltip</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+    </td>
+  </td>
+  </tr>
+</table>

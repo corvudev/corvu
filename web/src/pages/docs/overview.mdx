@@ -1,0 +1,26 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS UI primitives and utilities
+description: An overview over all ui primitives and utilities corvu provides for SolidJS.
+image: https://corvu.dev/banner.jpg
+---
+import PrimitivesOverview from '@components/docs/primitives/PrimitivesOverview.astro'
+import UtilitiesOverview from '@components/docs/utilities/UtilitiesOverview.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# Overview
+
+## Primitives
+
+Corvu's growing list of UI primitives for SolidJS. Accessible, customizable and ready to use in your project!
+
+<PrimitivesOverview />
+
+## Utilities
+
+A set of commonly needed, low-level patterns that you might need in the modern, accessible web. They are exported as separate packages and can be used independently from corvu.
+
+<UtilitiesOverview />
+

@@ -1,0 +1,44 @@
+---
+import UtilitySvg from '@components/docs/utilities/Utility.svg?raw'
+
+const utilities = [
+  {
+    illustration: UtilitySvg,
+    name: 'focusTrap',
+    href: '/docs/utilities/focus-trap/',
+  },
+  {
+    illustration: UtilitySvg,
+    name: 'presence',
+    href: '/docs/utilities/presence/',
+  },
+  {
+    illustration: UtilitySvg,
+    name: 'preventScroll',
+    href: '/docs/utilities/prevent-scroll/',
+  },
+  {
+    illustration: UtilitySvg,
+    name: 'transitionSize',
+    href: '/docs/utilities/transition-size/',
+  },
+]
+---
+
+<div class="not-prose mt-5 @container">
+  <div class="grid gap-4 @md:grid-cols-2 @3xl:grid-cols-3">
+    {
+      utilities.map((utility) => (
+        <a
+          href={utility.href}
+          class="overflow-hidden rounded-xl border-[5px] border-corvu-400 bg-corvu-400 transition-transform active:translate-y-0.5 md:hover:scale-[1.02]"
+        >
+          <Fragment set:html={utility.illustration} />
+          <span class="block bg-corvu-100 px-2 py-1 text-lg font-bold">
+            {utility.name}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</div>
