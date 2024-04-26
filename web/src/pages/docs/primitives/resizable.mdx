@@ -158,7 +158,7 @@ You can nest resizables to create more complex layouts. Resize handles automatic
 
 ### Persistent layout
 
-Corvu itself doesn't provide a first party way to persist the layout of resizable panels. However, you can achieve this easily with something like the <Link href="https://primitives.solidjs.community/package/storage" text="makePersisted" /> utility from Solid Primitives:
+Corvu itself doesn't provide a first party way to persist the layout of resizable panels. However, you can achieve this easily with something like the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility from Solid Primitives:
 
 <Code code={`
 import { createSignal } from 'solid-js'
@@ -166,7 +166,7 @@ import { makePersisted } from '@solid-primitives/storage'
 import { Resizable } from 'corvu/resizable'
 
 const PersistentResizable = () => {
-  const [sizes, setSizes] = makePersisted(createSignal([]), {
+  const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
     name: 'resizable-sizes'
   })
 
@@ -301,9 +301,34 @@ const Component = () => {
 }
 `} lang="tsx" copyButton />
 
+### Persistent layout with SSR
+
+To avoid content shift when using server side rendering, we have to define the `initialSize` property on every `<Panel />` component. This makes sure that the panel renders with the correct size on the server. We can use the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility with the <Link href="https://primitives.solidjs.community/package/storage#cookiestorage" newTab>`cookieStorage`</Link> from Solid Primitives:
+
+<Code code={`
+import { createSignal } from 'solid-js'
+import { cookieStorage, makePersisted } from '@solid-primitives/storage'
+import { Resizable } from 'corvu/resizable'
+
+const SSRPersistentResizable = () => {
+  const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
+    storage: cookieStorage,
+    name: 'resizable-sizes'
+  })
+
+  return (
+    <Resizable sizes={sizes()} onSizesChange={setSizes}>
+      <Resizable.Panel initialSize={sizes()[0] ?? 0.5} />
+      <Resizable.Handle />
+      <Resizable.Panel initialSize={sizes()[1] ?? 0.5} />
+    </Resizable>
+  )
+}
+`} lang="tsx" copyButton />
+
 ## Accessibility
 
-Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/" text="Window Splitter WAI-ARIA design pattern" newTab />.
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/" newTab>Window Splitter WAI-ARIA design pattern</Link>.
 
 ### Ensuring handles are accessible
 

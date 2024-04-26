@@ -22,7 +22,7 @@ export const components = { h2: H2, h3: H3 }
 
 # Tooltip
 
-A popup that displays information when its trigger receives keyboard focus or the mouse hovers over it. It uses the awesome <Link href="https://floating-ui.com/" text="Floating UI" newTab /> library in the background for positioning and allows you to fully customize its behavior.
+A popup that displays information when its trigger receives keyboard focus or the mouse hovers over it. It uses the awesome <Link href="https://floating-ui.com/" newTab>Floating UI</Link> library in the background for positioning and allows you to fully customize its behavior.
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -89,7 +89,7 @@ import { Tooltip } from 'corvu/tooltip'
 The anchor component can optionally be used to make the tooltip anchor itself to another element than the trigger.
 
 ## Floating UI
-The initial placement of the tooltip can be configured with the `placement` property on the `Root` component. Refer to the <Link href="https://floating-ui.com/docs/computePosition/#placement" text="Floating UI placement option" newTab /> to see all available placements.
+The initial placement of the tooltip can be configured with the `placement` property on the `Root` component. Refer to the <Link href="https://floating-ui.com/docs/computePosition/#placement" newTab>Floating UI placement option</Link> to see all available placements.
 
 You can configure the positioning strategy with the `strategy` property on the `Root` component. Valid options are `absolute` or `fixed`. In most cases, it's recommended to leave this property at the default setting `absolute`, as this requires the browser to do the least work when updating the position.
 
@@ -114,7 +114,7 @@ export type FloatingOptions = {
 
 If you want to enable a middleware with default options, you can pass `true` as the value.
 
-The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware/" text="Floating UI's middleware documentation" newTab />.
+The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware/" newTab>Floating UI's middleware documentation</Link>.
 
 ### FloatingState
 The tooltip also provides a you with a `floatingState` property that contains the current state of the tooltip. You can use this property to override a specific behavior according to your needs.
@@ -134,7 +134,7 @@ export type FloatingState = {
 `} lang="tsx" copyButton />
 
 ## Accessibility
-Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" text="Tooltip WAI-ARIA design pattern" newTab />.
+Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" newTab>Tooltip WAI-ARIA design pattern</Link>.
 
 ### Keyboard navigation
 

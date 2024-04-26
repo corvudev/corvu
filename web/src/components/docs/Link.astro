@@ -5,7 +5,7 @@ interface Props {
   newTab?: boolean
 }
 
-const { href, text, newTab } = Astro.props
+const { href, newTab } = Astro.props
 ---
 
-<a href={href} target={newTab === true ? '_blank' : undefined}>{text}</a>
+<a href={href} target={newTab === true ? '_blank' : undefined}><slot /></a>
