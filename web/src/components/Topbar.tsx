@@ -12,7 +12,7 @@ const Topbar: ParentComponent<{
 
   return (
     <header
-      class="pointer-events-none fixed inset-x-0 top-0 z-30"
+      class="fixed inset-x-0 top-0 z-30 lg:pointer-events-none"
       style={{
         'padding-right': 'var(--scrollbar-width, 0)',
       }}
@@ -27,7 +27,7 @@ const Topbar: ParentComponent<{
           },
         )}
       >
-        <a href="/" class="pointer-events-auto">
+        <a href="/" class="lg:pointer-events-auto">
           <span class="sr-only">corvu</span>
           <img
             src={HeaderLogoDark.src}
@@ -44,7 +44,7 @@ const Topbar: ParentComponent<{
             class="hidden dark:block"
           />
         </a>
-        <div class="pointer-events-auto flex items-center space-x-2">
+        <div class="flex items-center space-x-2 lg:pointer-events-auto">
           <ThemeSelect />
           <a
             href="https://github.com/corvudev/corvu/"
