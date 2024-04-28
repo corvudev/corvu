@@ -45,14 +45,14 @@ const NavDrawer: FlowComponent = (props) => {
                 <span class="sr-only">corvu</span>
                 <img
                   src={HeaderLogoDark.src}
-                  alt="Corvu logo"
+                  alt="corvu logo dark"
                   height={42}
                   width={136}
                   class="dark:hidden"
                 />
                 <img
                   src={HeaderLogoLight.src}
-                  alt="Corvu logo"
+                  alt="corvu logo light"
                   height={42}
                   width={136}
                   class="hidden dark:block"

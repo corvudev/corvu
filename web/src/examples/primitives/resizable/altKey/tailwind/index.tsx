@@ -25,12 +25,12 @@ const ResizableAltKeyExample: VoidComponent = () => {
         >
           <img
             src={LogoDark.src}
-            alt="Corvu logo dark"
+            alt="corvu logo dark"
             class="h-16 dark:hidden"
           />
           <img
             src={LogoLight.src}
-            alt="Corvu logo light"
+            alt="corvu logo light"
             class="hidden h-16 dark:block"
           />
         </Resizable.Panel>

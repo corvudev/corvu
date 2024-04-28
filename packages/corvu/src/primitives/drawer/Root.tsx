@@ -78,7 +78,7 @@ export type DrawerRootProps = {
    */
   allowSkippingSnapPoints?: boolean
   /**
-   * Corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property.
+   * corvu drawers have logic to make dragging and scrolling work together. If you don't want this behavior or if you want to implement something yourself, you can disable it with this property.
    * @defaultValue `true`
    */
   handleScrollableElements?: boolean

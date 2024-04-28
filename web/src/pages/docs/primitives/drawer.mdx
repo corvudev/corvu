@@ -115,7 +115,7 @@ A plain CSS example would look like this:
 }
 `} lang="css" copyButton />
 
-Corvu's tailwind plugin also provides a `corvu-transitioning` modifier that you can use:
+corvu's tailwind plugin also provides a `corvu-transitioning` modifier that you can use:
 
 <Code code={`
 <Drawer.Content
@@ -231,7 +231,7 @@ Scrollable elements work out of the box. The drawer will check if the user is dr
 </ExampleWrapper>
 
 ### Transitioning the content height
-Corvu's drawer can handle `height: auto` and transition between heights when the content changes. This is possible by using a `ResizeObserver` to detect height changes and apply a fixed height for the time of the transition.
+corvu's drawer can handle `height: auto` and transition between heights when the content changes. This is possible by using a `ResizeObserver` to detect height changes and apply a fixed height for the time of the transition.
 
 This is disabled by default and you need to set the `transitionResize` property on the root component to enable it. Also, remember to set `transition-property: height` on the drawer content ;).
 
@@ -291,7 +291,7 @@ style={{
 The height will adjust to match the drawer's height until it's under 70%, which is the last snap point. Don't forget to apply the same transition function as you defined for your drawer transform and you're good to go!
 
 ### Disable dragging on certain elements
-You can disable drag on an element by giving it the `data-corvu-no-drag` attribute. Corvu will ignore any drag events on elements with this attribute.
+You can disable drag on an element by giving it the `data-corvu-no-drag` attribute. corvu will ignore any drag events on elements with this attribute.
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',

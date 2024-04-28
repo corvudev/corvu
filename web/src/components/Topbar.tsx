@@ -31,14 +31,14 @@ const Topbar: ParentComponent<{
           <span class="sr-only">corvu</span>
           <img
             src={HeaderLogoDark.src}
-            alt="Corvu logo"
+            alt="corvu logo"
             height={42}
             width={136}
             class="dark:hidden"
           />
           <img
             src={HeaderLogoLight.src}
-            alt="Corvu logo"
+            alt="corvu logo"
             height={42}
             width={136}
             class="hidden dark:block"

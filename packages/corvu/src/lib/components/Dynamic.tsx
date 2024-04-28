@@ -18,7 +18,7 @@ export type DynamicAttributes<T extends ValidComponent> = {
   as?: T | keyof JSX.HTMLElementTags
 }
 
-/** Corvu's version of Solid's `Dynamic` component. Renders as a div by default and can be overridden with the `as` property. */
+/** corvu's version of Solid's `Dynamic` component. Renders as a div by default and can be overridden with the `as` property. */
 const Dynamic = <T extends ValidComponent = typeof DEFAULT_DYNAMIC_ELEMENT>(
   props: OverrideComponentProps<T, DynamicAttributes<T>>,
 ) => {

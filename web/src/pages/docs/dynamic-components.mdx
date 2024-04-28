@@ -15,7 +15,7 @@ All primitive components that render a DOM element, are dynamic. This means that
 
 ## Native elements
 
-In most cases, you shouldn't need to change the DOM element that the primitive component renders. Corvu has sensible defaults for all components. But there are cases where it makes sense to change them. An example would be the `Tooltip` trigger which renders as a `button` element. You may want to render a tooltip on a link (`a` tag) instead. To do this, you have to specify the `as` property on the trigger component:
+In most cases, you shouldn't need to change the DOM element that the primitive component renders. corvu has sensible defaults for all components. But there are cases where it makes sense to change them. An example would be the `Tooltip` trigger which renders as a `button` element. You may want to render a tooltip on a link (`a` tag) instead. To do this, you have to specify the `as` property on the trigger component:
 <Code code={`
 <Tooltip.Trigger as="a" href="https://corvu.dev">
   corvu.dev

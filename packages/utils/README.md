@@ -14,7 +14,7 @@
 </div>
 
 ## About
-Corvu is a collection of open source UI primitives for SolidJS. It offers:
+corvu is a collection of open source UI primitives for SolidJS. It offers:
 
 - 🫥 Unstyled,
 - ♿ Accessible primitives
