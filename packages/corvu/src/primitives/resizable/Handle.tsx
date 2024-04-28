@@ -1,3 +1,4 @@
+import { callEventHandler, dataIf, mergeRefs } from '@lib/utils'
 import {
   createEffect,
   createMemo,
@@ -10,7 +11,6 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import { dataIf, mergeRefs } from '@lib/utils'
 import type {
   DragTarget,
   Handle,
@@ -69,6 +69,20 @@ export type ResizableHandleProps<
     disabled?: boolean
     /** @hidden */
     children?: JSX.Element
+    /** @hidden */
+    onMouseEnter?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+    /** @hidden */
+    onMouseLeave?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+    /** @hidden */
+    onKeyDown?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
+    /** @hidden */
+    onKeyUp?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
+    /** @hidden */
+    onFocus?: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
+    /** @hidden */
+    onBlur?: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
+    /** @hidden */
+    onPointerDown?: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
   }
 >
 
@@ -104,6 +118,13 @@ const ResizableHandle = <
     'style',
     'disabled',
     'children',
+    'onMouseEnter',
+    'onMouseLeave',
+    'onKeyDown',
+    'onKeyUp',
+    'onFocus',
+    'onBlur',
+    'onPointerDown',
   ])
 
   const [ref, setRef] = createSignal<HTMLElement | null>(null)
@@ -224,6 +245,60 @@ const ResizableHandle = <
     }),
   )
 
+  const onMouseEnter: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (e) => {
+    if (
+      callEventHandler(localProps.onMouseEnter, e) ||
+      localProps.disabled === true
+    )
+      return
+    setHovered('handle')
+  }
+  const onMouseLeave: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (e) => {
+    if (callEventHandler(localProps.onMouseLeave, e)) return
+    setHovered(null)
+  }
+  const onKeyDown: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent> = (e) => {
+    if (callEventHandler(localProps.onKeyDown, e) || dragging()) return
+    const element = ref()
+    if (!element) return
+    context().onKeyDown(element, e)
+  }
+  const onKeyUp: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent> = (e) => {
+    if (callEventHandler(localProps.onKeyUp, e) || e.key !== 'Tab') return
+    setFocused(true)
+  }
+  const onFocus: JSX.EventHandlerUnion<HTMLElement, FocusEvent> = (e) => {
+    if (callEventHandler(localProps.onFocus, e) || hovered()) return
+    setFocused(true)
+    setActive(true)
+  }
+  const onBlur: JSX.EventHandlerUnion<HTMLElement, FocusEvent> = (e) => {
+    if (callEventHandler(localProps.onBlur, e)) return
+    setFocused(false)
+    if (hovered()) return
+    setActive(false)
+  }
+  const onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent> = (
+    e,
+  ) => {
+    if (callEventHandler(localProps.onPointerDown, e)) return
+    const targetElement = e.target as HTMLElement
+    let target: DragTarget = 'handle'
+    if (
+      targetElement.hasAttribute(
+        'data-corvu-resizable-handle-start-intersection',
+      )
+    ) {
+      target = 'startIntersection'
+    }
+    if (
+      targetElement.hasAttribute('data-corvu-resizable-handle-end-intersection')
+    ) {
+      target = 'endIntersection'
+    }
+    globalHandleCallbacks?.onDragStart(e, target)
+  }
+
   return (
     <Dynamic
       as={
@@ -231,47 +306,13 @@ const ResizableHandle = <
         DEFAULT_RESIZABLE_HANDLE_ELEMENT
       }
       ref={mergeRefs(setRef, localProps.ref)}
-      onMouseEnter={() => localProps.disabled !== true && setHovered('handle')}
-      onMouseLeave={() => setHovered(null)}
-      onKeyDown={(event: KeyboardEvent) => {
-        if (dragging()) return
-        const element = ref()
-        if (!element) return
-        context().onKeyDown(element, event)
-      }}
-      onKeyUp={(event: KeyboardEvent) => {
-        if (event.key !== 'Tab') return
-        setFocused(true)
-      }}
-      onFocus={() => {
-        if (hovered()) return
-        setFocused(true)
-        setActive(true)
-      }}
-      onBlur={() => {
-        setFocused(false)
-        if (hovered()) return
-        setActive(false)
-      }}
-      onPointerDown={(event: PointerEvent) => {
-        const targetElement = event.target as HTMLElement
-        let target: DragTarget = 'handle'
-        if (
-          targetElement.hasAttribute(
-            'data-corvu-resizable-handle-start-intersection',
-          )
-        ) {
-          target = 'startIntersection'
-        }
-        if (
-          targetElement.hasAttribute(
-            'data-corvu-resizable-handle-end-intersection',
-          )
-        ) {
-          target = 'endIntersection'
-        }
-        globalHandleCallbacks?.onDragStart(event, target)
-      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onPointerDown={onPointerDown}
       role="separator"
       aria-controls={ariaInformation()?.ariaControls}
       aria-orientation={context().orientation()}
