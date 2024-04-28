@@ -1,0 +1,12 @@
+{
+  "bootstrap-sha": "f7b9e4e0022bf1f26520a013efc37e7054e863cd",
+  "packages": {
+    "packages/corvu": {},
+    "packages/solid-focus-trap": {},
+    "packages/solid-presence": {},
+    "packages/solid-prevent-scroll": {},
+    "packages/solid-transition-size": {},
+    "packages/tailwind": {},
+    "packages/utils": {}
+  }
+}

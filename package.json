@@ -11,13 +11,16 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "ci:publish": "pnpm build && pnpm publish -r",
     "clean": "turbo run clean && rm -rf node_modules",
     "dev:corvu": "turbo run dev --filter=@corvu/dev --filter=corvu",
     "dev:web": "turbo run dev --filter=@corvu/web",
     "lint": "turbo run lint",
-    "preview:web": "turbo run preview --filter=@corvu/web"
+    "preview:web": "turbo run preview --filter=@corvu/web",
+    "rp": "release-please"
   },
   "devDependencies": {
+    "release-please": "^16.10.2",
     "turbo": "^1.13.3"
   }
 }

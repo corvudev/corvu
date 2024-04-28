@@ -1,39 +1,47 @@
-name: lint
+name: release-please
 
 on:
   push:
     branches:
-      - '**'
-  pull_request:
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+      - main
 
 jobs:
-  lint:
-    name: Lint
+  release-please:
     runs-on: ubuntu-latest
     steps:
+      - name: release-please
+        id: release-please
+        uses: google-github-actions/release-please-action@v4
+        with:
+          command: manifest
+          monorepo-tags: true
+
       - name: Check out
+        if: ${{ steps.release-please.outputs.releases_created }}
         uses: actions/checkout@v4
 
       - name: Install nodejs
+        if: ${{ steps.release-please.outputs.releases_created }}
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
       - name: Install pnpm
+        if: ${{ steps.release-please.outputs.releases_created }}
         uses: pnpm/action-setup@v3
         with:
           version: latest
           run_install: false
 
       - name: Get pnpm store dir
+        if: ${{ steps.release-please.outputs.releases_created }}
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: pnpm cache
+        if: ${{ steps.release-please.outputs.releases_created }}
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -42,9 +50,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
+        if: ${{ steps.release-please.outputs.releases_created }}
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
 
-      - name: Lint
+      - name: Publish to npm
+        if: ${{ steps.release-please.outputs.releases_created }}
         run: |
-          pnpm lint
+          pnpm ci:publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
