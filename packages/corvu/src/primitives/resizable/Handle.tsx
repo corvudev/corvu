@@ -327,6 +327,7 @@ const ResizableHandle = <
         position: 'relative',
         cursor: context().handleCursorStyle() ? 'inherit' : undefined,
         'touch-action': 'none',
+        'flex-shrink': 0,
         ...localProps.style,
       }}
       disabled={localProps.disabled}
