@@ -12,9 +12,6 @@ jobs:
       - name: release-please
         id: release-please
         uses: google-github-actions/release-please-action@v4
-        with:
-          command: manifest
-          monorepo-tags: true
 
       - name: Check out
         if: ${{ steps.release-please.outputs.releases_created }}

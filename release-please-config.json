@@ -2,13 +2,28 @@
   "bootstrap-sha": "f7b9e4e0022bf1f26520a013efc37e7054e863cd",
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
+  "include-component-in-tag": true,
   "packages": {
-    "packages/corvu": {},
-    "packages/solid-focus-trap": {},
-    "packages/solid-presence": {},
-    "packages/solid-prevent-scroll": {},
-    "packages/solid-transition-size": {},
-    "packages/tailwind": {},
-    "packages/utils": {}
+    "packages/corvu": {
+      "component": "corvu"
+    },
+    "packages/solid-focus-trap": {
+      "component": "solid-focus-trap"
+    },
+    "packages/solid-presence": {
+      "component": "solid-presence"
+    },
+    "packages/solid-prevent-scroll": {
+      "component": "solid-prevent-scroll"
+    },
+    "packages/solid-transition-size": {
+      "component": "solid-transition-size"
+    },
+    "packages/tailwind": {
+      "component": "@corvu/tailwind"
+    },
+    "packages/utils": {
+      "component": "@corvu/utils"
+    }
   }
 }
