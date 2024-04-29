@@ -37,8 +37,7 @@ jobs:
         if: ${{ steps.release-please.outputs.releases_created }}
         id: pnpm-cache
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: pnpm cache
         if: ${{ steps.release-please.outputs.releases_created }}
@@ -51,12 +50,13 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.release-please.outputs.releases_created }}
-        run: |
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Set pnpm auth token
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish to npm
         if: ${{ steps.release-please.outputs.releases_created }}
-        run: |
-          pnpm ci:publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm ci:publish
