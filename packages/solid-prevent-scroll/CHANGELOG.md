@@ -1,5 +1,12 @@
 # solid-prevent-scroll
 
+## [0.1.7](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.6...solid-prevent-scroll-v0.1.7) (2024-04-29)
+
+
+### Features
+
+* add resizable primitive ([#13](https://github.com/corvudev/corvu/issues/13)) ([b77a5d2](https://github.com/corvudev/corvu/commit/b77a5d2404da37a5f2e0402a082aaddbdab6b5e0))
+
 ## 0.1.6
 
 ### Patch Changes
