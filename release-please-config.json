@@ -1,5 +1,7 @@
 {
   "bootstrap-sha": "f7b9e4e0022bf1f26520a013efc37e7054e863cd",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
   "packages": {
     "packages/corvu": {},
     "packages/solid-focus-trap": {},
