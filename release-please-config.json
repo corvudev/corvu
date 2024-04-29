@@ -1,36 +1,32 @@
 {
   "bootstrap-sha": "f7b9e4e0022bf1f26520a013efc37e7054e863cd",
+  "last-release-sha": "7a53e105af7762b25154465b9ac4ea5ab97b489d",
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
+  "tag-separator": "@",
   "include-component-in-tag": true,
+  "include-v-in-tag": false,
   "packages": {
     "packages/corvu": {
-      "component": "corvu",
-      "exclude-paths": ["README.md"]
+      "component": "corvu"
     },
     "packages/solid-focus-trap": {
-      "component": "solid-focus-trap",
-      "exclude-paths": ["README.md"]
+      "component": "solid-focus-trap"
     },
     "packages/solid-presence": {
-      "component": "solid-presence",
-      "exclude-paths": ["README.md"]
+      "component": "solid-presence"
     },
     "packages/solid-prevent-scroll": {
-      "component": "solid-prevent-scroll",
-      "exclude-paths": ["README.md"]
+      "component": "solid-prevent-scroll"
     },
     "packages/solid-transition-size": {
-      "component": "solid-transition-size",
-      "exclude-paths": ["README.md"]
+      "component": "solid-transition-size"
     },
     "packages/tailwind": {
-      "component": "@corvu/tailwind",
-      "exclude-paths": ["README.md"]
+      "component": "@corvu/tailwind"
     },
     "packages/utils": {
-      "component": "@corvu/utils",
-      "exclude-paths": ["README.md"]
+      "component": "@corvu/utils"
     }
   }
 }
