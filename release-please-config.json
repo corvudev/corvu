@@ -5,25 +5,32 @@
   "include-component-in-tag": true,
   "packages": {
     "packages/corvu": {
-      "component": "corvu"
+      "component": "corvu",
+      "exclude-paths": ["README.md"]
     },
     "packages/solid-focus-trap": {
-      "component": "solid-focus-trap"
+      "component": "solid-focus-trap",
+      "exclude-paths": ["README.md"]
     },
     "packages/solid-presence": {
-      "component": "solid-presence"
+      "component": "solid-presence",
+      "exclude-paths": ["README.md"]
     },
     "packages/solid-prevent-scroll": {
-      "component": "solid-prevent-scroll"
+      "component": "solid-prevent-scroll",
+      "exclude-paths": ["README.md"]
     },
     "packages/solid-transition-size": {
-      "component": "solid-transition-size"
+      "component": "solid-transition-size",
+      "exclude-paths": ["README.md"]
     },
     "packages/tailwind": {
-      "component": "@corvu/tailwind"
+      "component": "@corvu/tailwind",
+      "exclude-paths": ["README.md"]
     },
     "packages/utils": {
-      "component": "@corvu/utils"
+      "component": "@corvu/utils",
+      "exclude-paths": ["README.md"]
     }
   }
 }
