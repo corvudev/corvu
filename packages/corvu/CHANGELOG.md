@@ -1,5 +1,18 @@
 # corvu
 
+## [0.5.1](https://github.com/corvudev/corvu/compare/corvu@0.5.0...corvu-v0.5.1) (2024-04-29)
+
+
+### Features
+
+* **resizable:** add `onDragStart` and `onDragEnd` to the resize handle ([7efdc6d](https://github.com/corvudev/corvu/commit/7efdc6dcee8dad7136227ce723ba1d212132933f))
+
+
+### Bug Fixes
+
+* **resizable:** add `flex-shrink: 0` to resize handle ([3777025](https://github.com/corvudev/corvu/commit/37770251e05c78c96f2bfa8445bfff88b35be61f))
+* **resizable:** properly merge event handlers ([3c47d57](https://github.com/corvudev/corvu/commit/3c47d57e8ca415680d033e9dc6bf8fad2d485b7f))
+
 ## 0.5.0
 
 ### Minor Changes
