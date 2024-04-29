@@ -1,7 +1,6 @@
 node_modules
 dist
 .turbo
-.env
 packages/corvu/api.json
 packages/solid-focus-trap/api.json
 packages/solid-presence/api.json
