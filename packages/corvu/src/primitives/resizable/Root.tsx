@@ -251,8 +251,7 @@ const ResizableRoot = <
 
   createEffect(() => {
     if (localProps.onSizesChange !== undefined) {
-      // @ts-expect-error: splitProps doing weird things
-      localProps.onSizesChange(sizes())
+      localProps.onSizesChange?.(sizes())
     }
   })
 

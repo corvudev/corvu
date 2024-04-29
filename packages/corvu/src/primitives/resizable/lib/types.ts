@@ -45,7 +45,7 @@ export type Handle = {
   active: Accessor<boolean>
   setActive: Setter<boolean>
   onDrag: (delta: number, altKey: boolean) => void
-  onDragEnd: () => void
+  onDragEnd: (event: PointerEvent | TouchEvent | MouseEvent) => void
 }
 
 export type DragTarget = 'handle' | 'startIntersection' | 'endIntersection'

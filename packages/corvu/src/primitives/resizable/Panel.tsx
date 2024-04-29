@@ -219,11 +219,9 @@ const ResizablePanel = <
 
     if (instance && prev !== collapsed) {
       if (collapsed && localProps.onCollapse !== undefined) {
-        // @ts-expect-error: splitProps doing weird things
-        localProps.onCollapse(instance.size())
+        localProps.onCollapse?.(instance.size())
       } else if (!collapsed && localProps.onExpand !== undefined) {
-        // @ts-expect-error: splitProps doing weird things
-        localProps.onExpand(instance.size())
+        localProps.onExpand?.(instance.size())
       }
     }
 

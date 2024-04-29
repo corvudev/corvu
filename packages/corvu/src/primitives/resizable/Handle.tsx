@@ -54,9 +54,17 @@ export type ResizableHandleProps<
      */
     altKey?: boolean | 'only'
     /**
+     * Callback fired when the handle starts being dragged. Can be prevented by calling `event.preventDefault`.
+     */
+    onDragStart?: (event: PointerEvent) => void
+    /**
      * Callback fired when the handle is being dragged. Can be prevented by calling `event.preventDefault`.
      */
     onDrag?: (event: CustomEvent) => void
+    /**
+     * Callback fired when the handle stops being dragged.
+     */
+    onDragEnd?: (event: PointerEvent) => void
     /**
      * The `id` of the resizable context to use.
      */
@@ -111,7 +119,9 @@ const ResizableHandle = <
     'startIntersection',
     'endIntersection',
     'altKey',
+    'onDragStart',
     'onDrag',
+    'onDragEnd',
     'contextId',
     'as',
     'ref',
@@ -223,13 +233,15 @@ const ResizableHandle = <
           const dragEvent = new CustomEvent('drag', {
             cancelable: true,
           })
-          // @ts-expect-error: splitProps doing weird things
-          localProps.onDrag(dragEvent)
+          localProps.onDrag?.(dragEvent)
           if (dragEvent.defaultPrevented) return
         }
         context().onDrag(element, delta, altKey)
       },
-      onDragEnd: context().onDragEnd,
+      onDragEnd: (event) => {
+        localProps.onDragEnd?.(event)
+        context().onDragEnd()
+      },
     }
 
     globalHandleCallbacks = registerHandle(globalHandle)
@@ -282,6 +294,7 @@ const ResizableHandle = <
     e,
   ) => {
     if (callEventHandler(localProps.onPointerDown, e)) return
+    if (callEventHandler(localProps.onDragStart, e)) return
     const targetElement = e.target as HTMLElement
     let target: DragTarget = 'handle'
     if (

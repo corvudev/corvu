@@ -208,7 +208,7 @@ const onMove = (x: number, y: number, altKey: boolean) => {
   }
 }
 
-const onDragEnd = () => {
+const onDragEnd = (event: PointerEvent | TouchEvent | MouseEvent) => {
   batch(() => {
     // While dragging, active states are locked and we need to evaluate them on drag end
     for (const handle of handles) {
@@ -223,7 +223,7 @@ const onDragEnd = () => {
         }
       } else {
         handle.setDragging(false)
-        handle.onDragEnd()
+        handle.onDragEnd(event)
 
         if (!handle.hovered() && !handle.hoveredAsIntersection()) {
           handle.setActive(false)
