@@ -7,9 +7,33 @@
   "include-component-in-tag": true,
   "include-v-in-tag": false,
   "packages": {
+    "packages/accordion": {
+      "component": "@corvu/accordion",
+      "release-as": "0.1.0"
+    },
     "packages/corvu": {
       "component": "corvu",
       "release-as": "0.6.0"
+    },
+    "packages/dialog": {
+      "component": "@corvu/dialog",
+      "release-as": "0.1.0"
+    },
+    "packages/disclosure": {
+      "component": "@corvu/disclosure",
+      "release-as": "0.1.0"
+    },
+    "packages/drawer": {
+      "component": "@corvu/drawer",
+      "release-as": "0.1.0"
+    },
+    "packages/popover": {
+      "component": "@corvu/popover",
+      "release-as": "0.1.0"
+    },
+    "packages/resizable": {
+      "component": "@corvu/resizable",
+      "release-as": "0.1.0"
     },
     "packages/solid-focus-trap": {
       "component": "solid-focus-trap",
@@ -30,6 +54,10 @@
     "packages/tailwind": {
       "component": "@corvu/tailwind",
       "release-as": "0.1.5"
+    },
+    "packages/tooltip": {
+      "component": "@corvu/tooltip",
+      "release-as": "0.1.0"
     },
     "packages/utils": {
       "component": "@corvu/utils",
