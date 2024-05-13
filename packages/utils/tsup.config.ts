@@ -11,7 +11,16 @@ function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
     format,
     clean: true,
     dts: format === 'esm' && !jsx,
-    entry: ['src/index.ts', 'src/createStyle.ts', 'src/scroll.ts'],
+    entry: [
+      'src/index.ts',
+      'src/components/*.tsx',
+      'src/create/*.ts',
+      'src/dom/index.ts',
+      'src/dynamic/index.ts',
+      'src/floating/index.ts',
+      'src/reactivity/index.ts',
+      'src/scroll/index.ts',
+    ],
     outDir: 'dist/',
     treeshake: { preset: 'smallest' },
     replaceNodeEnv: true,
@@ -33,4 +42,7 @@ function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
   }
 }
 
-export default defineConfig([generateConfig('esm', false)])
+export default defineConfig([
+  generateConfig('esm', false),
+  generateConfig('esm', true),
+])

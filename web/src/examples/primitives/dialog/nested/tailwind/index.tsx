@@ -1,4 +1,4 @@
-import { Dialog } from 'corvu/dialog'
+import Dialog from '@corvu/dialog'
 import type { VoidComponent } from 'solid-js'
 
 const DialogExample: VoidComponent = () => {

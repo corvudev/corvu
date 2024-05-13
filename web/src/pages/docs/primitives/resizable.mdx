@@ -23,9 +23,11 @@ import HoistingExample from '@examples/primitives/resizable/hoisting/tailwind/in
 import HoistingTailwindTsx from '@examples/primitives/resizable/hoisting/tailwind/index?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Resizable } from '@lib/typedoc/libraries'
 import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
 import Link from '@components/docs/Link.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -33,6 +35,8 @@ export const components = { h2: H2, h3: H3 }
 # Resizable
 
 SolidJS components for building resizable panels and splitters.
+
+<PackageInfo packageName="@corvu/resizable" />
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -75,11 +79,19 @@ SolidJS components for building resizable panels and splitters.
   'Full control from userland with access to the state, resize and collapse functions',
 ]} />
 
+## Installation
+
+<Code code={`
+npm install @corvu/resizable
+`} lang="bash" copyButton />
+
+The resizable is also included in the main `corvu` package under `corvu/resizable`.
+
 ## Usage
 <Code code={`
-import { Resizable } from 'corvu/resizable'
-// Or
-// import { Root, Panel, Handle } from 'corvu/resizable'
+import Resizable from '@corvu/resizable' // 'corvu/resizable'
+// or
+// import { Root, Panel, Handle } from '@corvu/resizable'
 `} lang="tsx" copyButton />
 
 ### Anatomy
@@ -163,7 +175,7 @@ corvu itself doesn't provide a first party way to persist the layout of resizabl
 <Code code={`
 import { createSignal } from 'solid-js'
 import { makePersisted } from '@solid-primitives/storage'
-import { Resizable } from 'corvu/resizable'
+import Resizable from '@corvu/resizable'
 
 const PersistentResizable = () => {
   const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
@@ -195,7 +207,7 @@ Edit the layout below and refresh the page to see how the panel sizes persist.
     }
   ]
 }]} client:load>
-  <PersistentExample client:only />
+  <PersistentExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -221,7 +233,7 @@ Here, the left Panel is collapsible with `minSize={0.3}` and `collapsedSize={0.1
     }
   ]
 }]} client:load>
-  <CollapsibleExample client:only />
+  <CollapsibleExample client:load />
   <RawCode slot="tailwindTsx" code={CollapsibleTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -270,7 +282,7 @@ Here is an example that uses this approach:
     }
   ]
 }]} client:load>
-  <HoistingExample client:only />
+  <HoistingExample client:load />
   <RawCode slot="tailwindTsx" code={HoistingTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -308,7 +320,7 @@ To avoid content shift when using server side rendering, we have to define the `
 <Code code={`
 import { createSignal } from 'solid-js'
 import { cookieStorage, makePersisted } from '@solid-primitives/storage'
-import { Resizable } from 'corvu/resizable'
+import Resizable from '@corvu/resizable'
 
 const SSRPersistentResizable = () => {
   const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
@@ -377,4 +389,4 @@ Pressing shift while resizing with arrow keys will expand/contract the panel ful
 
 ## API reference
 
-<GenerateApiDocs primitive="Resizable" />
+<ApiReference library={Resizable} />

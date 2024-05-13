@@ -15,8 +15,10 @@ import CssTsx from '@examples/primitives/dialog/basic/css/index?raw'
 import CssStyle from '@examples/primitives/dialog/basic/css/index.css?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Dialog } from '@lib/typedoc/libraries'
 import Link from '@components/docs/Link.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -24,6 +26,8 @@ export const components = { h2: H2, h3: H3 }
 # Dialog
 
 A window overlaid on either the primary window or another dialog window.
+
+<PackageInfo packageName="@corvu/dialog" />
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -66,11 +70,19 @@ A window overlaid on either the primary window or another dialog window.
   'Supports nested dialogs'
 ]} />
 
+## Installation
+
+<Code code={`
+npm install @corvu/dialog
+`} lang="bash" copyButton />
+
+The dialog is also included in the main `corvu` package under `corvu/dialog`.
+
 ## Usage
 <Code code={`
-import { Dialog } from 'corvu/dialog'
-// Or
-// import { Root, Trigger, ... } from 'corvu/dialog'
+import Dialog from '@corvu/dialog' // 'corvu/dialog'
+// or
+// import { Root, Trigger, ... } from '@corvu/dialog'
 `} lang="tsx" copyButton />
 
 ### Anatomy
@@ -129,4 +141,4 @@ Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal
 
 ## API reference
 
-<GenerateApiDocs primitive="Dialog" />
+<ApiReference library={Dialog} />

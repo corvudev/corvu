@@ -1,0 +1,27 @@
+---
+import ApiReturns from '@components/docs/api/lists/ApiReturns.astro'
+import type { ContextApiReference } from '@lib/typedoc/types/apiReferences'
+
+interface Props extends ContextApiReference {}
+
+const { name, descriptionHtml, returns } = Astro.props
+---
+
+<div>
+  <div class="not-prose inline-flex items-center space-x-2">
+    <h3
+      id={encodeURIComponent(name)}
+      class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
+    >
+      {name}
+    </h3><p
+      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
+    >
+      Context
+    </p>
+  </div>
+  <p class="mt-3" set:html={descriptionHtml} />
+  <div class="mt-4">
+    <ApiReturns returns={returns} />
+  </div>
+</div>

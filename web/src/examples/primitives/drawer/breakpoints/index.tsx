@@ -1,4 +1,4 @@
-import { Drawer } from 'corvu/drawer'
+import Drawer from '@corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
 const DrawerBreakPointExample: VoidComponent = () => {

@@ -6,7 +6,9 @@ image: https://corvu.dev/banner.jpg
 ---
 import Features from '@components/docs/Features.astro'
 import Code from '@components/docs/code/Code.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { PreventScroll } from '@lib/typedoc/libraries'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -15,12 +17,20 @@ export const components = { h2: H2, h3: H3 }
 
 Utility that prevents scrolling outside of a given DOM element. Works by preventing events that else would lead to scrolling.
 
+<PackageInfo packageName="solid-prevent-scroll" />
+
 ## Features
 <Features features={[
   'Supports nested scroll containers',
   'Works both vertically and horizontally',
   'Removes the body scrollbar without layout shift',
 ]} />
+
+## Installation
+
+<Code code={`
+npm install solid-prevent-scroll
+`} lang="bash" copyButton />
 
 ## Usage
 
@@ -66,4 +76,4 @@ Use the `--scrollbar-width` CSS variable to add padding to fixed elements to pre
 
 ## API reference
 
-<GenerateApiDocs utility="createPreventScroll" />
+<ApiReference library={PreventScroll} />

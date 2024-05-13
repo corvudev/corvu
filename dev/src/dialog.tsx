@@ -1,6 +1,6 @@
 import { createSignal, For, type VoidComponent } from 'solid-js'
 import clsx from 'clsx'
-import { Dialog } from 'corvu/dialog'
+import Dialog from 'corvu/dialog'
 
 const DialogDev: VoidComponent = () => {
   return (

@@ -3,7 +3,7 @@ import '@fontsource-variable/rubik'
 import '@assets/global.css'
 import '@assets/shiki.css'
 import Background from '@components/Background'
-import { corvuVersion } from '@lib/getMeta'
+import getApiReferenceHeadings from '@lib/typedoc/headings'
 import Head from '@components/Head.astro'
 import Navigation from '@components/docs/nav/Navigation.astro'
 import TableOfContents from '@components/docs/TableOfContents'
@@ -56,19 +56,12 @@ const { frontmatter, headings } = Astro.props
         </div>
         <div class="-mt-1 mb-6 grow">
           <article
-            class="prose max-w-[800px] @container prose-headings:scroll-mt-20 prose-h1:mb-4 prose-h1:text-4xl prose-h1:font-black prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-2xl prose-h2:font-extrabold prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-xl prose-h3:font-bold prose-p:mb-2 prose-p:max-w-3xl prose-p:!leading-7 prose-a:text-corvu-link prose-a:underline hover:prose-a:text-corvu-link-hover prose-blockquote:rounded-md prose-blockquote:border-2 prose-blockquote:border-corvu-200 prose-blockquote:bg-corvu-100 prose-blockquote:px-4 prose-blockquote:py-2 prose-code:whitespace-nowrap prose-code:rounded prose-code:border prose-code:border-corvu-200 prose-code:bg-corvu-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-ol:mb-3 prose-ol:ml-[21px] prose-ol:list-outside prose-ol:list-decimal prose-ul:mb-3 prose-ul:ml-[21px] prose-ul:list-outside prose-ul:list-disc prose-li:mb-1 md:ml-60 md:prose-headings:scroll-mt-2"
+            class="prose max-w-[800px] @container prose-headings:scroll-mt-20 prose-h1:mb-4 prose-h1:text-4xl prose-h1:font-black prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-2xl prose-h2:font-extrabold prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-xl prose-h3:font-bold prose-p:mb-2 prose-p:max-w-3xl prose-p:!leading-7 prose-a:text-corvu-link prose-a:underline hover:prose-a:text-corvu-link-hover prose-blockquote:rounded-md prose-blockquote:border-2 prose-blockquote:border-corvu-200 prose-blockquote:bg-corvu-100 prose-blockquote:px-4 prose-blockquote:py-2 prose-code:whitespace-nowrap prose-code:rounded prose-code:border prose-code:border-corvu-200 prose-code:bg-corvu-100 prose-code:px-1.5 prose-code:pb-0.5 prose-code:pt-1 prose-code:text-sm prose-ol:mb-3 prose-ol:ml-[21px] prose-ol:list-outside prose-ol:list-decimal prose-ul:mb-3 prose-ul:ml-[21px] prose-ul:list-outside prose-ul:list-disc prose-li:mb-1 md:ml-60 md:prose-headings:scroll-mt-2"
           >
             <slot />
             <div
-              class="not-prose mb-8 mt-16 flex justify-between space-x-4 border-t-2 border-corvu-200 pt-4 text-sm"
+              class="not-prose mb-8 mt-16 flex justify-end space-x-4 border-t-2 border-corvu-200 pt-4 text-sm"
             >
-              <code
-                ><a
-                  href="https://www.npmjs.com/package/corvu/"
-                  target="_blank"
-                  class="-m-2 p-2">corvu@{corvuVersion}</a
-                ></code
-              >
               <p class="text-right">
                 Developed and designed by <a
                   href="https://github.com/GiyoMoon/"
@@ -80,8 +73,12 @@ const { frontmatter, headings } = Astro.props
             </div>
           </article>
         </div>
-        <TableOfContents headings={headings} client:load />
+        <TableOfContents
+          headings={headings}
+          apiHeadings={getApiReferenceHeadings(headings[0].text)}
+          client:load
+        />
       </div>
     </main>
-  </body>
-</html>
+  </body></html
+>

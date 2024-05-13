@@ -1,0 +1,28 @@
+---
+import ApiProps from '@components/docs/api/lists/ApiProps.astro'
+import ApiReturns from '@components/docs/api/lists/ApiReturns.astro'
+import type { FunctionApiReference } from '@lib/typedoc/types/apiReferences'
+
+interface Props extends FunctionApiReference {}
+
+const { name, props, returns } = Astro.props
+---
+
+<div>
+  <div class="not-prose inline-flex items-center space-x-2">
+    <h3
+      id={encodeURIComponent(name)}
+      class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
+    >
+      {name}
+    </h3><p
+      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
+    >
+      Function
+    </p>
+  </div>
+  <div class="mt-4">
+    <ApiProps props={props} />
+    {returns && <ApiReturns returns={returns} />}
+  </div>
+</div>

@@ -5,7 +5,9 @@ description: Create animation-aware components which wait for any animation to f
 image: https://corvu.dev/banner.jpg
 ---
 import Code from '@components/docs/code/Code.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Presence } from '@lib/typedoc/libraries'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -14,11 +16,19 @@ export const components = { h2: H2, h3: H3 }
 
 Manages the presence of an element in the DOM while being aware of pending animations before unmounting it. You can see it in action in the [Dialog](/docs/primitives/dialog/) primitive.
 
+<PackageInfo packageName="solid-presence" />
+
+## Installation
+
+<Code code={`
+npm install solid-presence
+`} lang="bash" copyButton />
+
+## Usage
 The `createPresence` utility returns a boolean called `present` which indicates if the element should be present in the DOM or not.
 
 The `state` variable can be used to get the current state of the presence. Valid states are `present`, `hiding` or `hidden`.
 
-## Usage
 <Code code={`
 import createPresence from 'solid-presence'
 `} lang="tsx" copyButton />
@@ -44,4 +54,4 @@ const DialogContent: Component<{
 
 ## API reference
 
-<GenerateApiDocs utility="createPresence" />
+<ApiReference library={Presence} />

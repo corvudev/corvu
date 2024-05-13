@@ -1,5 +1,5 @@
 import { Gear } from '@examples/primitives/popover/icons'
-import { Popover } from 'corvu/popover'
+import Popover from '@corvu/popover'
 import type { VoidComponent } from 'solid-js'
 
 const PopoverExample: VoidComponent = () => {

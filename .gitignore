@@ -1,8 +1,5 @@
 node_modules
 dist
 .turbo
-packages/corvu/api.json
-packages/solid-focus-trap/api.json
-packages/solid-presence/api.json
-packages/solid-prevent-scroll/api.json
-packages/solid-transition-size/api.json
+packages/*/typedoc.json
+tsup.config.**
