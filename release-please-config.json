@@ -28,7 +28,8 @@
       "release-as": "0.1.2"
     },
     "packages/tailwind": {
-      "component": "@corvu/tailwind"
+      "component": "@corvu/tailwind",
+      "release-as": "0.1.5"
     },
     "packages/utils": {
       "component": "@corvu/utils",
