@@ -13,11 +13,7 @@ import {
   createInternalResizableContext,
   createResizableContext,
 } from '@src/context'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { fixToPrecision, resolveSize, splitPanels } from '@src/lib/utils'
 import {
   getDistributablePercentage,
@@ -26,58 +22,62 @@ import {
 } from '@src/lib/resize'
 import { isFunction, type Size } from '@corvu/utils'
 import type { PanelData, PanelInstance, ResizeStrategy } from '@src/lib/types'
+import { type Ref, sortByDocumentPosition } from '@corvu/utils/dom'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createSize from '@corvu/utils/create/size'
 import { handleResizeConstraints } from '@src/lib/cursor'
 import { mergeRefs } from '@corvu/utils/reactivity'
-import { sortByDocumentPosition } from '@corvu/utils/dom'
 
 const DEFAULT_RESIZABLE_ROOT_ELEMENT = 'div'
 
-export type ResizableRootProps<
-  T extends ValidComponent = typeof DEFAULT_RESIZABLE_ROOT_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The orientation of the resizable.
-     * @defaultValue 'horizontal'
-     */
-    orientation?: 'horizontal' | 'vertical'
-    /**
-     * Panel sizes in percentage.
-     */
-    sizes?: number[]
-    /**
-     * Callback fired when the panel sizes change.
-     */
-    onSizesChange?: (sizes: number[]) => void
-    /**
-     * Initial panel sizes. Gets overridden by the `initialSize` prop on `<Panel />` components.
-     */
-    initialSizes?: Size[]
-    /**
-     * The delta to use when resizing with arrow keys.
-     * @defaultValue 0.1
-     */
-    keyboardDelta?: Size
-    /**
-     * Whether to handle the cursor style when resizing.
-     * @defaultValue true
-     */
-    handleCursorStyle?: boolean
-    /**
-     * The `id` of the resizable context to use.
-     */
-    contextId?: string
-    children: JSX.Element | ((props: ResizableRootChildrenProps) => JSX.Element)
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-  }
->
+export type ResizableRootCorvuProps = {
+  /**
+   * The orientation of the resizable.
+   * @defaultValue 'horizontal'
+   */
+  orientation?: 'horizontal' | 'vertical'
+  /**
+   * Panel sizes in percentage.
+   */
+  sizes?: number[]
+  /**
+   * Callback fired when the panel sizes change.
+   */
+  onSizesChange?: (sizes: number[]) => void
+  /**
+   * Initial panel sizes. Gets overridden by the `initialSize` prop on `<Panel />` components.
+   */
+  initialSizes?: Size[]
+  /**
+   * The delta to use when resizing with arrow keys.
+   * @defaultValue 0.1
+   */
+  keyboardDelta?: Size
+  /**
+   * Whether to handle the cursor style when resizing.
+   * @defaultValue true
+   */
+  handleCursorStyle?: boolean
+  /**
+   * The `id` of the resizable context to use.
+   */
+  contextId?: string
+}
+
+export type ResizableRootSharedElementProps = {
+  ref: Ref
+  style: JSX.CSSProperties
+  children: JSX.Element | ((props: ResizableRootChildrenProps) => JSX.Element)
+}
+
+export type ResizableRootElementProps = ResizableRootSharedElementProps & {
+  'data-orientation': 'horizontal' | 'vertical'
+  'data-corvu-resizable-root': ''
+}
+
+export type ResizableRootProps = ResizableRootCorvuProps &
+  Partial<ResizableRootSharedElementProps>
 
 export type ResizableRootChildrenProps = {
   /** The orientation of the resizable. */
@@ -106,7 +106,7 @@ export type ResizableRootChildrenProps = {
 const ResizableRoot = <
   T extends ValidComponent = typeof DEFAULT_RESIZABLE_ROOT_ELEMENT,
 >(
-  props: ResizableRootProps<T>,
+  props: DynamicProps<T, ResizableRootProps, ResizableRootElementProps>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -115,7 +115,7 @@ const ResizableRoot = <
       keyboardDelta: 0.1,
       handleCursorStyle: true,
     },
-    props,
+    props as ResizableRootProps,
   )
 
   const [localProps, otherProps] = splitProps(defaultedProps, [
@@ -126,7 +126,6 @@ const ResizableRoot = <
     'keyboardDelta',
     'handleCursorStyle',
     'contextId',
-    'as',
     'ref',
     'style',
     'children',
@@ -167,7 +166,7 @@ const ResizableRoot = <
     if (panelData.initialSize !== undefined) {
       panelSize = resolveSize(panelData.initialSize, rootSize())
     } else if (localProps.initialSizes[panelIndex] !== undefined && idExists) {
-      panelSize = resolveSize(localProps.initialSizes[panelIndex], rootSize())
+      panelSize = resolveSize(localProps.initialSizes[panelIndex]!, rootSize())
     }
 
     panelSize = panelSize ?? 0.5
@@ -246,7 +245,7 @@ const ResizableRoot = <
 
   createEffect(() => {
     if (localProps.onSizesChange !== undefined) {
-      localProps.onSizesChange?.(sizes())
+      localProps.onSizesChange(sizes())
     }
   })
 
@@ -669,8 +668,9 @@ const ResizableRoot = <
             expand,
           }}
         >
-          <Dynamic
-            as={localProps.as ?? DEFAULT_RESIZABLE_ROOT_ELEMENT}
+          <Dynamic<ResizableRootElementProps>
+            as={DEFAULT_RESIZABLE_ROOT_ELEMENT}
+            // === SharedElementProps ===
             ref={mergeRefs(setRef, localProps.ref)}
             style={{
               display: 'flex',
@@ -678,8 +678,9 @@ const ResizableRoot = <
                 localProps.orientation === 'horizontal' ? 'row' : 'column',
               ...localProps.style,
             }}
-            data-corvu-resizable-root=""
+            // === ElementProps ===
             data-orientation={localProps.orientation}
+            data-corvu-resizable-root=""
             {...otherProps}
           >
             {untrack(() => resolveChildren())}

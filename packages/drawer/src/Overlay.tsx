@@ -1,10 +1,35 @@
-import { createMemo, splitProps, type ValidComponent } from 'solid-js'
+import {
+  type Component,
+  createMemo,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import Dialog, {
+  type OverlayCorvuProps as DialogOverlayCorvuProps,
+  type OverlayElementProps as DialogOverlayElementProps,
+  type OverlaySharedElementProps as DialogOverlaySharedElementProps,
+} from '@corvu/dialog'
 import { dataIf } from '@corvu/utils'
-import Dialog from '@corvu/dialog'
-import type { OverlayProps as DialogOverlayProps } from '@corvu/dialog'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDrawerContext } from '@src/context'
 
 const DEFAULT_DRAWER_OVERLAY_ELEMENT = 'div'
+
+export type DrawerOverlayCorvuProps = DialogOverlayCorvuProps
+
+export type DrawerOverlaySharedElementProps = DialogOverlaySharedElementProps
+
+export type DrawerOverlayElementProps = DrawerOverlaySharedElementProps & {
+  'data-closing': '' | undefined
+  'data-opening': '' | undefined
+  'data-resizing': '' | undefined
+  'data-snapping': '' | undefined
+  'data-transitioning': '' | undefined
+  'data-corvu-drawer-overlay': ''
+} & DialogOverlayElementProps
+
+export type DrawerOverlayProps = DrawerOverlayCorvuProps &
+  Partial<DrawerOverlaySharedElementProps>
 
 /** Component which can be used to create a faded background. Can be animated.
  *
@@ -20,25 +45,34 @@ const DEFAULT_DRAWER_OVERLAY_ELEMENT = 'div'
 const DrawerOverlay = <
   T extends ValidComponent = typeof DEFAULT_DRAWER_OVERLAY_ELEMENT,
 >(
-  props: DialogOverlayProps<T>,
+  props: DynamicProps<T, DrawerOverlayProps, DrawerOverlayElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['contextId'])
+  const [localProps, otherProps] = splitProps(props as DrawerOverlayProps, [
+    'contextId',
+  ])
 
   const drawerContext = createMemo(() =>
     useInternalDrawerContext(localProps.contextId),
   )
 
   return (
-    <Dialog.Overlay
+    <Dialog.Overlay<
+      Component<
+        Omit<DrawerOverlayElementProps, keyof DialogOverlayElementProps>
+      >
+    >
+      as={DEFAULT_DRAWER_OVERLAY_ELEMENT}
       contextId={localProps.contextId}
-      data-transitioning={dataIf(drawerContext().isTransitioning())}
-      data-opening={dataIf(drawerContext().transitionState() === 'opening')}
+      // === ElementProps ===
       data-closing={dataIf(drawerContext().transitionState() === 'closing')}
-      data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
+      data-opening={dataIf(drawerContext().transitionState() === 'opening')}
       data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
-      data-corvu-dialog-overlay={undefined}
+      data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
+      data-transitioning={dataIf(drawerContext().isTransitioning())}
       data-corvu-drawer-overlay=""
-      {...(otherProps as DialogOverlayProps<T>)}
+      // === Misc ===
+      data-corvu-dialog-overlay={null}
+      {...otherProps}
     />
   )
 }

@@ -63,6 +63,7 @@ export type AccordionRootProps = {
    * The `id` of the accordion context. Useful if you have nested accordions and want to create components that belong to a accordion higher up in the tree.
    */
   contextId?: string
+  /** @hidden */
   children: JSX.Element | ((props: AccordionRootChildrenProps) => JSX.Element)
 }
 

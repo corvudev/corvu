@@ -7,16 +7,30 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@src/dynamic'
+import { Dynamic, type DynamicProps } from '@src/dynamic'
 import type { FloatingState } from '@src/create/floating'
-import { mergeRefs } from '@src/reactivity'
 import { PositionToDirection } from '@src/floating/lib'
 
 export const DEFAULT_FLOATING_ARROW_ELEMENT = 'div'
+
+export type FloatingArrowCorvuProps = {
+  floatingState: FloatingState
+  /**
+   * Size of the arrow in px.
+   * @defaultValue 16
+   */
+  size?: number
+}
+
+export type FloatingArrowSharedElementProps = {
+  style: JSX.CSSProperties
+  children: JSX.Element
+}
+
+export type FloatingArrowElementProps = FloatingArrowSharedElementProps
+
+export type FloatingArrowProps = FloatingArrowCorvuProps &
+  Partial<FloatingArrowSharedElementProps>
 
 type Position = 'top' | 'bottom' | 'left' | 'right'
 
@@ -34,48 +48,24 @@ const TransformOrigin = {
   right: '100% 0px',
 }
 
-export type FloatingArrowProps<
-  T extends ValidComponent = typeof DEFAULT_FLOATING_ARROW_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * Size of the arrow in px.
-     * @defaultValue 16
-     */
-    size?: number
-    /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-  }
->
-
 const FloatingArrow = <
   T extends ValidComponent = typeof DEFAULT_FLOATING_ARROW_ELEMENT,
 >(
-  props: FloatingArrowProps<T> & {
-    setRef: (element: HTMLElement) => void
-    floatingState: FloatingState
-  },
+  props: DynamicProps<T, FloatingArrowProps, FloatingArrowElementProps>,
 ) => {
   const defaultedProps = mergeProps(
     {
       size: 16,
     },
-    props,
+    props as FloatingArrowProps & { as?: ValidComponent },
   )
 
   const [localProps, otherProps] = splitProps(defaultedProps, [
-    'setRef',
-    'floatingState',
     'as',
+    'floatingState',
     'size',
-    'children',
-    'ref',
     'style',
+    'children',
   ])
 
   const arrowDirection = createMemo(
@@ -99,19 +89,18 @@ const FloatingArrow = <
 
   const resolveChildren = children(() => localProps.children)
 
-  const defaultArrow = () =>
-    localProps.as === undefined && resolveChildren.toArray().length === 0
+  const defaultArrow = () => resolveChildren.toArray().length === 0
 
   return (
-    <Dynamic
+    <Dynamic<FloatingArrowElementProps>
       as={localProps.as ?? DEFAULT_FLOATING_ARROW_ELEMENT}
-      ref={mergeRefs(localProps.setRef, localProps.ref)}
+      // === SharedElementProps ===
       style={{
         position: 'absolute',
         left: arrowLeft(),
         top: arrowTop(),
         [arrowDirection()]: '0px',
-        transform: [Transform[arrowDirection()]],
+        transform: Transform[arrowDirection()],
         'transform-origin': TransformOrigin[arrowDirection()],
         height: defaultArrow() ? `${localProps.size}px` : undefined,
         width: defaultArrow() ? `${localProps.size}px` : undefined,

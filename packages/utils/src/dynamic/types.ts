@@ -1,17 +1,28 @@
-import type { ComponentProps, JSX, ValidComponent } from 'solid-js'
+import type { Component, ComponentProps, JSX, ValidComponent } from 'solid-js'
 
-type DynamicAttributes<T extends ValidComponent> = {
+type DynamicAttributes<
+  T extends ValidComponent,
+  ElementProps extends object = object,
+> = {
   /**
    * Component to render the dynamic component as.
    * @defaultValue `div`
    */
-  as?: T | keyof JSX.HTMLElementTags
+  as?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | (T extends Component<any>
+        ? (
+            props: Omit<ComponentProps<T>, keyof ElementProps> & ElementProps,
+          ) => JSX.Element
+        : T)
+    | keyof JSX.HTMLElementTags
 }
 
-type OverrideComponentProps<T extends ValidComponent, Props> = OverrideProps<
-  ComponentProps<T>,
-  Props
->
 type OverrideProps<T, P> = Omit<T, keyof P> & P
 
-export type { DynamicAttributes, OverrideComponentProps, OverrideProps }
+type DynamicProps<
+  T extends ValidComponent,
+  Props extends object,
+  ElementProps extends object = object,
+> = OverrideProps<ComponentProps<T>, Props & DynamicAttributes<T, ElementProps>>
+
+export type { DynamicAttributes, DynamicProps }

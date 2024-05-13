@@ -41,7 +41,6 @@ const Disclosure: Library = {
         'collapseBehavior',
         'disclosureId',
         'contextId',
-        'children',
       ],
     },
     Trigger: {
@@ -95,12 +94,11 @@ const Accordion: Library = {
         'loop',
         'collapseBehavior',
         'contextId',
-        'children',
       ],
     },
     Item: {
       kind: 'component',
-      sorting: ['value', 'disabled', 'triggerId', 'children', 'as'],
+      sorting: ['value', 'disabled', 'triggerId', 'as'],
       inherits: {
         library: Disclosure,
         name: 'Root',
@@ -201,7 +199,6 @@ const Dialog: Library = {
         'labelId',
         'descriptionId',
         'contextId',
-        'children',
       ],
     },
     Trigger: {
@@ -312,7 +309,6 @@ const Drawer: Library = {
         'allowSkippingSnapPoints',
         'handleScrollableElements',
         'transitionResize',
-        'children',
       ],
       inherits: {
         library: Dialog,
@@ -434,7 +430,7 @@ const Popover: Library = {
   items: {
     Root: {
       kind: 'component',
-      sorting: ['placement', 'strategy', 'floatingOptions', 'children'],
+      sorting: ['placement', 'strategy', 'floatingOptions'],
       inherits: {
         library: Dialog,
         name: 'Root',
@@ -539,7 +535,6 @@ const Resizable: Library = {
         'keyboardDelta',
         'handleCursorStyle',
         'as',
-        'children',
         'contextId',
       ],
     },
@@ -556,7 +551,6 @@ const Resizable: Library = {
         'onCollapse',
         'onExpand',
         'as',
-        'children',
         'contextId',
         'panelId',
       ],
@@ -641,7 +635,6 @@ const Tooltip: Library = {
         'onScroll',
         'tooltipId',
         'contextId',
-        'children',
       ],
     },
     Anchor: {

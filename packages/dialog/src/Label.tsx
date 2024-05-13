@@ -5,28 +5,28 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDialogContext } from '@src/context'
 
 export const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
 
-export type DialogLabelProps<
-  T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the dialog context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    'data-corvu-dialog-label'?: string | undefined
-  }
->
+export type DialogLabelCorvuProps = {
+  /**
+   * The `id` of the dialog context to use.
+   */
+  contextId?: string
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type DialogLabelSharedElementProps = {}
+
+export type DialogLabelElementProps = DialogLabelSharedElementProps & {
+  id: string | undefined
+  'data-corvu-dialog-label': string | null
+}
+
+export type DialogLabelProps = DialogLabelCorvuProps &
+  Partial<DialogLabelSharedElementProps>
 
 /** Label element to announce the dialog to accessibility tools.
  *
@@ -35,12 +35,10 @@ export type DialogLabelProps<
 const DialogLabel = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
 >(
-  props: DialogLabelProps<T>,
+  props: DynamicProps<T, DialogLabelProps, DialogLabelElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DialogLabelProps, [
     'contextId',
-    'data-corvu-dialog-label',
   ])
 
   const context = createMemo(() =>
@@ -54,17 +52,11 @@ const DialogLabel = <
   })
 
   return (
-    <Dynamic
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DIALOG_LABEL_ELEMENT
-      }
+    <Dynamic<DialogLabelElementProps>
+      as={DEFAULT_DIALOG_LABEL_ELEMENT}
+      // === ElementProps ===
       id={context().labelId()}
-      data-corvu-dialog-label={
-        localProps.hasOwnProperty('data-corvu-dialog-label')
-          ? localProps['data-corvu-dialog-label']
-          : ''
-      }
+      data-corvu-dialog-label=""
       {...otherProps}
     />
   )

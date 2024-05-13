@@ -1,9 +1,28 @@
-import { createMemo, type ValidComponent } from 'solid-js'
-import Disclosure from '@corvu/disclosure'
-import type { ContentProps as DisclosureContentProps } from '@corvu/disclosure'
+import { type Component, createMemo, type ValidComponent } from 'solid-js'
+import Disclosure, {
+  type ContentCorvuProps as DisclosureContentCorvuProps,
+  type ContentElementProps as DisclosureContentElementProps,
+  type ContentSharedElementProps as DisclosureContentSharedElementProps,
+} from '@corvu/disclosure'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalAccordionItemContext } from '@src/itemContext'
 
 const DEFAULT_ACCORDION_CONTENT_ELEMENT = 'div'
+
+export type AccordionContentCorvuProps = DisclosureContentCorvuProps
+
+export type AccordionContentSharedElementProps =
+  DisclosureContentSharedElementProps
+
+export type AccordionContentElementProps =
+  AccordionContentSharedElementProps & {
+    role: 'region'
+    'aria-labelledby': string | undefined
+    'data-corvu-accordion-content': ''
+  } & DisclosureContentElementProps
+
+export type AccordionContentProps = AccordionContentCorvuProps &
+  Partial<AccordionContentSharedElementProps>
 
 /** Content of an accordion item. Can be animated.
  *
@@ -16,19 +35,26 @@ const DEFAULT_ACCORDION_CONTENT_ELEMENT = 'div'
 const AccordionContent = <
   T extends ValidComponent = typeof DEFAULT_ACCORDION_CONTENT_ELEMENT,
 >(
-  props: DisclosureContentProps<T>,
+  props: DynamicProps<T, AccordionContentProps, AccordionContentElementProps>,
 ) => {
   const context = createMemo(() =>
     useInternalAccordionItemContext(props.contextId),
   )
 
   return (
-    <Disclosure.Content
+    <Disclosure.Content<
+      Component<
+        Omit<AccordionContentElementProps, keyof DisclosureContentElementProps>
+      >
+    >
+      as={DEFAULT_ACCORDION_CONTENT_ELEMENT}
+      // === ElementProps ===
       role="region"
       aria-labelledby={context().triggerId()}
-      data-corvu-disclosure-content={undefined}
       data-corvu-accordion-content=""
-      {...props}
+      // === Misc ===
+      data-corvu-disclosure-content={null}
+      {...(props as AccordionContentProps)}
     />
   )
 }

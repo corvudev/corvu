@@ -1,8 +1,15 @@
-import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
 import {
-  type DynamicAttributes,
+  type Component,
+  createMemo,
+  type JSX,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import {
   DynamicButton,
-  type OverrideComponentProps,
+  type DynamicButtonElementProps,
+  type DynamicButtonSharedElementProps,
+  type DynamicProps,
 } from '@corvu/utils/dynamic'
 import { callEventHandler } from '@corvu/utils/dom'
 import { dataIf } from '@corvu/utils'
@@ -10,21 +17,28 @@ import { useInternalDisclosureContext } from '@src/context'
 
 export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
 
-export type DisclosureTriggerProps<
-  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the disclosure context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-    /** @hidden */
-    'data-corvu-disclosure-trigger'?: string | undefined
-  }
->
+export type DisclosureTriggerCorvuProps = {
+  /**
+   * The `id` of the disclosure context to use.
+   */
+  contextId?: string
+}
+
+export type DisclosureTriggerSharedElementProps = {
+  onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+} & DynamicButtonSharedElementProps
+
+export type DisclosureTriggerElementProps =
+  DisclosureTriggerSharedElementProps & {
+    'aria-controls': string
+    'aria-expanded': 'true' | 'false'
+    'data-collapsed': '' | undefined
+    'data-expanded': '' | undefined
+    'data-corvu-disclosure-trigger': '' | null
+  } & DynamicButtonElementProps
+
+export type DisclosureTriggerProps = DisclosureTriggerCorvuProps &
+  Partial<DisclosureTriggerSharedElementProps>
 
 /** Button that changes the open state of the disclosure when clicked.
  *
@@ -35,13 +49,11 @@ export type DisclosureTriggerProps<
 const DisclosureTrigger = <
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
 >(
-  props: DisclosureTriggerProps<T>,
+  props: DynamicProps<T, DisclosureTriggerProps, DisclosureTriggerElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DisclosureTriggerProps, [
     'contextId',
     'onClick',
-    'data-corvu-disclosure-trigger',
   ])
 
   const context = createMemo(() =>
@@ -54,21 +66,20 @@ const DisclosureTrigger = <
   }
 
   return (
-    <DynamicButton
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DISCLOSURE_TRIGGER_ELEMENT
-      }
+    <DynamicButton<
+      Component<
+        Omit<DisclosureTriggerElementProps, keyof DynamicButtonElementProps>
+      >
+    >
+      as={DEFAULT_DISCLOSURE_TRIGGER_ELEMENT}
+      // === SharedElementProps ===
       onClick={onClick}
-      aria-expanded={context().expanded() ? 'true' : 'false'}
+      // === ElementProps ===
       aria-controls={context().disclosureId()}
-      data-expanded={dataIf(context().expanded())}
+      aria-expanded={context().expanded() ? 'true' : 'false'}
       data-collapsed={dataIf(!context().expanded())}
-      data-corvu-disclosure-trigger={
-        localProps.hasOwnProperty('data-corvu-disclosure-trigger')
-          ? localProps['data-corvu-disclosure-trigger']
-          : ''
-      }
+      data-expanded={dataIf(context().expanded())}
+      data-corvu-disclosure-trigger=""
       {...otherProps}
     />
   )

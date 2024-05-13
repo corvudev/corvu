@@ -1,29 +1,39 @@
-import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
 import {
-  type DynamicAttributes,
+  type Component,
+  createMemo,
+  type JSX,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import {
   DynamicButton,
-  type OverrideComponentProps,
+  type DynamicButtonElementProps,
+  type DynamicButtonSharedElementProps,
+  type DynamicProps,
 } from '@corvu/utils/dynamic'
 import { callEventHandler } from '@corvu/utils/dom'
 import { useInternalDialogContext } from '@src/context'
 
 export const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
 
-export type DialogCloseProps<
-  T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the dialog context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-    /** @hidden */
-    'data-corvu-dialog-close'?: string | undefined
-  }
->
+export type DialogCloseCorvuProps = {
+  /**
+   * The `id` of the dialog context to use.
+   */
+  contextId?: string
+}
+
+export type DialogCloseSharedElementProps = {
+  onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+} & DynamicButtonSharedElementProps
+
+export type DialogCloseElementProps = DialogCloseSharedElementProps & {
+  'aria-label': 'close'
+  'data-corvu-dialog-close': '' | null
+} & DynamicButtonElementProps
+
+export type DialogCloseProps = DialogCloseCorvuProps &
+  Partial<DialogCloseSharedElementProps>
 
 /** Close button that changes the open state to false when clicked.
  *
@@ -32,13 +42,11 @@ export type DialogCloseProps<
 const DialogClose = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
 >(
-  props: DialogCloseProps<T>,
+  props: DynamicProps<T, DialogCloseProps, DialogCloseElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DialogCloseProps, [
     'contextId',
     'onClick',
-    'data-corvu-dialog-close',
   ])
 
   const context = createMemo(() =>
@@ -50,18 +58,15 @@ const DialogClose = <
   }
 
   return (
-    <DynamicButton
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DIALOG_CLOSE_ELEMENT
-      }
+    <DynamicButton<
+      Component<Omit<DialogCloseElementProps, keyof DynamicButtonElementProps>>
+    >
+      as={DEFAULT_DIALOG_CLOSE_ELEMENT}
+      // === SharedElementProps ===
       onClick={onClick}
+      // === ElementProps ===
       aria-label="close"
-      data-corvu-dialog-close={
-        localProps.hasOwnProperty('data-corvu-dialog-close')
-          ? localProps['data-corvu-dialog-close']
-          : ''
-      }
+      data-corvu-dialog-close=""
       {...otherProps}
     />
   )

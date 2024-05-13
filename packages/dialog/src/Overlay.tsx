@@ -5,39 +5,41 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
+import type { Ref } from '@corvu/utils/dom'
 import { useInternalDialogContext } from '@src/context'
 
 export const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 
-export type DialogOverlayProps<
-  T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries.
-     * @defaultValue `false`
-     */
-    forceMount?: boolean
-    /**
-     * The `id` of the dialog context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-    /** @hidden */
-    'data-corvu-dialog-overlay'?: string | undefined
-  }
->
+export type DialogOverlayCorvuProps = {
+  /**
+   * Whether the dialog overlay should be forced to render. Useful when using third-party animation libraries.
+   * @defaultValue `false`
+   */
+  forceMount?: boolean
+  /**
+   * The `id` of the dialog context to use.
+   */
+  contextId?: string
+}
+
+export type DialogOverlaySharedElementProps = {
+  ref: Ref
+  style: JSX.CSSProperties
+}
+
+export type DialogOverlayElementProps = DialogOverlaySharedElementProps & {
+  tabIndex: '-1'
+  'aria-hidden': 'true' | undefined
+  'data-closed': '' | undefined
+  'data-open': '' | undefined
+  'data-corvu-dialog-overlay': '' | null
+}
+
+export type DialogOverlayProps = DialogOverlayCorvuProps &
+  Partial<DialogOverlaySharedElementProps>
 
 /** Component which can be used to create a faded background. Can be animated.
  *
@@ -48,15 +50,13 @@ export type DialogOverlayProps<
 const DialogOverlay = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
 >(
-  props: DialogOverlayProps<T>,
+  props: DynamicProps<T, DialogOverlayProps, DialogOverlayElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DialogOverlayProps, [
     'forceMount',
     'contextId',
     'ref',
     'style',
-    'data-corvu-dialog-overlay',
   ])
 
   const context = createMemo(() =>
@@ -73,25 +73,20 @@ const DialogOverlay = <
 
   return (
     <Show when={show()}>
-      <Dynamic
-        as={
-          (localProps.as as ValidComponent | undefined) ??
-          DEFAULT_DIALOG_OVERLAY_ELEMENT
-        }
+      <Dynamic<DialogOverlayElementProps>
+        as={DEFAULT_DIALOG_OVERLAY_ELEMENT}
+        // === SharedElementProps ===
         ref={mergeRefs(context().setOverlayRef, localProps.ref)}
-        aria-hidden="true"
-        data-open={dataIf(context().open())}
-        data-closed={dataIf(!context().open())}
-        data-corvu-dialog-overlay={
-          localProps.hasOwnProperty('data-corvu-dialog-overlay')
-            ? localProps['data-corvu-dialog-overlay']
-            : ''
-        }
-        tabIndex="-1"
         style={{
           'pointer-events': 'auto',
           ...localProps.style,
         }}
+        // === ElementProps ===
+        tabIndex="-1"
+        aria-hidden="true"
+        data-closed={dataIf(!context().open())}
+        data-open={dataIf(context().open())}
+        data-corvu-dialog-overlay=""
         {...otherProps}
       />
     </Show>

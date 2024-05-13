@@ -5,28 +5,29 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDialogContext } from '@src/context'
 
 export const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
 
-export type DialogDescriptionProps<
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the dialog context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    'data-corvu-dialog-description'?: string | undefined
+export type DialogDescriptionCorvuProps = {
+  /**
+   * The `id` of the dialog context to use.
+   */
+  contextId?: string
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type DialogDescriptionSharedElementProps = {}
+
+export type DialogDescriptionElementProps =
+  DialogDescriptionSharedElementProps & {
+    id: string | undefined
+    'data-corvu-dialog-description': '' | null
   }
->
+
+export type DialogDescriptionProps = DialogDescriptionCorvuProps &
+  Partial<DialogDescriptionSharedElementProps>
 
 /** Description element to announce the dialog to accessibility tools.
  *
@@ -35,12 +36,10 @@ export type DialogDescriptionProps<
 const DialogDescription = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
 >(
-  props: DialogDescriptionProps<T>,
+  props: DynamicProps<T, DialogDescriptionProps, DialogDescriptionElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DialogDescriptionProps, [
     'contextId',
-    'data-corvu-dialog-description',
   ])
 
   const context = createMemo(() =>
@@ -54,17 +53,11 @@ const DialogDescription = <
   })
 
   return (
-    <Dynamic
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DIALOG_DESCRIPTION_ELEMENT
-      }
+    <Dynamic<DialogDescriptionElementProps>
+      as={DEFAULT_DIALOG_DESCRIPTION_ELEMENT}
+      // === ElementProps ===
       id={context().descriptionId()}
-      data-corvu-dialog-description={
-        localProps.hasOwnProperty('data-corvu-dialog-description')
-          ? localProps['data-corvu-dialog-description']
-          : ''
-      }
+      data-corvu-dialog-description=""
       {...otherProps}
     />
   )

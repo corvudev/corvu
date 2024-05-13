@@ -81,6 +81,7 @@ export type DrawerRootProps = {
    * @defaultValue `false`
    */
   transitionResize?: boolean
+  /** @hidden */
   children:
     | JSX.Element
     | ((

@@ -11,7 +11,7 @@ export const components = { h2: H2, h3: H3 }
 
 # Dynamic Components
 
-All primitive components that render a DOM element, are dynamic. This means that you can modify the element or the component they should render as.
+All primitive components that render a DOM element are dynamic, which means that you can modify the element or the component they should render as.
 
 ## Native elements
 
@@ -28,13 +28,18 @@ A much more common use case is to render a primitive component as a custom Solid
 
 For example, you might have your own, custom-styled button component and want to use it as a trigger for a dialog:
 <Code code={`
-const CustomButton = (props: {
-  variant: 'fill' | 'outline'
-  children: JSX.Element
-}) => {
+import {
+  ComponentProps,
+  splitProps,
+} from 'solid-js'
+import Dialog from '@corvu/dialog'
+
+const CustomButton = (
+  props: ComponentProps<'button'> & { variant: 'fill' | 'outline' },
+) => {
   const [local, rest] = splitProps(props, ['variant'])
   // Apply your custom styling here
-  return <button class="..." {...rest} />
+  return <button class={local.variant} {...rest} />
 }
 
 const DialogTrigger = () => (
@@ -44,39 +49,72 @@ const DialogTrigger = () => (
 )
 `} lang="tsx" />
 
-Props not belonging to the primitive component will be passed to the component you defined.
+Props not belonging to the primitive component will be passed through to your custom component. In this case, the `variant` prop is passed to the `CustomButton` component.
 
-> ❗ To ensure functionality and accessibility, your component needs to accept props defined by the primitive component. To do this, you need to spread the received props onto your element. Otherwise, things will break.
+> ❗ To ensure functionality and accessibility, your component needs to spread the received props onto your element. Otherwise, corvu can't define props on the element and things will break.
 
-### Using corvu props for yourself
+## Component types
 
-In the rare cases where your component accepts a property that the corvu primitive component itself uses (like the `as` property here), you can create a wrapper component around it, like this:
+corvu's dynamic components have a flexible type system. This allows library developers or users who want to create their own components based on corvu's primitives to have a great developer experience.
+
+Every dynamic component exposes 4 types.
+
+For example, the `<Dialog.Trigger>` component exports the types `DialogTriggerCorvuProps`, `DialogTriggerSharedElementProps`, `DialogTriggerElementProps` and `DialogTriggerProps`.
+
+Lets have a look at the types:
+
+### CorvuProps
+
+`CorvuProps` contains all props that are specific to the primitive component and are not passed through to the rendered element. They are consumed by corvu. For example, the [`<Resizable.Handle />`](/docs/primitives/resizable/#Panel) has props like `minSize` or `collapsible`.
+
+### SharedElementProps
+
+`SharedElementProps` includes all props that get defined by corvu on the rendered element **but** can be overridden by the user. This usually includes the `ref` or `style` properties.
+
+### ElementProps
+
+`ElementProps` element props inherits all `SharedElementProps` and additionally includes all props that are set by corvu and can't be overridden by the user. This includes for example accessibility props like `aria-*`, `role` and `data-*`.
+
+### Props
+
+This is the type that defines what props that corvu expects from the user. It's equal to `CorvuProps & Partial<SharedElementProps>`.
+
+### DynamicProps
+
+`DynamicProps` is a helper type that allows you to expose the dynamic aspect of corvu components from your custom component. Let's look at an example:
 
 <Code code={`
-type CustomButtonProps = {
-  as: string
+import {
+  type ValidComponent,
+  ComponentProps,
+  splitProps,
+} from 'solid-js'
+import Dialog, { type TriggerProps, type DynamicProps } from '@corvu/dialog'
+
+// Define your custom props, including \`TriggerProps\` from corvu
+export type CustomDisclosureTriggerProps = TriggerProps & {
   variant: 'fill' | 'outline'
-  children: JSX.Element
 }
 
-const CustomButton = (props: CustomButtonProps) => {
-  const [local, rest] = splitProps(props, ['as', 'variant'])
-  // Apply your custom styling here
-  return <Dynamic component={local.as} {...rest} />
-}
-
-const DialogTrigger = () => {
-  return (
-    <Dialog.Trigger
-      as={(props: Omit<CustomButtonProps, 'as'>) => (
-        <CustomButton as="button" {...props} />
-      )}
-      variant="outline"
-    >
-      Open
-    </Dialog.Trigger>
-  )
+// The generic \`T\` allows the user to specify
+// the element this component should render as
+const CustomDialogTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, CustomDisclosureTriggerProps>,
+) => {
+  const [local, rest] = splitProps(props as CustomDisclosureTriggerProps, [
+    'variant',
+  ])
+  // Define the default dynamic type, in this case 'button'.
+  // This can be overridden by the user.
+  return <Dialog.Trigger as="button" class={local.variant} {...rest} />
 }
 `} lang="tsx" />
 
-You need to type the `props` to omit all props you already define inside the wrapper function and you're good to go!
+If you don't want to expose the dynamic aspect of corvu's components, you can define the generic explicitly:
+
+<Code code={`
+const CustomDialogTrigger = (
+  props: DynamicProps<'button', CustomDisclosureTriggerProps>,
+) => {
+`} lang="tsx" />
+

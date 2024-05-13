@@ -1,4 +1,6 @@
+import { callEventHandler, type Ref } from '@corvu/utils/dom'
 import {
+  type Component,
   createEffect,
   createMemo,
   createSignal,
@@ -8,15 +10,36 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import Disclosure, {
-  type TriggerProps as DisclosureTriggerProps,
+  type TriggerCorvuProps as DisclosureTriggerCorvuProps,
+  type TriggerElementProps as DisclosureTriggerElementProps,
+  type TriggerSharedElementProps as DisclosureTriggerSharedElementProps,
 } from '@corvu/disclosure'
-import { callEventHandler } from '@corvu/utils/dom'
 import { dataIf } from '@corvu/utils'
-import type { OverrideComponentProps } from '@corvu/utils/dynamic'
+import type { DynamicProps } from '@corvu/utils/dynamic'
+import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalAccordionContext } from '@src/context'
 import { useInternalAccordionItemContext } from '@src/itemContext'
 
 const DEFAULT_ACCORDION_TRIGGER_ELEMENT = 'button'
+
+export type AccordionTriggerCorvuProps = DisclosureTriggerCorvuProps
+
+export type AccordionTriggerSharedElementProps = {
+  ref: Ref
+  onKeyDown: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
+  disabled: true | undefined
+} & DisclosureTriggerSharedElementProps
+
+export type AccordionTriggerElementProps =
+  AccordionTriggerSharedElementProps & {
+    id: string | undefined
+    'aria-disabled': 'true' | undefined
+    'data-disabled': '' | undefined
+    'data-corvu-accordion-trigger': ''
+  } & DisclosureTriggerElementProps
+
+export type AccordionTriggerProps = AccordionTriggerCorvuProps &
+  Partial<AccordionTriggerSharedElementProps>
 
 /** Button that changes the open state of the accordion item when clicked.
  *
@@ -28,15 +51,14 @@ const DEFAULT_ACCORDION_TRIGGER_ELEMENT = 'button'
 const AccordionTrigger = <
   T extends ValidComponent = typeof DEFAULT_ACCORDION_TRIGGER_ELEMENT,
 >(
-  props: OverrideComponentProps<
-    T,
-    DisclosureTriggerProps<T> & {
-      /** @hidden */
-      onKeyDown?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
-    }
-  >,
+  props: DynamicProps<T, AccordionTriggerProps, AccordionTriggerElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['contextId', 'onKeyDown'])
+  const [localProps, otherProps] = splitProps(props as AccordionTriggerProps, [
+    'contextId',
+    'ref',
+    'onKeyDown',
+    'disabled',
+  ])
   const [triggerRef, setTriggerRef] = createSignal<HTMLElement | null>(null)
 
   const accordionContext = createMemo(() =>
@@ -68,17 +90,27 @@ const AccordionTrigger = <
   }
 
   return (
-    <Disclosure.Trigger
-      ref={setTriggerRef}
-      id={context().triggerId()}
+    <Disclosure.Trigger<
+      Component<
+        Omit<AccordionTriggerElementProps, keyof DisclosureTriggerElementProps>
+      >
+    >
+      as={DEFAULT_ACCORDION_TRIGGER_ELEMENT}
+      // === SharedElementProps ===
+      ref={mergeRefs(localProps.ref, setTriggerRef)}
       onKeyDown={onKeyDown}
+      disabled={
+        localProps.disabled === true || context().disabled() || undefined
+      }
+      // === ElementProps ===
+      id={context().triggerId()}
       contextId={localProps.contextId}
       aria-disabled={context().disabled() ? 'true' : undefined}
       data-disabled={dataIf(context().disabled())}
-      data-corvu-disclosure-trigger={undefined}
       data-corvu-accordion-trigger=""
-      disabled={context().disabled() ? 'true' : undefined}
-      {...(otherProps as DisclosureTriggerProps<T>)}
+      // === Misc ===
+      data-corvu-disclosure-trigger={null}
+      {...otherProps}
     />
   )
 }

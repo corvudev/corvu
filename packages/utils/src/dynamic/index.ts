@@ -1,10 +1,16 @@
-import type {
-  DynamicAttributes,
-  OverrideComponentProps,
-  OverrideProps,
-} from '@src/dynamic/types'
+import type { DynamicAttributes, DynamicProps } from '@src/dynamic/types'
+import DynamicButton, {
+  type DynamicButtonElementProps,
+  type DynamicButtonProps,
+  type DynamicButtonSharedElementProps,
+} from '@src/dynamic/DynamicButton'
 import Dynamic from '@src/dynamic/Dynamic'
-import DynamicButton from '@src/dynamic/DynamicButton'
 
-export type { DynamicAttributes, OverrideComponentProps, OverrideProps }
+export type {
+  DynamicAttributes,
+  DynamicProps,
+  DynamicButtonSharedElementProps,
+  DynamicButtonElementProps,
+  DynamicButtonProps,
+}
 export { Dynamic, DynamicButton }

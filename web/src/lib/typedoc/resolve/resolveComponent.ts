@@ -68,15 +68,28 @@ const resolveComponent = (
 
 const resolveComponentProps = (component: DeclarationVariant) => {
   // Components always have their props inside a separate type
-  const parameterType = component.signatures![0].parameters[0].type
+  let propsType = component.signatures![0].parameters[0].type
 
-  if (parameterType.type !== 'reference') {
-    throw new Error(
-      `Expected parameter type to be a reference: ${component.name}`,
-    )
+  if (propsType.type === 'intersection') {
+    propsType = propsType.types[0]
   }
 
-  const propsDeclaration = resolveReferenceType(parameterType)
+  if (propsType.type !== 'reference') {
+    throw new Error(`Expected props type to be a reference: ${component.name}`)
+  }
+
+  let isDynamicComponent = false
+
+  if (propsType.name === 'DynamicProps') {
+    isDynamicComponent = true
+    propsType = propsType.typeArguments![1]
+  }
+
+  if (propsType.type !== 'reference') {
+    throw new Error(`Expected props type to be a reference: ${component.name}`)
+  }
+
+  const propsDeclaration = resolveReferenceType(propsType)
 
   if (typeof propsDeclaration === 'string') {
     throw new Error(
@@ -118,10 +131,15 @@ const resolveComponentProps = (component: DeclarationVariant) => {
   const propTypes = getTypeProps(type)
 
   const defaultAs = resolveDefaultDynamicAs(component)
-  const asProp = propTypes.find((prop) => prop.name === 'as')
-  if (asProp) {
-    asProp.defaultHtml = `<code>${defaultAs}</code>`
-    asProp.type = 'ValidComponent'
+  if (isDynamicComponent) {
+    const asProps: PropType = {
+      name: 'as',
+      type: 'ValidComponent',
+      defaultHtml: `<code>${defaultAs}</code>`,
+      descriptionHtml: 'Component to render the dynamic component as.',
+      isFunction: false,
+    }
+    propTypes.push(asProps)
   }
 
   return propTypes

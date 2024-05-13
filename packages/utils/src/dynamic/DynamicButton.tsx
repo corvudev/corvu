@@ -4,55 +4,52 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import type {
-  DynamicAttributes,
-  OverrideComponentProps,
-} from '@src/dynamic/types'
 import createTagName from '@src/create/tagName'
 import Dynamic from '@src/dynamic/Dynamic'
+import type { DynamicProps } from '@src/dynamic/types'
 import { isButton } from '@src/assertions'
 import { mergeRefs } from '@src/reactivity'
+import type { Ref } from '@src/dom'
 
 const DEFAULT_DYNAMIC_BUTTON_ELEMENT = 'button'
 
-export type DynamicButtonProps<
-  T extends ValidComponent = typeof DEFAULT_DYNAMIC_BUTTON_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    ref?: (element: HTMLElement) => void
-    type?: string
-  }
->
+export type DynamicButtonSharedElementProps = {
+  ref: Ref
+  type: 'button' | 'submit' | 'reset' | undefined
+}
+
+export type DynamicButtonElementProps = DynamicButtonSharedElementProps & {
+  role: 'button' | undefined
+}
+
+export type DynamicButtonProps = Partial<DynamicButtonSharedElementProps>
 
 /** An accessible button that sets `type` and `role` properly based on if it's a native button. */
 const DynamicButton = <
   T extends ValidComponent = typeof DEFAULT_DYNAMIC_BUTTON_ELEMENT,
 >(
-  props: DynamicButtonProps<T>,
+  props: DynamicProps<T, DynamicButtonProps, DynamicButtonElementProps>,
 ) => {
   const [ref, setRef] = createSignal<HTMLElement | null>(null)
 
-  const [localProps, otherProps] = splitProps(props, ['as', 'ref', 'type'])
+  const [localProps, otherProps] = splitProps(props, ['ref', 'type'])
 
   const tagName = createTagName({
     element: ref,
     fallback: DEFAULT_DYNAMIC_BUTTON_ELEMENT,
   })
 
-  const isNativeButton = createMemo(() => {
+  const memoizedIsButton = createMemo(() => {
     return isButton(tagName(), localProps.type)
   })
 
   return (
-    <Dynamic
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DYNAMIC_BUTTON_ELEMENT
-      }
+    <Dynamic<DynamicButtonElementProps>
+      // === SharedElementProps ===
       ref={mergeRefs(setRef, localProps.ref)}
-      type={isNativeButton() ? 'button' : undefined}
-      role={!isNativeButton() ? 'button' : undefined}
+      type={memoizedIsButton() ? 'button' : undefined}
+      // === ElementProps ===
+      role={!memoizedIsButton() ? 'button' : undefined}
       {...otherProps}
     />
   )

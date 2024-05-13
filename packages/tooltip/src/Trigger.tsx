@@ -1,28 +1,45 @@
-import { createMemo, splitProps, type ValidComponent } from 'solid-js'
 import {
-  type DynamicAttributes,
+  type Component,
+  createMemo,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import {
   DynamicButton,
-  type OverrideComponentProps,
+  type DynamicButtonElementProps,
+  type DynamicButtonSharedElementProps,
+  type DynamicProps,
 } from '@corvu/utils/dynamic'
 import { dataIf } from '@corvu/utils'
 import { mergeRefs } from '@corvu/utils/reactivity'
+import type { Placement } from '@floating-ui/dom'
+import type { Ref } from '@corvu/utils/dom'
 import { useInternalTooltipContext } from '@src/context'
 
 const DEFAULT_TOOLTIP_TRIGGER_ELEMENT = 'button'
 
-export type TooltipTriggerProps<
-  T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the tooltip context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-  }
->
+export type TooltipTriggerCorvuProps = {
+  /**
+   * The `id` of the tooltip context to use.
+   */
+  contextId?: string
+}
+
+export type TooltipTriggerSharedElementProps = {
+  ref: Ref
+} & DynamicButtonSharedElementProps
+
+export type TooltipTriggerElementProps = TooltipTriggerSharedElementProps & {
+  'aria-describedby': string | undefined
+  'aria-expanded': 'true' | 'false'
+  'data-closed': '' | undefined
+  'data-open': '' | undefined
+  'data-placement': Placement | undefined
+  'data-corvu-tooltip-trigger': ''
+} & DynamicButtonElementProps
+
+export type TooltipTriggerProps = TooltipTriggerCorvuProps &
+  Partial<TooltipTriggerSharedElementProps>
 
 /** Button that opens the tooltip when focused or hovered.
  *
@@ -34,25 +51,31 @@ export type TooltipTriggerProps<
 const TooltipTrigger = <
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
 >(
-  props: TooltipTriggerProps<T>,
+  props: DynamicProps<T, TooltipTriggerProps, TooltipTriggerElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['as', 'contextId', 'ref'])
+  const [localProps, otherProps] = splitProps(props as TooltipTriggerProps, [
+    'contextId',
+    'ref',
+  ])
 
   const context = createMemo(() =>
     useInternalTooltipContext(localProps.contextId),
   )
 
   return (
-    <DynamicButton
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_TOOLTIP_TRIGGER_ELEMENT
-      }
+    <DynamicButton<
+      Component<
+        Omit<TooltipTriggerElementProps, keyof DynamicButtonElementProps>
+      >
+    >
+      as={DEFAULT_TOOLTIP_TRIGGER_ELEMENT}
+      // === SharedElementProps ===
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
-      aria-expanded={context().open() ? 'true' : 'false'}
+      // === ElementProps ===
       aria-describedby={context().open() ? context().tooltipId() : undefined}
-      data-open={dataIf(context().open())}
+      aria-expanded={context().open() ? 'true' : 'false'}
       data-closed={dataIf(!context().open())}
+      data-open={dataIf(context().open())}
       data-placement={
         context().open() ? context().floatingState().placement : undefined
       }

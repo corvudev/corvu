@@ -3,8 +3,8 @@ import {
   callEventHandler,
   sortByDocumentPosition,
 } from '@src/dom/lib'
-import type { EventHandlerEvent } from '@src/dom/types'
+import type { EventHandlerEvent, Ref } from '@src/dom/types'
 
-export type { EventHandlerEvent }
+export type { EventHandlerEvent, Ref }
 
 export { afterPaint, callEventHandler, sortByDocumentPosition }

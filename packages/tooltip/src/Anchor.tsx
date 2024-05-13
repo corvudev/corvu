@@ -1,27 +1,28 @@
 import { createMemo, splitProps, type ValidComponent } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs } from '@corvu/utils/reactivity'
+import type { Ref } from '@corvu/utils/dom'
 import { useInternalTooltipContext } from '@src/context'
 
 const DEFAULT_TOOLTIP_ANCHOR_ELEMENT = 'div'
 
-export type TooltipAnchorProps<
-  T extends ValidComponent = typeof DEFAULT_TOOLTIP_ANCHOR_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the tooltip context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-  }
->
+export type TooltipAnchorCorvuProps = {
+  /**
+   * The `id` of the tooltip context to use.
+   */
+  contextId?: string
+}
+
+export type TooltipAnchorSharedElementProps = {
+  ref: Ref
+}
+
+export type TooltipAnchorElementProps = TooltipAnchorSharedElementProps & {
+  'data-corvu-tooltip-anchor': ''
+}
+
+export type TooltipAnchorProps = TooltipAnchorCorvuProps &
+  Partial<TooltipAnchorSharedElementProps>
 
 /** Anchor element to override the floating reference.
  *
@@ -30,22 +31,24 @@ export type TooltipAnchorProps<
 const TooltipAnchor = <
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_ANCHOR_ELEMENT,
 >(
-  props: TooltipAnchorProps<T>,
+  props: DynamicProps<T, TooltipAnchorProps, TooltipAnchorElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['as', 'contextId', 'ref'])
+  const [localProps, otherProps] = splitProps(props as TooltipAnchorProps, [
+    'contextId',
+    'ref',
+  ])
 
   const context = createMemo(() =>
     useInternalTooltipContext(localProps.contextId),
   )
 
   return (
-    <Dynamic
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_TOOLTIP_ANCHOR_ELEMENT
-      }
+    <Dynamic<TooltipAnchorElementProps>
+      as={DEFAULT_TOOLTIP_ANCHOR_ELEMENT}
+      // === SharedElementProps ===
       ref={mergeRefs(context().setAnchorRef, localProps.ref)}
-      data-corvu-tooltip-anchor
+      // === ElementProps ===
+      data-corvu-tooltip-anchor=""
       {...otherProps}
     />
   )

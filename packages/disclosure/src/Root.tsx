@@ -47,6 +47,7 @@ export type DisclosureRootProps = {
    * The `id` of the disclosure context. Useful if you have nested disclosures and want to create components that belong to a disclosure higher up in the tree.
    */
   contextId?: string
+  /** @hidden */
   children: JSX.Element | ((props: DisclosureRootChildrenProps) => JSX.Element)
 }
 

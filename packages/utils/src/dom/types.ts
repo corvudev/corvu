@@ -3,4 +3,6 @@ type EventHandlerEvent<T, E extends Event> = E & {
   target: Element
 }
 
-export type { EventHandlerEvent }
+type Ref = HTMLElement | ((element: HTMLElement) => void)
+
+export type { EventHandlerEvent, Ref }
