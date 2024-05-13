@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "ci:publish": "pnpm build && pnpm publish -r",
+    "ci:publish": "pnpm build && pnpm publish -r --access public",
     "clean": "turbo run clean && rm -rf node_modules",
     "dev:corvu": "turbo run dev --filter=@corvu/dev --filter=corvu",
     "dev:web": "turbo run dev --filter=@corvu/web",
