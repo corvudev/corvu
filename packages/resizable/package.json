@@ -1,6 +1,6 @@
 {
   "name": "@corvu/resizable",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "description": "Unstyled, accessible and customizable UI primitives for SolidJS",
   "keywords": [
