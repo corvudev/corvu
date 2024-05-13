@@ -6,7 +6,7 @@
   "packages/drawer": "0.1.0",
   "packages/popover": "0.1.0",
   "packages/resizable": "0.1.0",
-  "packages/solid-focus-trap": "0.1.5",
+  "packages/solid-focus-trap": "0.1.6",
   "packages/solid-presence": "0.1.6",
   "packages/solid-prevent-scroll": "0.1.7",
   "packages/solid-transition-size": "0.1.2",
