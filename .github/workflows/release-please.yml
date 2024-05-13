@@ -14,30 +14,30 @@ jobs:
         uses: google-github-actions/release-please-action@v4
 
       - name: Check out
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         uses: actions/checkout@v4
 
       - name: Install nodejs
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
       - name: Install pnpm
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         uses: pnpm/action-setup@v3
         with:
           version: latest
           run_install: false
 
       - name: Get pnpm store dir
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         id: pnpm-cache
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: pnpm cache
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -46,7 +46,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         run: pnpm install --frozen-lockfile
 
       - name: Set pnpm auth token
@@ -55,5 +55,5 @@ jobs:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish to npm
-        if: ${{ steps.release-please.outputs.releases_created }}
+        if: ${{ steps.release-please.outputs.releases_created == 'true' }}
         run: pnpm ci:publish
