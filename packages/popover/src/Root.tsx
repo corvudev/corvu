@@ -41,6 +41,7 @@ export type PopoverRootProps = {
    * @defaultValue `{ flip: true, shift: true }`
    */
   floatingOptions?: FloatingOptions | null
+  /** @hidden */
   children:
     | JSX.Element
     | ((

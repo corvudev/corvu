@@ -1,26 +1,24 @@
-import { createMemo, Show, splitProps } from 'solid-js'
-import type { OverrideComponentProps } from '@corvu/utils/dynamic'
+import { type ComponentProps, createMemo, Show, splitProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
 import { some } from '@corvu/utils/reactivity'
 import { useInternalTooltipContext } from '@src/context'
 
-export type TooltipPortalProps = OverrideComponentProps<
-  typeof Portal,
-  {
-    /**
-     * Whether the tooltip portal should be forced to render. Useful when using third-party animation libraries.
-     * @defaultValue `false`
-     */
-    forceMount?: boolean
-    /**
-     * The `id` of the tooltip context to use.
-     */
-    contextId?: string
-  }
->
+export type TooltipPortalProps = {
+  /**
+   * Whether the tooltip portal should be forced to render. Useful when using third-party animation libraries.
+   * @defaultValue `false`
+   */
+  forceMount?: boolean
+  /**
+   * The `id` of the tooltip context to use.
+   */
+  contextId?: string
+}
 
 /** Portals its children at the end of the body element to ensure that the tooltip always rendered on top. */
-const TooltipPortal = (props: TooltipPortalProps) => {
+const TooltipPortal = (
+  props: TooltipPortalProps & ComponentProps<typeof Portal>,
+) => {
   const [localProps, otherProps] = splitProps(props, [
     'forceMount',
     'contextId',

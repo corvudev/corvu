@@ -1,35 +1,42 @@
-import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
-import type {
-  DynamicAttributes,
-  OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import {
+  type Component,
+  createMemo,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
 import FloatingArrow, {
-  type FloatingArrowProps,
+  type FloatingArrowElementProps,
+  type FloatingArrowSharedElementProps,
 } from '@corvu/utils/components/FloatingArrow'
+import type { DynamicProps } from '@corvu/utils/dynamic'
+import { mergeRefs } from '@corvu/utils/reactivity'
+import type { Ref } from '@corvu/utils/dom'
 import { useInternalTooltipContext } from '@src/context'
 
 const DEFAULT_TOOLTIP_ARROW_ELEMENT = 'div'
 
-export type TooltipArrowProps<
-  T extends ValidComponent = typeof DEFAULT_TOOLTIP_ARROW_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * Size of the arrow in px.
-     * @defaultValue 16
-     * */
-    size?: number
-    /**
-     * The `id` of the tooltip context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-  }
->
+export type TooltipArrowCorvuProps = {
+  /**
+   * Size of the arrow in px.
+   * @defaultValue 16
+   */
+  size?: number
+  /**
+   * The `id` of the tooltip context to use.
+   */
+  contextId?: string
+}
+
+export type TooltipArrowSharedElementProps = {
+  ref: Ref
+} & FloatingArrowSharedElementProps
+
+export type TooltipArrowElementProps = TooltipArrowSharedElementProps & {
+  'data-corvu-tooltip-arrow': ''
+} & FloatingArrowElementProps
+
+export type TooltipArrowProps = TooltipArrowCorvuProps &
+  Partial<TooltipArrowSharedElementProps>
 
 /** Arrow element that automatically points towards the floating reference. Comes with a default arrow svg, but can be overridden by providing your own as the children.
  *
@@ -38,20 +45,25 @@ export type TooltipArrowProps<
 const TooltipArrow = <
   T extends ValidComponent = typeof DEFAULT_TOOLTIP_ARROW_ELEMENT,
 >(
-  props: TooltipArrowProps<T>,
+  props: DynamicProps<T, TooltipArrowProps, TooltipArrowElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['contextId'])
+  const [localProps, otherProps] = splitProps(props as TooltipArrowProps, [
+    'contextId',
+    'ref',
+  ])
 
   const context = createMemo(() =>
     useInternalTooltipContext(localProps.contextId),
   )
 
   return (
-    <FloatingArrow
-      setRef={context().setArrowRef}
+    <FloatingArrow<Component<TooltipArrowElementProps>>
+      as={DEFAULT_TOOLTIP_ARROW_ELEMENT}
       floatingState={context().floatingState()}
+      // === SharedElementProps ===
+      ref={mergeRefs(context().setArrowRef, localProps.ref)}
       data-corvu-tooltip-arrow=""
-      {...(otherProps as FloatingArrowProps<T>)}
+      {...otherProps}
     />
   )
 }

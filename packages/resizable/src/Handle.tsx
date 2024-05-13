@@ -1,3 +1,4 @@
+import { callEventHandler, type Ref } from '@corvu/utils/dom'
 import {
   createEffect,
   createMemo,
@@ -16,80 +17,78 @@ import type {
   HandleCallbacks,
   HoverState,
 } from '@src/lib/types'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { fixToPrecision, resolveSize, splitPanels } from '@src/lib/utils'
 import { registerHandle, unregisterHandle } from '@src/lib/handleManager'
-import { callEventHandler } from '@corvu/utils/dom'
 import { dataIf } from '@corvu/utils'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalResizableContext } from '@src/context'
 
 export const DEFAULT_RESIZABLE_HANDLE_ELEMENT = 'button'
 
-export type ResizableHandleProps<
-  T extends ValidComponent = typeof DEFAULT_RESIZABLE_HANDLE_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * Whether the handle is allowed to intersect with another handle at its start (Left/Top of the handle)
-     * @defaultValue `true`
-     */
-    startIntersection?: boolean
-    /**
-     * Whether the handle is allowed to intersect with another handle at its end (Right/Bottom of the handle)
-     * @defaultValue `true`
-     */
-    endIntersection?: boolean
-    /**
-     * Whether Alt key resize mode is enabled. Set to `'only'` to make it the default  and only way to resize.
-     * @defaultValue `true`
-     */
-    altKey?: boolean | 'only'
-    /**
-     * Callback fired when the handle starts being dragged. Can be prevented by calling `event.preventDefault`.
-     */
-    onDragStart?: (event: PointerEvent) => void
-    /**
-     * Callback fired when the handle is being dragged. Can be prevented by calling `event.preventDefault`.
-     */
-    onDrag?: (event: CustomEvent) => void
-    /**
-     * Callback fired when the handle stops being dragged.
-     */
-    onDragEnd?: (event: PointerEvent) => void
-    /**
-     * The `id` of the resizable context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-    /** @hidden */
-    disabled?: boolean
-    /** @hidden */
-    children?: JSX.Element
-    /** @hidden */
-    onMouseEnter?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-    /** @hidden */
-    onMouseLeave?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-    /** @hidden */
-    onKeyDown?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
-    /** @hidden */
-    onKeyUp?: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
-    /** @hidden */
-    onFocus?: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
-    /** @hidden */
-    onBlur?: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
-    /** @hidden */
-    onPointerDown?: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
-  }
->
+export type ResizableHandleCorvuProps = {
+  /**
+   * Whether the handle is allowed to intersect with another handle at its start (Left/Top of the handle)
+   * @defaultValue `true`
+   */
+  startIntersection?: boolean
+  /**
+   * Whether the handle is allowed to intersect with another handle at its end (Right/Bottom of the handle)
+   * @defaultValue `true`
+   */
+  endIntersection?: boolean
+  /**
+   * Whether Alt key resize mode is enabled. Set to `'only'` to make it the default  and only way to resize.
+   * @defaultValue `true`
+   */
+  altKey?: boolean | 'only'
+  /**
+   * Callback fired when the handle starts being dragged. Can be prevented by calling `event.preventDefault`.
+   */
+  onDragStart?: (event: PointerEvent) => void
+  /**
+   * Callback fired when the handle is being dragged. Can be prevented by calling `event.preventDefault`.
+   */
+  onDrag?: (event: CustomEvent) => void
+  /**
+   * Callback fired when the handle stops being dragged.
+   */
+  onDragEnd?: (event: PointerEvent | TouchEvent | MouseEvent) => void
+  /**
+   * The `id` of the resizable context to use.
+   */
+  contextId?: string
+}
+
+export type ResizableHandleSharedElementProps = {
+  ref: Ref
+  style: JSX.CSSProperties
+  disabled: boolean | undefined
+  onBlur: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
+  onFocus: JSX.EventHandlerUnion<HTMLElement, FocusEvent>
+  onKeyDown: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
+  onKeyUp: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
+  onMouseEnter: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+  onMouseLeave: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+  onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
+  children: JSX.Element
+}
+
+export type ResizableHandleElementProps = ResizableHandleSharedElementProps & {
+  role: 'separator'
+  'aria-controls': string | undefined
+  'aria-orientation': 'horizontal' | 'vertical'
+  'aria-valuemax': number | undefined
+  'aria-valuemin': number | undefined
+  'aria-valuenow': number | undefined
+  'data-active': '' | undefined
+  'data-dragging': '' | undefined
+  'data-orientation': 'horizontal' | 'vertical'
+  'data-corvu-resizable-handle': ''
+}
+
+export type ResizableHandleProps = ResizableHandleCorvuProps &
+  Partial<ResizableHandleSharedElementProps>
 
 /** Resizable handle.
  *
@@ -101,7 +100,7 @@ export type ResizableHandleProps<
 const ResizableHandle = <
   T extends ValidComponent = typeof DEFAULT_RESIZABLE_HANDLE_ELEMENT,
 >(
-  props: ResizableHandleProps<T>,
+  props: DynamicProps<T, ResizableHandleProps, ResizableHandleElementProps>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -109,7 +108,7 @@ const ResizableHandle = <
       endIntersection: true,
       altKey: true,
     },
-    props,
+    props as ResizableHandleProps,
   )
 
   const [localProps, otherProps] = splitProps(defaultedProps, [
@@ -120,7 +119,6 @@ const ResizableHandle = <
     'onDrag',
     'onDragEnd',
     'contextId',
-    'as',
     'ref',
     'style',
     'disabled',
@@ -230,7 +228,7 @@ const ResizableHandle = <
           const dragEvent = new CustomEvent('drag', {
             cancelable: true,
           })
-          localProps.onDrag?.(dragEvent)
+          localProps.onDrag(dragEvent)
           if (dragEvent.defaultPrevented) return
         }
         context().onDrag(element, delta, altKey)
@@ -310,29 +308,10 @@ const ResizableHandle = <
   }
 
   return (
-    <Dynamic
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_RESIZABLE_HANDLE_ELEMENT
-      }
+    <Dynamic<ResizableHandleElementProps>
+      as={DEFAULT_RESIZABLE_HANDLE_ELEMENT}
+      // === SharedElementProps ===
       ref={mergeRefs(setRef, localProps.ref)}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onKeyDown={onKeyDown}
-      onKeyUp={onKeyUp}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onPointerDown={onPointerDown}
-      role="separator"
-      aria-controls={ariaInformation()?.ariaControls}
-      aria-orientation={context().orientation()}
-      aria-valuenow={ariaInformation()?.ariaValueNow}
-      aria-valuemin={ariaInformation()?.ariaValueMin}
-      aria-valuemax={ariaInformation()?.ariaValueMax}
-      data-corvu-resizable-handle=""
-      data-active={dataIf(active())}
-      data-dragging={dataIf(dragging())}
-      data-orientation={context().orientation()}
       style={{
         position: 'relative',
         cursor: context().handleCursorStyle() ? 'inherit' : undefined,
@@ -341,6 +320,24 @@ const ResizableHandle = <
         ...localProps.style,
       }}
       disabled={localProps.disabled}
+      onBlur={onBlur}
+      onFocus={onFocus}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onPointerDown={onPointerDown}
+      // === ElementProps ===
+      role="separator"
+      aria-controls={ariaInformation()?.ariaControls}
+      aria-orientation={context().orientation()}
+      aria-valuemax={ariaInformation()?.ariaValueMax}
+      aria-valuemin={ariaInformation()?.ariaValueMin}
+      aria-valuenow={ariaInformation()?.ariaValueNow}
+      data-active={dataIf(active())}
+      data-dragging={dataIf(dragging())}
+      data-orientation={context().orientation()}
+      data-corvu-resizable-handle=""
       {...otherProps}
     >
       <Show when={startIntersection()}>

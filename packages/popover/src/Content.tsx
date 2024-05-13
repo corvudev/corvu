@@ -1,10 +1,33 @@
-import { createMemo, splitProps, type ValidComponent } from 'solid-js'
+import {
+  type Component,
+  createMemo,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import type {
+  ContentCorvuProps as DialogContentCorvuProps,
+  ContentElementProps as DialogContentElementProps,
+  ContentSharedElementProps as DialogContentSharedElementProps,
+} from '@corvu/dialog'
 import Dialog from '@corvu/dialog'
-import type { ContentProps as DialogContentProps } from '@corvu/dialog'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 import { getFloatingStyle } from '@corvu/utils/floating'
+import type { Placement } from '@floating-ui/dom'
 import { useInternalPopoverContext } from '@src/context'
 
 const DEFAULT_POPOVER_CONTENT_ELEMENT = 'div'
+
+export type PopoverContentCorvuProps = DialogContentCorvuProps
+
+export type PopoverContentSharedElementProps = DialogContentSharedElementProps
+
+export type PopoverContentElementProps = PopoverContentSharedElementProps & {
+  'data-placement': Placement
+  'data-corvu-popover-content': ''
+} & DialogContentElementProps
+
+export type PopoverContentProps = PopoverContentCorvuProps &
+  Partial<PopoverContentSharedElementProps>
 
 /** Content of the popover. Can be animated.
  *
@@ -16,9 +39,9 @@ const DEFAULT_POPOVER_CONTENT_ELEMENT = 'div'
 const PopoverContent = <
   T extends ValidComponent = typeof DEFAULT_POPOVER_CONTENT_ELEMENT,
 >(
-  props: DialogContentProps<T>,
+  props: DynamicProps<T, PopoverContentProps, PopoverContentElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
+  const [localProps, otherProps] = splitProps(props as PopoverContentProps, [
     'forceMount',
     'contextId',
     'style',
@@ -29,8 +52,14 @@ const PopoverContent = <
   )
 
   return (
-    <Dialog.Content
+    <Dialog.Content<
+      Component<
+        Omit<PopoverContentElementProps, keyof DialogContentElementProps>
+      >
+    >
+      as={DEFAULT_POPOVER_CONTENT_ELEMENT}
       contextId={localProps.contextId}
+      // === SharedElementProps ===
       style={{
         ...getFloatingStyle({
           strategy: () => context().strategy(),
@@ -38,10 +67,12 @@ const PopoverContent = <
         })(),
         ...localProps.style,
       }}
+      // === ElementProps ===
       data-placement={context().floatingState().placement}
-      data-corvu-dialog-content={undefined}
       data-corvu-popover-content=""
-      {...(otherProps as DialogContentProps<T>)}
+      // === Misc ===
+      data-corvu-dialog-content={null}
+      {...otherProps}
     />
   )
 }

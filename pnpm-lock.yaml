@@ -17,19 +17,37 @@ importers:
 
   dev:
     dependencies:
+      '@corvu/accordion':
+        specifier: workspace:*
+        version: link:../packages/accordion
+      '@corvu/dialog':
+        specifier: workspace:*
+        version: link:../packages/dialog
+      '@corvu/disclosure':
+        specifier: workspace:*
+        version: link:../packages/disclosure
+      '@corvu/drawer':
+        specifier: workspace:*
+        version: link:../packages/drawer
+      '@corvu/popover':
+        specifier: workspace:*
+        version: link:../packages/popover
+      '@corvu/resizable':
+        specifier: workspace:*
+        version: link:../packages/resizable
+      '@corvu/tailwind':
+        specifier: workspace:*
+        version: link:../packages/tailwind
+      '@corvu/tooltip':
+        specifier: workspace:*
+        version: link:../packages/tooltip
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      corvu:
-        specifier: workspace:*
-        version: link:../packages/corvu
       solid-js:
         specifier: ^1.8.17
         version: 1.8.17
     devDependencies:
-      '@corvu/tailwind':
-        specifier: workspace:*
-        version: link:../packages/tailwind
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.7.1
         version: 7.7.1(@typescript-eslint/parser@7.8.0)(eslint@8.57.0)(typescript@5.4.5)

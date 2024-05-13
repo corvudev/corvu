@@ -1,33 +1,46 @@
-import { createMemo, type JSX, splitProps, type ValidComponent } from 'solid-js'
+import { callEventHandler, type Ref } from '@corvu/utils/dom'
 import {
-  type DynamicAttributes,
+  type Component,
+  createMemo,
+  type JSX,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
+import {
   DynamicButton,
-  type OverrideComponentProps,
+  type DynamicButtonElementProps,
+  type DynamicButtonSharedElementProps,
+  type DynamicProps,
 } from '@corvu/utils/dynamic'
-import { callEventHandler } from '@corvu/utils/dom'
 import { dataIf } from '@corvu/utils'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalDialogContext } from '@src/context'
 
 export const DEFAULT_DIALOG_TRIGGER_ELEMENT = 'button'
 
-export type DialogTriggerProps<
-  T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The `id` of the dialog context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    onClick?: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-    /** @hidden */
-    'data-corvu-dialog-trigger'?: string | undefined
-  }
->
+export type DialogTriggerCorvuProps = {
+  /**
+   * The `id` of the dialog context to use.
+   */
+  contextId?: string
+}
+
+export type DialogTriggerSharedElementProps = {
+  ref: Ref
+  onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
+} & DynamicButtonSharedElementProps
+
+export type DialogTriggerElementProps = DialogTriggerSharedElementProps & {
+  'aria-controls': string
+  'aria-expanded': 'true' | 'false'
+  'aria-haspopup': 'dialog'
+  'data-closed': '' | undefined
+  'data-open': '' | undefined
+  'data-corvu-dialog-trigger': '' | null
+} & DynamicButtonElementProps
+
+export type DialogTriggerProps = DialogTriggerCorvuProps &
+  Partial<DialogTriggerSharedElementProps>
 
 /** Button that changes the open state of the dialog when clicked.
  *
@@ -38,14 +51,12 @@ export type DialogTriggerProps<
 const DialogTrigger = <
   T extends ValidComponent = typeof DEFAULT_DIALOG_TRIGGER_ELEMENT,
 >(
-  props: DialogTriggerProps<T>,
+  props: DynamicProps<T, DialogTriggerProps, DialogTriggerElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DialogTriggerProps, [
     'contextId',
     'ref',
     'onClick',
-    'data-corvu-dialog-trigger',
   ])
 
   const context = createMemo(() =>
@@ -58,23 +69,22 @@ const DialogTrigger = <
   }
 
   return (
-    <DynamicButton
-      as={
-        (localProps.as as ValidComponent | undefined) ??
-        DEFAULT_DIALOG_TRIGGER_ELEMENT
-      }
+    <DynamicButton<
+      Component<
+        Omit<DialogTriggerElementProps, keyof DynamicButtonElementProps>
+      >
+    >
+      as={DEFAULT_DIALOG_TRIGGER_ELEMENT}
+      // === SharedElementProps ===
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
       onClick={onClick}
-      aria-haspopup="dialog"
-      aria-expanded={context().open() ? 'true' : 'false'}
+      // === ElementProps ===
       aria-controls={context().dialogId()}
-      data-open={dataIf(context().open())}
+      aria-expanded={context().open() ? 'true' : 'false'}
+      aria-haspopup="dialog"
       data-closed={dataIf(!context().open())}
-      data-corvu-dialog-trigger={
-        localProps.hasOwnProperty('data-corvu-dialog-trigger')
-          ? localProps['data-corvu-dialog-trigger']
-          : ''
-      }
+      data-open={dataIf(context().open())}
+      data-corvu-dialog-trigger=""
       {...otherProps}
     />
   )

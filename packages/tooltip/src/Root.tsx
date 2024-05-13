@@ -140,6 +140,7 @@ export type TooltipRootProps = {
    * The `id` of the tooltip context. Useful if you have nested tooltips and want to create components that belong to a tooltip higher up in the tree.
    */
   contextId?: string
+  /** @hidden */
   children: JSX.Element | ((props: TooltipRootChildrenProps) => JSX.Element)
 }
 

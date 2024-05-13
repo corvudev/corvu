@@ -22,9 +22,9 @@ const chain = <Args extends [] | unknown[]>(callbacks: {
 }
 
 const mergeRefs = <T>(
-  ...refs: (((val: T) => void) | undefined)[]
+  ...refs: (T | ((val: T) => void) | undefined)[]
 ): ((el: T) => void) => {
-  return chain(refs)
+  return chain(refs as ((el: T) => void)[])
 }
 
 const some = (...signals: Accessor<unknown>[]) => {

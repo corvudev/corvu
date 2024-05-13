@@ -1,32 +1,66 @@
-import Anchor, { type TooltipAnchorProps } from '@src/Anchor'
-import Arrow, { type TooltipArrowProps } from '@src/Arrow'
-import Content, { type TooltipContentProps } from '@src/Content'
+import Anchor, {
+  type TooltipAnchorCorvuProps as AnchorCorvuProps,
+  type TooltipAnchorElementProps as AnchorElementProps,
+  type TooltipAnchorProps as AnchorProps,
+  type TooltipAnchorSharedElementProps as AnchorSharedElementProps,
+} from '@src/Anchor'
+import Arrow, {
+  type TooltipArrowCorvuProps as ArrowCorvuProps,
+  type TooltipArrowElementProps as ArrowElementProps,
+  type TooltipArrowProps as ArrowProps,
+  type TooltipArrowSharedElementProps as ArrowSharedElementProps,
+} from '@src/Arrow'
+import Content, {
+  type TooltipContentCorvuProps as ContentCorvuProps,
+  type TooltipContentElementProps as ContentElementProps,
+  type TooltipContentProps as ContentProps,
+  type TooltipContentSharedElementProps as ContentSharedElementProps,
+} from '@src/Content'
+import {
+  type TooltipContextValue as ContextValue,
+  useTooltipContext as useContext,
+} from '@src/context'
 import type {
   FloatingOptions,
   FloatingState,
 } from '@corvu/utils/create/floating'
-import Portal, { type TooltipPortalProps } from '@src/Portal'
+import Portal, { type TooltipPortalProps as PortalProps } from '@src/Portal'
 import Root, {
-  type TooltipRootChildrenProps,
-  type TooltipRootProps,
+  type TooltipRootChildrenProps as RootChildrenProps,
+  type TooltipRootProps as RootProps,
 } from '@src/Root'
-import {
-  type TooltipContextValue,
-  useTooltipContext as useContext,
-} from '@src/context'
-import Trigger, { type TooltipTriggerProps } from '@src/Trigger'
+import Trigger, {
+  type TooltipTriggerCorvuProps as TriggerCorvuProps,
+  type TooltipTriggerElementProps as TriggerElementProps,
+  type TooltipTriggerProps as TriggerProps,
+  type TooltipTriggerSharedElementProps as TriggerSharedElementProps,
+} from '@src/Trigger'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 
 export type {
-  TooltipRootProps as RootProps,
-  TooltipRootChildrenProps as RootChildrenProps,
-  TooltipAnchorProps as AnchorProps,
-  TooltipTriggerProps as TriggerProps,
-  TooltipPortalProps as PortalProps,
-  TooltipContentProps as ContentProps,
-  TooltipArrowProps as ArrowProps,
-  TooltipContextValue as ContextValue,
+  RootProps,
+  RootChildrenProps,
+  AnchorCorvuProps,
+  AnchorSharedElementProps,
+  AnchorElementProps,
+  AnchorProps,
+  TriggerCorvuProps,
+  TriggerSharedElementProps,
+  TriggerElementProps,
+  TriggerProps,
+  PortalProps,
+  ContentCorvuProps,
+  ContentSharedElementProps,
+  ContentElementProps,
+  ContentProps,
+  ArrowCorvuProps,
+  ArrowSharedElementProps,
+  ArrowElementProps,
+  ArrowProps,
+  ContextValue,
   FloatingOptions,
   FloatingState,
+  DynamicProps,
 }
 
 export { Root, Anchor, Trigger, Portal, Content, Arrow, useContext }

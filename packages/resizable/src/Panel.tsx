@@ -11,87 +11,89 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import { dataIf, isFunction, type Size } from '@corvu/utils'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import type { PanelInstance, ResizeStrategy } from '@src/lib/types'
 import createOnce from '@corvu/utils/create/once'
 import { createResizablePanelContext } from '@src/panelContext'
 import { mergeRefs } from '@corvu/utils/reactivity'
+import type { Ref } from '@corvu/utils/dom'
 import { resolveSize } from '@src/lib/utils'
 import { useInternalResizableContext } from '@src/context'
 
 export const DEFAULT_RESIZABLE_PANEL_ELEMENT = 'div'
 
-export type ResizablePanelProps<
-  T extends ValidComponent = typeof DEFAULT_RESIZABLE_PANEL_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * The initial size of the panel. If the panel is rendered on the server, this should be a percentage to avoid layout shifts.
-     */
-    initialSize?: Size
-    /**
-     * The minimum size of the panel.
-     * @defaultValue 0
-     */
-    minSize?: Size
-    /**
-     * The maximum size of the panel.
-     * @defaultValue 1
-     */
-    maxSize?: Size
-    /**
-     * Whether the panel is collapsible.
-     * @defaultValue `false`
-     */
-    collapsible?: boolean
-    /**
-     * The size the panel should collapse to.
-     * @defaultValue 0
-     */
-    collapsedSize?: Size
-    /**
-     * How much the user has to "overdrag" for the panel to collapse.
-     * @defaultValue 0.05
-     */
-    collapseThreshold?: Size
-    /**
-     * Callback fired when the panel is resized.
-     * @param size - The new size of the panel.
-     */
-    onResize?: (size: number) => void
-    /**
-     * Callback fired when the panel is collapsed.
-     * @param size - The new size of the panel.
-     */
-    onCollapse?: (size: number) => void
-    /**
-     * Callback fired when the panel is expanded.
-     * @param size - The new size of the panel.
-     */
-    onExpand?: (size: number) => void
-    /**
-     * The `id` of the resizable context to use.
-     */
-    contextId?: string
-    /**
-     * The `id` attribute of the resizable panel element.
-     * @defaultValue `createUniqueId()`
-     */
-    panelId?: string
-    children?:
-      | JSX.Element
-      | ((props: ResizablePanelChildrenProps) => JSX.Element)
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-  }
->
+export type ResizablePanelCorvuProps = {
+  /**
+   * The initial size of the panel. If the panel is rendered on the server, this should be a percentage to avoid layout shifts.
+   */
+  initialSize?: Size
+  /**
+   * The minimum size of the panel.
+   * @defaultValue 0
+   */
+  minSize?: Size
+  /**
+   * The maximum size of the panel.
+   * @defaultValue 1
+   */
+  maxSize?: Size
+  /**
+   * Whether the panel is collapsible.
+   * @defaultValue `false`
+   */
+  collapsible?: boolean
+  /**
+   * The size the panel should collapse to.
+   * @defaultValue 0
+   */
+  collapsedSize?: Size
+  /**
+   * How much the user has to "overdrag" for the panel to collapse.
+   * @defaultValue 0.05
+   */
+  collapseThreshold?: Size
+  /**
+   * Callback fired when the panel is resized.
+   * @param size - The new size of the panel.
+   */
+  onResize?: (size: number) => void
+  /**
+   * Callback fired when the panel is collapsed.
+   * @param size - The new size of the panel.
+   */
+  onCollapse?: (size: number) => void
+  /**
+   * Callback fired when the panel is expanded.
+   * @param size - The new size of the panel.
+   */
+  onExpand?: (size: number) => void
+  /**
+   * The `id` of the resizable context to use.
+   */
+  contextId?: string
+  /**
+   * The `id` attribute of the resizable panel element.
+   * @defaultValue `createUniqueId()`
+   */
+  panelId?: string
+}
+
+export type ResizablePanelSharedElementProps = {
+  ref: Ref
+  style: JSX.CSSProperties
+  children: JSX.Element | ((props: ResizablePanelChildrenProps) => JSX.Element)
+}
+
+export type ResizablePanelElementProps = ResizablePanelSharedElementProps & {
+  id: string
+  'data-collapsed': '' | undefined
+  'data-expanded': '' | undefined
+  'data-orientation': 'horizontal' | 'vertical'
+  'data-corvu-resizable-panel': ''
+}
+
+export type ResizablePanelProps = ResizablePanelCorvuProps &
+  Partial<ResizablePanelSharedElementProps>
 
 export type ResizablePanelChildrenProps = {
   /** The current size of the panel. */
@@ -128,7 +130,7 @@ export type ResizablePanelChildrenProps = {
 const ResizablePanel = <
   T extends ValidComponent = typeof DEFAULT_RESIZABLE_PANEL_ELEMENT,
 >(
-  props: ResizablePanelProps<T>,
+  props: DynamicProps<T, ResizablePanelProps, ResizablePanelElementProps>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -140,7 +142,7 @@ const ResizablePanel = <
       collapseThreshold: 0.05,
       panelId: createUniqueId(),
     },
-    props,
+    props as ResizablePanelProps,
   )
 
   const [localProps, otherProps] = splitProps(defaultedProps, [
@@ -155,7 +157,6 @@ const ResizablePanel = <
     'onExpand',
     'contextId',
     'panelId',
-    'as',
     'ref',
     'style',
     'children',
@@ -218,9 +219,9 @@ const ResizablePanel = <
 
     if (instance && prev !== collapsed) {
       if (collapsed && localProps.onCollapse !== undefined) {
-        localProps.onCollapse?.(instance.size())
+        localProps.onCollapse(instance.size())
       } else if (!collapsed && localProps.onExpand !== undefined) {
-        localProps.onExpand?.(instance.size())
+        localProps.onExpand(instance.size())
       }
     }
 
@@ -324,20 +325,22 @@ const ResizablePanel = <
           panelId: () => localProps.panelId,
         }}
       >
-        <Dynamic
-          as={localProps.as ?? DEFAULT_RESIZABLE_PANEL_ELEMENT}
+        <Dynamic<ResizablePanelElementProps>
+          as={DEFAULT_RESIZABLE_PANEL_ELEMENT}
+          // === SharedElementProps ===
           ref={mergeRefs(setRef, localProps.ref)}
-          id={localProps.panelId}
           style={{
             'flex-basis': panelSize() * 100 + '%',
             ...localProps.style,
           }}
-          data-corvu-resizable-panel=""
-          data-orientation={context().orientation()}
+          // === ElementProps ===
+          id={localProps.panelId}
           data-collapsed={dataIf(collapsed())}
           data-expanded={dataIf(
             localProps.collapsible === true && !collapsed(),
           )}
+          data-orientation={context().orientation()}
+          data-corvu-resizable-panel=""
           {...otherProps}
         >
           {untrack(() => resolveChildren())}

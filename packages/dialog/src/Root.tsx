@@ -140,6 +140,7 @@ export type DialogRootProps = {
    * The `id` of the dialog context. Useful if you have nested dialogs and want to create components that belong to a dialog higher up in the tree.
    */
   contextId?: string
+  /** @hidden */
   children: JSX.Element | ((props: DialogRootChildrenProps) => JSX.Element)
 }
 

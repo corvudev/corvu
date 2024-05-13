@@ -4,7 +4,7 @@ import type { Size } from '@corvu/utils'
 export type PanelData = {
   id: string
   element: HTMLElement
-  initialSize?: number
+  initialSize?: Size
   minSize?: Size
   maxSize?: Size
   collapsible: boolean

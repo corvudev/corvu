@@ -1,23 +1,48 @@
 import { type Axis, dataIf } from '@corvu/utils'
 import {
   batch,
+  type Component,
   createEffect,
   createMemo,
+  type JSX,
   onCleanup,
   splitProps,
   type ValidComponent,
 } from 'solid-js'
+import type {
+  ContentCorvuProps as DialogContentCorvuProps,
+  ContentElementProps as DialogContentElementProps,
+  ContentSharedElementProps as DialogContentSharedElementProps,
+} from '@corvu/dialog'
 import {
   findClosestSnapPoint,
   locationIsDraggable,
   resolveSnapPoint,
 } from '@src/lib'
 import Dialog from '@corvu/dialog'
-import type { ContentProps as DialogContentProps } from '@corvu/dialog'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 import { getScrollAtLocation } from '@corvu/utils/scroll'
 import { useInternalDrawerContext } from '@src/context'
 
 const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
+
+export type DrawerContentCorvuProps = DialogContentCorvuProps
+
+export type DrawerContentSharedElementProps = DialogContentSharedElementProps
+
+export type DrawerContentElementProps = DrawerContentSharedElementProps & {
+  onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
+  onTransitionEnd: JSX.EventHandlerUnion<HTMLElement, TransitionEvent>
+  'data-opening': '' | undefined
+  'data-closing': '' | undefined
+  'data-resizing': '' | undefined
+  'data-snapping': '' | undefined
+  'data-transitioning': '' | undefined
+  'data-corvu-drawer-content': ''
+} & DialogContentElementProps
+
+export type DrawerContentProps = DrawerContentCorvuProps &
+  Partial<DrawerContentSharedElementProps>
 
 /** Content of the drawer. Can be animated.
  *
@@ -33,9 +58,12 @@ const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
 const DrawerContent = <
   T extends ValidComponent = typeof DEFAULT_DRAWER_CONTENT_ELEMENT,
 >(
-  props: DialogContentProps<T>,
+  props: DynamicProps<T, DrawerContentProps, DrawerContentElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['contextId', 'style'])
+  const [localProps, otherProps] = splitProps(props as DrawerContentProps, [
+    'contextId',
+    'style',
+  ])
 
   let pointerDown = false
   let dragStartPos: number | null = null
@@ -278,8 +306,14 @@ const DrawerContent = <
   }
 
   return (
-    <Dialog.Content
+    <Dialog.Content<
+      Component<
+        Omit<DrawerContentElementProps, keyof DialogContentElementProps>
+      >
+    >
+      as={DEFAULT_DRAWER_CONTENT_ELEMENT}
       contextId={localProps.contextId}
+      // === SharedElementProps ===
       style={{
         transform: transformValue(),
         'transition-duration': drawerContext().isDragging() ? '0ms' : undefined,
@@ -287,6 +321,7 @@ const DrawerContent = <
         width: transitionWidth(),
         ...localProps.style,
       }}
+      // === ElementProps ===
       onPointerDown={onPointerDown}
       onTransitionEnd={() => {
         batch(() => {
@@ -298,14 +333,15 @@ const DrawerContent = <
           }
         })
       }}
-      data-transitioning={dataIf(drawerContext().isTransitioning())}
-      data-opening={dataIf(drawerContext().transitionState() === 'opening')}
       data-closing={dataIf(drawerContext().transitionState() === 'closing')}
-      data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
+      data-opening={dataIf(drawerContext().transitionState() === 'opening')}
       data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
-      data-corvu-dialog-content={undefined}
+      data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
+      data-transitioning={dataIf(drawerContext().isTransitioning())}
       data-corvu-drawer-content=""
-      {...(otherProps as DialogContentProps<T>)}
+      // === Misc ===
+      data-corvu-dialog-content={null}
+      {...otherProps}
     />
   )
 }

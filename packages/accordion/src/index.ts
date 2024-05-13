@@ -1,38 +1,60 @@
+import Content, {
+  type AccordionContentCorvuProps as ContentCorvuProps,
+  type AccordionContentElementProps as ContentElementProps,
+  type AccordionContentProps as ContentProps,
+  type AccordionContentSharedElementProps as ContentSharedElementProps,
+} from '@src/Content'
 import {
-  type AccordionContextValue,
+  type AccordionContextValue as ContextValue,
   useAccordionContext as useContext,
 } from '@src/context'
 import {
-  type AccordionItemContextValue,
-  useAccordionItemContext as useItemContext,
-} from '@src/itemContext'
-import {
-  type ContentProps as DisclosureContentProps,
   type ContextValue as DisclosureContextValue,
-  type TriggerProps as DisclosureTriggerProps,
   useContext as useDisclosureContext,
 } from '@corvu/disclosure'
 import Item, {
-  type AccordionItemChildrenProps,
-  type AccordionItemProps,
+  type AccordionItemChildrenProps as ItemChildrenProps,
+  type AccordionItemCorvuProps as ItemCorvuProps,
+  type AccordionItemElementProps as ItemElementProps,
+  type AccordionItemProps as ItemProps,
+  type AccordionItemSharedElementProps as ItemSharedElementProps,
 } from '@src/Item'
+import {
+  type AccordionItemContextValue as ItemContextValue,
+  useAccordionItemContext as useItemContext,
+} from '@src/itemContext'
 import Root, {
-  type AccordionRootChildrenProps,
-  type AccordionRootProps,
+  type AccordionRootChildrenProps as RootChildrenProps,
+  type AccordionRootProps as RootProps,
 } from '@src/Root'
-import Content from '@src/Content'
-import Trigger from '@src/Trigger'
+import Trigger, {
+  type AccordionTriggerCorvuProps as TriggerCorvuProps,
+  type AccordionTriggerElementProps as TriggerElementProps,
+  type AccordionTriggerProps as TriggerProps,
+  type AccordionTriggerSharedElementProps as TriggerSharedElementProps,
+} from '@src/Trigger'
+import type { DynamicProps } from '@corvu/utils/dynamic'
 
 export type {
-  AccordionRootProps as RootProps,
-  AccordionRootChildrenProps as RootChildrenProps,
-  AccordionItemProps as ItemProps,
-  AccordionItemChildrenProps as ItemChildrenProps,
-  DisclosureTriggerProps as TriggerProps,
-  DisclosureContentProps as ContentProps,
-  AccordionContextValue as ContextValue,
-  AccordionItemContextValue as ItemContextValue,
+  RootProps,
+  RootChildrenProps,
+  ItemCorvuProps,
+  ItemSharedElementProps,
+  ItemElementProps,
+  ItemProps,
+  ItemChildrenProps,
+  TriggerCorvuProps,
+  TriggerSharedElementProps,
+  TriggerElementProps,
+  TriggerProps,
+  ContentCorvuProps,
+  ContentSharedElementProps,
+  ContentElementProps,
+  ContentProps,
+  ContextValue,
+  ItemContextValue,
   DisclosureContextValue,
+  DynamicProps,
 }
 
 export {

@@ -5,14 +5,14 @@ import {
   untrack,
   type ValidComponent,
 } from 'solid-js'
-import type { DynamicAttributes, OverrideComponentProps } from '@src/dynamic'
+import type { DynamicAttributes } from '@src/dynamic'
 import { Dynamic as SolidDynamic } from 'solid-js/web'
 
 const DEFAULT_DYNAMIC_ELEMENT = 'div'
 
 /** corvu's version of Solid's `Dynamic` component. Renders as a div by default and can be overridden with the `as` property. */
-const Dynamic = <T extends ValidComponent = typeof DEFAULT_DYNAMIC_ELEMENT>(
-  props: OverrideComponentProps<T, DynamicAttributes<T>>,
+const Dynamic = <ElementProps,>(
+  props: DynamicAttributes<ValidComponent> & ElementProps,
 ) => {
   const [localProps, otherProps] = splitProps(props, ['as'])
 

@@ -5,39 +5,41 @@ import {
   splitProps,
   type ValidComponent,
 } from 'solid-js'
-import {
-  Dynamic,
-  type DynamicAttributes,
-  type OverrideComponentProps,
-} from '@corvu/utils/dynamic'
+import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
+import type { Ref } from '@corvu/utils/dom'
 import { useInternalDisclosureContext } from '@src/context'
 
 export const DEFAULT_DISCLOSURE_CONTENT_ELEMENT = 'div'
 
-export type DisclosureContentProps<
-  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_CONTENT_ELEMENT,
-> = OverrideComponentProps<
-  T,
-  DynamicAttributes<T> & {
-    /**
-     * Whether the disclosure content should be forced to render. Useful when using third-party animation libraries.
-     * @defaultValue `false`
-     */
-    forceMount?: boolean
-    /**
-     * The `id` of the disclosure context to use.
-     */
-    contextId?: string
-    /** @hidden */
-    ref?: (element: HTMLElement) => void
-    /** @hidden */
-    style?: JSX.CSSProperties
-    /** @hidden */
-    'data-corvu-disclosure-content'?: string | undefined
+export type DisclosureContentCorvuProps = {
+  /**
+   * Whether the disclosure content should be forced to render. Useful when using third-party animation libraries.
+   * @defaultValue `false`
+   */
+  forceMount?: boolean
+  /**
+   * The `id` of the disclosure context to use.
+   */
+  contextId?: string
+}
+
+export type DisclosureContentSharedElementProps = {
+  ref: Ref
+  style: JSX.CSSProperties
+}
+
+export type DisclosureContentElementProps =
+  DisclosureContentSharedElementProps & {
+    id: string
+    'data-collapsed': '' | undefined
+    'data-expanded': '' | undefined
+    'data-corvu-disclosure-content': '' | null
   }
->
+
+export type DisclosureContentProps = DisclosureContentCorvuProps &
+  Partial<DisclosureContentSharedElementProps>
 
 /** Content of a disclosure. Can be animated.
  *
@@ -50,15 +52,13 @@ export type DisclosureContentProps<
 const DisclosureContent = <
   T extends ValidComponent = typeof DEFAULT_DISCLOSURE_CONTENT_ELEMENT,
 >(
-  props: DisclosureContentProps<T>,
+  props: DynamicProps<T, DisclosureContentProps, DisclosureContentElementProps>,
 ) => {
-  const [localProps, otherProps] = splitProps(props, [
-    'as',
+  const [localProps, otherProps] = splitProps(props as DisclosureContentProps, [
     'forceMount',
     'contextId',
     'ref',
     'style',
-    'data-corvu-disclosure-content',
   ])
 
   const context = createMemo(() =>
@@ -89,52 +89,42 @@ const DisclosureContent = <
     switch (collapseBehavior) {
       case 'hide':
         return (
-          <Dynamic
-            as={
-              (localProps.as as ValidComponent | undefined) ??
-              DEFAULT_DISCLOSURE_CONTENT_ELEMENT
-            }
+          <Dynamic<DisclosureContentElementProps>
+            as={DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
+            // === SharedElementProps ===
             ref={mergeRefs(context().setContentRef, localProps.ref)}
-            id={context().disclosureId()}
-            data-expanded={dataIf(context().expanded())}
-            data-collapsed={dataIf(!context().expanded())}
-            data-corvu-disclosure-content={
-              localProps.hasOwnProperty('data-corvu-disclosure-content')
-                ? localProps['data-corvu-disclosure-content']
-                : ''
-            }
             style={{
               display: !show() ? 'none' : undefined,
               '--corvu-disclosure-content-width': `${contentWidth()}px`,
               '--corvu-disclosure-content-height': `${contentHeight()}px`,
               ...localProps.style,
             }}
+            // === ElementProps ===
+            id={context().disclosureId()}
+            data-collapsed={dataIf(!context().expanded())}
+            data-expanded={dataIf(context().expanded())}
+            data-corvu-disclosure-content=""
             {...otherProps}
           />
         )
       case 'remove':
         return (
           <Show when={show()}>
-            <Dynamic
-              as={
-                (localProps.as as ValidComponent | undefined) ??
-                DEFAULT_DISCLOSURE_CONTENT_ELEMENT
-              }
+            <Dynamic<DisclosureContentElementProps>
+              as={DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
+              // === SharedElementProps ===
               ref={mergeRefs(context().setContentRef, localProps.ref)}
-              id={context().disclosureId()}
-              data-expanded={dataIf(context().expanded())}
-              data-collapsed={dataIf(!context().expanded())}
-              data-corvu-disclosure-content={
-                localProps.hasOwnProperty('data-corvu-disclosure-content')
-                  ? localProps['data-corvu-disclosure-content']
-                  : ''
-              }
               style={{
                 display: !show() ? 'none' : undefined,
                 '--corvu-disclosure-content-width': `${contentWidth()}px`,
                 '--corvu-disclosure-content-height': `${contentHeight()}px`,
                 ...localProps.style,
               }}
+              // === ElementProps ===
+              id={context().disclosureId()}
+              data-expanded={dataIf(context().expanded())}
+              data-collapsed={dataIf(!context().expanded())}
+              data-corvu-disclosure-content=""
               {...otherProps}
             />
           </Show>
