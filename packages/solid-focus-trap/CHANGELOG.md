@@ -1,16 +1,5 @@
 # solid-focus-trap
 
-## [0.1.5](https://github.com/corvudev/corvu/compare/solid-focus-trap@0.1.5...solid-focus-trap@0.1.5) (2024-05-13)
-
-
-### ⚠ BREAKING CHANGES
-
-* split primitives into separate packages ([#17](https://github.com/corvudev/corvu/issues/17))
-
-### Code Refactoring
-
-* split primitives into separate packages ([#17](https://github.com/corvudev/corvu/issues/17)) ([360e8fb](https://github.com/corvudev/corvu/commit/360e8fb040c54ebd542dc244a5e10a7784e4388b))
-
 ## 0.1.5
 
 ### Patch Changes
