@@ -1,6 +1,6 @@
 import { For, type VoidComponent } from 'solid-js'
 import clsx from 'clsx'
-import { Drawer } from 'corvu/drawer'
+import Drawer from '@corvu/drawer'
 
 const DrawerScrollableExample: VoidComponent = () => {
   return (

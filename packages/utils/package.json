@@ -31,26 +31,32 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "solid": "./dist/index.jsx",
       "default": "./dist/index.js"
     },
-    "./scroll": {
-      "types": "./dist/scroll.d.ts",
-      "default": "./dist/scroll.js"
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "solid": "./dist/*/index.jsx",
+      "default": "./dist/*/index.js"
     },
-    "./create-style": {
-      "types": "./dist/createStyle.d.ts",
-      "default": "./dist/createStyle.js"
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "solid": "./dist/components/*.jsx",
+      "default": "./dist/components/*.js"
+    },
+    "./create/*": {
+      "types": "./dist/create/*.d.ts",
+      "solid": "./dist/create/*.jsx",
+      "default": "./dist/create/*.js"
     }
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
-      "scroll": [
-        "./dist/scroll.d.ts"
-      ],
-      "create-style": [
-        "./dist/createStyle.d.ts"
+      "*": [
+        "./dist/*/*.d.ts",
+        "./dist/index.d.ts"
       ]
     }
   },
@@ -59,8 +65,12 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rm -rf .turbo dist node_modules",
-    "lint": "eslint --max-warnings=0 ."
+    "clean": "rm -rf .turbo dist node_modules typedoc.json",
+    "lint": "eslint --max-warnings=0 .",
+    "typedoc": "rm -f typedoc.json && typedoc --json typedoc.json --entryPoints ./src/index.ts --entryPoints ./src/components/*.tsx --entryPoints ./src/create/*.ts --entryPoints ./src/*/index.ts"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.7.1",
@@ -71,6 +81,7 @@
     "prettier": "^3.2.5",
     "solid-js": "^1.8.17",
     "tsup": "^8.0.2",
+    "typedoc": "^0.25.13",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {

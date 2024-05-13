@@ -13,8 +13,10 @@ import CssTsx from '@examples/primitives/popover/basic/css/index?raw'
 import CssStyle from '@examples/primitives/popover/basic/css/index.css?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Popover } from '@lib/typedoc/libraries'
 import Link from '@components/docs/Link.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -22,6 +24,8 @@ export const components = { h2: H2, h3: H3 }
 # Popover
 
 A popup that displays an anchored interactive dialog on click. It uses the awesome <Link href="https://floating-ui.com/" newTab>Floating UI</Link> library in the background for positioning and allows you to fully customize its behavior.
+
+<PackageInfo packageName="@corvu/popover" />
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -64,11 +68,19 @@ A popup that displays an anchored interactive dialog on click. It uses the aweso
   'Optional arrow component',
 ]} />
 
+## Installation
+
+<Code code={`
+npm install @corvu/popover
+`} lang="bash" copyButton />
+
+The popover is also included in the main `corvu` package under `corvu/popover`.
+
 ## Usage
 <Code code={`
-import { Popover } from 'corvu/popover'
-// Or
-// import { Root, Trigger, ... } from 'corvu/popover'
+import Popover from '@corvu/popover' // 'corvu/popover'
+// or
+// import { Root, Trigger, ... } from '@corvu/popover'
 `} lang="tsx" copyButton />
 
 ### Anatomy
@@ -98,44 +110,14 @@ The initial placement of the tooltip can be configured with the `placement` prop
 You can configure the positioning strategy with the `strategy` property on the `Root` component. Valid options are `absolute` or `fixed`. In most cases, it's recommended to leave this property at the default setting `absolute`, as this requires the browser to do the least work when updating the position.
 
 ### FloatingOptions
-Middlewares can be configured with the `floatingOptions` property on the `Root` component.
-
-<Code code={`
-export type FloatingOptions = {
-  offset?: OffsetOptions
-  shift?: boolean | ShiftOptions
-  flip?: boolean | FlipOptions
-  arrow?: Padding
-  size?: DetectOverflowOptions & {
-    matchSize?: boolean
-    fitViewPort?: boolean
-  }
-  autoPlacement?: boolean | AutoPlacementOptions
-  hide?: boolean | HideOptions
-  inline?: boolean | InlineOptions
-}
-`} lang="tsx" copyButton />
+Middlewares can be configured with the `floatingOptions` property on the `Root` component. Check out the <Link href="#FloatingOptions"><code>FloatingOptions</code></Link> type in the API Reference.
 
 If you want to enable a middleware with default options, you can pass `true` as the value.
 
 The option types are directly taken from the Floating UI middlewares. Check out <Link href="https://floating-ui.com/docs/middleware/" newTab>Floating UI's middleware documentation</Link>.
 
 ### FloatingState
-The popover also provides a you with a `floatingState` property that contains the current state of the popover. You can use this property to override a specific behavior according to your needs.
-
-<Code code={`
-export type FloatingState = {
-  placement: Placement
-  x: number
-  y: number
-  width: number | null
-  height: number | null
-  maxWidth: number | null
-  maxHeight: number | null
-  arrowX: number | null
-  arrowY: number | null
-}
-`} lang="tsx" copyButton />
+The popover also provides a you with a `floatingState` property that contains the current state of the popover. You can use this property to override a specific behavior according to your needs. Check out the <Link href="#FloatingState"><code>FloatingState</code></Link> type in the API Reference.
 
 ## Accessibility
 Adheres to the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" newTab>Dialog WAI-ARIA design pattern</Link>.
@@ -146,4 +128,4 @@ Only components which are specific to the popover are documented here. For all o
 
 The dialog context is re-exported as `Popover.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog/#Dialog.RootChildrenProps).
 
-<GenerateApiDocs primitive="Popover" />
+<ApiReference library={Popover} />

@@ -1,0 +1,55 @@
+---
+import type { Tag } from '@lib/typedoc/types/apiReferences'
+
+interface Props {
+  kind: 'data' | 'css'
+  componentName: string
+  tags: Tag[]
+}
+
+const { kind, componentName, tags } = Astro.props
+---
+
+<div class="mb-4">
+  <h4 class="not-prose text-lg font-bold">
+    {kind === 'data' ? 'Data attributes' : 'CSS properties'}
+  </h4>
+  {
+    kind === 'data' && (
+      <p class="mt-2">
+        Data attributes present on <code>&lt;{componentName} /&gt;</code>{' '}
+        components.
+      </p>
+    )
+  }
+  {
+    kind === 'css' && (
+      <p class="mt-2">
+        CSS properties present on <code>&lt;{componentName} /&gt;</code>{' '}
+        components.
+      </p>
+    )
+  }
+  <div class="overflow-y-auto">
+    <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+      <tr class="not-prose border-b border-corvu-100">
+        <th class="w-1/2 pb-3">Property</th>
+        <th class="w-1/2 pb-3">Description</th>
+      </tr>
+      {
+        tags.map((prop) => (
+          <tr class="border-b border-corvu-100">
+            <td class="not-prose py-5 pr-5 align-top text-sm">
+              <p class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 pb-0.5 pt-1.5 font-mono">
+                {prop.name}
+              </p>
+            </td>
+            <td class="py-5 pr-5 align-top text-sm">
+              <div class="prose" set:html={prop.descriptionHtml} />
+            </td>
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+</div>

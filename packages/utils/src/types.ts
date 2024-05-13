@@ -1,8 +1,5 @@
-type MaybeAccessor<T> = T | (() => T)
-
-type MaybeAccessorValue<T extends MaybeAccessor<unknown>> =
-  T extends () => unknown ? ReturnType<T> : T
-
 type Axis = 'x' | 'y'
+type Side = 'top' | 'right' | 'bottom' | 'left'
+type Size = `${number}px` | number
 
-export type { MaybeAccessor, Axis, MaybeAccessorValue }
+export type { Axis, Side, Size }

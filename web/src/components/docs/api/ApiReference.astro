@@ -1,0 +1,47 @@
+---
+import ApiItemChildrenProps from '@components/docs/api/items/ApiItemChildrenProps.astro'
+import ApiItemComponent from '@components/docs/api/items/ApiItemComponent.astro'
+import ApiItemContext from '@components/docs/api/items/ApiItemContext.astro'
+import ApiItemFunction from '@components/docs/api/items/ApiItemFunction.astro'
+import ApiItemInheritedComponent from '@components/docs/api/items/ApiItemInheritedComponent.astro'
+import ApiItemInheritedContext from '@components/docs/api/items/ApiItemInheritedContext.astro'
+import ApiItemSimple from '@components/docs/api/items/ApiItemSimple.astro'
+import type { Library } from '@lib/typedoc/types/specifications'
+import resolveLibrary from '@lib/typedoc/resolve/resolve'
+
+interface Props {
+  library: Library
+}
+
+const { library } = Astro.props
+
+const apiReferences = resolveLibrary(library)
+---
+
+<div class="space-y-14">
+  {
+    apiReferences.map((apiReference) => (
+      <>
+        {apiReference.kind === 'component' && (
+          <ApiItemComponent {...apiReference} />
+        )}
+        {apiReference.kind === 'inherited-component' && (
+          <ApiItemInheritedComponent {...apiReference} />
+        )}
+        {apiReference.kind === 'context' && (
+          <ApiItemContext {...apiReference} />
+        )}
+        {apiReference.kind === 'inherited-context' && (
+          <ApiItemInheritedContext {...apiReference} />
+        )}
+        {apiReference.kind === 'childrenProps' && (
+          <ApiItemChildrenProps {...apiReference} />
+        )}
+        {apiReference.kind === 'simple' && <ApiItemSimple {...apiReference} />}
+        {apiReference.kind === 'function' && (
+          <ApiItemFunction {...apiReference} />
+        )}
+      </>
+    ))
+  }
+</div>

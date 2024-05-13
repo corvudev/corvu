@@ -1,6 +1,6 @@
 import LogoDark from '@assets/logo_dark.svg'
 import LogoLight from '@assets/logo_light.svg'
-import { Resizable } from 'corvu/resizable'
+import Resizable from '@corvu/resizable'
 import type { VoidComponent } from 'solid-js'
 
 const ResizableAltKeyExample: VoidComponent = () => {

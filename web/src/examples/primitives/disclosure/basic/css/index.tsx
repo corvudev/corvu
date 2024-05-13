@@ -1,6 +1,6 @@
 import './index.css'
 import { CaretUpDown, X } from '@examples/primitives/disclosure/icons'
-import { Disclosure } from 'corvu/disclosure'
+import Disclosure from '@corvu/disclosure'
 import type { VoidComponent } from 'solid-js'
 
 const DisclosureExample: VoidComponent = () => {

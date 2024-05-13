@@ -1,6 +1,6 @@
 import { createSignal, type VoidComponent } from 'solid-js'
 import { makePersisted } from '@solid-primitives/storage'
-import { Resizable } from 'corvu/resizable'
+import Resizable from '@corvu/resizable'
 
 const ResizablePersistentExample: VoidComponent = () => {
   // eslint-disable-next-line solid/reactivity

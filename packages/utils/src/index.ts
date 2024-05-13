@@ -1,6 +1,6 @@
-import { access, afterPaint } from '@src/utils'
-import type { Axis, MaybeAccessor, MaybeAccessorValue } from '@src/types'
+import type { Axis, Side, Size } from '@src/types'
+import { dataIf, isButton, isFunction } from '@src/assertions'
 
-export type { MaybeAccessor, Axis, MaybeAccessorValue }
+export type { Axis, Side, Size }
 
-export { access, afterPaint }
+export { isFunction, isButton, dataIf }

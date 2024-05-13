@@ -25,8 +25,10 @@ import TransitionResizeExample from '@examples/primitives/drawer/transitionResiz
 import TransitionResizeTailwindTsx from '@examples/primitives/drawer/transitionResize/index?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Drawer } from '@lib/typedoc/libraries'
 import Link from '@components/docs/Link.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -34,6 +36,8 @@ export const components = { h2: H2, h3: H3 }
 # Drawer
 
 A drawer is a draggable dialog that is attached to any side of the viewport. It uses the [Dialog](/docs/primitives/dialog/) primitive under the hood and adds dragging logic on top of it.
+
+<PackageInfo packageName="@corvu/drawer" />
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -76,11 +80,19 @@ A drawer is a draggable dialog that is attached to any side of the viewport. It 
   'Customizable damping and velocity settings',
 ]} />
 
+## Installation
+
+<Code code={`
+npm install @corvu/drawer
+`} lang="bash" copyButton />
+
+The drawer is also included in the main `corvu` package under `corvu/drawer`.
+
 ## Usage
 <Code code={`
-import { Drawer } from 'corvu/drawer'
-// Or
-// import { Root, Trigger, ... } from 'corvu/drawer'
+import Drawer from '@corvu/drawer' // 'corvu/drawer'
+// or
+// import { Root, Trigger, ... } from '@corvu/drawer'
 `} lang="tsx" copyButton />
 
 ### Anatomy
@@ -320,4 +332,4 @@ Only components which are specific to the drawer are documented here. For all ot
 
 The dialog context is re-exported as `Drawer.useDialogContext` and the root children callback also accepts all props of the dialog root callback function, which are documented in the [Dialog API reference](/docs/primitives/dialog/#Dialog.RootChildrenProps).
 
-<GenerateApiDocs primitive="Drawer" />
+<ApiReference library={Drawer} />

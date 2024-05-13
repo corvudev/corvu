@@ -4,7 +4,7 @@ import {
   SidebarSimpleFill,
 } from '@examples/primitives/resizable/icons'
 import clsx from 'clsx'
-import { Resizable } from 'corvu/resizable'
+import Resizable from '@corvu/resizable'
 
 const ResizableWrapper = (props: object) => {
   const context = Resizable.useContext()

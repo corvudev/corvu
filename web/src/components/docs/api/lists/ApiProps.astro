@@ -1,0 +1,79 @@
+---
+import type { Library } from '@lib/typedoc/types/specifications'
+import Link from '@components/docs/Link.astro'
+import type { PropType } from '@lib/typedoc/types/apiReferences'
+
+interface Props {
+  title?: string
+  descriptionHtml?: string
+  props: PropType[]
+  inherits: {
+    library: Library
+    name: string
+  } | null
+}
+
+const { title, descriptionHtml, props, inherits } = Astro.props
+---
+
+<div class="mb-4">
+  <h4 class="not-prose text-lg font-bold">{title ?? 'Props'}</h4>
+  {
+    descriptionHtml !== undefined && (
+      <p class="mt-3" set:html={descriptionHtml} />
+    )
+  }
+  {
+    inherits && (
+      <p class="mt-3">
+        Inherits {/* prettier-ignore */}
+        <Link href={`/docs/primitives/${inherits.library.name.toLowerCase()}/#${inherits.name}`}><code>&lt;{inherits.library.name}.{inherits.name} /&gt;</code></Link>
+        Props.
+      </p>
+    )
+  }
+  <div class="overflow-y-auto">
+    <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+      <tr class="not-prose border-b border-corvu-100">
+        <th class="w-1/4 pb-3">Property</th>
+        <th class="w-1/4 pb-3">Default</th>
+        <th class="w-1/2 pb-3">Type/Description</th>
+      </tr>
+      {
+        props.map((prop) => (
+          <tr class="border-b border-corvu-100">
+            <td class="not-prose py-5 pr-5 align-top text-sm">
+              <p
+                class:list={[
+                  'inline whitespace-nowrap rounded px-1.5 pb-0.5 pt-1.5 font-mono',
+                  {
+                    'bg-corvu-300': !prop.isFunction,
+                    'bg-corvu-blue': prop.isFunction,
+                  },
+                ]}
+              >
+                {prop.name}
+              </p>
+            </td>
+            <td class="py-5 pr-5 align-top">
+              {prop.defaultHtml === null ? (
+                <p>-</p>
+              ) : (
+                <div class="prose" set:html={prop.defaultHtml} />
+              )}
+            </td>
+            <td class="py-5 pr-5 align-top text-sm">
+              <p class="not-prose inline rounded border border-corvu-200 bg-corvu-100 px-1.5 pb-0.5 pt-1 font-mono text-sm">
+                {prop.type}
+              </p>
+              <div
+                class="prose mt-3 prose-code:border-none prose-code:bg-transparent prose-code:!p-0"
+                set:html={prop.descriptionHtml}
+              />
+            </td>
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+</div>

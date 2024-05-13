@@ -4,6 +4,7 @@ export default {
   singleQuote: true,
   jsxSingleQuote: false,
   semi: false,
+  htmlWhitespaceSensitivity: 'strict',
   overrides: [
     {
       files: '*.astro',
@@ -12,6 +13,7 @@ export default {
         singleQuote: true,
         jsxSingleQuote: false,
         semi: false,
+        htmlWhitespaceSensitivity: 'strict',
       },
     },
   ],

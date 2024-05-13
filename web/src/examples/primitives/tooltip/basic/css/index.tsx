@@ -1,6 +1,6 @@
 import './index.css'
 import { Star } from '@examples/primitives/tooltip/icons'
-import { Tooltip } from 'corvu/tooltip'
+import Tooltip from '@corvu/tooltip'
 import type { VoidComponent } from 'solid-js'
 
 const TooltipExample: VoidComponent = () => {

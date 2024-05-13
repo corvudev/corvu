@@ -10,7 +10,14 @@ import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
 
 # Installation
-Install corvu with the package manager of your choice:
+corvu provides every UI primitive as a separate package. This allows you to only install the primitives you need, to use the semver of every package as a reference for breaking/feature changes and progressively update packages in case of new versions.
+
+For example the drawer component is available as `@corvu/drawer`:
+<Code code={`
+npm install @corvu/drawer
+`} lang="bash" copyButton />
+
+If you want to install all primitives at once you can install the main package. Unused primitives will get tree-shaken by your bundler, so you don't have to worry about the bundle size.
 
 <Code code={`
 npm install corvu

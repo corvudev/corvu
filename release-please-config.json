@@ -8,25 +8,31 @@
   "include-v-in-tag": false,
   "packages": {
     "packages/corvu": {
-      "component": "corvu"
+      "component": "corvu",
+      "release-as": "0.6.0"
     },
     "packages/solid-focus-trap": {
-      "component": "solid-focus-trap"
+      "component": "solid-focus-trap",
+      "release-as": "0.1.5"
     },
     "packages/solid-presence": {
-      "component": "solid-presence"
+      "component": "solid-presence",
+      "release-as": "0.1.6"
     },
     "packages/solid-prevent-scroll": {
-      "component": "solid-prevent-scroll"
+      "component": "solid-prevent-scroll",
+      "release-as": "0.1.7"
     },
     "packages/solid-transition-size": {
-      "component": "solid-transition-size"
+      "component": "solid-transition-size",
+      "release-as": "0.1.2"
     },
     "packages/tailwind": {
       "component": "@corvu/tailwind"
     },
     "packages/utils": {
-      "component": "@corvu/utils"
+      "component": "@corvu/utils",
+      "release-as": "0.2.0"
     }
   }
 }

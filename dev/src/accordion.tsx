@@ -1,4 +1,4 @@
-import { Accordion } from 'corvu/accordion'
+import Accordion from 'corvu/accordion'
 import { type VoidComponent } from 'solid-js'
 
 const AccordionExample: VoidComponent = () => {

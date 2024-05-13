@@ -1,6 +1,5 @@
 import { createEffect, createSignal, For, onCleanup } from 'solid-js'
 import clsx from 'clsx'
-import getApiHeadings from '@lib/getApiHeadings'
 import type { VoidComponent } from 'solid-js'
 
 type Heading = {
@@ -13,6 +12,10 @@ type Heading = {
 const TableOfContents: VoidComponent<{
   headings: {
     depth: number
+    text: string
+    slug: string
+  }[]
+  apiHeadings: {
     text: string
     slug: string
   }[]
@@ -35,13 +38,10 @@ const TableOfContents: VoidComponent<{
       }
     })
 
-  // eslint-disable-next-line solid/reactivity
-  const apiHeadings = getApiHeadings(props.headings[0].text)
-
-  if (apiHeadings.length > 0) {
+  if (props.apiHeadings.length > 0) {
     const apiTitle = tableOfContents.find((h) => h.slug === 'api-reference')
     if (apiTitle) {
-      apiTitle.subheadings = apiHeadings.map((h) => {
+      apiTitle.subheadings = props.apiHeadings.map((h) => {
         return {
           depth: 3,
           text: h.text,

@@ -1,0 +1,31 @@
+---
+import type { InheritedContextApiReference } from '@lib/typedoc/types/apiReferences'
+import Link from '@components/docs/Link.astro'
+
+interface Props extends InheritedContextApiReference {}
+
+const { name, inherits } = Astro.props
+---
+
+<div>
+  <div class="not-prose inline-flex items-center space-x-2">
+    <h3
+      id={encodeURIComponent(name)}
+      class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
+    >
+      {name}
+    </h3><p
+      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
+    >
+      Context
+    </p>
+  </div>
+  <div class="mb-4 mt-3 border-b border-corvu-100 pb-3">
+    <p>
+      Inherited from <Link
+        href={`/docs/primitives/${inherits.library.name.toLowerCase()}/#${inherits.name}`}
+        ><code>&lt;{inherits.library.name}.{inherits.name} /&gt;</code></Link
+      >.
+    </p>
+  </div>
+</div>

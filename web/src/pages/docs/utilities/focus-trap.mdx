@@ -6,7 +6,9 @@ image: https://corvu.dev/banner.jpg
 ---
 import Features from '@components/docs/Features.astro'
 import Code from '@components/docs/code/Code.astro'
-import GenerateApiDocs from '@components/docs/GenerateApiDocs.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { FocusTrap } from '@lib/typedoc/libraries'
+import PackageInfo from '@components/docs/PackageInfo.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -15,12 +17,20 @@ export const components = { h2: H2, h3: H3 }
 
 Utility that traps focus inside a given DOM element.
 
+<PackageInfo packageName="solid-focus-trap" />
+
 ## Features
 <Features features={[
   'Watches for DOM changes inside the focus trap and updates accordingly',
   'Properly restores focus when the trap gets disabled',
   'Very customizable',
 ]} />
+
+## Installation
+
+<Code code={`
+npm install solid-focus-trap
+`} lang="bash" copyButton />
 
 ## Usage
 
@@ -77,4 +87,4 @@ const DialogContent: Component<{
 
 ## API reference
 
-<GenerateApiDocs utility="createFocusTrap" />
+<ApiReference library={FocusTrap} />

@@ -1,0 +1,38 @@
+---
+import ApiTag from '@components/docs/api/lists/ApiTag.astro'
+import type { InheritedComponentApiReference } from '@lib/typedoc/types/apiReferences'
+import Link from '@components/docs/Link.astro'
+
+interface Props extends InheritedComponentApiReference {}
+
+const { name, descriptionHtml, inherits, data, css } = Astro.props
+---
+
+<div>
+  <div class="not-prose inline-flex items-center space-x-2">
+    <h3
+      id={encodeURIComponent(name)}
+      class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
+    >
+      &lt;{name} /&gt;
+    </h3><p
+      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
+    >
+      Component
+    </p>
+  </div>
+  <p class="mt-3" set:html={descriptionHtml} />
+  <div class="mt-4">
+    <div class="mb-4 border-b border-corvu-100 pb-3">
+      <h4 class="not-prose text-lg font-bold">Props</h4>
+      <p class="mt-3">
+        Inherits <Link
+          href={`/docs/primitives/${inherits.library.name.toLowerCase()}/#${inherits.name}`}
+          ><code>&lt;{inherits.library.name}.{inherits.name} /&gt;</code></Link
+        > Props.
+      </p>
+    </div>
+    {data.length > 0 && <ApiTag kind="data" componentName={name} tags={data} />}
+    {css.length > 0 && <ApiTag kind="css" componentName={name} tags={css} />}
+  </div>
+</div>
