@@ -149,6 +149,7 @@ const DrawerContent = <
   })
 
   const onPointerDown = (event: PointerEvent) => {
+    if (event.button !== 0) return
     if (
       !locationIsDraggable(
         event.target as HTMLElement,
