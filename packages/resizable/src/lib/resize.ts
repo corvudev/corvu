@@ -1,4 +1,3 @@
-/* eslint-disable solid/reactivity */
 import { fixToPrecision, resolveSize, splitPanels } from '@src/lib/utils'
 import type { PanelInstance, ResizeStrategy } from '@src/lib/types'
 import { type Setter } from 'solid-js'
@@ -40,7 +39,6 @@ const getDistributablePercentage = (props: {
       collapsible: props.collapsible,
       rootSize: props.resizableData.rootSize,
     })
-    // eslint-disable-next-line prefer-const
     let [
       distributedPercentageFollowing,
       // eslint-disable-next-line prefer-const

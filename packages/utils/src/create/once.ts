@@ -15,7 +15,6 @@ const createOnce = <T>(fn: () => T) => {
       return result
     } else {
       called = true
-      // eslint-disable-next-line solid/reactivity
       return (result = createMemo(fn))
     }
   }

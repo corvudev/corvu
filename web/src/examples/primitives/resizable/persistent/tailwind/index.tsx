@@ -3,7 +3,6 @@ import { makePersisted } from '@solid-primitives/storage'
 import Resizable from '@corvu/resizable'
 
 const ResizablePersistentExample: VoidComponent = () => {
-  // eslint-disable-next-line solid/reactivity
   const [sizes, setSizes] = makePersisted(createSignal([]), {
     name: 'resizable-sizes',
   })

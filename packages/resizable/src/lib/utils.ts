@@ -13,7 +13,6 @@ const resolveSize = (size: Size, rootSize: number) => {
   return fixToPrecision(parseFloat(size) / rootSize)
 }
 
-/* eslint-disable solid/reactivity */
 const splitPanels = (props: {
   panels: PanelInstance[]
   focusedElement: Element

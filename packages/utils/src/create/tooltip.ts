@@ -107,7 +107,6 @@ const createTooltip = (props: {
     const group = access(props.group)
     const id = access(props.id)
     if (group === null) return
-    // eslint-disable-next-line solid/reactivity
     registerTooltip(group, id, () => {
       tooltipState = null
       props.close()

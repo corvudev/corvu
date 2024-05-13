@@ -109,7 +109,6 @@ const setGlobalCursorStyle = (cursorStyle: CursorStyle) => {
   updateCursorStyle()
 }
 
-/* eslint-disable solid/reactivity */
 const handleResizeConstraints = (props: {
   orientation: 'horizontal' | 'vertical'
   desiredPercentage: number

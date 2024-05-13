@@ -64,12 +64,7 @@ const DialogOverlay = <
   )
 
   const show = () =>
-    some(
-      context().open,
-      // eslint-disable-next-line solid/reactivity
-      () => localProps.forceMount,
-      context().overlayPresent,
-    )
+    some(context().open, () => localProps.forceMount, context().overlayPresent)
 
   return (
     <Show when={show()}>

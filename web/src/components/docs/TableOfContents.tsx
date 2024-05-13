@@ -25,7 +25,6 @@ const TableOfContents: VoidComponent<{
 
   const [headingsInView, setHeadingsInView] = createSignal<string[]>([])
 
-  // eslint-disable-next-line solid/reactivity
   props.headings
     .filter((h) => h.depth !== 1)
     .forEach((h) => {

@@ -224,7 +224,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
 
       if (_open) {
         setTransitionAwareOpen(true)
-        // eslint-disable-next-line solid/reactivity
         afterPaint(() => {
           batch(() => {
             setTransitionState('opening')
@@ -242,7 +241,6 @@ const DrawerRoot: Component<DrawerRootProps> = (props) => {
           setTransitionState('closing')
           setActiveSnapPoint(0)
         })
-        // eslint-disable-next-line solid/reactivity
         afterPaint(() => {
           const transitionDuration = parseFloat(
             drawerStyles()!.transitionDuration,

@@ -164,19 +164,16 @@ const ResizableHandle = <
     })
     const ariaControls = precidingPanels[precidingPanels.length - 1]?.data.id
     const ariaValueMax = followingPanels.reduce(
-      // eslint-disable-next-line solid/reactivity
       (acc, panel) =>
         acc - resolveSize(panel.data.minSize ?? 0, context().rootSize()),
       1,
     )
     const ariaValueMin = precidingPanels.reduce(
-      // eslint-disable-next-line solid/reactivity
       (acc, panel) =>
         acc + resolveSize(panel.data.minSize ?? 0, context().rootSize()),
       0,
     )
     const ariaValueNow = precidingPanels.reduce(
-      // eslint-disable-next-line solid/reactivity
       (acc, panel) => acc + resolveSize(panel.size(), context().rootSize()),
       0,
     )

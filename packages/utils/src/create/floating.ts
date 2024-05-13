@@ -177,13 +177,11 @@ const createFloating = (props: {
       middleware.push(inline(inlineOptions))
     }
 
-    // eslint-disable-next-line solid/reactivity
     const cleanup = autoUpdate(reference, floating, () => {
       computePosition(reference, floating, {
         placement: access(defaultedProps.placement),
         strategy: access(defaultedProps.strategy),
         middleware,
-        // eslint-disable-next-line solid/reactivity
       }).then(({ placement, x, y, middlewareData }) => {
         const newFloatingState = {
           placement,

@@ -68,7 +68,6 @@ const DisclosureContent = <
   const show = () =>
     some(
       context().expanded,
-      // eslint-disable-next-line solid/reactivity
       () => localProps.forceMount,
       context().contentPresent,
     )

@@ -69,12 +69,7 @@ const TooltipContent = <
   )
 
   const show = () =>
-    some(
-      context().open,
-      // eslint-disable-next-line solid/reactivity
-      () => localProps.forceMount,
-      context().contentPresent,
-    )
+    some(context().open, () => localProps.forceMount, context().contentPresent)
 
   return (
     <Dismissible

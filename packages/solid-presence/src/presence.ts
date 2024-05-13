@@ -39,7 +39,6 @@ const createPresence = (props: {
 
   const [presentState, setPresentState] = createSignal<
     'present' | 'hiding' | 'hidden'
-    // eslint-disable-next-line solid/reactivity
   >(access(props.show) ? 'present' : 'hidden')
 
   let animationName = 'none'
