@@ -1,17 +1,17 @@
 {
-  "packages/accordion": "0.0.0",
-  "packages/corvu": "0.5.1",
-  "packages/dialog": "0.0.0",
-  "packages/disclosure": "0.0.0",
-  "packages/drawer": "0.0.0",
-  "packages/popover": "0.0.0",
-  "packages/resizable": "0.0.0",
+  "packages/accordion": "0.1.0",
+  "packages/corvu": "0.6.0",
+  "packages/dialog": "0.1.0",
+  "packages/disclosure": "0.1.0",
+  "packages/drawer": "0.1.0",
+  "packages/popover": "0.1.0",
+  "packages/resizable": "0.1.0",
   "packages/solid-focus-trap": "0.1.5",
-  "packages/solid-presence": "0.1.5",
-  "packages/solid-prevent-scroll": "0.1.6",
-  "packages/solid-transition-size": "0.1.1",
-  "packages/tailwind": "0.1.4",
-  "packages/tooltip": "0.0.0",
-  "packages/utils": "0.1.1"
+  "packages/solid-presence": "0.1.6",
+  "packages/solid-prevent-scroll": "0.1.7",
+  "packages/solid-transition-size": "0.1.2",
+  "packages/tailwind": "0.1.5",
+  "packages/tooltip": "0.1.0",
+  "packages/utils": "0.2.0"
 }
 
