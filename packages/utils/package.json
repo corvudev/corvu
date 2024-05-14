@@ -55,8 +55,28 @@
   "typesVersions": {
     "*": {
       "*": [
-        "./dist/*/*.d.ts",
         "./dist/index.d.ts"
+      ],
+      "components/*": [
+        "./dist/components/*.d.ts"
+      ],
+      "create/*": [
+        "./dist/create/*.d.ts"
+      ],
+      "dom": [
+        "./dist/dom/index.d.ts"
+      ],
+      "dynamic": [
+        "./dist/dynamic/index.d.ts"
+      ],
+      "floating": [
+        "./dist/floating/index.d.ts"
+      ],
+      "reactivity": [
+        "./dist/reactivity/index.d.ts"
+      ],
+      "scroll": [
+        "./dist/scroll/index.d.ts"
       ]
     }
   },
