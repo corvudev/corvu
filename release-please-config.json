@@ -8,60 +8,46 @@
   "include-v-in-tag": false,
   "packages": {
     "packages/accordion": {
-      "component": "@corvu/accordion",
-      "release-as": "0.1.0"
+      "component": "@corvu/accordion"
     },
     "packages/corvu": {
-      "component": "corvu",
-      "release-as": "0.6.0"
+      "component": "corvu"
     },
     "packages/dialog": {
-      "component": "@corvu/dialog",
-      "release-as": "0.1.0"
+      "component": "@corvu/dialog"
     },
     "packages/disclosure": {
-      "component": "@corvu/disclosure",
-      "release-as": "0.1.0"
+      "component": "@corvu/disclosure"
     },
     "packages/drawer": {
-      "component": "@corvu/drawer",
-      "release-as": "0.1.0"
+      "component": "@corvu/drawer"
     },
     "packages/popover": {
-      "component": "@corvu/popover",
-      "release-as": "0.1.0"
+      "component": "@corvu/popover"
     },
     "packages/resizable": {
-      "component": "@corvu/resizable",
-      "release-as": "0.1.0"
+      "component": "@corvu/resizable"
     },
     "packages/solid-focus-trap": {
-      "component": "solid-focus-trap",
-      "release-as": "0.1.6"
+      "component": "solid-focus-trap"
     },
     "packages/solid-presence": {
-      "component": "solid-presence",
-      "release-as": "0.1.6"
+      "component": "solid-presence"
     },
     "packages/solid-prevent-scroll": {
-      "component": "solid-prevent-scroll",
-      "release-as": "0.1.7"
+      "component": "solid-prevent-scroll"
     },
     "packages/solid-transition-size": {
-      "component": "solid-transition-size",
-      "release-as": "0.1.2"
+      "component": "solid-transition-size"
     },
     "packages/tailwind": {
-      "component": "@corvu/tailwind",
-      "release-as": "0.1.5"
+      "component": "@corvu/tailwind"
     },
     "packages/tooltip": {
-      "component": "@corvu/tooltip",
-      "release-as": "0.1.0"
+      "component": "@corvu/tooltip"
     },
     "packages/utils": {
-      "component": "@corvu/utils",
-      "release-as": "0.2.0"
+      "component": "@corvu/utils"
     }
   }
 }
