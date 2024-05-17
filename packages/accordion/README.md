@@ -25,13 +25,6 @@ corvu is a collection of open source UI primitives for SolidJS. It offers:
 
 Read more at [corvu.dev](https://corvu.dev).
 
-## Getting started
-Install corvu with the package manager of your choice:
-
-```bash
-npm install corvu
-```
-
 ## Primitives
 
 <table>
