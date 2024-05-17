@@ -7,12 +7,11 @@ import Disclosure, {
 import type { DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalAccordionItemContext } from '@src/itemContext'
 
-const DEFAULT_ACCORDION_CONTENT_ELEMENT = 'div'
-
 export type AccordionContentCorvuProps = DisclosureContentCorvuProps
 
-export type AccordionContentSharedElementProps =
-  DisclosureContentSharedElementProps
+export type AccordionContentSharedElementProps<
+  T extends ValidComponent = 'div',
+> = DisclosureContentSharedElementProps<T>
 
 export type AccordionContentElementProps =
   AccordionContentSharedElementProps & {
@@ -21,8 +20,8 @@ export type AccordionContentElementProps =
     'data-corvu-accordion-content': ''
   } & DisclosureContentElementProps
 
-export type AccordionContentProps = AccordionContentCorvuProps &
-  Partial<AccordionContentSharedElementProps>
+export type AccordionContentProps<T extends ValidComponent = 'div'> =
+  AccordionContentCorvuProps & Partial<AccordionContentSharedElementProps<T>>
 
 /** Content of an accordion item. Can be animated.
  *
@@ -32,10 +31,8 @@ export type AccordionContentProps = AccordionContentCorvuProps &
  * @css `--corvu-disclosure-content-width` - The width of the accordion item content. Useful if you want to animate its width.
  * @css `--corvu-disclosure-content-height` - The height of the accordion item content. Useful if you want to animate its height.
  */
-const AccordionContent = <
-  T extends ValidComponent = typeof DEFAULT_ACCORDION_CONTENT_ELEMENT,
->(
-  props: DynamicProps<T, AccordionContentProps, AccordionContentElementProps>,
+const AccordionContent = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, AccordionContentProps<T>>,
 ) => {
   const context = createMemo(() =>
     useInternalAccordionItemContext(props.contextId),
@@ -47,7 +44,6 @@ const AccordionContent = <
         Omit<AccordionContentElementProps, keyof DisclosureContentElementProps>
       >
     >
-      as={DEFAULT_ACCORDION_CONTENT_ELEMENT}
       // === ElementProps ===
       role="region"
       aria-labelledby={context().triggerId()}

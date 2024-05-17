@@ -1,3 +1,4 @@
+import { combineStyle, type ElementOf, type Ref } from '@corvu/utils/dom'
 import {
   createMemo,
   type JSX,
@@ -8,10 +9,7 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
-import type { Ref } from '@corvu/utils/dom'
 import { useInternalDialogContext } from '@src/context'
-
-export const DEFAULT_DIALOG_OVERLAY_ELEMENT = 'div'
 
 export type DialogOverlayCorvuProps = {
   /**
@@ -25,10 +23,11 @@ export type DialogOverlayCorvuProps = {
   contextId?: string
 }
 
-export type DialogOverlaySharedElementProps = {
-  ref: Ref
-  style: JSX.CSSProperties
-}
+export type DialogOverlaySharedElementProps<T extends ValidComponent = 'div'> =
+  {
+    ref: Ref<ElementOf<T>>
+    style: string | JSX.CSSProperties
+  }
 
 export type DialogOverlayElementProps = DialogOverlaySharedElementProps & {
   tabIndex: '-1'
@@ -38,8 +37,8 @@ export type DialogOverlayElementProps = DialogOverlaySharedElementProps & {
   'data-corvu-dialog-overlay': '' | null
 }
 
-export type DialogOverlayProps = DialogOverlayCorvuProps &
-  Partial<DialogOverlaySharedElementProps>
+export type DialogOverlayProps<T extends ValidComponent = 'div'> =
+  DialogOverlayCorvuProps & Partial<DialogOverlaySharedElementProps<T>>
 
 /** Component which can be used to create a faded background. Can be animated.
  *
@@ -47,10 +46,8 @@ export type DialogOverlayProps = DialogOverlayCorvuProps &
  * @data `data-open` - Present when the dialog is open.
  * @data `data-closed` - Present when the dialog is closed.
  */
-const DialogOverlay = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_OVERLAY_ELEMENT,
->(
-  props: DynamicProps<T, DialogOverlayProps, DialogOverlayElementProps>,
+const DialogOverlay = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, DialogOverlayProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DialogOverlayProps, [
     'forceMount',
@@ -69,13 +66,15 @@ const DialogOverlay = <
   return (
     <Show when={show()}>
       <Dynamic<DialogOverlayElementProps>
-        as={DEFAULT_DIALOG_OVERLAY_ELEMENT}
+        as="div"
         // === SharedElementProps ===
         ref={mergeRefs(context().setOverlayRef, localProps.ref)}
-        style={{
-          'pointer-events': 'auto',
-          ...localProps.style,
-        }}
+        style={combineStyle(
+          {
+            'pointer-events': 'auto',
+          },
+          localProps.style,
+        )}
         // === ElementProps ===
         tabIndex="-1"
         aria-hidden="true"

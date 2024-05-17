@@ -1,3 +1,4 @@
+import { callEventHandler, type ElementOf } from '@corvu/utils/dom'
 import {
   type Component,
   createMemo,
@@ -11,10 +12,7 @@ import {
   type DynamicButtonSharedElementProps,
   type DynamicProps,
 } from '@corvu/utils/dynamic'
-import { callEventHandler } from '@corvu/utils/dom'
 import { useInternalDialogContext } from '@src/context'
-
-export const DEFAULT_DIALOG_CLOSE_ELEMENT = 'button'
 
 export type DialogCloseCorvuProps = {
   /**
@@ -23,26 +21,25 @@ export type DialogCloseCorvuProps = {
   contextId?: string
 }
 
-export type DialogCloseSharedElementProps = {
-  onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-} & DynamicButtonSharedElementProps
+export type DialogCloseSharedElementProps<T extends ValidComponent = 'button'> =
+  {
+    onClick: JSX.EventHandlerUnion<ElementOf<T>, MouseEvent>
+  } & DynamicButtonSharedElementProps<T>
 
 export type DialogCloseElementProps = DialogCloseSharedElementProps & {
   'aria-label': 'close'
   'data-corvu-dialog-close': '' | null
 } & DynamicButtonElementProps
 
-export type DialogCloseProps = DialogCloseCorvuProps &
-  Partial<DialogCloseSharedElementProps>
+export type DialogCloseProps<T extends ValidComponent = 'button'> =
+  DialogCloseCorvuProps & Partial<DialogCloseSharedElementProps<T>>
 
 /** Close button that changes the open state to false when clicked.
  *
  * @data `data-corvu-dialog-close` - Present on every dialog close element.
  */
-const DialogClose = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_CLOSE_ELEMENT,
->(
-  props: DynamicProps<T, DialogCloseProps, DialogCloseElementProps>,
+const DialogClose = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, DialogCloseProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DialogCloseProps, [
     'contextId',
@@ -53,7 +50,9 @@ const DialogClose = <
     useInternalDialogContext(localProps.contextId),
   )
 
-  const onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (event) => {
+  const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
+    event,
+  ) => {
     !callEventHandler(localProps.onClick, event) && context().setOpen(false)
   }
 
@@ -61,7 +60,6 @@ const DialogClose = <
     <DynamicButton<
       Component<Omit<DialogCloseElementProps, keyof DynamicButtonElementProps>>
     >
-      as={DEFAULT_DIALOG_CLOSE_ELEMENT}
       // === SharedElementProps ===
       onClick={onClick}
       // === ElementProps ===

@@ -1,3 +1,4 @@
+import { callEventHandler, type ElementOf } from '@corvu/utils/dom'
 import {
   type Component,
   createMemo,
@@ -11,11 +12,8 @@ import {
   type DynamicButtonSharedElementProps,
   type DynamicProps,
 } from '@corvu/utils/dynamic'
-import { callEventHandler } from '@corvu/utils/dom'
 import { dataIf } from '@corvu/utils'
 import { useInternalDisclosureContext } from '@src/context'
-
-export const DEFAULT_DISCLOSURE_TRIGGER_ELEMENT = 'button'
 
 export type DisclosureTriggerCorvuProps = {
   /**
@@ -24,9 +22,11 @@ export type DisclosureTriggerCorvuProps = {
   contextId?: string
 }
 
-export type DisclosureTriggerSharedElementProps = {
-  onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent>
-} & DynamicButtonSharedElementProps
+export type DisclosureTriggerSharedElementProps<
+  T extends ValidComponent = 'button',
+> = {
+  onClick: JSX.EventHandlerUnion<ElementOf<T>, MouseEvent>
+} & DynamicButtonSharedElementProps<T>
 
 export type DisclosureTriggerElementProps =
   DisclosureTriggerSharedElementProps & {
@@ -37,8 +37,8 @@ export type DisclosureTriggerElementProps =
     'data-corvu-disclosure-trigger': '' | null
   } & DynamicButtonElementProps
 
-export type DisclosureTriggerProps = DisclosureTriggerCorvuProps &
-  Partial<DisclosureTriggerSharedElementProps>
+export type DisclosureTriggerProps<T extends ValidComponent = 'button'> =
+  DisclosureTriggerCorvuProps & Partial<DisclosureTriggerSharedElementProps<T>>
 
 /** Button that changes the open state of the disclosure when clicked.
  *
@@ -46,10 +46,8 @@ export type DisclosureTriggerProps = DisclosureTriggerCorvuProps &
  * @data `data-expanded` - Present when the disclosure is expanded.
  * @data `data-collapsed` - Present when the disclosure is collapsed.
  */
-const DisclosureTrigger = <
-  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_TRIGGER_ELEMENT,
->(
-  props: DynamicProps<T, DisclosureTriggerProps, DisclosureTriggerElementProps>,
+const DisclosureTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, DisclosureTriggerProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DisclosureTriggerProps, [
     'contextId',
@@ -60,7 +58,7 @@ const DisclosureTrigger = <
     useInternalDisclosureContext(localProps.contextId),
   )
 
-  const onClick: JSX.EventHandlerUnion<HTMLElement, MouseEvent> = (e) => {
+  const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (e) => {
     !callEventHandler(localProps.onClick, e) &&
       context().setExpanded((expanded) => !expanded)
   }
@@ -71,7 +69,6 @@ const DisclosureTrigger = <
         Omit<DisclosureTriggerElementProps, keyof DynamicButtonElementProps>
       >
     >
-      as={DEFAULT_DISCLOSURE_TRIGGER_ELEMENT}
       // === SharedElementProps ===
       onClick={onClick}
       // === ElementProps ===

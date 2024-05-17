@@ -1,4 +1,10 @@
 import {
+  combineStyle,
+  type ElementOf,
+  type Ref,
+  sortByDocumentPosition,
+} from '@corvu/utils/dom'
+import {
   createEffect,
   createMemo,
   createSignal,
@@ -22,14 +28,11 @@ import {
 } from '@src/lib/resize'
 import { isFunction, type Size } from '@corvu/utils'
 import type { PanelData, PanelInstance, ResizeStrategy } from '@src/lib/types'
-import { type Ref, sortByDocumentPosition } from '@corvu/utils/dom'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createSize from '@corvu/utils/create/size'
 import { handleResizeConstraints } from '@src/lib/cursor'
 import { mergeRefs } from '@corvu/utils/reactivity'
-
-const DEFAULT_RESIZABLE_ROOT_ELEMENT = 'div'
 
 export type ResizableRootCorvuProps = {
   /**
@@ -65,19 +68,20 @@ export type ResizableRootCorvuProps = {
   contextId?: string
 }
 
-export type ResizableRootSharedElementProps = {
-  ref: Ref
-  style: JSX.CSSProperties
-  children: JSX.Element | ((props: ResizableRootChildrenProps) => JSX.Element)
-}
+export type ResizableRootSharedElementProps<T extends ValidComponent = 'div'> =
+  {
+    ref: Ref<ElementOf<T>>
+    style: string | JSX.CSSProperties
+    children: JSX.Element | ((props: ResizableRootChildrenProps) => JSX.Element)
+  }
 
 export type ResizableRootElementProps = ResizableRootSharedElementProps & {
   'data-orientation': 'horizontal' | 'vertical'
   'data-corvu-resizable-root': ''
 }
 
-export type ResizableRootProps = ResizableRootCorvuProps &
-  Partial<ResizableRootSharedElementProps>
+export type ResizableRootProps<T extends ValidComponent = 'div'> =
+  ResizableRootCorvuProps & Partial<ResizableRootSharedElementProps<T>>
 
 export type ResizableRootChildrenProps = {
   /** The orientation of the resizable. */
@@ -103,10 +107,8 @@ export type ResizableRootChildrenProps = {
  * @data `data-corvu-resizable-root` - Present on every resizable root element.
  * @data `data-orientation` - The orientation of the resizable.
  */
-const ResizableRoot = <
-  T extends ValidComponent = typeof DEFAULT_RESIZABLE_ROOT_ELEMENT,
->(
-  props: DynamicProps<T, ResizableRootProps, ResizableRootElementProps>,
+const ResizableRoot = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, ResizableRootProps<T>>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -669,15 +671,17 @@ const ResizableRoot = <
           }}
         >
           <Dynamic<ResizableRootElementProps>
-            as={DEFAULT_RESIZABLE_ROOT_ELEMENT}
+            as="div"
             // === SharedElementProps ===
             ref={mergeRefs(setRef, localProps.ref)}
-            style={{
-              display: 'flex',
-              'flex-direction':
-                localProps.orientation === 'horizontal' ? 'row' : 'column',
-              ...localProps.style,
-            }}
+            style={combineStyle(
+              {
+                display: 'flex',
+                'flex-direction':
+                  localProps.orientation === 'horizontal' ? 'row' : 'column',
+              },
+              localProps.style,
+            )}
             // === ElementProps ===
             data-orientation={localProps.orientation}
             data-corvu-resizable-root=""

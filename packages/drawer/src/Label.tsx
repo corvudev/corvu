@@ -6,33 +6,29 @@ import Dialog, {
 } from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 
-const DEFAULT_DRAWER_LABEL_ELEMENT = 'h2'
-
 export type DrawerLabelCorvuProps = DialogLabelCorvuProps
 
-export type DrawerLabelSharedElementProps = DialogLabelSharedElementProps
+export type DrawerLabelSharedElementProps<T extends ValidComponent = 'h2'> =
+  DialogLabelSharedElementProps<T>
 
 export type DrawerLabelElementProps = DrawerLabelSharedElementProps & {
   'data-corvu-drawer-label': ''
 } & DialogLabelElementProps
 
-export type DrawerLabelProps = DrawerLabelCorvuProps &
-  Partial<DrawerLabelSharedElementProps>
+export type DrawerLabelProps<T extends ValidComponent = 'h2'> =
+  DrawerLabelCorvuProps & Partial<DrawerLabelSharedElementProps<T>>
 
 /** Label element to announce the drawer to accessibility tools.
  *
  * @data `data-corvu-drawer-label` - Present on every drawer label element.
  */
-const DrawerLabel = <
-  T extends ValidComponent = typeof DEFAULT_DRAWER_LABEL_ELEMENT,
->(
-  props: DynamicProps<T, DrawerLabelProps, DrawerLabelElementProps>,
+const DrawerLabel = <T extends ValidComponent = 'h2'>(
+  props: DynamicProps<T, DrawerLabelProps<T>>,
 ) => {
   return (
     <Dialog.Label<
       Component<Omit<DrawerLabelElementProps, keyof DialogLabelElementProps>>
     >
-      as={DEFAULT_DRAWER_LABEL_ELEMENT}
       // === ElementProps ===
       data-corvu-drawer-label=""
       // === Misc ===

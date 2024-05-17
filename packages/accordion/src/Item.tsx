@@ -23,8 +23,6 @@ import Fragment from '@corvu/utils/components/Fragment'
 import { isFunction } from '@corvu/utils'
 import { useInternalAccordionContext } from '@src/context'
 
-const DEFAULT_ACCORDION_ITEM_ELEMENT = Fragment
-
 export type AccordionItemCorvuProps = {
   /**
    * Value of the accordion item.
@@ -45,7 +43,10 @@ export type AccordionItemCorvuProps = {
   'expanded' | 'onExpandedChange' | 'initialExpanded' | 'children'
 >
 
-export type AccordionItemSharedElementProps = {
+export type AccordionItemSharedElementProps<
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  T extends ValidComponent = typeof Fragment,
+> = {
   children:
     | JSX.Element
     | ((
@@ -57,8 +58,8 @@ export type AccordionItemElementProps = AccordionItemSharedElementProps & {
   'data-corvu-accordion-item': ''
 }
 
-export type AccordionItemProps = AccordionItemCorvuProps &
-  Partial<AccordionItemSharedElementProps>
+export type AccordionItemProps<T extends ValidComponent = typeof Fragment> =
+  AccordionItemCorvuProps & Partial<AccordionItemSharedElementProps<T>>
 
 /** Props that are passed to the Item component children callback. */
 export type AccordionItemChildrenProps = {
@@ -74,10 +75,8 @@ export type AccordionItemChildrenProps = {
  *
  * @data `data-corvu-accordion-item` - Present if the item isn't rendered as a Fragment.
  */
-const AccordionItem = <
-  T extends ValidComponent = typeof DEFAULT_ACCORDION_ITEM_ELEMENT,
->(
-  props: DynamicProps<T, AccordionItemCorvuProps, AccordionItemElementProps>,
+const AccordionItem = <T extends ValidComponent = typeof Fragment>(
+  props: DynamicProps<T, AccordionItemProps<T>>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -166,7 +165,7 @@ const AccordionItem = <
           }}
         >
           <Dynamic<AccordionItemElementProps>
-            as={DEFAULT_ACCORDION_ITEM_ELEMENT as ValidComponent}
+            as={Fragment}
             // === ElementProps ===
             data-corvu-accordion-item=""
             {...otherProps}

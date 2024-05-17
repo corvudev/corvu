@@ -9,25 +9,25 @@ import type {
   ContentElementProps as DialogContentElementProps,
   ContentSharedElementProps as DialogContentSharedElementProps,
 } from '@corvu/dialog'
+import { combineStyle } from '@corvu/utils/dom'
 import Dialog from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 import { getFloatingStyle } from '@corvu/utils/floating'
 import type { Placement } from '@floating-ui/dom'
 import { useInternalPopoverContext } from '@src/context'
 
-const DEFAULT_POPOVER_CONTENT_ELEMENT = 'div'
-
 export type PopoverContentCorvuProps = DialogContentCorvuProps
 
-export type PopoverContentSharedElementProps = DialogContentSharedElementProps
+export type PopoverContentSharedElementProps<T extends ValidComponent = 'div'> =
+  DialogContentSharedElementProps<T>
 
 export type PopoverContentElementProps = PopoverContentSharedElementProps & {
   'data-placement': Placement
   'data-corvu-popover-content': ''
 } & DialogContentElementProps
 
-export type PopoverContentProps = PopoverContentCorvuProps &
-  Partial<PopoverContentSharedElementProps>
+export type PopoverContentProps<T extends ValidComponent = 'button'> =
+  PopoverContentCorvuProps & Partial<PopoverContentSharedElementProps<T>>
 
 /** Content of the popover. Can be animated.
  *
@@ -36,10 +36,8 @@ export type PopoverContentProps = PopoverContentCorvuProps &
  * @data `data-closed` - Present when the popover is closed.
  * @data `data-placement` - Current placement of the popover.
  */
-const PopoverContent = <
-  T extends ValidComponent = typeof DEFAULT_POPOVER_CONTENT_ELEMENT,
->(
-  props: DynamicProps<T, PopoverContentProps, PopoverContentElementProps>,
+const PopoverContent = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, PopoverContentProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as PopoverContentProps, [
     'forceMount',
@@ -57,16 +55,17 @@ const PopoverContent = <
         Omit<PopoverContentElementProps, keyof DialogContentElementProps>
       >
     >
-      as={DEFAULT_POPOVER_CONTENT_ELEMENT}
       contextId={localProps.contextId}
       // === SharedElementProps ===
-      style={{
-        ...getFloatingStyle({
-          strategy: () => context().strategy(),
-          floatingState: () => context().floatingState(),
-        })(),
-        ...localProps.style,
-      }}
+      style={combineStyle(
+        {
+          ...getFloatingStyle({
+            strategy: () => context().strategy(),
+            floatingState: () => context().floatingState(),
+          })(),
+        },
+        localProps.style,
+      )}
       // === ElementProps ===
       data-placement={context().floatingState().placement}
       data-corvu-popover-content=""

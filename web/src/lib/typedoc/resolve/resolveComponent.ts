@@ -263,22 +263,16 @@ const getTypeProps = (type: Type): PropType[] => {
         break
       }
       const propDeclaration = resolveReferenceType(type)
-      if (
-        typeof propDeclaration === 'string' ||
-        !propDeclaration.type ||
-        propDeclaration.type.type !== 'reflection'
-      ) {
+      if (typeof propDeclaration === 'string' || !propDeclaration.type) {
         throw new Error(`Missing props for ${type.name}`)
       }
-      propTypes.push(...getReflectionProps(propDeclaration.type))
+      propTypes.push(...getTypeProps(propDeclaration.type))
       break
     case 'reflection':
       propTypes.push(...getReflectionProps(type))
       break
     case 'intersection':
-      for (const intersectionType of type.types) {
-        propTypes.push(...getTypeProps(intersectionType))
-      }
+      propTypes.push(...getTypeProps(type.types[0]))
       break
     default:
       throw new Error(`Unknown type ${type.type}`)

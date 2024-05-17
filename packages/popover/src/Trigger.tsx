@@ -15,19 +15,19 @@ import { mergeRefs } from '@corvu/utils/reactivity'
 import type { Placement } from '@floating-ui/dom'
 import { useInternalPopoverContext } from '@src/context'
 
-const DEFAULT_POPOVER_TRIGGER_ELEMENT = 'button'
-
 export type PopoverTriggerCorvuProps = DialogTriggerCorvuProps
 
-export type PopoverTriggerSharedElementProps = DialogTriggerSharedElementProps
+export type PopoverTriggerSharedElementProps<
+  T extends ValidComponent = 'button',
+> = DialogTriggerSharedElementProps<T>
 
 export type PopoverTriggerElementProps = PopoverTriggerSharedElementProps & {
   'data-placement': Placement | undefined
   'data-corvu-popover-trigger': ''
 } & DialogTriggerElementProps
 
-export type PopoverTriggerProps = PopoverTriggerCorvuProps &
-  Partial<PopoverTriggerSharedElementProps>
+export type PopoverTriggerProps<T extends ValidComponent = 'button'> =
+  PopoverTriggerCorvuProps & Partial<PopoverTriggerSharedElementProps<T>>
 
 /** Button that changes the open state of the popover when clicked.
  *
@@ -36,10 +36,8 @@ export type PopoverTriggerProps = PopoverTriggerCorvuProps &
  * @data `data-closed` - Present when the popover is closed.
  * @data `data-placement` - Current placement of the popover. Only present when the popover is open.
  */
-const PopoverTrigger = <
-  T extends ValidComponent = typeof DEFAULT_POPOVER_TRIGGER_ELEMENT,
->(
-  props: DynamicProps<T, PopoverTriggerProps, PopoverTriggerElementProps>,
+const PopoverTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, PopoverTriggerProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as PopoverTriggerProps, [
     'ref',
@@ -60,7 +58,6 @@ const PopoverTrigger = <
         Omit<PopoverTriggerElementProps, keyof DialogTriggerElementProps>
       >
     >
-      as={DEFAULT_POPOVER_TRIGGER_ELEMENT}
       contextId={localProps.contextId}
       // === SharedElementProps ===
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}

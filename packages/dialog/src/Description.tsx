@@ -8,8 +8,6 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDialogContext } from '@src/context'
 
-export const DEFAULT_DIALOG_DESCRIPTION_ELEMENT = 'p'
-
 export type DialogDescriptionCorvuProps = {
   /**
    * The `id` of the dialog context to use.
@@ -17,8 +15,11 @@ export type DialogDescriptionCorvuProps = {
   contextId?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type DialogDescriptionSharedElementProps = {}
+export type DialogDescriptionSharedElementProps<
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  T extends ValidComponent = 'p',
+  // eslint-disable-next-line @typescript-eslint/ban-types
+> = {}
 
 export type DialogDescriptionElementProps =
   DialogDescriptionSharedElementProps & {
@@ -26,17 +27,15 @@ export type DialogDescriptionElementProps =
     'data-corvu-dialog-description': '' | null
   }
 
-export type DialogDescriptionProps = DialogDescriptionCorvuProps &
-  Partial<DialogDescriptionSharedElementProps>
+export type DialogDescriptionProps<T extends ValidComponent = 'p'> =
+  DialogDescriptionCorvuProps & Partial<DialogDescriptionSharedElementProps<T>>
 
 /** Description element to announce the dialog to accessibility tools.
  *
  * @data `data-corvu-dialog-description` - Present on every dialog description element.
  */
-const DialogDescription = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_DESCRIPTION_ELEMENT,
->(
-  props: DynamicProps<T, DialogDescriptionProps, DialogDescriptionElementProps>,
+const DialogDescription = <T extends ValidComponent = 'p'>(
+  props: DynamicProps<T, DialogDescriptionProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DialogDescriptionProps, [
     'contextId',
@@ -54,7 +53,7 @@ const DialogDescription = <
 
   return (
     <Dynamic<DialogDescriptionElementProps>
-      as={DEFAULT_DIALOG_DESCRIPTION_ELEMENT}
+      as="p"
       // === ElementProps ===
       id={context().descriptionId()}
       data-corvu-dialog-description=""

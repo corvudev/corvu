@@ -13,11 +13,10 @@ import { dataIf } from '@corvu/utils'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDrawerContext } from '@src/context'
 
-const DEFAULT_DRAWER_OVERLAY_ELEMENT = 'div'
-
 export type DrawerOverlayCorvuProps = DialogOverlayCorvuProps
 
-export type DrawerOverlaySharedElementProps = DialogOverlaySharedElementProps
+export type DrawerOverlaySharedElementProps<T extends ValidComponent = 'div'> =
+  DialogOverlaySharedElementProps<T>
 
 export type DrawerOverlayElementProps = DrawerOverlaySharedElementProps & {
   'data-closing': '' | undefined
@@ -28,8 +27,8 @@ export type DrawerOverlayElementProps = DrawerOverlaySharedElementProps & {
   'data-corvu-drawer-overlay': ''
 } & DialogOverlayElementProps
 
-export type DrawerOverlayProps = DrawerOverlayCorvuProps &
-  Partial<DrawerOverlaySharedElementProps>
+export type DrawerOverlayProps<T extends ValidComponent = 'div'> =
+  DrawerOverlayCorvuProps & Partial<DrawerOverlaySharedElementProps<T>>
 
 /** Component which can be used to create a faded background. Can be animated.
  *
@@ -42,10 +41,8 @@ export type DrawerOverlayProps = DrawerOverlayCorvuProps &
  * @data `data-snapping` - Present when the drawer is transitioning after the user stops dragging.
  * @data `data-resizing` - Present when the drawer is transitioning after the size (width/height) changes. Only present if `transitionResize` is set to `true`.
  */
-const DrawerOverlay = <
-  T extends ValidComponent = typeof DEFAULT_DRAWER_OVERLAY_ELEMENT,
->(
-  props: DynamicProps<T, DrawerOverlayProps, DrawerOverlayElementProps>,
+const DrawerOverlay = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, DrawerOverlayProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DrawerOverlayProps, [
     'contextId',
@@ -61,7 +58,6 @@ const DrawerOverlay = <
         Omit<DrawerOverlayElementProps, keyof DialogOverlayElementProps>
       >
     >
-      as={DEFAULT_DRAWER_OVERLAY_ELEMENT}
       contextId={localProps.contextId}
       // === ElementProps ===
       data-closing={dataIf(drawerContext().transitionState() === 'closing')}

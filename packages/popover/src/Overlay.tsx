@@ -6,18 +6,17 @@ import Dialog, {
 } from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 
-const DEFAULT_POPOVER_OVERLAY_ELEMENT = 'div'
-
 export type PopoverOverlayCorvuProps = DialogOverlayCorvuProps
 
-export type PopoverOverlaySharedElementProps = DialogOverlaySharedElementProps
+export type PopoverOverlaySharedElementProps<T extends ValidComponent = 'div'> =
+  DialogOverlaySharedElementProps<T>
 
 export type PopoverOverlayElementProps = PopoverOverlaySharedElementProps & {
   'data-corvu-popover-overlay': ''
 } & DialogOverlayElementProps
 
-export type PopoverOverlayProps = PopoverOverlayCorvuProps &
-  Partial<PopoverOverlaySharedElementProps>
+export type PopoverOverlayProps<T extends ValidComponent = 'div'> =
+  PopoverOverlayCorvuProps & Partial<PopoverOverlaySharedElementProps<T>>
 
 /** Component which can be used to create a faded background. Can be animated.
  *
@@ -25,10 +24,8 @@ export type PopoverOverlayProps = PopoverOverlayCorvuProps &
  * @data `data-open` - Present when the popover is open.
  * @data `data-closed` - Present when the popover is closed.
  */
-const PopoverOverlay = <
-  T extends ValidComponent = typeof DEFAULT_POPOVER_OVERLAY_ELEMENT,
->(
-  props: DynamicProps<T, PopoverOverlayProps, PopoverOverlayElementProps>,
+const PopoverOverlay = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, PopoverOverlayProps<T>>,
 ) => {
   return (
     <Dialog.Overlay<
@@ -36,7 +33,6 @@ const PopoverOverlay = <
         Omit<PopoverOverlayElementProps, keyof DialogOverlayElementProps>
       >
     >
-      as={DEFAULT_POPOVER_OVERLAY_ELEMENT}
       // === ElementProps ===
       data-corvu-popover-overlay=""
       // === Misc ===

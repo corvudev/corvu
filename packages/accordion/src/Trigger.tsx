@@ -1,4 +1,4 @@
-import { callEventHandler, type Ref } from '@corvu/utils/dom'
+import { callEventHandler, type ElementOf } from '@corvu/utils/dom'
 import {
   type Component,
   createEffect,
@@ -20,15 +20,14 @@ import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalAccordionContext } from '@src/context'
 import { useInternalAccordionItemContext } from '@src/itemContext'
 
-const DEFAULT_ACCORDION_TRIGGER_ELEMENT = 'button'
-
 export type AccordionTriggerCorvuProps = DisclosureTriggerCorvuProps
 
-export type AccordionTriggerSharedElementProps = {
-  ref: Ref
-  onKeyDown: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent>
-  disabled: true | undefined
-} & DisclosureTriggerSharedElementProps
+export type AccordionTriggerSharedElementProps<
+  T extends ValidComponent = 'button',
+> = {
+  onKeyDown: JSX.EventHandlerUnion<ElementOf<T>, KeyboardEvent>
+  disabled: boolean | undefined
+} & DisclosureTriggerSharedElementProps<T>
 
 export type AccordionTriggerElementProps =
   AccordionTriggerSharedElementProps & {
@@ -38,8 +37,8 @@ export type AccordionTriggerElementProps =
     'data-corvu-accordion-trigger': ''
   } & DisclosureTriggerElementProps
 
-export type AccordionTriggerProps = AccordionTriggerCorvuProps &
-  Partial<AccordionTriggerSharedElementProps>
+export type AccordionTriggerProps<T extends ValidComponent = 'button'> =
+  AccordionTriggerCorvuProps & Partial<AccordionTriggerSharedElementProps<T>>
 
 /** Button that changes the open state of the accordion item when clicked.
  *
@@ -48,10 +47,8 @@ export type AccordionTriggerProps = AccordionTriggerCorvuProps &
  * @data `data-collapsed` - Present when the accordion is collapsed.
  * @data `data-disabled` - Present when the accordion trigger is disabled.
  */
-const AccordionTrigger = <
-  T extends ValidComponent = typeof DEFAULT_ACCORDION_TRIGGER_ELEMENT,
->(
-  props: DynamicProps<T, AccordionTriggerProps, AccordionTriggerElementProps>,
+const AccordionTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, AccordionTriggerProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as AccordionTriggerProps, [
     'contextId',
@@ -84,7 +81,9 @@ const AccordionTrigger = <
     onCleanup(() => _context.unregisterTriggerId())
   })
 
-  const onKeyDown: JSX.EventHandlerUnion<HTMLElement, KeyboardEvent> = (e) => {
+  const onKeyDown: JSX.EventHandlerUnion<HTMLButtonElement, KeyboardEvent> = (
+    e,
+  ) => {
     !callEventHandler(localProps.onKeyDown, e) &&
       accordionContext().onTriggerKeyDown(e)
   }
@@ -95,7 +94,6 @@ const AccordionTrigger = <
         Omit<AccordionTriggerElementProps, keyof DisclosureTriggerElementProps>
       >
     >
-      as={DEFAULT_ACCORDION_TRIGGER_ELEMENT}
       // === SharedElementProps ===
       ref={mergeRefs(localProps.ref, setTriggerRef)}
       onKeyDown={onKeyDown}

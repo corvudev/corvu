@@ -19,16 +19,16 @@ import {
   locationIsDraggable,
   resolveSnapPoint,
 } from '@src/lib'
+import { combineStyle } from '@corvu/utils/dom'
 import Dialog from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 import { getScrollAtLocation } from '@corvu/utils/scroll'
 import { useInternalDrawerContext } from '@src/context'
 
-const DEFAULT_DRAWER_CONTENT_ELEMENT = 'div'
-
 export type DrawerContentCorvuProps = DialogContentCorvuProps
 
-export type DrawerContentSharedElementProps = DialogContentSharedElementProps
+export type DrawerContentSharedElementProps<T extends ValidComponent = 'div'> =
+  DialogContentSharedElementProps<T>
 
 export type DrawerContentElementProps = DrawerContentSharedElementProps & {
   onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
@@ -41,8 +41,8 @@ export type DrawerContentElementProps = DrawerContentSharedElementProps & {
   'data-corvu-drawer-content': ''
 } & DialogContentElementProps
 
-export type DrawerContentProps = DrawerContentCorvuProps &
-  Partial<DrawerContentSharedElementProps>
+export type DrawerContentProps<T extends ValidComponent = 'div'> =
+  DrawerContentCorvuProps & Partial<DrawerContentSharedElementProps<T>>
 
 /** Content of the drawer. Can be animated.
  *
@@ -55,10 +55,8 @@ export type DrawerContentProps = DrawerContentCorvuProps &
  * @data `data-snapping` - Present when the drawer is transitioning after the user stops dragging.
  * @data `data-resizing` - Present when the drawer is transitioning after the size (width/height) changes. Only present if `transitionResize` is set to `true`.
  */
-const DrawerContent = <
-  T extends ValidComponent = typeof DEFAULT_DRAWER_CONTENT_ELEMENT,
->(
-  props: DynamicProps<T, DrawerContentProps, DrawerContentElementProps>,
+const DrawerContent = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, DrawerContentProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DrawerContentProps, [
     'contextId',
@@ -312,16 +310,19 @@ const DrawerContent = <
         Omit<DrawerContentElementProps, keyof DialogContentElementProps>
       >
     >
-      as={DEFAULT_DRAWER_CONTENT_ELEMENT}
       contextId={localProps.contextId}
       // === SharedElementProps ===
-      style={{
-        transform: transformValue(),
-        'transition-duration': drawerContext().isDragging() ? '0ms' : undefined,
-        height: transitionHeight(),
-        width: transitionWidth(),
-        ...localProps.style,
-      }}
+      style={combineStyle(
+        {
+          transform: transformValue(),
+          'transition-duration': drawerContext().isDragging()
+            ? '0ms'
+            : undefined,
+          height: transitionHeight(),
+          width: transitionWidth(),
+        },
+        localProps.style,
+      )}
       // === ElementProps ===
       onPointerDown={onPointerDown}
       onTransitionEnd={() => {

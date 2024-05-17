@@ -6,33 +6,29 @@ import Dialog, {
 } from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 
-const DEFAULT_POPOVER_LABEL_ELEMENT = 'h2'
-
 export type PopoverLabelCorvuProps = DialogLabelCorvuProps
 
-export type PopoverLabelSharedElementProps = DialogLabelSharedElementProps
+export type PopoverLabelSharedElementProps<T extends ValidComponent = 'h2'> =
+  DialogLabelSharedElementProps<T>
 
 export type PopoverLabelElementProps = PopoverLabelSharedElementProps & {
   'data-corvu-popover-label': ''
 } & DialogLabelElementProps
 
-export type PopoverLabelProps = PopoverLabelCorvuProps &
-  Partial<PopoverLabelSharedElementProps>
+export type PopoverLabelProps<T extends ValidComponent = 'h2'> =
+  PopoverLabelCorvuProps & Partial<PopoverLabelSharedElementProps<T>>
 
 /** Label element to announce the popover to accessibility tools.
  *
  * @data `data-corvu-popover-label` - Present on every popover label element.
  */
-const PopoverLabel = <
-  T extends ValidComponent = typeof DEFAULT_POPOVER_LABEL_ELEMENT,
->(
-  props: DynamicProps<T, PopoverLabelProps, PopoverLabelElementProps>,
+const PopoverLabel = <T extends ValidComponent = 'h2'>(
+  props: DynamicProps<T, PopoverLabelProps<T>>,
 ) => {
   return (
     <Dialog.Label<
       Component<Omit<PopoverLabelElementProps, keyof DialogLabelElementProps>>
     >
-      as={DEFAULT_POPOVER_LABEL_ELEMENT}
       // === ElementProps ===
       data-corvu-popover-label=""
       // === Misc ===

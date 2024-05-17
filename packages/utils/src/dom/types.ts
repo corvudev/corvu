@@ -3,6 +3,11 @@ type EventHandlerEvent<T, E extends Event> = E & {
   target: Element
 }
 
-type Ref = HTMLElement | ((element: HTMLElement) => void)
+type ElementOf<T> = T extends keyof HTMLElementTagNameMap
+  ? HTMLElementTagNameMap[T]
+  : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
 
-export type { EventHandlerEvent, Ref }
+type Ref<T> = T | ((element: T) => void)
+
+export type { EventHandlerEvent, ElementOf, Ref }

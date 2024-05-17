@@ -13,10 +13,7 @@ import {
 import { dataIf } from '@corvu/utils'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import type { Placement } from '@floating-ui/dom'
-import type { Ref } from '@corvu/utils/dom'
 import { useInternalTooltipContext } from '@src/context'
-
-const DEFAULT_TOOLTIP_TRIGGER_ELEMENT = 'button'
 
 export type TooltipTriggerCorvuProps = {
   /**
@@ -25,9 +22,9 @@ export type TooltipTriggerCorvuProps = {
   contextId?: string
 }
 
-export type TooltipTriggerSharedElementProps = {
-  ref: Ref
-} & DynamicButtonSharedElementProps
+export type TooltipTriggerSharedElementProps<
+  T extends ValidComponent = 'button',
+> = DynamicButtonSharedElementProps<T>
 
 export type TooltipTriggerElementProps = TooltipTriggerSharedElementProps & {
   'aria-describedby': string | undefined
@@ -38,8 +35,8 @@ export type TooltipTriggerElementProps = TooltipTriggerSharedElementProps & {
   'data-corvu-tooltip-trigger': ''
 } & DynamicButtonElementProps
 
-export type TooltipTriggerProps = TooltipTriggerCorvuProps &
-  Partial<TooltipTriggerSharedElementProps>
+export type TooltipTriggerProps<T extends ValidComponent = 'button'> =
+  TooltipTriggerCorvuProps & Partial<TooltipTriggerSharedElementProps<T>>
 
 /** Button that opens the tooltip when focused or hovered.
  *
@@ -48,10 +45,8 @@ export type TooltipTriggerProps = TooltipTriggerCorvuProps &
  * @data `data-closed` - Present when the tooltip is closed.
  * @data `data-placement` - Current placement of the tooltip. Only present when the tooltip is open.
  */
-const TooltipTrigger = <
-  T extends ValidComponent = typeof DEFAULT_TOOLTIP_TRIGGER_ELEMENT,
->(
-  props: DynamicProps<T, TooltipTriggerProps, TooltipTriggerElementProps>,
+const TooltipTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, TooltipTriggerProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as TooltipTriggerProps, [
     'contextId',
@@ -68,7 +63,6 @@ const TooltipTrigger = <
         Omit<TooltipTriggerElementProps, keyof DynamicButtonElementProps>
       >
     >
-      as={DEFAULT_TOOLTIP_TRIGGER_ELEMENT}
       // === SharedElementProps ===
       ref={mergeRefs(context().setTriggerRef, localProps.ref)}
       // === ElementProps ===

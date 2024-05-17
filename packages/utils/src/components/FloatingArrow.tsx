@@ -8,10 +8,9 @@ import {
   type ValidComponent,
 } from 'solid-js'
 import { Dynamic, type DynamicProps } from '@src/dynamic'
+import { combineStyle } from '@src/dom'
 import type { FloatingState } from '@src/create/floating'
 import { PositionToDirection } from '@src/floating/lib'
-
-export const DEFAULT_FLOATING_ARROW_ELEMENT = 'div'
 
 export type FloatingArrowCorvuProps = {
   floatingState: FloatingState
@@ -22,15 +21,17 @@ export type FloatingArrowCorvuProps = {
   size?: number
 }
 
-export type FloatingArrowSharedElementProps = {
-  style: JSX.CSSProperties
-  children: JSX.Element
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type FloatingArrowSharedElementProps<T extends ValidComponent = 'div'> =
+  {
+    style: string | JSX.CSSProperties
+    children: JSX.Element
+  }
 
 export type FloatingArrowElementProps = FloatingArrowSharedElementProps
 
-export type FloatingArrowProps = FloatingArrowCorvuProps &
-  Partial<FloatingArrowSharedElementProps>
+export type FloatingArrowProps<T extends ValidComponent = 'div'> =
+  FloatingArrowCorvuProps & Partial<FloatingArrowSharedElementProps<T>>
 
 type Position = 'top' | 'bottom' | 'left' | 'right'
 
@@ -48,10 +49,8 @@ const TransformOrigin = {
   right: '100% 0px',
 }
 
-const FloatingArrow = <
-  T extends ValidComponent = typeof DEFAULT_FLOATING_ARROW_ELEMENT,
->(
-  props: DynamicProps<T, FloatingArrowProps, FloatingArrowElementProps>,
+const FloatingArrow = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, FloatingArrowProps<T>>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -93,20 +92,22 @@ const FloatingArrow = <
 
   return (
     <Dynamic<FloatingArrowElementProps>
-      as={localProps.as ?? DEFAULT_FLOATING_ARROW_ELEMENT}
+      as="div"
       // === SharedElementProps ===
-      style={{
-        position: 'absolute',
-        left: arrowLeft(),
-        top: arrowTop(),
-        [arrowDirection()]: '0px',
-        transform: Transform[arrowDirection()],
-        'transform-origin': TransformOrigin[arrowDirection()],
-        height: defaultArrow() ? `${localProps.size}px` : undefined,
-        width: defaultArrow() ? `${localProps.size}px` : undefined,
-        'pointer-events': 'none',
-        ...localProps.style,
-      }}
+      style={combineStyle(
+        {
+          position: 'absolute',
+          left: arrowLeft(),
+          top: arrowTop(),
+          [arrowDirection()]: '0px',
+          transform: Transform[arrowDirection()],
+          'transform-origin': TransformOrigin[arrowDirection()],
+          height: defaultArrow() ? `${localProps.size}px` : undefined,
+          width: defaultArrow() ? `${localProps.size}px` : undefined,
+          'pointer-events': 'none',
+        },
+        localProps.style,
+      )}
       {...otherProps}
     >
       <Show when={defaultArrow()} fallback={resolveChildren()}>

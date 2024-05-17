@@ -1,3 +1,4 @@
+import { combineStyle, type ElementOf, type Ref } from '@corvu/utils/dom'
 import {
   createEffect,
   createMemo,
@@ -16,11 +17,8 @@ import type { PanelInstance, ResizeStrategy } from '@src/lib/types'
 import createOnce from '@corvu/utils/create/once'
 import { createResizablePanelContext } from '@src/panelContext'
 import { mergeRefs } from '@corvu/utils/reactivity'
-import type { Ref } from '@corvu/utils/dom'
 import { resolveSize } from '@src/lib/utils'
 import { useInternalResizableContext } from '@src/context'
-
-export const DEFAULT_RESIZABLE_PANEL_ELEMENT = 'div'
 
 export type ResizablePanelCorvuProps = {
   /**
@@ -78,11 +76,14 @@ export type ResizablePanelCorvuProps = {
   panelId?: string
 }
 
-export type ResizablePanelSharedElementProps = {
-  ref: Ref
-  style: JSX.CSSProperties
-  children: JSX.Element | ((props: ResizablePanelChildrenProps) => JSX.Element)
-}
+export type ResizablePanelSharedElementProps<T extends ValidComponent = 'div'> =
+  {
+    ref: Ref<ElementOf<T>>
+    style: string | JSX.CSSProperties
+    children:
+      | JSX.Element
+      | ((props: ResizablePanelChildrenProps) => JSX.Element)
+  }
 
 export type ResizablePanelElementProps = ResizablePanelSharedElementProps & {
   id: string
@@ -92,8 +93,8 @@ export type ResizablePanelElementProps = ResizablePanelSharedElementProps & {
   'data-corvu-resizable-panel': ''
 }
 
-export type ResizablePanelProps = ResizablePanelCorvuProps &
-  Partial<ResizablePanelSharedElementProps>
+export type ResizablePanelProps<T extends ValidComponent = 'div'> =
+  ResizablePanelCorvuProps & Partial<ResizablePanelSharedElementProps<T>>
 
 export type ResizablePanelChildrenProps = {
   /** The current size of the panel. */
@@ -127,10 +128,8 @@ export type ResizablePanelChildrenProps = {
  * @data `data-collapsed` - Present if the panel is currently collapsed.
  * @data `data-expanded` - Present if the panel is currently expanded. Only present on panels that are collapsible.
  */
-const ResizablePanel = <
-  T extends ValidComponent = typeof DEFAULT_RESIZABLE_PANEL_ELEMENT,
->(
-  props: DynamicProps<T, ResizablePanelProps, ResizablePanelElementProps>,
+const ResizablePanel = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, ResizablePanelProps<T>>,
 ) => {
   const defaultedProps = mergeProps(
     {
@@ -326,13 +325,15 @@ const ResizablePanel = <
         }}
       >
         <Dynamic<ResizablePanelElementProps>
-          as={DEFAULT_RESIZABLE_PANEL_ELEMENT}
+          as="div"
           // === SharedElementProps ===
           ref={mergeRefs(setRef, localProps.ref)}
-          style={{
-            'flex-basis': panelSize() * 100 + '%',
-            ...localProps.style,
-          }}
+          style={combineStyle(
+            {
+              'flex-basis': panelSize() * 100 + '%',
+            },
+            localProps.style,
+          )}
           // === ElementProps ===
           id={localProps.panelId}
           data-collapsed={dataIf(collapsed())}

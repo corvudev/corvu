@@ -1,3 +1,4 @@
+import { combineStyle, type ElementOf, type Ref } from '@corvu/utils/dom'
 import {
   createMemo,
   type JSX,
@@ -11,10 +12,7 @@ import { dataIf } from '@corvu/utils'
 import Dismissible from '@corvu/utils/components/Dismissible'
 import { getFloatingStyle } from '@corvu/utils/floating'
 import type { Placement } from '@floating-ui/dom'
-import type { Ref } from '@corvu/utils/dom'
 import { useInternalTooltipContext } from '@src/context'
-
-export const DEFAULT_TOOLTIP_CONTENT_ELEMENT = 'div'
 
 export type TooltipContentCorvuProps = {
   /**
@@ -28,10 +26,11 @@ export type TooltipContentCorvuProps = {
   contextId?: string
 }
 
-export type TooltipContentSharedElementProps = {
-  ref: Ref
-  style: JSX.CSSProperties
-}
+export type TooltipContentSharedElementProps<T extends ValidComponent = 'div'> =
+  {
+    ref: Ref<ElementOf<T>>
+    style: string | JSX.CSSProperties
+  }
 
 export type TooltipContentElementProps = TooltipContentSharedElementProps & {
   id: string
@@ -42,8 +41,8 @@ export type TooltipContentElementProps = TooltipContentSharedElementProps & {
   'data-corvu-tooltip-content': ''
 }
 
-export type TooltipContentProps = TooltipContentCorvuProps &
-  Partial<TooltipContentSharedElementProps>
+export type TooltipContentProps<T extends ValidComponent = 'div'> =
+  TooltipContentCorvuProps & Partial<TooltipContentSharedElementProps<T>>
 
 /** Content of the tooltip. Can be animated.
  *
@@ -52,10 +51,8 @@ export type TooltipContentProps = TooltipContentCorvuProps &
  * @data `data-closed` - Present when the tooltip is closed.
  * @data `data-placement` - Current placement of the tooltip.
  */
-const TooltipContent = <
-  T extends ValidComponent = typeof DEFAULT_TOOLTIP_CONTENT_ELEMENT,
->(
-  props: DynamicProps<T, TooltipContentProps, TooltipContentElementProps>,
+const TooltipContent = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, TooltipContentProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as TooltipContentProps, [
     'forceMount',
@@ -84,17 +81,19 @@ const TooltipContent = <
       {(props) => (
         <Show when={show()}>
           <Dynamic<TooltipContentElementProps>
-            as={DEFAULT_TOOLTIP_CONTENT_ELEMENT}
+            as="div"
             // === SharedElementProps ===
             ref={mergeRefs(context().setContentRef, localProps.ref)}
-            style={{
-              ...getFloatingStyle({
-                strategy: () => context().strategy(),
-                floatingState: () => context().floatingState(),
-              })(),
-              'pointer-events': props.isLastLayer ? 'auto' : undefined,
-              ...localProps.style,
-            }}
+            style={combineStyle(
+              {
+                ...getFloatingStyle({
+                  strategy: () => context().strategy(),
+                  floatingState: () => context().floatingState(),
+                })(),
+                'pointer-events': props.isLastLayer ? 'auto' : undefined,
+              },
+              localProps.style,
+            )}
             // === ElementProps ===
             id={context().tooltipId()}
             role="tooltip"

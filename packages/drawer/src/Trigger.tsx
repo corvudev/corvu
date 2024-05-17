@@ -6,18 +6,18 @@ import Dialog, {
 } from '@corvu/dialog'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 
-const DEFAULT_DRAWER_TRIGGER_ELEMENT = 'button'
-
 export type DrawerTriggerCorvuProps = DialogTriggerCorvuProps
 
-export type DrawerTriggerSharedElementProps = DialogTriggerSharedElementProps
+export type DrawerTriggerSharedElementProps<
+  T extends ValidComponent = 'button',
+> = DialogTriggerSharedElementProps<T>
 
 export type DrawerTriggerElementProps = DrawerTriggerSharedElementProps & {
   'data-corvu-drawer-trigger': ''
 } & DialogTriggerElementProps
 
-export type DrawerTriggerProps = DrawerTriggerCorvuProps &
-  Partial<DrawerTriggerSharedElementProps>
+export type DrawerTriggerProps<T extends ValidComponent = 'button'> =
+  DrawerTriggerCorvuProps & Partial<DrawerTriggerSharedElementProps<T>>
 
 /** Button that changes the open state of the drawer when clicked.
  *
@@ -25,10 +25,8 @@ export type DrawerTriggerProps = DrawerTriggerCorvuProps &
  * @data `data-open` - Present when the drawer is open.
  * @data `data-closed` - Present when the drawer is closed.
  */
-const DrawerTrigger = <
-  T extends ValidComponent = typeof DEFAULT_DRAWER_TRIGGER_ELEMENT,
->(
-  props: DynamicProps<T, DrawerTriggerProps, DrawerTriggerElementProps>,
+const DrawerTrigger = <T extends ValidComponent = 'button'>(
+  props: DynamicProps<T, DrawerTriggerProps<T>>,
 ) => {
   return (
     <Dialog.Trigger<
@@ -36,7 +34,6 @@ const DrawerTrigger = <
         Omit<DrawerTriggerElementProps, keyof DialogTriggerElementProps>
       >
     >
-      as={DEFAULT_DRAWER_TRIGGER_ELEMENT}
       // === ElementProps ===
       data-corvu-drawer-trigger=""
       // === Misc ===

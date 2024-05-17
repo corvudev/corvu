@@ -29,11 +29,13 @@ const resolveReferenceType = (
         return type.name
     }
     const api = Typedoc[type.package]
-    const declaration = findDeclarationByName(type.name, api.children)
+    const declaration = findDeclarationByName(api.name, api.children)
 
     if (!declaration) {
       // TODO: DisclosureRootProps -> RootProps etc.
-      throw new Error(`Declaration with Name ${type.name} not found`)
+      throw new Error(
+        `Declaration with Name ${type.name} not found. Probably shouldn't arrive here as these are inherited props :P`,
+      )
     }
 
     return declaration

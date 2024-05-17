@@ -1,3 +1,4 @@
+import { combineStyle, type ElementOf, type Ref } from '@corvu/utils/dom'
 import {
   createMemo,
   type JSX,
@@ -8,10 +9,7 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
-import type { Ref } from '@corvu/utils/dom'
 import { useInternalDisclosureContext } from '@src/context'
-
-export const DEFAULT_DISCLOSURE_CONTENT_ELEMENT = 'div'
 
 export type DisclosureContentCorvuProps = {
   /**
@@ -25,9 +23,11 @@ export type DisclosureContentCorvuProps = {
   contextId?: string
 }
 
-export type DisclosureContentSharedElementProps = {
-  ref: Ref
-  style: JSX.CSSProperties
+export type DisclosureContentSharedElementProps<
+  T extends ValidComponent = 'div',
+> = {
+  ref: Ref<ElementOf<T>>
+  style: string | JSX.CSSProperties
 }
 
 export type DisclosureContentElementProps =
@@ -38,8 +38,8 @@ export type DisclosureContentElementProps =
     'data-corvu-disclosure-content': '' | null
   }
 
-export type DisclosureContentProps = DisclosureContentCorvuProps &
-  Partial<DisclosureContentSharedElementProps>
+export type DisclosureContentProps<T extends ValidComponent = 'div'> =
+  DisclosureContentCorvuProps & Partial<DisclosureContentSharedElementProps<T>>
 
 /** Content of a disclosure. Can be animated.
  *
@@ -49,10 +49,8 @@ export type DisclosureContentProps = DisclosureContentCorvuProps &
  * @css `--corvu-disclosure-content-width` - The width of the disclosure content. Useful if you want to animate its width.
  * @css `--corvu-disclosure-content-height` - The height of the disclosure content. Useful if you want to animate its height.
  */
-const DisclosureContent = <
-  T extends ValidComponent = typeof DEFAULT_DISCLOSURE_CONTENT_ELEMENT,
->(
-  props: DynamicProps<T, DisclosureContentProps, DisclosureContentElementProps>,
+const DisclosureContent = <T extends ValidComponent = 'div'>(
+  props: DynamicProps<T, DisclosureContentProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DisclosureContentProps, [
     'forceMount',
@@ -89,15 +87,17 @@ const DisclosureContent = <
       case 'hide':
         return (
           <Dynamic<DisclosureContentElementProps>
-            as={DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
+            as="div"
             // === SharedElementProps ===
             ref={mergeRefs(context().setContentRef, localProps.ref)}
-            style={{
-              display: !show() ? 'none' : undefined,
-              '--corvu-disclosure-content-width': `${contentWidth()}px`,
-              '--corvu-disclosure-content-height': `${contentHeight()}px`,
-              ...localProps.style,
-            }}
+            style={combineStyle(
+              {
+                display: !show() ? 'none' : undefined,
+                '--corvu-disclosure-content-width': `${contentWidth()}px`,
+                '--corvu-disclosure-content-height': `${contentHeight()}px`,
+              },
+              localProps.style,
+            )}
             // === ElementProps ===
             id={context().disclosureId()}
             data-collapsed={dataIf(!context().expanded())}
@@ -110,15 +110,17 @@ const DisclosureContent = <
         return (
           <Show when={show()}>
             <Dynamic<DisclosureContentElementProps>
-              as={DEFAULT_DISCLOSURE_CONTENT_ELEMENT}
+              as="div"
               // === SharedElementProps ===
               ref={mergeRefs(context().setContentRef, localProps.ref)}
-              style={{
-                display: !show() ? 'none' : undefined,
-                '--corvu-disclosure-content-width': `${contentWidth()}px`,
-                '--corvu-disclosure-content-height': `${contentHeight()}px`,
-                ...localProps.style,
-              }}
+              style={combineStyle(
+                {
+                  display: !show() ? 'none' : undefined,
+                  '--corvu-disclosure-content-width': `${contentWidth()}px`,
+                  '--corvu-disclosure-content-height': `${contentHeight()}px`,
+                },
+                localProps.style,
+              )}
               // === ElementProps ===
               id={context().disclosureId()}
               data-expanded={dataIf(context().expanded())}

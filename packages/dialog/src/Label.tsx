@@ -8,8 +8,6 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { useInternalDialogContext } from '@src/context'
 
-export const DEFAULT_DIALOG_LABEL_ELEMENT = 'h2'
-
 export type DialogLabelCorvuProps = {
   /**
    * The `id` of the dialog context to use.
@@ -17,25 +15,23 @@ export type DialogLabelCorvuProps = {
   contextId?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type DialogLabelSharedElementProps = {}
+// eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/no-unused-vars
+export type DialogLabelSharedElementProps<T extends ValidComponent = 'h2'> = {}
 
 export type DialogLabelElementProps = DialogLabelSharedElementProps & {
   id: string | undefined
   'data-corvu-dialog-label': string | null
 }
 
-export type DialogLabelProps = DialogLabelCorvuProps &
-  Partial<DialogLabelSharedElementProps>
+export type DialogLabelProps<T extends ValidComponent = 'h2'> =
+  DialogLabelCorvuProps & Partial<DialogLabelSharedElementProps<T>>
 
 /** Label element to announce the dialog to accessibility tools.
  *
  * @data `data-corvu-dialog-label` - Present on every dialog label element.
  */
-const DialogLabel = <
-  T extends ValidComponent = typeof DEFAULT_DIALOG_LABEL_ELEMENT,
->(
-  props: DynamicProps<T, DialogLabelProps, DialogLabelElementProps>,
+const DialogLabel = <T extends ValidComponent = 'h2'>(
+  props: DynamicProps<T, DialogLabelProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as DialogLabelProps, [
     'contextId',
@@ -53,7 +49,7 @@ const DialogLabel = <
 
   return (
     <Dynamic<DialogLabelElementProps>
-      as={DEFAULT_DIALOG_LABEL_ELEMENT}
+      as="h2"
       // === ElementProps ===
       id={context().labelId()}
       data-corvu-dialog-label=""
