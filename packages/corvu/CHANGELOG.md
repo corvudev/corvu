@@ -1,5 +1,12 @@
 # corvu
 
+## [0.7.0](https://github.com/corvudev/corvu/compare/corvu@0.6.0...corvu@0.7.0) (2024-05-21)
+
+
+### Features
+
+* pin primitives to minor version ([d6fffc2](https://github.com/corvudev/corvu/commit/d6fffc23f70d445a6940ab7499ca92287e770ffe))
+
 ## [0.6.0](https://github.com/corvudev/corvu/compare/corvu-v0.5.1...corvu@0.6.0) (2024-05-13)
 
 
