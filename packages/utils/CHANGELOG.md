@@ -1,5 +1,17 @@
 # @corvu/utils
 
+## [0.3.0](https://github.com/corvudev/corvu/compare/@corvu/utils@0.2.0...@corvu/utils@0.3.0) (2024-05-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* make component props generic to ensure proper typing
+
+### Bug Fixes
+
+* make component props generic to ensure proper typing ([631fd87](https://github.com/corvudev/corvu/commit/631fd87b7175663404a569b793bc9a474eb6a2f0))
+* proper typesVersions in package.json ([77c9ceb](https://github.com/corvudev/corvu/commit/77c9cebc34fb276d837cc8299da472452164f5ae))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/utils@0.1.1...@corvu/utils@0.2.0) (2024-05-13)
 
 
