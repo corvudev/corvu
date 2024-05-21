@@ -11,7 +11,8 @@
       "component": "@corvu/accordion"
     },
     "packages/corvu": {
-      "component": "corvu"
+      "component": "corvu",
+      "release-as": "0.7.0"
     },
     "packages/dialog": {
       "component": "@corvu/dialog"
