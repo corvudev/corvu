@@ -128,25 +128,25 @@ importers:
   packages/corvu:
     dependencies:
       '@corvu/accordion':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../accordion
       '@corvu/dialog':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../dialog
       '@corvu/disclosure':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../disclosure
       '@corvu/drawer':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../drawer
       '@corvu/popover':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../popover
       '@corvu/resizable':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../resizable
       '@corvu/tooltip':
-        specifier: workspace:^
+        specifier: workspace:~
         version: link:../tooltip
     devDependencies:
       '@typescript-eslint/eslint-plugin':

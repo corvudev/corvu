@@ -52,13 +52,13 @@
     "lint": "eslint --max-warnings=0 ."
   },
   "dependencies": {
-    "@corvu/accordion": "workspace:^",
-    "@corvu/dialog": "workspace:^",
-    "@corvu/disclosure": "workspace:^",
-    "@corvu/drawer": "workspace:^",
-    "@corvu/popover": "workspace:^",
-    "@corvu/resizable": "workspace:^",
-    "@corvu/tooltip": "workspace:^"
+    "@corvu/accordion": "workspace:~",
+    "@corvu/dialog": "workspace:~",
+    "@corvu/disclosure": "workspace:~",
+    "@corvu/drawer": "workspace:~",
+    "@corvu/popover": "workspace:~",
+    "@corvu/resizable": "workspace:~",
+    "@corvu/tooltip": "workspace:~"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.10.0",
