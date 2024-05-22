@@ -109,7 +109,7 @@ const getReflectionProps = (type: ReflectionType) => {
         name: signature.name,
         defaultHtml: getDefaultValue(signature.comment),
         type,
-        descriptionHtml: formatText(signature.comment?.summary),
+        descriptionHtml: formatText(prop.comment?.summary),
         isFunction: true,
       })
     } else if (prop.type?.type === 'reflection') {
@@ -120,7 +120,7 @@ const getReflectionProps = (type: ReflectionType) => {
         name: prop.name,
         defaultHtml: getDefaultValue(signature.comment),
         type,
-        descriptionHtml: formatText(signature.comment?.summary),
+        descriptionHtml: formatText(prop.comment?.summary),
         isFunction: true,
       })
     } else {
