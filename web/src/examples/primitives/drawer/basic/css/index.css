@@ -1,4 +1,6 @@
 [data-corvu-drawer-trigger] {
+  border-width: 0;
+  cursor: pointer;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 0.5rem;
@@ -37,6 +39,9 @@
 }
 
 [data-corvu-drawer-content] {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
   position: fixed;
   left: 0px;
   right: 0px;
@@ -46,30 +51,22 @@
   height: 100%;
   max-height: 500px;
   flex-direction: column;
-  border-style: solid;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   border-top-width: 4px;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
   border-color: hsl(258, 79%, 74%);
-  background-color: hsl(253, 26.4%, 17.1%);
-  color: hsl(266, 41%, 90%);
+  background-color: hsl(249, 87%, 94%);
   padding-top: 0.75rem;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 [data-corvu-drawer-content]::after {
-  content: '';
   position: absolute;
   left: 0px;
   right: 0px;
   top: 100%;
   height: 50%;
   background-color: inherit;
-  border: none;
+  content: '';
 }
 
 [data-corvu-drawer-content][data-transitioning] {
@@ -78,8 +75,14 @@
   transition-duration: 500ms;
 }
 
+@media (min-width: 768px) {
+  [data-corvu-drawer-content] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
 .notch {
-  margin-top: 0.5rem;
   height: 0.25rem;
   width: 2.5rem;
   align-self: center;
@@ -89,7 +92,7 @@
 
 [data-corvu-drawer-label] {
   margin-top: 0.5rem;
-  margin-bottom: 0;
+  margin-bottom: 0px;
   text-align: center;
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -105,7 +108,8 @@
   position: absolute;
   left: 0px;
   right: 0px;
-  bottom: -2.25rem;
+  bottom: -1.25rem;
   z-index: 10;
   text-align: center;
+  margin: 0px;
 }
