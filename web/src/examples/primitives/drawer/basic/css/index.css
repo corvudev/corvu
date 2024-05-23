@@ -1,4 +1,6 @@
 [data-corvu-drawer-trigger] {
+  border-width: 0;
+  cursor: pointer;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 0.5rem;
@@ -12,7 +14,6 @@
   font-weight: 500;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
   transition-duration: 100ms;
   animation-duration: 100ms;
 }
@@ -38,6 +39,9 @@
 }
 
 [data-corvu-drawer-content] {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
   position: fixed;
   left: 0px;
   right: 0px;
@@ -62,6 +66,7 @@
   top: 100%;
   height: 50%;
   background-color: inherit;
+  content: '';
 }
 
 [data-corvu-drawer-content][data-transitioning] {
@@ -70,7 +75,7 @@
   transition-duration: 500ms;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   [data-corvu-drawer-content] {
     -webkit-user-select: none;
     user-select: none;
@@ -78,16 +83,16 @@
 }
 
 .notch {
-  margin-top: 0.5rem;
   height: 0.25rem;
   width: 2.5rem;
   align-self: center;
   border-radius: 9999px;
-  background-color: TOOD;
+  background-color: hsl(258, 79%, 74%);
 }
 
 [data-corvu-drawer-label] {
   margin-top: 0.5rem;
+  margin-bottom: 0px;
   text-align: center;
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -95,7 +100,7 @@
 }
 
 [data-corvu-drawer-description] {
-  margin-top: 1rem;
+  margin-top: 0.25rem;
   text-align: center;
 }
 
@@ -106,4 +111,5 @@
   bottom: -1.25rem;
   z-index: 10;
   text-align: center;
+  margin: 0px;
 }
