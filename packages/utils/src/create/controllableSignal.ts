@@ -5,7 +5,6 @@ import {
   type Signal,
   untrack,
 } from 'solid-js'
-import { isFunction } from '@src/index'
 
 /**
  * Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop.
@@ -41,7 +40,7 @@ function createControllableSignal<T>(props: {
   const setValue: Setter<T | undefined> = (next?: unknown) => {
     return untrack(() => {
       let nextValue: Exclude<T, Function>
-      if (isFunction(next)) {
+      if (typeof next === 'function') {
         nextValue = next(value()) as Exclude<T, Function>
       } else {
         nextValue = next as Exclude<T, Function>

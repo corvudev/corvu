@@ -5,7 +5,6 @@
  * https://github.com/solidjs-community/solid-primitives
  */
 import type { EventHandlerEvent } from '@src/dom'
-import { isFunction } from '@src/assertions'
 import type { JSX } from 'solid-js'
 
 const extractCSSregex = /((?:--)?(?:\w+-?)+)\s*:\s*([^;]*)/g
@@ -37,7 +36,7 @@ const callEventHandler = <T, E extends Event>(
   event: EventHandlerEvent<T, E>,
 ) => {
   if (eventHandler) {
-    if (isFunction(eventHandler)) {
+    if (typeof eventHandler === 'function') {
       eventHandler(event)
     } else {
       eventHandler[0](eventHandler[1], event)

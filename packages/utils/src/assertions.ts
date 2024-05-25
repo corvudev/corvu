@@ -8,7 +8,7 @@
 const isFunction = <T extends Function = Function>(
   value: unknown,
 ): value is T => {
-  return typeof value === 'function'
+  return typeof value === 'function' && value.length > 0
 }
 
 const buttonInputTypes = ['button', 'color', 'file', 'image', 'reset', 'submit']
