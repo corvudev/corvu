@@ -152,6 +152,7 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
       !locationIsDraggable(
         event.target as HTMLElement,
         dialogContext().contentRef()!,
+        event.pointerType,
       )
     )
       return

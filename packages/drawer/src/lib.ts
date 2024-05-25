@@ -155,14 +155,17 @@ const findNearbySnapPoint = (
  * An element is draggable if:
  * - The target element and all of its parents don't have the `data-corvu-no-drag` attribute present.
  * - The target element is not an input of type range.
+ * - If the pointerType is mouse, the target element is not a <select> element.
  *
  * @param location - The HTMLElement to check.
- * @param stopAt - The HTMLElement to stop at when searching up the tree. Defaults to the body element.
+ * @param stopAt - The HTMLElement to stop at when searching up the tree.
+ * @param pointerType - The type of pointer that is being used.
  * @returns Whether the location is draggable.
  */
 export const locationIsDraggable = (
   location: HTMLElement,
-  stopAt?: HTMLElement,
+  stopAt: HTMLElement,
+  pointerType: string,
 ) => {
   let currentElement: HTMLElement | null = location
 
@@ -171,11 +174,12 @@ export const locationIsDraggable = (
   do {
     if (
       currentElement.hasAttribute('data-corvu-no-drag') ||
-      (currentElement as HTMLInputElement).type === 'range'
+      (currentElement as HTMLInputElement).type === 'range' ||
+      (currentElement.tagName === 'SELECT' && pointerType === 'mouse')
     )
       return false
 
-    if (currentElement === (stopAt ?? document.documentElement)) {
+    if (currentElement === stopAt) {
       stopReached = true
     } else {
       currentElement = currentElement.parentElement
