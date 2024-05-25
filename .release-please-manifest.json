@@ -12,6 +12,6 @@
   "packages/solid-transition-size": "0.1.2",
   "packages/tailwind": "0.1.5",
   "packages/tooltip": "0.2.0",
-  "packages/utils": "0.3.0"
+  "packages/utils": "0.3.1"
 }
 

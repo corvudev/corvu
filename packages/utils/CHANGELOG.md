@@ -1,5 +1,12 @@
 # @corvu/utils
 
+## [0.3.1](https://github.com/corvudev/corvu/compare/@corvu/utils@0.3.0...@corvu/utils@0.3.1) (2024-05-25)
+
+
+### Bug Fixes
+
+* **isFunction:** check function.length to ignore accessors ([749304d](https://github.com/corvudev/corvu/commit/749304d5e9cc433b322c4bf761483e68ae0801c8))
+
 ## [0.3.0](https://github.com/corvudev/corvu/compare/@corvu/utils@0.2.0...@corvu/utils@0.3.0) (2024-05-21)
 
 
