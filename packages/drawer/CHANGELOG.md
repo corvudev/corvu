@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.2.0...@corvu/drawer@0.2.1) (2024-05-25)
+
+
+### Bug Fixes
+
+* prevent dragging if the target is a &lt;select&gt; element ([073c5b9](https://github.com/corvudev/corvu/commit/073c5b944635872feb1d4b1d09700e47428cacb5))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.1.0...@corvu/drawer@0.2.0) (2024-05-21)
 
 
