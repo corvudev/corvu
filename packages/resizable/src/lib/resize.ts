@@ -119,7 +119,7 @@ const distributePercentage = (props: {
       panel.data.collapsedSize ?? 0,
       props.rootSize,
     )
-    if (panelSize === collapsedSize) continue
+    if (panel.data.collapsible && panelSize === collapsedSize) continue
 
     const availablePercentage = props.desiredPercentage - distributedPercentage
     if (availablePercentage === 0) break
