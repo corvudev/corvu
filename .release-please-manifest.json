@@ -5,7 +5,7 @@
   "packages/disclosure": "0.2.0",
   "packages/drawer": "0.2.1",
   "packages/popover": "0.2.0",
-  "packages/resizable": "0.2.0",
+  "packages/resizable": "0.2.1",
   "packages/solid-focus-trap": "0.1.6",
   "packages/solid-presence": "0.1.6",
   "packages/solid-prevent-scroll": "0.1.7",
