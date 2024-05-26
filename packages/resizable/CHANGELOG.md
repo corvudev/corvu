@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.0...@corvu/resizable@0.2.1) (2024-05-26)
+
+
+### Bug Fixes
+
+* panel not resizing if size is 0 ([5009c34](https://github.com/corvudev/corvu/commit/5009c34489bfc62ecf1967d85f19ae271a491d6e))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.1.0...@corvu/resizable@0.2.0) (2024-05-21)
 
 
