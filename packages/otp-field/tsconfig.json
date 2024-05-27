@@ -20,7 +20,13 @@
     "skipLibCheck": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [
+        "./src/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",

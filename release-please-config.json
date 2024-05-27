@@ -22,6 +22,10 @@
     "packages/drawer": {
       "component": "@corvu/drawer"
     },
+    "packages/otp-field": {
+      "component": "@corvu/otp-field",
+      "release-as": "0.1.0"
+    },
     "packages/popover": {
       "component": "@corvu/popover"
     },

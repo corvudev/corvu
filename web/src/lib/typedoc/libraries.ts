@@ -5,6 +5,7 @@ import disclosureTypedoc from '../../../../packages/disclosure/typedoc.json'
 import drawerTypedoc from '../../../../packages/drawer/typedoc.json'
 import focusTrapTypedoc from '../../../../packages/solid-focus-trap/typedoc.json'
 import type { Library } from '@lib/typedoc/types/specifications'
+import otpFieldTypedoc from '../../../../packages/otp-field/typedoc.json'
 import popoverTypedoc from '../../../../packages/popover/typedoc.json'
 import presenceTypedoc from '../../../../packages/solid-presence/typedoc.json'
 import preventScrollTypedoc from '../../../../packages/solid-prevent-scroll/typedoc.json'
@@ -18,6 +19,7 @@ export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/dialog': dialogTypedoc as ApiDeclaration,
   '@corvu/disclosure': disclosureTypedoc as ApiDeclaration,
   '@corvu/drawer': drawerTypedoc as ApiDeclaration,
+  '@corvu/otp-field': otpFieldTypedoc as ApiDeclaration,
   '@corvu/popover': popoverTypedoc as ApiDeclaration,
   '@corvu/resizable': resizableTypedoc as ApiDeclaration,
   '@corvu/tooltip': tooltipTypedoc as ApiDeclaration,
@@ -424,6 +426,53 @@ const Drawer: Library = {
   },
 }
 
+const OtpField: Library = {
+  api: Typedoc['@corvu/otp-field'],
+  name: 'OTP Field',
+  items: {
+    Root: {
+      kind: 'component',
+      sorting: [
+        'maxLength',
+        'value',
+        'onValueChange',
+        'onComplete',
+        'shiftPWManagers',
+        'contextId',
+        'as',
+      ],
+    },
+    Input: {
+      kind: 'component',
+      sorting: ['pattern', 'noScriptCSSFallback', 'contextId', 'as'],
+    },
+    RootChildrenProps: {
+      kind: 'childrenProps',
+      sorting: [
+        'value',
+        'isFocused',
+        'isHovered',
+        'isInserting',
+        'maxLength',
+        'activeSlots',
+        'shiftPWManagers',
+      ],
+    },
+    useContext: {
+      kind: 'context',
+      sorting: [
+        'value',
+        'isFocused',
+        'isHovered',
+        'isInserting',
+        'maxLength',
+        'activeSlots',
+        'shiftPWManagers',
+      ],
+    },
+  },
+}
+
 const Popover: Library = {
   api: Typedoc['@corvu/popover'],
   name: 'Popover',
@@ -783,6 +832,7 @@ export {
   Dialog,
   Disclosure,
   Drawer,
+  OtpField,
   Popover,
   Resizable,
   Tooltip,
@@ -797,6 +847,7 @@ export default [
   Dialog,
   Disclosure,
   Drawer,
+  OtpField,
   Popover,
   Resizable,
   Tooltip,

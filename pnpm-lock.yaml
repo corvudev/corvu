@@ -125,11 +125,51 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  packages/otp-field:
+    dependencies:
+      '@corvu/utils':
+        specifier: workspace:~
+        version: link:../utils
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.8.0
+        version: 7.10.0(@typescript-eslint/parser@7.10.0)(eslint@8.57.0)(typescript@5.4.5)
+      esbuild-plugin-solid:
+        specifier: ^0.6.0
+        version: 0.6.0(esbuild@0.21.3)(solid-js@1.8.17)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.57.0)
+      eslint-plugin-solid:
+        specifier: ^0.14.0
+        version: 0.14.0(eslint@8.57.0)(typescript@5.4.5)
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      solid-js:
+        specifier: ^1.8.17
+        version: 1.8.17
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(typescript@5.4.5)
+      typedoc:
+        specifier: ^0.25.13
+        version: 0.25.13(typescript@5.4.5)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   packages/corvu:
     dependencies:
       '@corvu/accordion':
         specifier: workspace:~
         version: link:../accordion
+      '@corvu/otp-field':
+        specifier: workspace:~
+        version: link:../otp-field
       '@corvu/dialog':
         specifier: workspace:~
         version: link:../dialog
@@ -664,6 +704,9 @@ importers:
       '@corvu/accordion':
         specifier: workspace:*
         version: link:../packages/accordion
+      '@corvu/otp-field':
+        specifier: workspace:*
+        version: link:../packages/otp-field
       '@corvu/dialog':
         specifier: workspace:*
         version: link:../packages/dialog

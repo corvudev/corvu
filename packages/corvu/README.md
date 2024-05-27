@@ -47,12 +47,18 @@ Read more at [corvu.dev](https://corvu.dev).
         <p>Disclosure</p>
       </a>
     </td>
-   </tr> 
-   <tr>
+  </tr>
+  <tr>
     <td align="center" width=33%>
       <a href="https://corvu.dev/docs/primitives/drawer/">
         <img src="https://corvu.dev/primitives/drawer.jpg" alt="SolidJS Drawer">
         <p>Drawer</p>
+      </a>
+    </td>
+    <td align="center" width=33%>
+      <a href="https://corvu.dev/docs/primitives/otp-field/">
+        <img src="https://corvu.dev/primitives/otp-field.jpg" alt="SolidJS OTP Field">
+        <p>OTP Field</p>
       </a>
     </td>
     <td align="center" width=33%>
@@ -61,15 +67,13 @@ Read more at [corvu.dev](https://corvu.dev).
         <p>Popover</p>
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" width=33%>
       <a href="https://corvu.dev/docs/primitives/resizable/">
         <img src="https://corvu.dev/primitives/resizable.jpg" alt="SolidJS Resizable/Splitter">
         <p>Resizable</p>
       </a>
-    </td>
-  </td>
-   <tr>
-    <td align="center" width=33%>
     </td>
     <td align="center" width=33%>
       <a href="https://corvu.dev/docs/primitives/tooltip/">
@@ -79,6 +83,5 @@ Read more at [corvu.dev](https://corvu.dev).
     </td>
     <td align="center" width=33%>
     </td>
-  </td>
   </tr>
 </table>

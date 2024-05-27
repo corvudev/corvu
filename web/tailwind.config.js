@@ -45,6 +45,7 @@ export default {
       animation: {
         expand: 'expand 250ms cubic-bezier(0.32,0.72,0,0.75)',
         collapse: 'collapse 250ms cubic-bezier(0.32,0.72,0,0.75)',
+        'caret-blink': 'caret-blink 1.25s ease-out infinite',
       },
       keyframes: {
         expand: {
@@ -62,6 +63,10 @@ export default {
           '100%': {
             height: '0px',
           },
+        },
+        'caret-blink': {
+          '0%,70%,100%': { opacity: '1' },
+          '20%,50%': { opacity: '0' },
         },
       },
     },
