@@ -1,10 +1,10 @@
 {
   "packages/accordion": "0.2.0",
-  "packages/corvu": "0.7.0",
+  "packages/corvu": "0.7.1",
   "packages/dialog": "0.2.0",
   "packages/disclosure": "0.2.0",
   "packages/drawer": "0.2.1",
-  "packages/otp-field": "0.0.0",
+  "packages/otp-field": "0.1.0",
   "packages/popover": "0.2.0",
   "packages/resizable": "0.2.1",
   "packages/solid-focus-trap": "0.1.6",
