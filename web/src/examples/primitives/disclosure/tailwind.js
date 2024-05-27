@@ -10,6 +10,7 @@ export default {
           200: '#d4cbfb',
           300: '#bcacf6',
           400: '#a888f1',
+          text: '#180f24',
         },
       },
       animation: {

@@ -4,6 +4,7 @@ import dialog from '../../../packages/dialog/package.json'
 import disclosure from '../../../packages/disclosure/package.json'
 import drawer from '../../../packages/drawer/package.json'
 import focusTrap from '../../../packages/solid-focus-trap/package.json'
+import otpField from '../../../packages/otp-field/package.json'
 import popover from '../../../packages/popover/package.json'
 import presence from '../../../packages/solid-presence/package.json'
 import preventScroll from '../../../packages/solid-prevent-scroll/package.json'
@@ -44,6 +45,12 @@ const packageMetas: {
     version: drawer.version,
     npmHref: 'https://www.npmjs.com/package/@corvu/drawer',
     sourceHref: 'https://github.com/corvudev/corvu/tree/main/packages/drawer',
+  },
+  '@corvu/otp-field': {
+    version: otpField.version,
+    npmHref: 'https://www.npmjs.com/package/@corvu/otp-field',
+    sourceHref:
+      'https://github.com/corvudev/corvu/tree/main/packages/otp-field',
   },
   '@corvu/popover': {
     version: popover.version,

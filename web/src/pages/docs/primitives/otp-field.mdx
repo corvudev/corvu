@@ -1,0 +1,184 @@
+---
+layout: '@layouts/Docs.astro'
+title: OTP Input
+description: A customizable, unstyled and accessible OTP Input component for SolidJS
+image: https://corvu.dev/primitives/otp-field.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/otp-field/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/otp-field/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/otp-field/tailwind.js?raw'
+import CssTsx from '@examples/primitives/otp-field/basic/css/index?raw'
+import CssStyle from '@examples/primitives/otp-field/basic/css/index.css?raw'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { OtpField } from '@lib/typedoc/libraries'
+import Link from '@components/docs/Link.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# OTP Field
+
+An accessible and customizable OTP Input component for SolidJS.
+
+<PackageInfo packageName="@corvu/otp-field" />
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
+}]} heading client:load>
+  <BasicExample client:load />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Renders as a single input; Supports all default keybindings and is accessible',
+  'Supports Android and iOS copy, paste, and cut',
+  'Automatically removes visual separators when pasting (e.g. 123-456 -> 123456)',
+  'Can retrieve OTP codes from out-of-channel mechanisms, such as SMS, email, or auth apps.'
+]} />
+
+## Installation
+
+<Code code={`
+npm install @corvu/otp-field
+`} lang="bash" copyButton />
+
+The OTP Field is also included in the main `corvu` package under `corvu/otp-field`.
+
+## Usage
+<Code code={`
+import OtpField from '@corvu/otp-field' // 'corvu/otp-field'
+// or
+// import { Root, Input } from '@corvu/otp-field'
+`} lang="tsx" copyButton />
+
+The OTP Field primitive renders an invisible input field (`<OtpField.Input />`) on top of the visible slots. This allows you to style the input field as you like while keeping the input field accessible. corvu takes care of syncing the selection, focus and hover states between the input and your UI.
+
+### Anatomy
+
+<Code code={`
+<OtpField>
+  <OtpField.Input />
+</OtpField>
+`} lang="tsx" copyButton />
+
+### Basic Usage
+
+A simple usage of the OTP Field, using the context to manage the state of the UI:
+
+<Code code={`
+const OtpFieldExample = () => {
+  return (
+    <div>
+      <OtpField maxLength={6}>
+        <OtpField.Input aria-label="Verification Code" />
+        <Slot index={0} />
+        <Slot index={1} />
+        <Slot index={2} />
+        <Slot index={3} />
+        <Slot index={4} />
+        <Slot index={5} />
+      </OtpField>
+    </div>
+  )
+}
+
+const Slot = (props: { index: number }) => {
+  const context = OtpField.useContext()
+  const char = () => context.value()[props.index]
+  const showFakeCaret = () =>
+    context.value().length === props.index && context.isInserting()
+
+  return (
+    <div>
+      {char()}
+      <Show when={showFakeCaret()}>
+        <span>|</span>
+      </Show>
+    </div>
+  )
+}
+`} lang="tsx" copyButton />
+
+### Integration with form libraries
+
+The OTP Field can easily be used with form libraries like <Link href="https://modularforms.dev/" newTab>Modular Forms</Link> as you have full control over the input field:
+
+<Code code={`
+import { createForm, submit } from '@modular-forms/solid'
+import OtpField from '@corvu/otp-field'
+
+function OtpForm() {
+  const [form, { Form, Field }] = createForm<{
+    otp: string
+  }>()
+
+  return (
+    <Form
+      onSubmit={(values) => {
+        // Submit form
+      }}
+    >
+      <Field name="otp">
+        {(field, props) => (
+          <OtpField maxLength={6} onComplete={() => submit(form)}>
+            <OtpField.Input {...props} />
+            ...
+          </OtpField>
+        )}
+      </Field>
+    </Form>
+  )
+}
+`} lang="tsx" copyButton />
+
+The form automatically submits when the OTP Field is filled because we're calling `submit(form)` inside the `onComplete` callback.
+
+## Accessibility
+The OTP Field renders as a single native input element, which means it supports all standard keybindings and is accessible by default.
+
+It is suggested that you add a label to describe the input:
+
+<Code code={`
+<OtpField maxLength={6}>
+  <OtpField.Input aria-label="Verification Code" />
+</OtpField>
+`} lang="tsx" copyButton />
+
+## Credits
+
+The implementation of this OTP Field is inspired by Guilherme's <Link href="https://github.com/guilhermerodz/input-otp" newTab>React OTP Input</Link>.
+
+## API reference
+
+<ApiReference library={OtpField} />

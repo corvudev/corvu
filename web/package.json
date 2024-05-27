@@ -26,6 +26,7 @@
     "@corvu/dialog": "workspace:*",
     "@corvu/disclosure": "workspace:*",
     "@corvu/drawer": "workspace:*",
+    "@corvu/otp-field": "workspace:*",
     "@corvu/popover": "workspace:*",
     "@corvu/resizable": "workspace:*",
     "@corvu/tailwind": "workspace:*",
