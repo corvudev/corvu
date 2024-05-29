@@ -17,6 +17,7 @@ import {
 } from 'solid-js'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import createOtpFieldStyleElement from '@src/lib/style'
+import { isServer } from 'solid-js/web'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalOtpFieldContext } from '@src/context'
 
@@ -110,14 +111,11 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
   )
 
   createEffect(() => {
+    createOtpFieldStyleElement()
     document.addEventListener('selectionchange', onSelectionChange)
     onCleanup(() => {
       document.removeEventListener('selectionchange', onSelectionChange)
     })
-  })
-
-  createEffect(() => {
-    createOtpFieldStyleElement()
   })
 
   createEffect(() => {
@@ -329,7 +327,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
 
   return (
     <>
-      <Show when={localProps.noScriptCSSFallback}>
+      <Show when={localProps.noScriptCSSFallback !== null && isServer}>
         <noscript>
           <style>{localProps.noScriptCSSFallback}</style>
         </noscript>
