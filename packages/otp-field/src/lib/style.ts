@@ -1,6 +1,11 @@
+import { onCleanup } from 'solid-js'
+
 let otpFieldStyleElement: HTMLStyleElement | null = null
 
+let activeCount = 0
+
 const createOtpFieldStyleElement = () => {
+  activeCount += 1
   if (otpFieldStyleElement) return
   otpFieldStyleElement = document.createElement('style')
   document.head.appendChild(otpFieldStyleElement)
@@ -15,6 +20,14 @@ const createOtpFieldStyleElement = () => {
     [data-corvu-otp-field-input] + * { pointer-events: all !important; };
   `
   otpFieldStyleElement.innerHTML = styleString
+
+  onCleanup(() => {
+    activeCount -= 1
+    if (activeCount === 0 && otpFieldStyleElement) {
+      otpFieldStyleElement.remove()
+      otpFieldStyleElement = null
+    }
+  })
 }
 
 export default createOtpFieldStyleElement
