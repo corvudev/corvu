@@ -59,7 +59,7 @@ corvu's dynamic components have a flexible type system. This allows library deve
 
 Every dynamic component exposes 4 types.
 
-For example, the `<Dialog.Trigger>` component exports the types `DialogTriggerCorvuProps`, `DialogTriggerSharedElementProps`, `DialogTriggerElementProps` and `DialogTriggerProps`.
+For example, the `<Dialog.Trigger>` component exports the types `DialogTriggerCorvuProps`, `DialogTriggerSharedElementProps<T>`, `DialogTriggerElementProps` and `DialogTriggerProps<T>`.
 
 Lets have a look at the types:
 
@@ -67,15 +67,15 @@ Lets have a look at the types:
 
 `CorvuProps` contains all props that are specific to the primitive component and are not passed through to the rendered element. They are consumed by corvu. For example, the [`<Resizable.Handle />`](/docs/primitives/resizable/#Panel) has props like `minSize` or `collapsible`.
 
-### SharedElementProps
+### SharedElementProps&lt;T extends ValidComponent&gt;
 
-`SharedElementProps` includes all props that get defined by corvu on the rendered element **but** can be overridden by the user. This usually includes the `ref` or `style` properties.
+`SharedElementProps` includes all props that get defined by corvu on the rendered element **but** can be overridden by the user. This usually includes the `ref` or `style` properties. The generic is used to properly type `ref` and event listeners.
 
 ### ElementProps
 
 `ElementProps` element props inherits all `SharedElementProps` and additionally includes all props that are set by corvu and can't be overridden by the user. This includes for example accessibility props like `aria-*`, `role` and `data-*`.
 
-### Props
+### Props&lt;T extends ValidComponent&gt;
 
 This is the type that defines what props that corvu expects from the user. It's equal to `CorvuProps & Partial<SharedElementProps>`.
 
@@ -92,14 +92,14 @@ import {
 import Dialog, { type TriggerProps, type DynamicProps } from '@corvu/dialog'
 
 // Define your custom props, including \`TriggerProps\` from corvu
-export type CustomDisclosureTriggerProps = TriggerProps & {
+export type CustomDisclosureTriggerProps<T extends ValidComponent = 'button'> = TriggerProps<T> & {
   variant: 'fill' | 'outline'
 }
 
 // The generic \`T\` allows the user to specify
 // the element this component should render as
 const CustomDialogTrigger = <T extends ValidComponent = 'button'>(
-  props: DynamicProps<T, CustomDisclosureTriggerProps>,
+  props: DynamicProps<T, CustomDisclosureTriggerProps<T>>,
 ) => {
   const [local, rest] = splitProps(props as CustomDisclosureTriggerProps, [
     'variant',
@@ -114,7 +114,7 @@ If you don't want to expose the dynamic aspect of corvu's components, you can de
 
 <Code code={`
 const CustomDialogTrigger = (
-  props: DynamicProps<'button', CustomDisclosureTriggerProps>,
+  props: DynamicProps<'button', CustomDisclosureTriggerProps<'button'>>,
 ) => {
 `} lang="tsx" />
 
