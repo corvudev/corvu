@@ -13,10 +13,19 @@ const packageMeta = packageMetas[packageName]
   <p
     class="flex space-x-1 rounded-full border border-corvu-200 bg-corvu-100 px-2 pb-0.5 pt-1 font-mono text-xs"
   >
-    <span
-      class="size-3.5 text-center font-sans text-sm font-extrabold leading-4"
-      >V</span
-    ><span>{packageMeta.version}</span>
+    <span class="flex size-3.5 items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 64 64"
+        class="size-3"
+        ><path
+          fill="currentColor"
+          d="M17.834 0a2 2 0 0 1 1.907 1.397l12.53 39.638a.529.529 0 0 0 1.01-.002L45.648 1.404A2 2 0 0 1 47.558 0h13.62a2 2 0 0 1 1.888 2.662l-21.058 60A2 2 0 0 1 40.121 64h-15.97a2 2 0 0 1-1.885-1.33L.948 2.67A2 2 0 0 1 2.833 0h15.001Z"
+        ></path></svg
+      >
+    </span>
+    <span>{packageMeta.version}</span>
   </p>
   <a
     href={packageMeta.npmHref}
