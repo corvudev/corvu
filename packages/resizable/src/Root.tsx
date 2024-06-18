@@ -19,19 +19,14 @@ import {
   createInternalResizableContext,
   createResizableContext,
 } from '@src/context'
+import { deltaResize, resizePanel } from '@src/lib/resize'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
-import { fixToPrecision, resolveSize, splitPanels } from '@src/lib/utils'
-import {
-  getDistributablePercentage,
-  resize as internalResize,
-  resizePanel,
-} from '@src/lib/resize'
 import { isFunction, type Size } from '@corvu/utils'
 import type { PanelData, PanelInstance, ResizeStrategy } from '@src/lib/types'
+import { resolveSize, splitPanels } from '@src/lib/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createSize from '@corvu/utils/create/size'
-import { handleResizeConstraints } from '@src/lib/cursor'
 import { mergeRefs } from '@corvu/utils/reactivity'
 
 export type ResizableRootCorvuProps = {
@@ -266,12 +261,12 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
       const deltaPercentage = allowedSize - sizes()[panelIndex]!
 
       resizePanel({
-        initialSizes: panels().map((panel) => panel.size()),
         deltaPercentage,
-        collapsible: false,
         strategy: strategy ?? 'both',
-        panels: panels(),
         panel,
+        panels: panels(),
+        initialSizes: panels().map((panel) => panel.size()),
+        collapsible: false,
         resizableData: {
           rootSize: rootSize(),
           orientation: localProps.orientation,
@@ -294,12 +289,12 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
       if (!panel.data.collapsible || panelSize === collapsedSize) return
       const deltaPercentage = collapsedSize - panelSize
       resizePanel({
-        initialSizes: panels().map((panel) => panel.size()),
         deltaPercentage,
-        collapsible: true,
         strategy: strategy ?? 'both',
-        panels: panels(),
         panel,
+        panels: panels(),
+        initialSizes: panels().map((panel) => panel.size()),
+        collapsible: true,
         resizableData: {
           rootSize: rootSize(),
           orientation: localProps.orientation,
@@ -324,12 +319,12 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
       const deltaPercentage = minSize - panelSize
 
       resizePanel({
-        initialSizes: panels().map((panel) => panel.size()),
         deltaPercentage,
-        collapsible: true,
         strategy: strategy ?? 'both',
-        panels: panels(),
         panel,
+        panels: panels(),
+        initialSizes: panels().map((panel) => panel.size()),
+        collapsible: true,
         resizableData: {
           rootSize: rootSize(),
           orientation: localProps.orientation,
@@ -347,174 +342,26 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
       initialSizes = panels().map((panel) => panel.size())
       altKeyCache = altKey
     }
-    if (altKey && panels().length > 2) {
-      let panelIndex =
-        panels().filter(
-          (panel) =>
-            handle.compareDocumentPosition(panel.data.element) &
-            Node.DOCUMENT_POSITION_PRECEDING,
-        ).length - 1
-      const isPrecedingHandle = panelIndex === 0
-      if (isPrecedingHandle) {
-        panelIndex++
-        delta = -delta
-      }
-
-      const panel = panels()[panelIndex]!
-      const panelSize = initialSizes[panelIndex]!
-      const deltaPercentage = delta / rootSize()
-      const minDelta =
-        resolveSize(panel.data.minSize ?? 0, rootSize()) - panelSize
-      const maxDelta =
-        resolveSize(panel.data.maxSize ?? 1, rootSize()) - panelSize
-      const cappedDeltaPercentage =
-        Math.max(minDelta, Math.min(deltaPercentage * 2, maxDelta)) / 2
-
-      const [precedingPanels, followingPanels] = splitPanels({
-        panels: panels(),
-        focusedElement: panel.data.element,
-      })
-      const precedingPanelsIncluding = [...precedingPanels, panel]
-      const followingPanelsIncluding = [panel, ...followingPanels]
-      const distributablePercentage = getDistributablePercentage({
-        desiredPercentage: cappedDeltaPercentage,
-        initialSizes,
-        collapsible: false,
-        resizeActions: [
-          {
-            precedingPanels: precedingPanelsIncluding,
-            followingPanels: followingPanels,
-          },
-          {
-            precedingPanels: precedingPanels,
-            followingPanels: followingPanelsIncluding,
-            negate: true,
-          },
-        ],
-        resizableData: {
-          rootSize: rootSize(),
-        },
-      })
-
-      if (localProps.handleCursorStyle === true) {
-        handleResizeConstraints({
-          orientation: localProps.orientation,
-          desiredPercentage: deltaPercentage,
-          distributablePercentage,
-          revertConstraints: isPrecedingHandle,
-        })
-      }
-
-      internalResize({
-        initialSizes,
-        collapsible: false,
-        resizeActions: [
-          {
-            precedingPanels: precedingPanelsIncluding,
-            followingPanels,
-            deltaPercentage: distributablePercentage,
-          },
-          {
-            precedingPanels,
-            followingPanels: followingPanelsIncluding,
-            deltaPercentage: -distributablePercentage,
-          },
-        ],
-        resizableData: {
-          rootSize: rootSize(),
-          orientation: localProps.orientation,
-          setSizes,
-        },
-      })
-    } else {
-      const [precedingPanels, followingPanels] = splitPanels({
-        panels: panels(),
-        focusedElement: handle,
-      })
-
-      const desiredPercentage = delta / rootSize()
-
-      const distributablePercentage = getDistributablePercentage({
-        desiredPercentage,
-        initialSizes,
-        collapsible: true,
-        resizeActions: [
-          {
-            precedingPanels,
-            followingPanels,
-          },
-        ],
-        resizableData: {
-          rootSize: rootSize(),
-        },
-      })
-
-      internalResize({
-        initialSizes,
-        collapsible: true,
-        resizeActions: [
-          {
-            precedingPanels,
-            followingPanels,
-            deltaPercentage: distributablePercentage,
-          },
-        ],
-        resizableData: {
-          rootSize: rootSize(),
-          orientation: localProps.orientation,
-          setSizes,
-        },
-      })
-
-      if (localProps.handleCursorStyle === true) {
-        const fixedDesiredPercentage = fixToPrecision(desiredPercentage)
-        const fixedDistributablePercentage = fixToPrecision(
-          distributablePercentage,
-        )
-
-        let betweenCollapse = false
-        const precedingPanel = precedingPanels[precedingPanels.length - 1]!
-        if (precedingPanel.data.collapsible) {
-          const precedingCollapsedSize = resolveSize(
-            precedingPanel.data.collapsedSize ?? 0,
-            rootSize(),
-          )
-          if (
-            (precedingPanel.size() === precedingCollapsedSize &&
-              fixedDesiredPercentage > fixedDistributablePercentage) ||
-            (precedingPanel.size() !== precedingCollapsedSize &&
-              fixedDesiredPercentage < fixedDistributablePercentage)
-          ) {
-            betweenCollapse = true
-          }
-        }
-        const followingPanel = followingPanels[0]!
-        if (followingPanel.data.collapsible) {
-          const followingCollapsedSize = resolveSize(
-            followingPanel.data.collapsedSize ?? 0,
-            rootSize(),
-          )
-          if (
-            (followingPanel.size() === followingCollapsedSize &&
-              fixedDesiredPercentage < fixedDistributablePercentage) ||
-            (followingPanel.size() !== followingCollapsedSize &&
-              fixedDesiredPercentage > fixedDistributablePercentage)
-          ) {
-            betweenCollapse = true
-          }
-        }
-
-        handleResizeConstraints({
-          orientation: localProps.orientation,
-          desiredPercentage,
-          distributablePercentage,
-          betweenCollapse,
-        })
-      }
-    }
+    deltaResize({
+      deltaPercentage: delta / rootSize(),
+      altKey,
+      handle,
+      panels: panels(),
+      initialSizes,
+      resizableData: {
+        rootSize: rootSize(),
+        handleCursorStyle: localProps.handleCursorStyle,
+        orientation: localProps.orientation,
+        setSizes,
+      },
+    })
   }
 
-  const onKeyDown = (handle: HTMLElement, event: KeyboardEvent) => {
+  const onKeyDown = (
+    handle: HTMLElement,
+    event: KeyboardEvent,
+    altKey: boolean,
+  ) => {
     if (event.key === 'Enter') {
       const [precedingPanels, followingPanels] = splitPanels({
         panels: panels(),
@@ -565,38 +412,17 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
 
     event.preventDefault()
 
-    const [precedingPanels, followingPanels] = splitPanels({
+    const initialSizes = panels().map((panel) => panel.size())
+
+    deltaResize({
+      deltaPercentage,
+      altKey,
+      handle,
       panels: panels(),
-      focusedElement: handle,
-    })
-
-    const distributablePercentage = getDistributablePercentage({
-      desiredPercentage: deltaPercentage,
-      initialSizes: panels().map((panel) => panel.size()),
-      collapsible: true,
-      resizeActions: [
-        {
-          precedingPanels,
-          followingPanels,
-        },
-      ],
+      initialSizes,
       resizableData: {
         rootSize: rootSize(),
-      },
-    })
-
-    internalResize({
-      initialSizes: panels().map((panel) => panel.size()),
-      collapsible: true,
-      resizeActions: [
-        {
-          precedingPanels,
-          followingPanels,
-          deltaPercentage: distributablePercentage,
-        },
-      ],
-      resizableData: {
-        rootSize: rootSize(),
+        handleCursorStyle: false,
         orientation: localProps.orientation,
         setSizes,
       },

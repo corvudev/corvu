@@ -66,7 +66,11 @@ export type InternalResizableContextValue = ResizableContextValue & {
   unregisterPanel: (id: string) => void
   onDrag: (handle: HTMLElement, delta: number, altKey: boolean) => void
   onDragEnd: () => void
-  onKeyDown: (handle: HTMLElement, event: KeyboardEvent) => void
+  onKeyDown: (
+    handle: HTMLElement,
+    event: KeyboardEvent,
+    altKey: boolean,
+  ) => void
 }
 
 const InternalResizableContext = createContext<InternalResizableContextValue>()

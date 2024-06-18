@@ -274,7 +274,9 @@ const ResizableHandle = <T extends ValidComponent = 'button'>(
     if (callEventHandler(localProps.onKeyDown, e) || dragging()) return
     const element = ref()
     if (!element) return
-    context().onKeyDown(element, e)
+    const altKey =
+      localProps.altKey === 'only' || (localProps.altKey !== false && e.altKey)
+    context().onKeyDown(element, e, altKey)
   }
   const onKeyUp: JSX.EventHandlerUnion<HTMLButtonElement, KeyboardEvent> = (
     e,

@@ -1,7 +1,17 @@
 import { fixToPrecision, resolveSize, splitPanels } from '@src/lib/utils'
 import type { PanelInstance, ResizeStrategy } from '@src/lib/types'
+import { handleResizeConstraints } from '@src/lib/cursor'
 import { type Setter } from 'solid-js'
 
+/**
+ * Calculates the distributable percentage for the given desired percentage and resize actions.
+ * @param desiredPercentage - The desired percentage to distribute.
+ * @param initialSizes - The initial sizes of the panels.
+ * @param collapsible - Whether the panels are allowed to collapse to distribute the percentage.
+ * @param resizeActions - The resize actions to distribute the percentage.
+ * @param resizableData - Data related to the resizable instance.
+ * @returns number - The distributable percentage.
+ */
 const getDistributablePercentage = (props: {
   desiredPercentage: number
   initialSizes: number[]
@@ -31,11 +41,11 @@ const getDistributablePercentage = (props: {
       // eslint-disable-next-line prefer-const
       collapsedPreceding,
     ] = distributePercentage({
+      desiredPercentage,
       side: 'preceding',
       panels: resizeAction.precedingPanels,
       initialSizes: newSizes,
       initialSizesStartIndex: 0,
-      desiredPercentage,
       collapsible: props.collapsible,
       rootSize: props.resizableData.rootSize,
     })
@@ -46,11 +56,11 @@ const getDistributablePercentage = (props: {
       // eslint-disable-next-line prefer-const
       collapsedFollowing,
     ] = distributePercentage({
+      desiredPercentage,
       side: 'following',
       panels: resizeAction.followingPanels,
       initialSizes: newSizes,
       initialSizesStartIndex: resizeAction.precedingPanels.length,
-      desiredPercentage,
       collapsible: props.collapsible,
       rootSize: props.resizableData.rootSize,
     })
@@ -89,12 +99,23 @@ const getDistributablePercentage = (props: {
   return distributablePercentage
 }
 
+/**
+ * Tries to distribute the desired percentage to the given panels. Doesn't actually resize the panels and is used to calculate the distributable percentage.
+ * @param desiredPercentage - The desired percentage to distribute.
+ * @param side - Whether the panels are preceding or following the handle.
+ * @param panels - The panels to resize.
+ * @param initialSizes - The initial sizes of the panels.
+ * @param initialSizesStartIndex - The index of the initial sizes to start from.
+ * @param collapsible - Whether the panels are allowed to collapse to distribute the percentage.
+ * @param rootSize - The resizable root size in pixels.
+ * @returns [number, number[], boolean] - The distributed percentage, the panel sizes after distribution, and whether a panel was collapsed.
+ */
 const distributePercentage = (props: {
+  desiredPercentage: number
   side: 'preceding' | 'following'
   panels: PanelInstance[]
   initialSizes: number[]
   initialSizesStartIndex: number
-  desiredPercentage: number
   collapsible: boolean
   rootSize: number
 }): [number, number[], boolean] => {
@@ -235,6 +256,12 @@ const distributePercentage = (props: {
   return [distributedPercentage, distributedSizes, collapsed]
 }
 
+/**
+ * Figure out the resize direction based on the desired percentage and side.
+ * @param side - Whether the panels to resize are preceding or following the handle.
+ * @param desiredPercentage - The desired percentage to resize.
+ * @returns 'precedingIncreasing' | 'precedingDecreasing' | 'followingIncreasing' | 'followingDecreasing' - The resize direction.
+ */
 const getResizeDirection = (props: {
   side: 'preceding' | 'following'
   desiredPercentage: number
@@ -251,6 +278,13 @@ const getResizeDirection = (props: {
   }
 }
 
+/**
+ * Resizes panels based on given resize actions.
+ * @param initialSizes - The initial sizes of the panels.
+ * @param collapsible - Whether the panels are allowed to collapse to distribute the percentage.
+ * @param resizeActions - The resize actions to distribute the percentage.
+ * @param resizableData - Data related to the resizable instance.
+ */
 const resize = (props: {
   initialSizes: number[]
   collapsible: boolean
@@ -268,20 +302,20 @@ const resize = (props: {
   let newSizes = props.initialSizes
   for (const resizeAction of props.resizeActions) {
     const [, distributedSizesPreceding] = distributePercentage({
+      desiredPercentage: resizeAction.deltaPercentage,
       side: 'preceding',
       panels: resizeAction.precedingPanels,
       initialSizes: newSizes,
       initialSizesStartIndex: 0,
-      desiredPercentage: resizeAction.deltaPercentage,
       collapsible: props.collapsible,
       rootSize: props.resizableData.rootSize,
     })
     const [, distributedSizesFollowing] = distributePercentage({
+      desiredPercentage: resizeAction.deltaPercentage,
       side: 'following',
       panels: resizeAction.followingPanels,
       initialSizes: newSizes,
       initialSizesStartIndex: resizeAction.precedingPanels.length,
-      desiredPercentage: resizeAction.deltaPercentage,
       collapsible: props.collapsible,
       rootSize: props.resizableData.rootSize,
     })
@@ -301,13 +335,23 @@ const resize = (props: {
   props.resizableData.setSizes(newSizes.map(fixToPrecision))
 }
 
+/**
+ * Resizes a panel by using the given strategy.
+ * @param deltaPercentage - The delta percentage to resize the panel.
+ * @param strategy - The resize strategy to apply.
+ * @param panel - The panel to resize.
+ * @param panels - The panels to resize.
+ * @param initialSizes - The initial sizes of the panels.
+ * @param collapsible - Whether the panels are allowed to collapse to distribute the percentage.
+ * @param resizableData - Data related to the resizable instance.
+ */
 const resizePanel = (props: {
-  initialSizes: number[]
   deltaPercentage: number
-  collapsible: boolean
   strategy: ResizeStrategy
-  panels: PanelInstance[]
   panel: PanelInstance
+  panels: PanelInstance[]
+  initialSizes: number[]
+  collapsible: boolean
   resizableData: {
     rootSize: number
     orientation: 'horizontal' | 'vertical'
@@ -410,4 +454,184 @@ const resizePanel = (props: {
   }
 }
 
-export { getDistributablePercentage, resize, resizePanel }
+/**
+ * Resizes panels based on the given delta percentage. Supports alt key resize mode.
+ * @param deltaPercentage - The delta percentage to resize the panels.
+ * #param altKey - Whether the alt key is pressed.
+ * @param handle - The handle that is being dragged.
+ * @param panels - The panels to resize.
+ * @param initialSizes - The initial sizes of the panels.
+ * @param resizableData - Data related to the resizable instance.
+ */
+const deltaResize = (props: {
+  deltaPercentage: number
+  altKey: boolean
+  handle: HTMLElement
+  panels: PanelInstance[]
+  initialSizes: number[]
+  resizableData: {
+    rootSize: number
+    handleCursorStyle: boolean
+    orientation: 'horizontal' | 'vertical'
+    setSizes: Setter<number[]>
+  }
+}) => {
+  if (props.altKey && props.panels.length > 2) {
+    let panelIndex =
+      props.panels.filter(
+        (panel) =>
+          props.handle.compareDocumentPosition(panel.data.element) &
+          Node.DOCUMENT_POSITION_PRECEDING,
+      ).length - 1
+    const isPrecedingHandle = panelIndex === 0
+    if (isPrecedingHandle) {
+      panelIndex++
+      props.deltaPercentage = -props.deltaPercentage
+    }
+
+    const panel = props.panels[panelIndex]!
+    const panelSize = props.initialSizes[panelIndex]!
+    const minDelta =
+      resolveSize(panel.data.minSize ?? 0, props.resizableData.rootSize) -
+      panelSize
+    const maxDelta =
+      resolveSize(panel.data.maxSize ?? 1, props.resizableData.rootSize) -
+      panelSize
+    const cappedDeltaPercentage =
+      Math.max(minDelta, Math.min(props.deltaPercentage * 2, maxDelta)) / 2
+
+    const [precedingPanels, followingPanels] = splitPanels({
+      panels: props.panels,
+      focusedElement: panel.data.element,
+    })
+    const precedingPanelsIncluding = [...precedingPanels, panel]
+    const followingPanelsIncluding = [panel, ...followingPanels]
+    const distributablePercentage = getDistributablePercentage({
+      desiredPercentage: cappedDeltaPercentage,
+      initialSizes: props.initialSizes,
+      collapsible: false,
+      resizeActions: [
+        {
+          precedingPanels: precedingPanelsIncluding,
+          followingPanels: followingPanels,
+        },
+        {
+          precedingPanels: precedingPanels,
+          followingPanels: followingPanelsIncluding,
+          negate: true,
+        },
+      ],
+      resizableData: {
+        rootSize: props.resizableData.rootSize,
+      },
+    })
+
+    if (props.resizableData.handleCursorStyle === true) {
+      handleResizeConstraints({
+        orientation: props.resizableData.orientation,
+        desiredPercentage: props.deltaPercentage,
+        distributablePercentage,
+        revertConstraints: isPrecedingHandle,
+      })
+    }
+
+    resize({
+      initialSizes: props.initialSizes,
+      collapsible: false,
+      resizeActions: [
+        {
+          precedingPanels: precedingPanelsIncluding,
+          followingPanels,
+          deltaPercentage: distributablePercentage,
+        },
+        {
+          precedingPanels,
+          followingPanels: followingPanelsIncluding,
+          deltaPercentage: -distributablePercentage,
+        },
+      ],
+      resizableData: props.resizableData,
+    })
+  } else {
+    const [precedingPanels, followingPanels] = splitPanels({
+      panels: props.panels,
+      focusedElement: props.handle,
+    })
+
+    const distributablePercentage = getDistributablePercentage({
+      desiredPercentage: props.deltaPercentage,
+      initialSizes: props.initialSizes,
+      collapsible: true,
+      resizeActions: [
+        {
+          precedingPanels,
+          followingPanels,
+        },
+      ],
+      resizableData: {
+        rootSize: props.resizableData.rootSize,
+      },
+    })
+
+    resize({
+      initialSizes: props.initialSizes,
+      collapsible: true,
+      resizeActions: [
+        {
+          precedingPanels,
+          followingPanels,
+          deltaPercentage: distributablePercentage,
+        },
+      ],
+      resizableData: props.resizableData,
+    })
+
+    if (props.resizableData.handleCursorStyle) {
+      const fixedDesiredPercentage = fixToPrecision(props.deltaPercentage)
+      const fixedDistributablePercentage = fixToPrecision(
+        distributablePercentage,
+      )
+
+      let betweenCollapse = false
+      const precedingPanel = precedingPanels[precedingPanels.length - 1]!
+      if (precedingPanel.data.collapsible) {
+        const precedingCollapsedSize = resolveSize(
+          precedingPanel.data.collapsedSize ?? 0,
+          props.resizableData.rootSize,
+        )
+        if (
+          (precedingPanel.size() === precedingCollapsedSize &&
+            fixedDesiredPercentage > fixedDistributablePercentage) ||
+          (precedingPanel.size() !== precedingCollapsedSize &&
+            fixedDesiredPercentage < fixedDistributablePercentage)
+        ) {
+          betweenCollapse = true
+        }
+      }
+      const followingPanel = followingPanels[0]!
+      if (followingPanel.data.collapsible) {
+        const followingCollapsedSize = resolveSize(
+          followingPanel.data.collapsedSize ?? 0,
+          props.resizableData.rootSize,
+        )
+        if (
+          (followingPanel.size() === followingCollapsedSize &&
+            fixedDesiredPercentage < fixedDistributablePercentage) ||
+          (followingPanel.size() !== followingCollapsedSize &&
+            fixedDesiredPercentage > fixedDistributablePercentage)
+        ) {
+          betweenCollapse = true
+        }
+      }
+
+      handleResizeConstraints({
+        orientation: props.resizableData.orientation,
+        desiredPercentage: props.deltaPercentage,
+        distributablePercentage,
+        betweenCollapse,
+      })
+    }
+  }
+}
+
+export { resizePanel, deltaResize }
