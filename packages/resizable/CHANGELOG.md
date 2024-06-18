@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.1...@corvu/resizable@0.2.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* **resizable:** respect altKey in onKeyDown ([1705522](https://github.com/corvudev/corvu/commit/1705522653457cae4b6181d9d17e10d33872e64c))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.0...@corvu/resizable@0.2.1) (2024-05-26)
 
 
