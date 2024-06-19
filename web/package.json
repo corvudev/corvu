@@ -9,6 +9,7 @@
     "email": "code@jasi.dev",
     "url": "https://github.com/GiyoMoon"
   },
+  "type": "module",
   "scripts": {
     "build": "astro build",
     "clean": "rm -rf .turbo dist node_modules",
