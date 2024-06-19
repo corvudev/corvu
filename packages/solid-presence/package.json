@@ -1,6 +1,6 @@
 {
   "name": "solid-presence",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "description": "SolidJS utility that manages the presence of an element in the DOM while being aware of pending animations.",
   "keywords": [

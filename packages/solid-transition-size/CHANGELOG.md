@@ -1,5 +1,12 @@
 # solid-transition-size
 
+## [0.1.3](https://github.com/corvudev/corvu/compare/solid-transition-size@0.1.2...solid-transition-size@0.1.3) (2024-06-19)
+
+
+### Bug Fixes
+
+* add solid export ([c228274](https://github.com/corvudev/corvu/commit/c228274e87ac7fb5a53953b8524d25ebd50d9c83))
+
 ## [0.1.2](https://github.com/corvudev/corvu/compare/solid-transition-size@0.1.1...solid-transition-size@0.1.2) (2024-05-13)
 
 
