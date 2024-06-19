@@ -31,4 +31,7 @@ function generateConfig(format: 'esm' | 'cjs', jsx: boolean): Options {
   }
 }
 
-export default defineConfig([generateConfig('esm', false)])
+export default defineConfig([
+  generateConfig('esm', false),
+  generateConfig('esm', true),
+])
