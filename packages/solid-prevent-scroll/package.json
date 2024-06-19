@@ -1,6 +1,6 @@
 {
   "name": "solid-prevent-scroll",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": false,
   "description": "SolidJS utility that prevents scrolling outside of a given DOM element. Works by preventing events that else would lead to scrolling.",
   "keywords": [
