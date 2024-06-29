@@ -77,58 +77,55 @@ function createTransitionSize(props: {
     })
   })
 
-  const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
+  const resizeObserverCallback = ([entry]: ResizeObserverEntry[]) => {
     if (transitioning()) return
-    for (const entry of entries) {
-      const target = entry.target as HTMLElement
-      if (target !== access(defaultedProps.element)) continue
-      const currentSize: [number, number] = [
-        target.offsetWidth,
-        target.offsetHeight,
-      ]
-      const dimension = access(defaultedProps.dimension)
-      if (dimension === 'both') {
-        if (!startSize) {
-          startSize = currentSize
-        } else if (
-          startSize[0] !== currentSize[0] &&
-          startSize[1] !== currentSize[1]
-        ) {
-          batch(() => {
-            setTransitionSize(startSize)
-            setTransitioning(true)
-          })
-          afterPaint(() => {
-            setTransitionSize(currentSize)
-            const transitionDuration = parseFloat(
-              getComputedStyle(entry.target).transitionDuration,
-            )
-            if (transitionDuration === 0) {
-              reset()
-            }
-          })
-        }
-      } else {
-        if (!startSize) {
-          startSize = currentSize
-        } else if (
-          getSizeOfDimension(dimension, startSize) !==
-          getSizeOfDimension(dimension, currentSize)
-        ) {
-          batch(() => {
-            setTransitionSize(getSizeOfDimension(dimension, startSize!))
-            setTransitioning(true)
-          })
-          afterPaint(() => {
-            setTransitionSize(getSizeOfDimension(dimension, currentSize))
-            const transitionDuration = parseFloat(
-              getComputedStyle(entry.target).transitionDuration,
-            )
-            if (transitionDuration === 0) {
-              reset()
-            }
-          })
-        }
+    const target = entry!.target as HTMLElement
+    const currentSize: [number, number] = [
+      target.offsetWidth,
+      target.offsetHeight,
+    ]
+    const dimension = access(defaultedProps.dimension)
+    if (dimension === 'both') {
+      if (!startSize) {
+        startSize = currentSize
+      } else if (
+        startSize[0] !== currentSize[0] &&
+        startSize[1] !== currentSize[1]
+      ) {
+        batch(() => {
+          setTransitionSize(startSize)
+          setTransitioning(true)
+        })
+        afterPaint(() => {
+          setTransitionSize(currentSize)
+          const transitionDuration = parseFloat(
+            getComputedStyle(entry!.target).transitionDuration,
+          )
+          if (transitionDuration === 0) {
+            reset()
+          }
+        })
+      }
+    } else {
+      if (!startSize) {
+        startSize = currentSize
+      } else if (
+        getSizeOfDimension(dimension, startSize) !==
+        getSizeOfDimension(dimension, currentSize)
+      ) {
+        batch(() => {
+          setTransitionSize(getSizeOfDimension(dimension, startSize!))
+          setTransitioning(true)
+        })
+        afterPaint(() => {
+          setTransitionSize(getSizeOfDimension(dimension, currentSize))
+          const transitionDuration = parseFloat(
+            getComputedStyle(entry!.target).transitionDuration,
+          )
+          if (transitionDuration === 0) {
+            reset()
+          }
+        })
       }
     }
   }

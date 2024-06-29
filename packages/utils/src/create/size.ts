@@ -20,11 +20,8 @@ const createSize = (props: {
     })
   })
 
-  const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-    for (const entry of entries) {
-      if (entry.target !== access(props.element)) continue
-      syncSize(entry.target as HTMLElement)
-    }
+  const resizeObserverCallback = ([entry]: ResizeObserverEntry[]) => {
+    syncSize(entry!.target as HTMLElement)
   }
 
   const syncSize = (element: HTMLElement) => {
