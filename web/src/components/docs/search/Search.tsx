@@ -1,4 +1,4 @@
-import { createEffect, For, Show } from 'solid-js'
+import { createEffect, For, on, Show } from 'solid-js'
 import createNavigation from '@components/docs/search/createNavigation'
 import SearchItem from '@components/docs/search/SearchItem'
 
@@ -36,18 +36,30 @@ const Search = (props: {
   setResult: (result: SearchResult | null) => void
   closeSearch: () => void
 }) => {
-  const { onKeyDown, onMouseMove, activeIndex } = createNavigation({
-    resultCount: () =>
-      props.result
-        ? Object.values(props.result).flatMap((items) => items).length
-        : 0,
-    onSelect: (index) => {
-      if (!props.result) return
-      props.closeSearch()
-      const resultArray = Object.values(props.result).flatMap((items) => items)
-      window.location.href = resultArray[index].pathname
-    },
-  })
+  const { resetActiveIndex, onKeyDown, onMouseMove, activeIndex } =
+    createNavigation({
+      resultCount: () =>
+        props.result
+          ? Object.values(props.result).flatMap((items) => items).length
+          : 0,
+      onSelect: (index) => {
+        if (!props.result) return
+        props.closeSearch()
+        const resultArray = Object.values(props.result).flatMap(
+          (items) => items,
+        )
+        window.location.href = resultArray[index].pathname
+      },
+    })
+
+  createEffect(
+    on(
+      () => props.result,
+      () => {
+        resetActiveIndex()
+      },
+    ),
+  )
 
   createEffect(() => {
     if (!props.searchValue) return props.setResult(null)

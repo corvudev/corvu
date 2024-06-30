@@ -39,6 +39,7 @@ const createNavigation = (props: {
     onKeyDown,
     onMouseMove,
     activeIndex,
+    resetActiveIndex: () => setActiveIndex(0),
   }
 }
 
