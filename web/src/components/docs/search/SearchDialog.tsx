@@ -45,41 +45,45 @@ const SearchDialog = () => {
         setResult({})
       }}
     >
-      <Dialog.Trigger class="group hidden items-center rounded-md border border-corvu-200 bg-corvu-bg px-2 py-1.5 transition-colors hover:bg-corvu-100 md:flex">
-        <span class="sr-only">Search docs</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 256 256"
-          class="size-5"
-        >
-          <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
-        </svg>
-        <span class="ml-1 text-sm">Search</span>
-        <kbd class="ml-1 min-w-6 rounded border border-corvu-200 bg-corvu-100 px-1 pb-px pt-1 text-center font-mono text-xs transition-colors group-hover:border-corvu-300 group-hover:bg-corvu-200 ">
-          ⌘K
-        </kbd>
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay class="fixed inset-0 z-50 bg-black/50" />
-        <Dialog.Content class="fixed bottom-auto left-1/2 top-14 z-50 w-full max-w-[550px] -translate-x-1/2 overflow-hidden rounded-lg border border-corvu-200 bg-corvu-bg pt-4 duration-200 corvu-open:animate-in corvu-open:fade-in-0 corvu-open:zoom-in-[0.99] corvu-open:slide-in-from-left-1/2 corvu-open:slide-in-from-top-[20%] corvu-closed:animate-out corvu-closed:fade-out-0 corvu-closed:zoom-out-[0.99] corvu-closed:slide-out-to-left-1/2 corvu-closed:slide-out-to-top-[20%]">
-          <Search
-            searchValue={searchValue()}
-            setSearchValue={setSearchValue}
-            result={result()}
-            setResult={setResult}
-            closeSearch={() => setOpen(false)}
-          />
-          <div class="items-center border-t border-corvu-200 bg-corvu-100 px-4 py-2 text-sm ">
-            <KeyboardShortcut key="↩" />
-            <span class="ml-1">select</span>
-            <KeyboardShortcut key="↑/↓" class="ml-3" />
-            <span class="ml-1">prev/next</span>
-            <KeyboardShortcut key="esc" class="ml-3" />
-            <span class="ml-1">exit</span>
-          </div>
-        </Dialog.Content>
-      </Dialog.Portal>
+      {(props) => (
+        <>
+          <Dialog.Trigger class="group hidden items-center rounded-md border border-corvu-200 bg-corvu-bg px-2 py-1.5 transition-colors hover:bg-corvu-100 md:flex">
+            <span class="sr-only">Search docs</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 256 256"
+              class="size-5"
+            >
+              <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
+            </svg>
+            <span class="ml-1 text-sm">Search</span>
+            <kbd class="ml-1 min-w-6 rounded border border-corvu-200 bg-corvu-100 px-1 pb-px pt-1 text-center font-mono text-xs transition-colors group-hover:border-corvu-300 group-hover:bg-corvu-200 ">
+              ⌘K
+            </kbd>
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay class="fixed inset-0 z-50 bg-black/50" />
+            <Dialog.Content class="fixed bottom-auto left-1/2 top-14 z-50 w-full max-w-[550px] -translate-x-1/2 overflow-hidden rounded-lg border border-corvu-200 bg-corvu-bg pt-4 duration-200 corvu-open:animate-in corvu-open:fade-in-0 corvu-open:zoom-in-[0.99] corvu-open:slide-in-from-left-1/2 corvu-open:slide-in-from-top-[20%] corvu-closed:animate-out corvu-closed:fade-out-0 corvu-closed:zoom-out-[0.99] corvu-closed:slide-out-to-left-1/2 corvu-closed:slide-out-to-top-[20%]">
+              <Search
+                searchValue={searchValue()}
+                setSearchValue={setSearchValue}
+                result={result()}
+                setResult={setResult}
+                closeSearch={() => props.setOpen(false)}
+              />
+              <div class="items-center border-t border-corvu-200 bg-corvu-100 px-4 py-2 text-sm ">
+                <KeyboardShortcut key="↩" />
+                <span class="ml-1">select</span>
+                <KeyboardShortcut key="↑/↓" class="ml-3" />
+                <span class="ml-1">prev/next</span>
+                <KeyboardShortcut key="esc" class="ml-3" />
+                <span class="ml-1">exit</span>
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </>
+      )}
     </Dialog>
   )
 }

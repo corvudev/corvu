@@ -71,7 +71,7 @@ const SearchDrawer = () => {
                 setSearchValue={setSearchValue}
                 result={result()}
                 setResult={setResult}
-                closeSearch={() => setOpen(false)}
+                closeSearch={() => props.setOpen(false)}
               />
             </Drawer.Content>
           </Drawer.Portal>
