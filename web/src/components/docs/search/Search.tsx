@@ -44,11 +44,11 @@ const Search = (props: {
           : 0,
       onSelect: (index) => {
         if (!props.result) return
-        props.closeSearch()
         const resultArray = Object.values(props.result).flatMap(
           (items) => items,
         )
         window.location.href = resultArray[index].pathname
+        props.closeSearch()
       },
     })
 
