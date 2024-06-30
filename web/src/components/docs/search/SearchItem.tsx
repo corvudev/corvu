@@ -5,15 +5,17 @@ const SearchItem = (props: {
   item: SearchItemType
   onMouseMove: () => void
   isActive: boolean
+  closeSearch: () => void
 }) => {
   return (
     <a
-      href={props.item.href}
+      href={props.item.pathname}
       class={clsx('block p-2 text-sm', {
         'bg-corvu-300': props.isActive,
         'bg-corvu-100': !props.isActive,
       })}
       onMouseMove={props.onMouseMove}
+      onClick={props.closeSearch}
     >
       <span class="block font-bold">{props.item.hierarchy}</span>
       <span

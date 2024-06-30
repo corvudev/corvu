@@ -9,7 +9,7 @@ export type SearchResult = {
 export type SearchItemType = {
   hierarchy: string
   content: string
-  href: string
+  pathname: string
 }
 
 type TypeSenseResponse = {
@@ -34,6 +34,7 @@ const Search = (props: {
   setSearchValue: (searchValue: string) => void
   result: SearchResult | null
   setResult: (result: SearchResult | null) => void
+  closeSearch: () => void
 }) => {
   const { onKeyDown, onMouseMove, activeIndex } = createNavigation({
     resultCount: () =>
@@ -42,8 +43,9 @@ const Search = (props: {
         : 0,
     onSelect: (index) => {
       if (!props.result) return
+      props.closeSearch()
       const resultArray = Object.values(props.result).flatMap((items) => items)
-      window.history.pushState({}, '', resultArray[index].href)
+      window.location.href = resultArray[index].pathname
     },
   })
 
@@ -70,11 +72,13 @@ const Search = (props: {
           } else {
             hierarchy += hit_hierarchy.slice(1).join(' → ')
           }
+          const url = new URL(hit.document.url)
           return {
             group_title: hit.document['hierarchy.lvl0'],
             hierarchy,
             content: hit.highlight.content?.snippet,
             href: hit.document.url,
+            pathname: url.pathname + url.hash,
           }
         })
         .reduce(
@@ -170,6 +174,7 @@ const Search = (props: {
                           item={item}
                           onMouseMove={() => onMouseMove(itemIndex)}
                           isActive={itemIndex === activeIndex()}
+                          closeSearch={props.closeSearch}
                         />
                       )
                     }}

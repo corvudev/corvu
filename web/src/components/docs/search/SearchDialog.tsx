@@ -68,6 +68,7 @@ const SearchDialog = () => {
             setSearchValue={setSearchValue}
             result={result()}
             setResult={setResult}
+            closeSearch={() => setOpen(false)}
           />
           <div class="items-center border-t border-corvu-200 bg-corvu-100 px-4 py-2 text-sm ">
             <KeyboardShortcut key="↩" />
