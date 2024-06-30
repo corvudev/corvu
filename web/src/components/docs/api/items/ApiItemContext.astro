@@ -8,7 +8,7 @@ const { name, descriptionHtml, returns } = Astro.props
 ---
 
 <div>
-  <div class="not-prose inline-flex items-center space-x-2">
+  <div class="not-prose group inline-flex items-center space-x-2">
     <h3
       id={encodeURIComponent(name)}
       class="scroll-mt-20 text-xl font-bold md:scroll-mt-2"
@@ -19,6 +19,33 @@ const { name, descriptionHtml, returns } = Astro.props
     >
       Context
     </p>
+    <a
+      href={`#${encodeURIComponent(name)}`}
+      class="not-prose transition-opacity hover:text-corvu-400 group-hover:opacity-100 md:opacity-0"
+      data-typesense-ignore
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 256 256"
+        class="size-5"
+      >
+        <rect width="256" height="256" fill="none"></rect>
+        <path
+          d="M127.88,196l-5.94,5.94a48,48,0,0,1-67.88-67.88L78.17,110A48,48,0,0,1,144,108"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="24"></path>
+        <path
+          d="M128.12,60l5.94-5.94a48,48,0,0,1,67.88,67.88l-24.11,24.11A48,48,0,0,1,112,148"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="24"></path>
+      </svg>
+    </a>
   </div>
   <p class="mt-3" set:html={descriptionHtml} />
   <div class="mt-4">

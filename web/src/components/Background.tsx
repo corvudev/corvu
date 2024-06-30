@@ -39,7 +39,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
           <div
             class="absolute -z-20 hidden size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(hsl(var(--corvu-400)),#ffffff00_120%)] blur-md md:block"
             style={{
-              display: x() === null ? 'none' : 'block',
+              display: x() === null ? 'none' : undefined,
               left: `${x() ?? 0}px`,
               top: `${y() ?? 0}px`,
             }}
@@ -60,7 +60,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
           <div
             class="absolute -z-20 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(hsl(var(--corvu-400)),#ffffff00_120%)] blur-md"
             style={{
-              display: x() === null ? 'none' : 'block',
+              display: x() === null ? 'none' : undefined,
               left: `${x() ?? 0}px`,
               top: `${y() ?? 0}px`,
             }}

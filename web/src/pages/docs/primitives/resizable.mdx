@@ -138,8 +138,8 @@ Resizing while holding down the Alt key changes the size of a panel from both si
       slotName: 'tailwindConfig',
     }
   ]
-}]} client:load>
-  <AltKeyExample client:load />
+}]} client:visible>
+  <AltKeyExample client:visible />
   <RawCode slot="tailwindTsx" code={AltKeyTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -162,8 +162,8 @@ You can nest resizables to create more complex layouts. Resize handles automatic
       slotName: 'tailwindConfig',
     }
   ]
-}]} client:load>
-  <NestedExample client:load />
+}]} client:visible>
+  <NestedExample client:visible />
   <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -206,7 +206,7 @@ Edit the layout below and refresh the page to see how the panel sizes persist.
       slotName: 'tailwindConfig',
     }
   ]
-}]} client:load>
+}]} client:visible>
   <PersistentExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
@@ -232,8 +232,8 @@ Here, the left Panel is collapsible with `minSize={0.3}` and `collapsedSize={0.1
       slotName: 'tailwindConfig',
     }
   ]
-}]} client:load>
-  <CollapsibleExample client:load />
+}]} client:visible>
+  <CollapsibleExample client:visible />
   <RawCode slot="tailwindTsx" code={CollapsibleTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
@@ -281,8 +281,8 @@ Here is an example that uses this approach:
       slotName: 'tailwindConfig',
     }
   ]
-}]} client:load>
-  <HoistingExample client:load />
+}]} client:visible>
+  <HoistingExample client:visible />
   <RawCode slot="tailwindTsx" code={HoistingTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>

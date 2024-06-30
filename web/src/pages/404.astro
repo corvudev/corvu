@@ -5,7 +5,7 @@ import Background from '@components/Background'
 import LogoDark from '@assets/logo_dark.svg'
 import LogoLight from '@assets/logo_light.svg'
 import ThemeScript from '@components/ThemeScript.astro'
-import Topbar from '@components/Topbar'
+import Topbar from '@components/Topbar.astro'
 ---
 
 <!doctype html>
@@ -19,8 +19,8 @@ import Topbar from '@components/Topbar'
     <ThemeScript />
   </head>
   <body class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased">
-    <Background type="home" client:load />
-    <Topbar floating client:load />
+    <Background type="home" client:media="(min-width: 768px)" />
+    <Topbar />
     <main class="mx-auto h-16 w-full max-w-7xl px-4">
       <div class="flex grow flex-col items-center pt-40">
         <div class="flex flex-col items-center">

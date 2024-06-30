@@ -1,0 +1,19 @@
+{
+  "index_name": "corvu",
+  "start_urls": [
+    "https://corvu.dev/docs/"
+  ],
+  "sitemap_urls": [
+    "https://corvu.dev/sitemap-index.xml"
+  ],
+  "selectors": {
+    "lvl0": "article h1",
+    "lvl1": "article h2",
+    "lvl2": "article h3",
+    "lvl3": "article h4",
+    "text": "article p, article li"
+  },
+  "selectors_exclude": ["[data-typesense-ignore]"],
+  "nb_hits": 885
+}
+

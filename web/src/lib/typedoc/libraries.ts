@@ -446,8 +446,8 @@ const OtpField: Library = {
       kind: 'component',
       sorting: ['pattern', 'noScriptCSSFallback', 'contextId', 'as'],
     },
-    RootChildrenProps: {
-      kind: 'childrenProps',
+    useContext: {
+      kind: 'context',
       sorting: [
         'value',
         'isFocused',
@@ -458,8 +458,8 @@ const OtpField: Library = {
         'shiftPWManagers',
       ],
     },
-    useContext: {
-      kind: 'context',
+    RootChildrenProps: {
+      kind: 'childrenProps',
       sorting: [
         'value',
         'isFocused',
@@ -632,6 +632,35 @@ const Resizable: Library = {
     },
     usePanelContext: {
       kind: 'context',
+      sorting: [
+        'size',
+        'minSize',
+        'maxSize',
+        'collapsible',
+        'collapsedSize',
+        'collapseThreshold',
+        'collapsed',
+        'resize',
+        'collapse',
+        'expand',
+        'panelId',
+      ],
+    },
+    RootChildrenProps: {
+      kind: 'childrenProps',
+      sorting: [
+        'orientation',
+        'sizes',
+        'setSizes',
+        'keyboardDelta',
+        'handleCursorStyle',
+        'resize',
+        'collapse',
+        'expand',
+      ],
+    },
+    PanelChildrenProps: {
+      kind: 'childrenProps',
       sorting: [
         'size',
         'minSize',

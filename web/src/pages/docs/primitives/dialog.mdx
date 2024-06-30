@@ -130,8 +130,8 @@ Feel free to nest dialogs however you want. corvu is aware of nested dialogs and
       slotName: 'tailwindConfig',
     }
   ]
-}]} heading={false} client:load>
-  <NestedExample client:load />
+}]} client:visible>
+  <NestedExample client:visible />
   <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>

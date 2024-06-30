@@ -76,22 +76,20 @@ const TableOfContents: VoidComponent<{
   })
 
   return (
-    <div class="ml-6 hidden w-52 text-sm lg:flex">
-      <nav class="fixed">
-        {tableOfContents.length > 0 && (
-          <p class="text-base font-semibold">On this page</p>
-        )}
-        <ul class="mt-3 space-y-2">
-          <For each={tableOfContents}>
-            {(heading) => {
-              return (
-                <TocItem heading={heading} headingsInView={headingsInView()} />
-              )
-            }}
-          </For>
-        </ul>
-      </nav>
-    </div>
+    <nav class="fixed">
+      {tableOfContents.length > 0 && (
+        <p class="text-base font-semibold">On this page</p>
+      )}
+      <ul class="mt-3 space-y-2">
+        <For each={tableOfContents}>
+          {(heading) => {
+            return (
+              <TocItem heading={heading} headingsInView={headingsInView()} />
+            )
+          }}
+        </For>
+      </ul>
+    </nav>
   )
 }
 

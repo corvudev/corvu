@@ -1,5 +1,6 @@
-node_modules
-dist
+.env
 .turbo
+dist
+node_modules
 packages/*/typedoc.json
 tsup.config.**.mjs
