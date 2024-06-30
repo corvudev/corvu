@@ -45,6 +45,7 @@ const { name, descriptionHtml, inherits, props } = Astro.props
           stroke-linejoin="round"
           stroke-width="24"></path>
       </svg>
+      <span class="sr-only">Section titled {name}</span>
     </a>
   </div>
   <p class="mt-3" set:html={descriptionHtml} />

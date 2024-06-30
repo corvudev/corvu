@@ -48,7 +48,6 @@ const SearchDialog = () => {
       {(props) => (
         <>
           <Dialog.Trigger class="group hidden items-center rounded-md border border-corvu-200 bg-corvu-bg px-2 py-1.5 transition-colors hover:bg-corvu-100 md:flex">
-            <span class="sr-only">Search docs</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
