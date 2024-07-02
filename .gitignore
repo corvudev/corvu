@@ -2,5 +2,5 @@
 .turbo
 dist
 node_modules
-packages/*/typedoc.json
+packages/*/api.json
 tsup.config.**.mjs

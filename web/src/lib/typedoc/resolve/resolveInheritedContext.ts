@@ -15,9 +15,7 @@ const resolveInheritedContext = (
   return {
     name,
     kind: 'inherited-context',
-    descriptionHtml: formatText(
-      contextDeclaration.signatures![0].comment?.summary,
-    ),
+    descriptionHtml: formatText(contextDeclaration.comment?.summary),
     inherits: inheritedContext.inherits,
   }
 }

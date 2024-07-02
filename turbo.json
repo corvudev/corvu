@@ -41,7 +41,7 @@
         "^build"
       ],
       "outputs": [
-        "typedoc.json"
+        "api.json"
       ]
     }
   }

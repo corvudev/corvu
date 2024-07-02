@@ -12,16 +12,13 @@ const resolveInheritedComponent = (
   if (!componentDeclaration) {
     throw new Error(`Component declaration not found: ${name}`)
   }
-  const comment = componentDeclaration.signatures![0].comment
-  const dataTags = getTags('data', comment)
-  const cssTags = getTags('css', comment)
+  const dataTags = getTags('data', componentDeclaration.comment)
+  const cssTags = getTags('css', componentDeclaration.comment)
 
   return {
     name,
     kind: 'inherited-component',
-    descriptionHtml: formatText(
-      componentDeclaration.signatures![0].comment?.summary,
-    ),
+    descriptionHtml: formatText(componentDeclaration.comment?.summary),
     inherits: inheritedComponent.inherits,
     data: dataTags,
     css: cssTags,

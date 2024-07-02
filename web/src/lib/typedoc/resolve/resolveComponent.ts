@@ -29,7 +29,6 @@ const resolveComponent = (
   if (!componentDeclaration) {
     throw new Error(`Component declaration not found: ${name}`)
   }
-  const comment = componentDeclaration.signatures![0].comment
   const props = resolveComponentProps(componentDeclaration).sort((a, b) => {
     const indexA = component.sorting.indexOf(a.name)
     const indexB = component.sorting.indexOf(b.name)
@@ -50,15 +49,13 @@ const resolveComponent = (
       `Unused sorting values for ${name}: ${unusedSorting.join(', ')}`,
     )
   }
-  const dataTags = getTags('data', comment)
-  const cssTags = getTags('css', comment)
+  const dataTags = getTags('data', componentDeclaration.comment)
+  const cssTags = getTags('css', componentDeclaration.comment)
 
   return {
     name,
     kind: 'component',
-    descriptionHtml: formatText(
-      componentDeclaration.signatures![0].comment?.summary,
-    ),
+    descriptionHtml: formatText(componentDeclaration.comment?.summary),
     props,
     inherits: component.inherits ?? null,
     data: dataTags,
@@ -148,31 +145,31 @@ const resolveComponentProps = (component: DeclarationVariant) => {
 const resolveDefaultDynamicAs = (component: DeclarationVariant) => {
   let defaultAs = null
 
-  if (component.signatures![0].typeParameter) {
+  if (component.signatures![0].typeParameters) {
     if (
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      !component.signatures![0].typeParameter[0] ||
-      !component.signatures![0].typeParameter[0].default
+      !component.signatures![0].typeParameters[0] ||
+      !component.signatures![0].typeParameters[0].default
     ) {
       throw new Error(
         `Missing default type parameter for the ${component.name} component`,
       )
     }
     if (
-      component.signatures![0].typeParameter[0].default.type === 'literal' &&
-      component.signatures![0].typeParameter[0].default.value !== null
+      component.signatures![0].typeParameters[0].default.type === 'literal' &&
+      component.signatures![0].typeParameters[0].default.value !== null
     ) {
-      defaultAs = component.signatures![0].typeParameter[0].default.value
+      defaultAs = component.signatures![0].typeParameters[0].default.value
     } else if (
-      component.signatures![0].typeParameter[0].default.type === 'reference'
+      component.signatures![0].typeParameters[0].default.type === 'reference'
     ) {
-      defaultAs = component.signatures![0].typeParameter[0].default.name
+      defaultAs = component.signatures![0].typeParameters[0].default.name
     } else if (
-      component.signatures![0].typeParameter[0].default.type === 'union' &&
-      component.signatures![0].typeParameter[0].default.types[0].type ===
+      component.signatures![0].typeParameters[0].default.type === 'union' &&
+      component.signatures![0].typeParameters[0].default.types[0].type ===
         'literal'
     ) {
-      defaultAs = component.signatures![0].typeParameter[0].default.types[0]
+      defaultAs = component.signatures![0].typeParameters[0].default.types[0]
         .value as string
     } else {
       throw new Error(

@@ -48,9 +48,7 @@ const resolveContext = (
   return {
     name,
     kind: 'context',
-    descriptionHtml: formatText(
-      contextDeclaration.signatures![0].comment?.summary,
-    ),
+    descriptionHtml: formatText(contextDeclaration.comment?.summary),
     returns,
   }
 }
