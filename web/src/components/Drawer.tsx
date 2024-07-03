@@ -5,7 +5,7 @@ import HeaderLogoLight from '@assets/header_logo_light.svg'
 
 const NavDrawer: FlowComponent = (props) => {
   return (
-    <Drawer side="left" breakPoints={[0.75]}>
+    <Drawer initialOpen={true} side="left" breakPoints={[0.75]}>
       {(drawerProps) => (
         <>
           <Drawer.Trigger class="p-1.5 md:hidden">

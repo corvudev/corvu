@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import Dialog from '@corvu/dialog'
 
 const SearchDialog = () => {
-  const [open, setOpen] = createSignal(false)
+  const [open, setOpen] = createSignal(true)
   const [searchValue, setSearchValue] = createSignal('')
   const [result, setResult] = createSignal<SearchResult | null>(null)
 

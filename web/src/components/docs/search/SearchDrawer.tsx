@@ -3,7 +3,7 @@ import Search, { type SearchResult } from '@components/docs/search/Search'
 import Drawer from '@corvu/drawer'
 
 const SearchDrawer = () => {
-  const [open, setOpen] = createSignal(false)
+  const [open, setOpen] = createSignal(true)
   const [searchValue, setSearchValue] = createSignal('')
   const [result, setResult] = createSignal<SearchResult | null>(null)
 
