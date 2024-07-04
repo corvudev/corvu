@@ -9,7 +9,7 @@ import Topbar from '@components/Topbar.astro'
 ---
 
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,10 +18,10 @@ import Topbar from '@components/Topbar.astro'
     <title>corvu</title>
     <ThemeScript />
   </head>
-  <body class="flex h-full flex-col bg-corvu-bg text-corvu-text antialiased">
+  <body class="flex flex-col bg-corvu-bg text-corvu-text antialiased">
     <Background type="home" client:media="(min-width: 768px)" />
     <Topbar />
-    <main class="mx-auto h-16 w-full max-w-7xl px-4">
+    <main class="mx-auto w-full max-w-7xl px-4">
       <div class="flex grow flex-col items-center pt-40">
         <div class="flex flex-col items-center">
           <img
