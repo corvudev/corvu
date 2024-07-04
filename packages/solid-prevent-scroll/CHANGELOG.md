@@ -1,5 +1,12 @@
 # solid-prevent-scroll
 
+## [0.1.9](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.8...solid-prevent-scroll@0.1.9) (2024-07-04)
+
+
+### Features
+
+* add `restoreScrollPosition` option ([122f26c](https://github.com/corvudev/corvu/commit/122f26c9aa5fe34f059583e9af69a214c351e6a8))
+
 ## [0.1.8](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.7...solid-prevent-scroll@0.1.8) (2024-06-19)
 
 

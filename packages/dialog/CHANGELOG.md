@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.0...@corvu/dialog@0.2.1) (2024-07-04)
+
+
+### Features
+
+* add `restoreScrollPosition` option ([122f26c](https://github.com/corvudev/corvu/commit/122f26c9aa5fe34f059583e9af69a214c351e6a8))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.1.0...@corvu/dialog@0.2.0) (2024-05-21)
 
 

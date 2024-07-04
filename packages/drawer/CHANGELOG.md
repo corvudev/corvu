@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.2.1...@corvu/drawer@0.2.2) (2024-07-04)
+
+
+### Bug Fixes
+
+* avoid drawer snapping when using android swipe back ([b8b2432](https://github.com/corvudev/corvu/commit/b8b2432475546eaf41768e751482fab926270303))
+* properly end dragging if drawer is closing ([5fc3fb1](https://github.com/corvudev/corvu/commit/5fc3fb133858b2671f50dd6b881d03bbfd3d2f57))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.2.0...@corvu/drawer@0.2.1) (2024-05-25)
 
 

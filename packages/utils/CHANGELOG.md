@@ -1,5 +1,12 @@
 # @corvu/utils
 
+## [0.3.2](https://github.com/corvudev/corvu/compare/@corvu/utils@0.3.1...@corvu/utils@0.3.2) (2024-07-04)
+
+
+### Bug Fixes
+
+* remove unnecessary loop in ResizeObserver callback ([72c16aa](https://github.com/corvudev/corvu/commit/72c16aa92c8833d84cbfddf812745caeac8f8d6f))
+
 ## [0.3.1](https://github.com/corvudev/corvu/compare/@corvu/utils@0.3.0...@corvu/utils@0.3.1) (2024-05-25)
 
 
