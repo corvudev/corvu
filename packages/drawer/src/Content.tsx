@@ -32,6 +32,7 @@ export type DrawerContentSharedElementProps<T extends ValidComponent = 'div'> =
 
 export type DrawerContentElementProps = DrawerContentSharedElementProps & {
   onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
+  onTouchStart: JSX.EventHandlerUnion<HTMLElement, TouchEvent>
   onTransitionEnd: JSX.EventHandlerUnion<HTMLElement, TransitionEvent>
   'data-opening': '' | undefined
   'data-closing': '' | undefined
@@ -136,13 +137,15 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
     document.addEventListener('pointermove', onPointerMove)
     document.addEventListener('touchmove', onTouchMove)
     document.addEventListener('pointerup', onPointerUp)
-    document.addEventListener('touchend', onPointerUp)
+    document.addEventListener('touchend', onTouchEnd)
+    document.addEventListener('contextmenu', onUp)
 
     onCleanup(() => {
       document.removeEventListener('pointermove', onPointerMove)
       document.removeEventListener('touchmove', onTouchMove)
       document.removeEventListener('pointerup', onPointerUp)
-      document.removeEventListener('touchend', onPointerUp)
+      document.removeEventListener('touchend', onTouchEnd)
+      document.removeEventListener('contextmenu', onUp)
     })
   })
 
@@ -183,7 +186,7 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
     if (!drawerContext().isDragging() || dragStartPos === null) {
       const selection = window.getSelection()
       if (selection && selection.toString().length > 0) {
-        onPointerUp()
+        onUp()
         return
       }
 
@@ -209,7 +212,7 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
           (axisDelta > 0 && Math.abs(availableScroll) > 1) ||
           (axisDelta < 0 && Math.abs(availableScrollTop) > 0)
         ) {
-          onPointerUp()
+          onUp()
           return
         }
       }
@@ -264,7 +267,15 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
     drawerContext().setTranslate(-delta)
   }
 
-  const onPointerUp = () => {
+  const onPointerUp = (event: PointerEvent) => {
+    if (event.pointerType !== 'touch') onUp()
+  }
+
+  const onTouchEnd = (event: TouchEvent) => {
+    if (event.touches.length === 0) onUp()
+  }
+
+  const onUp = () => {
     pointerDown = false
 
     if (!drawerContext().isDragging()) return
@@ -326,6 +337,10 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
       )}
       // === ElementProps ===
       onPointerDown={onPointerDown}
+      onTouchStart={(e) => {
+        if (e.touches.length !== 1) return
+        dragStartPos = null
+      }}
       onTransitionEnd={() => {
         batch(() => {
           if (drawerContext().transitionState() === 'closing') {
