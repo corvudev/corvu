@@ -1,5 +1,12 @@
 # solid-transition-size
 
+## [0.1.4](https://github.com/corvudev/corvu/compare/solid-transition-size@0.1.3...solid-transition-size@0.1.4) (2024-07-04)
+
+
+### Bug Fixes
+
+* remove unnecessary loop in ResizeObserver callback ([72c16aa](https://github.com/corvudev/corvu/commit/72c16aa92c8833d84cbfddf812745caeac8f8d6f))
+
 ## [0.1.3](https://github.com/corvudev/corvu/compare/solid-transition-size@0.1.2...solid-transition-size@0.1.3) (2024-06-19)
 
 
