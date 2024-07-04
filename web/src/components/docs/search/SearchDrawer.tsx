@@ -30,6 +30,7 @@ const SearchDrawer = () => {
         setSearchValue('')
         setResult({})
       }}
+      restoreScrollPosition={false}
     >
       {(props) => (
         <>

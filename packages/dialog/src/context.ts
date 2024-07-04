@@ -29,6 +29,8 @@ export type DialogContextValue = {
   preventScrollbarShift: Accessor<boolean>
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: Accessor<'padding' | 'margin'>
+  /** Whether to restore the `<body>` scroll position with `window.scrollTo` to avoid possible layout shift after closing the dialog. */
+  restoreScrollPosition: Accessor<boolean>
   /** Whether the dialog should allow pinch zoom while scroll is disabled. */
   allowPinchZoom: Accessor<boolean>
   /** Whether the dialog should trap focus. */

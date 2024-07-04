@@ -35,6 +35,7 @@ const DialogContent: Component<{
     hideScrollbar: true, // default
     preventScrollbarShift: true, // default
     preventScrollbarShiftMode: 'padding', // default, `padding` or `margin`
+    restoreScrollPosition: true, // default
     allowPinchZoom: false, // default
   })
 

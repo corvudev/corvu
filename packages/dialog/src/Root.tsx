@@ -91,6 +91,11 @@ export type DialogRootProps = {
    */
   preventScrollbarShiftMode?: 'padding' | 'margin'
   /**
+   * Whether to restore the `<body>` scroll position with `window.scrollTo` to avoid possible layout shift after closing the dialog.
+   * @defaultValue `true`
+   */
+  restoreScrollPosition?: boolean
+  /**
    * Whether the dialog should allow pinch zoom while scroll is disabled.
    * @defaultValue `true`
    */
@@ -170,6 +175,8 @@ export type DialogRootChildrenProps = {
   preventScrollbarShift: boolean
   /** Whether padding or margin should be used to avoid layout shift. */
   preventScrollbarShiftMode: 'padding' | 'margin'
+  /** Whether to restore the `<body>` scroll position with `window.scrollTo` to avoid possible layout shift after closing the dialog. */
+  restoreScrollPosition: boolean
   /** Whether the dialog should allow pinch zoom while scroll is disabled. */
   allowPinchZoom: boolean
   /** Whether the dialog should trap focus. */
@@ -215,6 +222,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       hideScrollbar: true,
       preventScrollbarShift: true,
       preventScrollbarShiftMode: 'padding' as const,
+      restoreScrollPosition: true,
       allowPinchZoom: true,
       trapFocus: true,
       restoreFocus: true,
@@ -266,6 +274,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     hideScrollbar: () => defaultedProps.hideScrollbar,
     preventScrollbarShift: () => defaultedProps.preventScrollbarShift,
     preventScrollbarShiftMode: () => defaultedProps.preventScrollbarShiftMode,
+    restoreScrollPosition: () => defaultedProps.restoreScrollPosition,
     allowPinchZoom: () => defaultedProps.allowPinchZoom,
   })
 
@@ -303,6 +312,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     },
     get preventScrollbarShiftMode() {
       return defaultedProps.preventScrollbarShiftMode
+    },
+    get restoreScrollPosition() {
+      return defaultedProps.restoreScrollPosition
     },
     get allowPinchZoom() {
       return defaultedProps.allowPinchZoom
@@ -378,6 +390,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             access(defaultedProps.preventScrollbarShift),
           preventScrollbarShiftMode: () =>
             defaultedProps.preventScrollbarShiftMode,
+          restoreScrollPosition: () => defaultedProps.restoreScrollPosition,
           allowPinchZoom: () => defaultedProps.allowPinchZoom,
           trapFocus: () => defaultedProps.trapFocus,
           restoreFocus: () => defaultedProps.restoreFocus,
@@ -413,6 +426,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
               access(defaultedProps.preventScrollbarShift),
             preventScrollbarShiftMode: () =>
               defaultedProps.preventScrollbarShiftMode,
+            restoreScrollPosition: () => defaultedProps.restoreScrollPosition,
             allowPinchZoom: () => defaultedProps.allowPinchZoom,
             trapFocus: () => defaultedProps.trapFocus,
             restoreFocus: () => defaultedProps.restoreFocus,

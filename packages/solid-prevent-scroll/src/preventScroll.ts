@@ -29,6 +29,7 @@ const isActive = (id: string) =>
  * @param props.hideScrollbar - Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
  * @param props.preventScrollbarShift - Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
  * @param props.preventScrollbarShiftMode - Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`*
+ * @param props.restoreScrollPosition - Whether to restore the `<body>` scroll position with `window.scrollTo` to avoid possible layout shift after disabling the utility. *Default = `true`*
  * @param props.allowPinchZoom - Whether pinch zoom should be allowed. *Default = `false`*
  */
 const createPreventScroll = (props: {
@@ -37,6 +38,7 @@ const createPreventScroll = (props: {
   hideScrollbar?: MaybeAccessor<boolean>
   preventScrollbarShift?: MaybeAccessor<boolean>
   preventScrollbarShiftMode?: MaybeAccessor<'padding' | 'margin'>
+  restoreScrollPosition?: MaybeAccessor<boolean>
   allowPinchZoom?: MaybeAccessor<boolean>
 }) => {
   const defaultedProps = mergeProps(
@@ -46,6 +48,7 @@ const createPreventScroll = (props: {
       hideScrollbar: true,
       preventScrollbarShift: true,
       preventScrollbarShiftMode: 'padding',
+      restoreScrollPosition: true,
       allowPinchZoom: false,
     },
     props,
@@ -80,16 +83,8 @@ const createPreventScroll = (props: {
 
     const scrollbarWidth = window.innerWidth - body.offsetWidth
 
-    createStyle({
-      key: 'prevent-scroll-overflow',
-      element: body,
-      style: {
-        overflow: 'hidden',
-      },
-    })
-
     if (access(defaultedProps.preventScrollbarShift)) {
-      const style: Partial<CSSStyleDeclaration> = {}
+      const style: Partial<CSSStyleDeclaration> = { overflow: 'hidden' }
       const properties: { key: string; value: string }[] = []
 
       if (scrollbarWidth > 0) {
@@ -113,14 +108,25 @@ const createPreventScroll = (props: {
       const offsetLeft = window.scrollX
 
       createStyle({
-        key: 'prevent-scroll-scrollbar',
+        key: 'prevent-scroll',
         element: body,
         style,
         properties,
         cleanup: () => {
-          if (scrollbarWidth > 0) {
+          if (
+            access(defaultedProps.restoreScrollPosition) &&
+            scrollbarWidth > 0
+          ) {
             window.scrollTo(offsetLeft, offsetTop)
           }
+        },
+      })
+    } else {
+      createStyle({
+        key: 'prevent-scroll',
+        element: body,
+        style: {
+          overflow: 'hidden',
         },
       })
     }

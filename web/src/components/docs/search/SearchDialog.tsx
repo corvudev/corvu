@@ -47,6 +47,7 @@ const SearchDialog = () => {
         setSearchValue('')
         setResult({})
       }}
+      restoreScrollPosition={false}
     >
       {(props) => (
         <>
