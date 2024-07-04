@@ -1,6 +1,6 @@
+import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap'
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
-import sitemap from '@astrojs/sitemap'
 import solid from '@astrojs/solid-js'
 import tailwind from '@astrojs/tailwind'
 
@@ -11,14 +11,12 @@ export default defineConfig({
     sitemap({
       serialize(item) {
         if (item.url === 'https://corvu.dev/') {
-          item.changefreq = 'daily'
-          item.lastmod = new Date()
           item.priority = 1
         } else {
-          item.changefreq = 'daily'
-          item.lastmod = new Date()
           item.priority = 0.9
         }
+        item.changefreq = ChangeFreqEnum.DAILY
+        item.lastmod = new Date().toISOString()
         return item
       },
     }),

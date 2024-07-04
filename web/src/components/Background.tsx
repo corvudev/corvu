@@ -6,7 +6,6 @@ import {
   Switch,
   type VoidComponent,
 } from 'solid-js'
-import clsx from 'clsx'
 
 const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
   const [x, setX] = createSignal<number | null>(null)
@@ -23,7 +22,6 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
     }
 
     window.addEventListener('pointermove', onPointerMove)
-    // if coursor moves outside of the window, set x and y to null
     window.addEventListener('pointerout', onPointerOut)
 
     onCleanup(() => {
@@ -45,14 +43,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
             }}
           />
           <div class="absolute inset-0 -z-20 bg-corvu-400/50 dark:bg-corvu-400/25" />
-          <div
-            class={clsx([
-              'fixed inset-0 -z-10 bg-[length:28px_28px]',
-              'bg-[radial-gradient(circle_at_center,_#ffffff00_2px,hsl(var(--corvu-bg))_0)]',
-              'after:absolute after:inset-0',
-              'after:bg-[radial-gradient(circle_at_50%_368px,hsl(var(--corvu-bg))_100px,#ffffff00_1000px,#ffffff00_100%)]',
-            ])}
-          />
+          <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,#ffffff00_2px,hsl(var(--corvu-bg))_0)] bg-[length:28px_28px] after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_50%_368px,hsl(var(--corvu-bg))_100px,#ffffff00_1000px,#ffffff00_100%)]" />
         </div>
       </Match>
       <Match when={props.type === 'docs'}>
@@ -66,15 +57,7 @@ const Background: VoidComponent<{ type: 'home' | 'docs' }> = (props) => {
             }}
           />
           <div class="absolute inset-0 -z-20 bg-corvu-400/50 dark:bg-corvu-400/25" />
-          <div
-            class={clsx([
-              'absolute inset-0 -z-10 bg-[length:28px_28px]',
-              'bg-[radial-gradient(circle_at_center,_#ffffff00_2px,_hsl(var(--corvu-bg))_0)]',
-              'after:absolute after:inset-0',
-              'after:bg-[linear-gradient(to_right,#ffffff00_0%,hsl(var(--corvu-bg))_20%,hsl(var(--corvu-bg))_100%)]',
-              'lg:after:bg-[linear-gradient(to_right,#ffffff00_0%,hsl(var(--corvu-bg))_25%,hsl(var(--corvu-bg))_75%,#ffffff00_90%)]',
-            ])}
-          />
+          <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,#ffffff00_2px,hsl(var(--corvu-bg))_0)] bg-[length:28px_28px] after:absolute after:inset-0 after:bg-[linear-gradient(to_right,#ffffff00_0%,hsl(var(--corvu-bg))_20%,hsl(var(--corvu-bg))_100%)] lg:after:bg-[linear-gradient(to_right,#ffffff00_0%,hsl(var(--corvu-bg))_25%,hsl(var(--corvu-bg))_75%,#ffffff00_90%)]" />
         </div>
       </Match>
     </Switch>

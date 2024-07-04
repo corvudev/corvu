@@ -24,8 +24,11 @@ const SearchDialog = () => {
 
   createEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!e.metaKey || e.key !== 'k') return
-      setOpen(true)
+      if (e.metaKey && e.key === 'k') {
+        setOpen((open) => !open)
+      } else if (e.key === '/') {
+        setOpen(true)
+      }
     }
 
     window.addEventListener('keydown', handleKeyDown)
