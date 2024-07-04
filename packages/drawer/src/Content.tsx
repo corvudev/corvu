@@ -149,6 +149,12 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
     })
   })
 
+  createEffect(() => {
+    if (drawerContext().transitionState() === 'closing') {
+      drawerContext().setIsDragging(false)
+    }
+  })
+
   const onPointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return
     if (
