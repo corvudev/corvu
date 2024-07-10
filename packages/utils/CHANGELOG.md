@@ -1,5 +1,16 @@
 # @corvu/utils
 
+## [0.4.0](https://github.com/corvudev/corvu/compare/@corvu/utils@0.3.2...@corvu/utils@0.4.0) (2024-07-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove createNavigation in favor of solid-list
+
+### Features
+
+* remove createNavigation in favor of solid-list ([0fdad24](https://github.com/corvudev/corvu/commit/0fdad2487b8c68878bfaa773b5a1e811e9359b12))
+
 ## [0.3.2](https://github.com/corvudev/corvu/compare/@corvu/utils@0.3.1...@corvu/utils@0.3.2) (2024-07-04)
 
 

@@ -1,5 +1,5 @@
 {
-  "packages/accordion": "0.2.0",
+  "packages/accordion": "0.2.1",
   "packages/corvu": "0.7.1",
   "packages/dialog": "0.2.1",
   "packages/disclosure": "0.2.0",
@@ -8,12 +8,12 @@
   "packages/popover": "0.2.0",
   "packages/resizable": "0.2.2",
   "packages/solid-focus-trap": "0.1.7",
-  "packages/solid-list": "0.0.0",
+  "packages/solid-list": "0.1.0",
   "packages/solid-presence": "0.1.7",
   "packages/solid-prevent-scroll": "0.1.9",
   "packages/solid-transition-size": "0.1.4",
   "packages/tailwind": "0.1.5",
   "packages/tooltip": "0.2.0",
-  "packages/utils": "0.3.2"
+  "packages/utils": "0.4.0"
 }
 
