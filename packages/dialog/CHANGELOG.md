@@ -1,4 +1,4 @@
-# Changelog
+# @corvu/dialog
 
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.0...@corvu/dialog@0.2.1) (2024-07-04)
 
@@ -34,5 +34,3 @@
 ### Code Refactoring
 
 * split primitives into separate packages ([#17](https://github.com/corvudev/corvu/issues/17)) ([360e8fb](https://github.com/corvudev/corvu/commit/360e8fb040c54ebd542dc244a5e10a7784e4388b))
-
-## @corvu/dialog
