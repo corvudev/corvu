@@ -1,6 +1,6 @@
 {
   "name": "solid-persistent",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "description": "SolidJS utility to create persistent components that keep their state and elements cached when removed from the DOM.",
   "keywords": [
