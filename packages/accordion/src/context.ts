@@ -19,6 +19,8 @@ export type AccordionContextValue = {
   orientation: Accessor<'horizontal' | 'vertical'>
   /** Whether the accordion should loop when navigating with the keyboard. */
   loop: Accessor<boolean>
+  /** The text direction of the accordion. */
+  textDirection: Accessor<'ltr' | 'rtl'>
   /** Whether the accordion item content should be removed or hidden when collapsed. */
   collapseBehavior: Accessor<'remove' | 'hide'>
 }
@@ -63,6 +65,7 @@ export type InternalAccordionContextValue = AccordionContextValue & {
   registerTrigger: (element: HTMLElement) => void
   unregisterTrigger: (element: HTMLElement) => void
   onTriggerKeyDown: (event: KeyboardEvent) => void
+  onTriggerFocus: (event: FocusEvent) => void
 }
 
 const InternalAccordionContext = createContext<InternalAccordionContextValue>()

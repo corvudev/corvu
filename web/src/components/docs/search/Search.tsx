@@ -1,5 +1,5 @@
 import { createEffect, For, on, Show } from 'solid-js'
-import createNavigation from '@components/docs/search/createNavigation'
+import createList from 'solid-list'
 import SearchItem from '@components/docs/search/SearchItem'
 
 export type SearchResult = {
@@ -36,27 +36,20 @@ const Search = (props: {
   setResult: (result: SearchResult | null) => void
   closeSearch: () => void
 }) => {
-  const { resetActiveIndex, onKeyDown, onMouseMove, activeIndex } =
-    createNavigation({
-      resultCount: () =>
-        props.result
-          ? Object.values(props.result).flatMap((items) => items).length
-          : 0,
-      onSelect: (index) => {
-        if (!props.result) return
-        const resultArray = Object.values(props.result).flatMap(
-          (items) => items,
-        )
-        window.location.href = resultArray[index].pathname
-        props.closeSearch()
-      },
-    })
+  const { selected, setSelected, onKeyDown } = createList({
+    initialSelected: 0,
+    itemCount: () =>
+      props.result
+        ? Object.values(props.result).flatMap((items) => items).length
+        : 0,
+    handleTab: false,
+  })
 
   createEffect(
     on(
       () => props.result,
       () => {
-        resetActiveIndex()
+        setSelected(0)
       },
     ),
   )
@@ -120,7 +113,20 @@ const Search = (props: {
           onInput={(e) =>
             props.setSearchValue((e.target as HTMLInputElement).value)
           }
-          onKeyDown={onKeyDown}
+          onFocus={() => setSelected(0)}
+          onBlur={() => setSelected(null)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (!props.result) return
+              const resultArray = Object.values(props.result).flatMap(
+                (items) => items,
+              )
+              window.location.href = resultArray[selected()!].pathname
+              props.closeSearch()
+              return
+            }
+            onKeyDown(e)
+          }}
         />
         <Show when={props.searchValue}>
           <button
@@ -176,8 +182,8 @@ const Search = (props: {
                       return (
                         <SearchItem
                           item={item}
-                          onMouseMove={() => onMouseMove(itemIndex)}
-                          isActive={itemIndex === activeIndex()}
+                          onMouseMove={() => setSelected(itemIndex)}
+                          isActive={itemIndex === selected()}
                           closeSearch={props.closeSearch}
                         />
                       )

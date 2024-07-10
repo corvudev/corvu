@@ -1,6 +1,7 @@
 import {
   type Component,
   createMemo,
+  createSignal,
   type JSX,
   mergeProps,
   type Setter,
@@ -11,9 +12,10 @@ import {
   createInternalAccordionContext,
 } from '@src/context'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
-import createNavigation from '@corvu/utils/create/navigation'
+import createList from 'solid-list'
 import createOnce from '@corvu/utils/create/once'
 import { isFunction } from '@corvu/utils'
+import { sortByDocumentPosition } from '@corvu/utils/dom'
 
 export type AccordionRootProps = {
   /**
@@ -55,6 +57,11 @@ export type AccordionRootProps = {
    */
   loop?: boolean
   /**
+   * The text direction of the accordion.
+   * @defaultValue `ltr`
+   */
+  textDirection?: 'ltr' | 'rtl'
+  /**
    * Whether the accordion content should be removed or hidden when collapsed. Useful if you want to always render the content for SEO reasons.
    * @defaultValue `remove`
    */
@@ -83,8 +90,10 @@ export type AccordionRootChildrenProps = {
   orientation: 'horizontal' | 'vertical'
   /** Whether the accordion should loop when navigating with the keyboard. */
   loop: boolean
+  /** The text direction of the accordion. */
+  textDirection: 'ltr' | 'rtl'
   /** Whether the accordion content should be removed or hidden when collapsed. */
-  collapseBehavior?: 'remove' | 'hide'
+  collapseBehavior: 'remove' | 'hide'
 }
 
 /** Context wrapper for the accordion. Is required for every accordion you create. */
@@ -97,6 +106,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
       disabled: false,
       orientation: 'vertical' as const,
       loop: true,
+      textDirection: 'ltr' as const,
       collapseBehavior: 'remove' as const,
     },
     props,
@@ -139,13 +149,24 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
     }
   }
 
-  const {
-    register: registerTrigger,
-    unregister: unregisterTrigger,
-    onKeyDown: onTriggerKeyDown,
-  } = createNavigation({
-    loop: () => defaultedProps.loop,
+  const [triggers, setTriggers] = createSignal<HTMLElement[]>([])
+  const selectableTriggers = createMemo(() => {
+    return triggers()
+      .filter((element) => !element.hasAttribute('disabled'))
+      .sort(sortByDocumentPosition)
+  })
+
+  const { onKeyDown: onTriggerKeyDown, onFocus: onTriggerFocus } = createList({
+    itemCount: () => selectableTriggers().length,
     orientation: () => defaultedProps.orientation,
+    loop: () => defaultedProps.loop,
+    textDirection: () => defaultedProps.textDirection,
+    onSelectedChange: (index) => {
+      if (index === null) return
+      const trigger = selectableTriggers()[index]
+      if (!trigger) return
+      trigger.focus()
+    },
   })
 
   const childrenProps: AccordionRootChildrenProps = {
@@ -167,6 +188,9 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
     },
     get loop() {
       return defaultedProps.loop
+    },
+    get textDirection() {
+      return defaultedProps.textDirection
     },
     get collapseBehavior() {
       return defaultedProps.collapseBehavior
@@ -199,6 +223,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
           disabled: () => defaultedProps.disabled,
           orientation: () => defaultedProps.orientation,
           loop: () => defaultedProps.loop,
+          textDirection: () => defaultedProps.textDirection,
           collapseBehavior: () => defaultedProps.collapseBehavior,
         }}
       >
@@ -211,12 +236,19 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
             disabled: () => defaultedProps.disabled,
             orientation: () => defaultedProps.orientation,
             loop: () => defaultedProps.loop,
+            textDirection: () => defaultedProps.textDirection,
             collapseBehavior: () => defaultedProps.collapseBehavior,
             internalValue,
             toggleValue,
-            registerTrigger,
-            unregisterTrigger,
+            registerTrigger: (trigger) =>
+              setTriggers((triggers) => [...triggers, trigger]),
+            unregisterTrigger: (trigger) =>
+              setTriggers((triggers) => triggers.filter((t) => t !== trigger)),
             onTriggerKeyDown,
+            onTriggerFocus: (e) =>
+              onTriggerFocus(
+                selectableTriggers().indexOf(e.target as HTMLElement),
+              ),
           }}
         >
           {untrack(() => resolveChildren())}

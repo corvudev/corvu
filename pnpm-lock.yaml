@@ -93,6 +93,9 @@ importers:
       '@corvu/utils':
         specifier: workspace:~
         version: link:../utils
+      solid-list:
+        specifier: workspace:~
+        version: link:../solid-list
     devDependencies:
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.15.0
@@ -466,6 +469,43 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
 
+  packages/solid-list:
+    dependencies:
+      '@corvu/utils':
+        specifier: workspace:~
+        version: link:../utils
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.15.0
+        version: 7.15.0(@typescript-eslint/parser@7.15.0(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3)
+      esbuild-plugin-solid:
+        specifier: ^0.6.0
+        version: 0.6.0(esbuild@0.21.5)(solid-js@1.8.18)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.57.0)
+      eslint-plugin-solid:
+        specifier: ^0.14.1
+        version: 0.14.1(eslint@8.57.0)(typescript@5.5.3)
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
+      solid-js:
+        specifier: ^1.8.18
+        version: 1.8.18
+      tsup:
+        specifier: ^8.1.0
+        version: 8.1.0(postcss@8.4.39)(typescript@5.5.3)
+      typedoc:
+        specifier: ^0.26.3
+        version: 0.26.3(typescript@5.5.3)
+      typescript:
+        specifier: ^5.5.3
+        version: 5.5.3
+
   packages/solid-presence:
     dependencies:
       '@corvu/utils':
@@ -791,6 +831,9 @@ importers:
       solid-js:
         specifier: ^1.8.18
         version: 1.8.18
+      solid-list:
+        specifier: workspace:*
+        version: link:../packages/solid-list
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4

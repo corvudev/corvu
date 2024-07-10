@@ -4,6 +4,7 @@ import dialog from '../../../packages/dialog/package.json'
 import disclosure from '../../../packages/disclosure/package.json'
 import drawer from '../../../packages/drawer/package.json'
 import focusTrap from '../../../packages/solid-focus-trap/package.json'
+import list from '../../../packages/solid-list/package.json'
 import otpField from '../../../packages/otp-field/package.json'
 import popover from '../../../packages/popover/package.json'
 import presence from '../../../packages/solid-presence/package.json'
@@ -73,6 +74,12 @@ const packageMetas: {
     npmHref: 'https://www.npmjs.com/package/solid-focus-trap',
     sourceHref:
       'https://github.com/corvudev/corvu/tree/main/packages/solid-focus-trap',
+  },
+  'solid-list': {
+    version: list.version,
+    npmHref: 'https://www.npmjs.com/package/solid-list',
+    sourceHref:
+      'https://github.com/corvudev/corvu/tree/main/packages/solid-list',
   },
   'solid-presence': {
     version: presence.version,

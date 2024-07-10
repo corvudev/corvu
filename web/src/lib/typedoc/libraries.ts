@@ -5,6 +5,7 @@ import disclosureTypedoc from '../../../../packages/disclosure/api.json'
 import drawerTypedoc from '../../../../packages/drawer/api.json'
 import focusTrapTypedoc from '../../../../packages/solid-focus-trap/api.json'
 import type { Library } from '@lib/typedoc/types/specifications'
+import listTypedoc from '../../../../packages/solid-list/api.json'
 import otpFieldTypedoc from '../../../../packages/otp-field/api.json'
 import popoverTypedoc from '../../../../packages/popover/api.json'
 import presenceTypedoc from '../../../../packages/solid-presence/api.json'
@@ -25,6 +26,7 @@ export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/tooltip': tooltipTypedoc as ApiDeclaration,
   '@corvu/utils': utilsTypedoc as ApiDeclaration,
   'solid-focus-trap': focusTrapTypedoc as ApiDeclaration,
+  'solid-list': listTypedoc as ApiDeclaration,
   'solid-presence': presenceTypedoc as ApiDeclaration,
   'solid-prevent-scroll': preventScrollTypedoc as ApiDeclaration,
   'solid-transition-size': transitionSizeTypedoc as ApiDeclaration,
@@ -94,6 +96,7 @@ const Accordion: Library = {
         'disabled',
         'orientation',
         'loop',
+        'textDirection',
         'collapseBehavior',
         'contextId',
       ],
@@ -130,6 +133,7 @@ const Accordion: Library = {
         'disabled',
         'orientation',
         'loop',
+        'textDirection',
         'collapseBehavior',
       ],
     },
@@ -154,6 +158,7 @@ const Accordion: Library = {
         'disabled',
         'orientation',
         'loop',
+        'textDirection',
         'collapseBehavior',
       ],
     },
@@ -814,6 +819,27 @@ const FocusTrap: Library = {
   },
 }
 
+const List: Library = {
+  api: Typedoc['solid-list'],
+  name: 'List',
+  items: {
+    createList: {
+      isDefaultExport: true,
+      kind: 'function',
+      propsSorting: [
+        'itemCount',
+        'initialSelected',
+        'orientation',
+        'loop',
+        'textDirection',
+        'handleTab',
+        'onSelectedChange',
+      ],
+      returnsSorting: ['selected', 'setSelected', 'onKeyDown', 'onFocus'],
+    },
+  },
+}
+
 const Presence: Library = {
   api: Typedoc['solid-presence'],
   name: 'Presence',
@@ -870,6 +896,7 @@ export {
   Resizable,
   Tooltip,
   FocusTrap,
+  List,
   Presence,
   PreventScroll,
   TransitionSize,
@@ -885,6 +912,7 @@ export default [
   Resizable,
   Tooltip,
   FocusTrap,
+  List,
   Presence,
   PreventScroll,
   TransitionSize,

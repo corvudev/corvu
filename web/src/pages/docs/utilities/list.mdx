@@ -1,0 +1,71 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS List
+description: Create accessible, keyboard navigable lists like search results, selects or autocompletes.
+image: https://corvu.dev/banner.jpg
+---
+import Features from '@components/docs/Features.astro'
+import Code from '@components/docs/code/Code.astro'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { List } from '@lib/typedoc/libraries'
+import PackageInfo from '@components/docs/PackageInfo.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# List
+
+A small utility to create accessible, keyboard navigable lists like search results, selects or autocompletes.
+
+<PackageInfo packageName="solid-list" />
+
+## Features
+<Features features={[
+  'Vertical and horizontal lists',
+  'Supports both rtl and ltr text directions',
+  'Is unopinonated and works with any kind of lists, even virtual lists',
+  'Optionally loops',
+]} />
+
+## Installation
+
+<Code code={`
+npm install solid-list
+`} lang="bash" copyButton />
+
+## Usage
+
+<Code code={`
+import createList from 'solid-list'
+`} lang="tsx" copyButton />
+
+<Code code={`
+const Search = () => {
+  const [results, setResults] = createSignal([])
+
+  const { selected, setSelected, onKeyDown } = createList({
+    itemCount: () => results().length,
+    initialSelected: 0,
+    orientation: 'vertical',
+    loop: true,
+    textDirection: 'ltr',
+    handleTab: false,
+    onSelectChange: (selected) => {}
+  })
+
+  return (
+    <>
+      <input onKeyDown={onKeyDown} />
+      <For each={result}>
+        {(item, index) => (
+            <a href={result.href} aria-selected={selected() === index()}>{result.name}<a>
+        )}
+      </For>
+    </>
+  )
+}
+`} lang="tsx" copyButton />
+
+## API reference
+
+<ApiReference library={List} />

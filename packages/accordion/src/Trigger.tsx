@@ -26,6 +26,7 @@ export type AccordionTriggerSharedElementProps<
   T extends ValidComponent = 'button',
 > = {
   onKeyDown: JSX.EventHandlerUnion<ElementOf<T>, KeyboardEvent>
+  onFocus?: JSX.EventHandlerUnion<ElementOf<T>, FocusEvent>
   disabled: boolean | undefined
 } & DisclosureTriggerSharedElementProps<T>
 
@@ -54,6 +55,7 @@ const AccordionTrigger = <T extends ValidComponent = 'button'>(
     'contextId',
     'ref',
     'onKeyDown',
+    'onFocus',
     'disabled',
   ])
   const [triggerRef, setTriggerRef] = createSignal<HTMLElement | null>(null)
@@ -88,6 +90,11 @@ const AccordionTrigger = <T extends ValidComponent = 'button'>(
       accordionContext().onTriggerKeyDown(e)
   }
 
+  const onFocus: JSX.EventHandlerUnion<HTMLButtonElement, FocusEvent> = (e) => {
+    callEventHandler(localProps.onFocus, e)
+    accordionContext().onTriggerFocus(e)
+  }
+
   return (
     <Disclosure.Trigger<
       Component<
@@ -97,6 +104,7 @@ const AccordionTrigger = <T extends ValidComponent = 'button'>(
       // === SharedElementProps ===
       ref={mergeRefs(localProps.ref, setTriggerRef)}
       onKeyDown={onKeyDown}
+      onFocus={onFocus}
       disabled={
         localProps.disabled === true || context().disabled() || undefined
       }
