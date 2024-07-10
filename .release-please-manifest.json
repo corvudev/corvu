@@ -9,7 +9,7 @@
   "packages/resizable": "0.2.2",
   "packages/solid-focus-trap": "0.1.7",
   "packages/solid-list": "0.1.0",
-  "packages/solid-persistent": "0.0.0",
+  "packages/solid-persistent": "0.1.0",
   "packages/solid-presence": "0.1.7",
   "packages/solid-prevent-scroll": "0.1.9",
   "packages/solid-transition-size": "0.1.4",
