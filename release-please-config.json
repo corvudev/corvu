@@ -35,8 +35,7 @@
       "component": "solid-focus-trap"
     },
     "packages/solid-list": {
-      "component": "solid-list",
-      "release-as": "0.1.0"
+      "component": "solid-list"
     },
     "packages/solid-presence": {
       "component": "solid-presence"
