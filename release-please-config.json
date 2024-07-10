@@ -37,6 +37,10 @@
     "packages/solid-list": {
       "component": "solid-list"
     },
+    "packages/solid-persistent": {
+      "component": "solid-persistent",
+      "release-as": "0.1.0"
+    },
     "packages/solid-presence": {
       "component": "solid-presence"
     },

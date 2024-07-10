@@ -54,6 +54,7 @@
     "shiki": "^1.10.3",
     "solid-js": "^1.8.18",
     "solid-list": "workspace:*",
+    "solid-persistent": "workspace:*",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3"
   }

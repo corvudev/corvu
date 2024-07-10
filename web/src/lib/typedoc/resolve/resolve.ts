@@ -33,6 +33,32 @@ const resolveLibrary = (library: Library): ApiReference[] => {
       case 'function':
         apiReferences.push(resolveFunction(library.api, name, item))
         break
+      case 'temporary':
+        switch (name) {
+          case 'createPersistent':
+            apiReferences.push({
+              name,
+              kind: 'function',
+              props: [
+                {
+                  name: 'component',
+                  defaultHtml: null,
+                  type: '() => JSX.Element',
+                  descriptionHtml: '',
+                  isFunction: true,
+                },
+              ],
+              returns: [
+                {
+                  name: 'persistedComponent',
+                  type: 'Accessor<JSX.Element>',
+                  descriptionHtml: '',
+                  isFunction: true,
+                },
+              ],
+            })
+            break
+        }
     }
   }
 

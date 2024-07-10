@@ -6,6 +6,7 @@ import drawer from '../../../packages/drawer/package.json'
 import focusTrap from '../../../packages/solid-focus-trap/package.json'
 import list from '../../../packages/solid-list/package.json'
 import otpField from '../../../packages/otp-field/package.json'
+import persistent from '../../../packages/solid-persistent/package.json'
 import popover from '../../../packages/popover/package.json'
 import presence from '../../../packages/solid-presence/package.json'
 import preventScroll from '../../../packages/solid-prevent-scroll/package.json'
@@ -80,6 +81,12 @@ const packageMetas: {
     npmHref: 'https://www.npmjs.com/package/solid-list',
     sourceHref:
       'https://github.com/corvudev/corvu/tree/main/packages/solid-list',
+  },
+  'solid-persistent': {
+    version: persistent.version,
+    npmHref: 'https://www.npmjs.com/package/solid-persistent',
+    sourceHref:
+      'https://github.com/corvudev/corvu/tree/main/packages/solid-persistent',
   },
   'solid-presence': {
     version: presence.version,

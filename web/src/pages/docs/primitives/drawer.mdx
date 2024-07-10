@@ -23,6 +23,8 @@ import NoDragExample from '@examples/primitives/drawer/noDrag/index'
 import NoDragTailwindTsx from '@examples/primitives/drawer/noDrag/index?raw'
 import TransitionResizeExample from '@examples/primitives/drawer/transitionResize/index'
 import TransitionResizeTailwindTsx from '@examples/primitives/drawer/transitionResize/index?raw'
+import PersistentExample from '@examples/primitives/drawer/persistent/index'
+import PersistentTailwindTsx from '@examples/primitives/drawer/persistent/index?raw'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
 import ApiReference from '@components/docs/api/ApiReference.astro'
@@ -320,6 +322,50 @@ You can disable drag on an element by giving it the `data-corvu-no-drag` attribu
 }]} client:visible>
   <NoDragExample client:visible />
   <RawCode slot="tailwindTsx" code={NoDragTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Persistent content
+To persist the content of the drawer even when it's unmounted, you can use corvu's <Link href="/docs/utilities/persistent/">`createPersistent`</Link> utility. It will cache the content when the drawer is opened for the first time and preserve its state and HTML elements.
+
+<Code code={`
+const PersistedDrawerContent = () => {
+  const persistedContent = createPersistent(() => {
+    return <input />
+  })
+
+  return (
+  <Drawer>
+      <Drawer.Trigger>
+        Open
+      </Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Content>
+          {persistedContent()}
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer>
+  )
+}
+`} lang="tsx" copyButton />
+
+Give it a try! 🐦‍⬛
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <PersistentExample client:visible />
+  <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 

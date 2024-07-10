@@ -7,6 +7,7 @@ import focusTrapTypedoc from '../../../../packages/solid-focus-trap/api.json'
 import type { Library } from '@lib/typedoc/types/specifications'
 import listTypedoc from '../../../../packages/solid-list/api.json'
 import otpFieldTypedoc from '../../../../packages/otp-field/api.json'
+import persistentTypedoc from '../../../../packages/solid-persistent/api.json'
 import popoverTypedoc from '../../../../packages/popover/api.json'
 import presenceTypedoc from '../../../../packages/solid-presence/api.json'
 import preventScrollTypedoc from '../../../../packages/solid-prevent-scroll/api.json'
@@ -27,6 +28,7 @@ export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/utils': utilsTypedoc as ApiDeclaration,
   'solid-focus-trap': focusTrapTypedoc as ApiDeclaration,
   'solid-list': listTypedoc as ApiDeclaration,
+  'solid-persistent': persistentTypedoc as ApiDeclaration,
   'solid-presence': presenceTypedoc as ApiDeclaration,
   'solid-prevent-scroll': preventScrollTypedoc as ApiDeclaration,
   'solid-transition-size': transitionSizeTypedoc as ApiDeclaration,
@@ -840,6 +842,16 @@ const List: Library = {
   },
 }
 
+const Persistent: Library = {
+  api: Typedoc['solid-persistent'],
+  name: 'Persistent',
+  items: {
+    createPersistent: {
+      kind: 'temporary',
+    },
+  },
+}
+
 const Presence: Library = {
   api: Typedoc['solid-presence'],
   name: 'Presence',
@@ -897,6 +909,7 @@ export {
   Tooltip,
   FocusTrap,
   List,
+  Persistent,
   Presence,
   PreventScroll,
   TransitionSize,
@@ -913,6 +926,7 @@ export default [
   Tooltip,
   FocusTrap,
   List,
+  Persistent,
   Presence,
   PreventScroll,
   TransitionSize,

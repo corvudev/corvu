@@ -14,6 +14,7 @@ export type TypeSpecification =
   | ChildrenPropsTypeSpecification
   | FunctionTypeSpecification
   | SimpleTypeSpecification
+  | TemporaryTypeSpecification
 
 export type ComponentTypeSpecification = {
   kind: 'component'
@@ -63,4 +64,8 @@ export type FunctionTypeSpecification = {
 
 export type SimpleTypeSpecification = {
   kind: 'simple'
+}
+
+export type TemporaryTypeSpecification = {
+  kind: 'temporary'
 }

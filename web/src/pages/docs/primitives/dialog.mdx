@@ -10,6 +10,8 @@ import BasicExample from '@examples/primitives/dialog/basic/tailwind/index'
 import TailwindTsx from '@examples/primitives/dialog/basic/tailwind/index?raw'
 import NestedExample from '@examples/primitives/dialog/nested/tailwind/index'
 import NestedTailwindTsx from '@examples/primitives/dialog/nested/tailwind/index?raw'
+import PersistentExample from '@examples/primitives/dialog/persistent/tailwind/index'
+import PersistentTailwindTsx from '@examples/primitives/dialog/persistent/tailwind/index?raw'
 import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import CssTsx from '@examples/primitives/dialog/basic/css/index?raw'
 import CssStyle from '@examples/primitives/dialog/basic/css/index.css?raw'
@@ -133,6 +135,50 @@ Feel free to nest dialogs however you want. corvu is aware of nested dialogs and
 }]} client:visible>
   <NestedExample client:visible />
   <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Persistent content
+To persist the content of the dialog even when it's unmounted, you can use corvu's <Link href="/docs/utilities/persistent/">`createPersistent`</Link> utility. It will cache the content when the dialog is opened for the first time and preserve its state and HTML elements.
+
+<Code code={`
+const PersistedDialogContent = () => {
+  const persistedContent = createPersistent(() => {
+    return <input />
+  })
+
+  return (
+  <Dialog>
+      <Dialog.Trigger>
+        Open
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Content>
+          {persistedContent()}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog>
+  )
+}
+`} lang="tsx" copyButton />
+
+Give it a try! 🐦‍⬛
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <PersistentExample client:visible />
+  <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 

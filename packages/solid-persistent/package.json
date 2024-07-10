@@ -1,0 +1,71 @@
+{
+  "name": "solid-persistent",
+  "version": "0.0.0",
+  "private": false,
+  "description": "SolidJS utility to create persistent components that keep their state and elements cached when removed from the DOM.",
+  "keywords": [
+    "solid",
+    "solidjs",
+    "persistent",
+    "cache",
+    "component",
+    "element"
+  ],
+  "homepage": "https://corvu.dev/docs/utilities/persistent-component",
+  "bugs": {
+    "url": "https://github.com/corvudev/corvu/issues",
+    "email": "code@jasi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corvudev/corvu.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jasmin Noetzli",
+    "email": "code@jasi.dev",
+    "url": "https://github.com/GiyoMoon"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "solid": "./dist/index.jsx",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf .turbo dist node_modules api.json",
+    "lint": "eslint --max-warnings=0 .",
+    "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "esbuild-plugin-solid": "^0.6.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-solid": "^0.14.1",
+    "prettier": "^3.3.2",
+    "solid-js": "^1.8.18",
+    "tsup": "^8.1.0",
+    "typedoc": "^0.26.4",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.8"
+  }
+}
