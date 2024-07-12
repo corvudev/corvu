@@ -59,7 +59,10 @@ const { title, descriptionHtml, props, inherits } = Astro.props
               {prop.defaultHtml === null ? (
                 <p>-</p>
               ) : (
-                <div class="prose" set:html={prop.defaultHtml} />
+                <div
+                  class="prose prose-code:!whitespace-normal"
+                  set:html={prop.defaultHtml}
+                />
               )}
             </td>
             <td class="py-5 pr-5 align-top text-sm">

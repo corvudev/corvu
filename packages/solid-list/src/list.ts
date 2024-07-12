@@ -11,6 +11,8 @@ import { mergeProps } from 'solid-js'
  * @param props.loop Whether the list should loop. *Default = `true`*
  * @param props.textDirection The text direction of the list. *Default = `'ltr'`*
  * @param props.handleTab Whether tab key presses should be handled. *Default = `true`*
+ * @param props.vimMode Whether vim movement key bindings should be used additionally to arrow key navigation. *Default = `false`*
+ * @param props.vimKeys The vim movement key bindings to use. *Default = `{ up: 'k', down: 'j', right: 'l', left: 'h' }`*
  * @param props.onSelectedChange Callback fired when the selected index changes.
  * @returns ```typescript
  * {
@@ -28,6 +30,13 @@ const createList = (props: {
   loop?: MaybeAccessor<boolean>
   textDirection?: MaybeAccessor<'ltr' | 'rtl'>
   handleTab?: MaybeAccessor<boolean>
+  vimMode?: MaybeAccessor<boolean>
+  vimKeys?: MaybeAccessor<{
+    up: string
+    down: string
+    right: string
+    left: string
+  }>
   onSelectedChange?: (selected: number | null) => void
 }) => {
   const defaultedProps = mergeProps(
@@ -37,6 +46,13 @@ const createList = (props: {
       loop: true,
       textDirection: 'ltr' as const,
       handleTab: true,
+      vimMode: false,
+      vimKeys: {
+        up: 'k',
+        down: 'j',
+        right: 'l',
+        left: 'h',
+      },
     },
     props,
   )
@@ -46,17 +62,47 @@ const createList = (props: {
     onChange: defaultedProps.onSelectedChange,
   })
 
+  const nextKeys = () => {
+    const vimKeys = access(defaultedProps.vimKeys)
+    let arrowKey: string
+    let vimKey: string
+    if (access(defaultedProps.orientation) === 'vertical') {
+      arrowKey = 'ArrowDown'
+      vimKey = vimKeys.down
+    } else if (access(defaultedProps.textDirection) === 'ltr') {
+      arrowKey = 'ArrowRight'
+      vimKey = vimKeys.right
+    } else {
+      arrowKey = 'ArrowLeft'
+      vimKey = vimKeys.left
+    }
+    return access(defaultedProps.vimMode) ? [arrowKey, vimKey] : [arrowKey]
+  }
+
+  const previousKeys = () => {
+    const vimKeys = access(defaultedProps.vimKeys)
+    let arrowKey: string
+    let vimKey: string
+    if (access(defaultedProps.orientation) === 'vertical') {
+      arrowKey = 'ArrowUp'
+      vimKey = vimKeys.up
+    } else if (access(defaultedProps.textDirection) === 'ltr') {
+      arrowKey = 'ArrowLeft'
+      vimKey = vimKeys.left
+    } else {
+      arrowKey = 'ArrowRight'
+      vimKey = vimKeys.right
+    }
+    return access(defaultedProps.vimMode) ? [arrowKey, vimKey] : [arrowKey]
+  }
+
   const onKeyDown = (event: KeyboardEvent) => {
     const _itemCount = access(defaultedProps.itemCount)
     if (_itemCount < 2) return
 
     const _selected = selected()
-    const _textDirection = access(defaultedProps.textDirection)
 
-    if (
-      getNextKey(access(defaultedProps.orientation), _textDirection) ===
-      event.key
-    ) {
+    if (nextKeys().includes(event.key)) {
       event.preventDefault()
       if (selected() === _itemCount - 1) {
         if (access(defaultedProps.loop)) {
@@ -65,10 +111,7 @@ const createList = (props: {
       } else {
         setSelected(_selected !== null ? _selected + 1 : 0)
       }
-    } else if (
-      getPreviousKey(access(defaultedProps.orientation), _textDirection) ===
-      event.key
-    ) {
+    } else if (previousKeys().includes(event.key)) {
       event.preventDefault()
       if (_selected === 0) {
         if (access(defaultedProps.loop)) {
@@ -104,26 +147,6 @@ const createList = (props: {
   }
 
   return { selected, setSelected, onKeyDown, onFocus }
-}
-
-const getNextKey = (
-  direction: 'vertical' | 'horizontal',
-  textDirection: 'ltr' | 'rtl',
-) => {
-  if (direction === 'vertical') {
-    return 'ArrowDown'
-  }
-  return textDirection === 'ltr' ? 'ArrowRight' : 'ArrowLeft'
-}
-
-const getPreviousKey = (
-  direction: 'vertical' | 'horizontal',
-  textDirection: 'ltr' | 'rtl',
-) => {
-  if (direction === 'vertical') {
-    return 'ArrowUp'
-  }
-  return textDirection === 'ltr' ? 'ArrowLeft' : 'ArrowRight'
 }
 
 export default createList

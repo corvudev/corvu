@@ -835,6 +835,8 @@ const List: Library = {
         'loop',
         'textDirection',
         'handleTab',
+        'vimMode',
+        'vimKeys',
         'onSelectedChange',
       ],
       returnsSorting: ['selected', 'setSelected', 'onKeyDown', 'onFocus'],
