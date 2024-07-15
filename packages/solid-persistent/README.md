@@ -17,7 +17,7 @@ SolidJS utility to create persistent components that keep their state and elemen
 Import the `createPersistent` utility and pass your component to it. Make sure to call the utility inside a component that doesn't unmount. Then use the returned Accessor in your JSX where it can unmount.
 
 ```tsx
-import createList from 'solid-list'
+import createPersistent from 'solid-persistent'
 ```
 
 ```tsx
