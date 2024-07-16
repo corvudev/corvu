@@ -12,7 +12,7 @@ import {
   createInternalAccordionContext,
 } from '@src/context'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
-import createList from 'solid-list'
+import { createList } from 'solid-list'
 import createOnce from '@corvu/utils/create/once'
 import { isFunction } from '@corvu/utils'
 import { sortByDocumentPosition } from '@corvu/utils/dom'
@@ -156,12 +156,12 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
       .sort(sortByDocumentPosition)
   })
 
-  const { onKeyDown: onTriggerKeyDown, onFocus: onTriggerFocus } = createList({
+  const { setActive, onKeyDown: onTriggerKeyDown } = createList({
     itemCount: () => selectableTriggers().length,
     orientation: () => defaultedProps.orientation,
     loop: () => defaultedProps.loop,
     textDirection: () => defaultedProps.textDirection,
-    onSelectedChange: (index) => {
+    onActiveChange: (index) => {
       if (index === null) return
       const trigger = selectableTriggers()[index]
       if (!trigger) return
@@ -246,9 +246,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
               setTriggers((triggers) => triggers.filter((t) => t !== trigger)),
             onTriggerKeyDown,
             onTriggerFocus: (e) =>
-              onTriggerFocus(
-                selectableTriggers().indexOf(e.target as HTMLElement),
-              ),
+              setActive(selectableTriggers().indexOf(e.target as HTMLElement)),
           }}
         >
           {untrack(() => resolveChildren())}
