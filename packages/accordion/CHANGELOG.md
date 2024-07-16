@@ -1,5 +1,12 @@
 # @corvu/accordion
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.1...@corvu/accordion@0.2.2) (2024-07-16)
+
+
+### Features
+
+* update solid-list ([0e036a0](https://github.com/corvudev/corvu/commit/0e036a0412a9065a738a878d362a3820b34ee3a8))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.0...@corvu/accordion@0.2.1) (2024-07-10)
 
 
