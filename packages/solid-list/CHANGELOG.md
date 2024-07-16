@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/corvudev/corvu/compare/solid-list@0.1.0...solid-list@0.2.0) (2024-07-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* createMultiList
+
+### Features
+
+* add vimMode ([4945b75](https://github.com/corvudev/corvu/commit/4945b75d7ef4551f930c7311950dd6d61b3aa6ae))
+* createMultiList ([e0e8f0e](https://github.com/corvudev/corvu/commit/e0e8f0ef9762410946b759f8c418e6c0306e9bcd))
+
 ## 0.1.0 (2024-07-10)
 
 
