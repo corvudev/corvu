@@ -12,7 +12,7 @@ type CodeSnippets = {
 const ExampleWrapper: FlowComponent<{
   children: JSX.Element
   codeSnippets: CodeSnippets
-  heading: boolean
+  height?: 'heading' | 'dynamic'
   [key: string]: JSX.Element | CodeSnippets
 }> = (props) => {
   const [viewCode, setViewCode] = createSignal(false)
@@ -85,8 +85,8 @@ const ExampleWrapper: FlowComponent<{
           class={clsx(
             'relative rounded-b-xl bg-corvu-400 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
             {
-              'h-[300px] @xl:h-[400px]': props.heading,
-              'h-[200px]': !props.heading,
+              'h-[300px] @xl:h-[400px]': props.height === 'heading',
+              'h-[200px]': !props.height,
             },
           )}
         >

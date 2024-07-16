@@ -6,26 +6,25 @@ import { mergeProps } from 'solid-js'
  * Creates a keyboard navigable list.
  *
  * @param props.itemCount The number of items in the list.
- * @param props.initialSelected The index of the initially selected item. *Default = `null`*
+ * @param props.initialActive The index of the initially active item. *Default = `null`*
  * @param props.orientation The orientation of the list. *Default = `'vertical'`*
  * @param props.loop Whether the list should loop. *Default = `true`*
  * @param props.textDirection The text direction of the list. *Default = `'ltr'`*
  * @param props.handleTab Whether tab key presses should be handled. *Default = `true`*
  * @param props.vimMode Whether vim movement key bindings should be used additionally to arrow key navigation. *Default = `false`*
  * @param props.vimKeys The vim movement key bindings to use. *Default = `{ up: 'k', down: 'j', right: 'l', left: 'h' }`*
- * @param props.onSelectedChange Callback fired when the selected index changes.
+ * @param props.onActiveChange Callback fired when the active index changes.
  * @returns ```typescript
  * {
- *   selected: () => number | null
- *   setSelected: Set<number | null>
+ *   active: () => number | null
+ *   setActive: Setter<number | null>
  *   onKeyDown: (event: KeyboardEvent) => void
- *   onFocus: (index: number) => void
  * }
  * ```
  */
 const createList = (props: {
   itemCount: MaybeAccessor<number>
-  initialSelected?: number | null
+  initialActive?: number | null
   orientation?: MaybeAccessor<'vertical' | 'horizontal'>
   loop?: MaybeAccessor<boolean>
   textDirection?: MaybeAccessor<'ltr' | 'rtl'>
@@ -37,11 +36,11 @@ const createList = (props: {
     right: string
     left: string
   }>
-  onSelectedChange?: (selected: number | null) => void
+  onActiveChange?: (active: number | null) => void
 }) => {
   const defaultedProps = mergeProps(
     {
-      initialSelected: null,
+      initialActive: null,
       orientation: 'vertical' as const,
       loop: true,
       textDirection: 'ltr' as const,
@@ -57,9 +56,9 @@ const createList = (props: {
     props,
   )
 
-  const [selected, setSelected] = createControllableSignal<number | null>({
-    initialValue: defaultedProps.initialSelected,
-    onChange: defaultedProps.onSelectedChange,
+  const [active, setActive] = createControllableSignal<number | null>({
+    initialValue: defaultedProps.initialActive,
+    onChange: defaultedProps.onActiveChange,
   })
 
   const nextKeys = () => {
@@ -67,13 +66,13 @@ const createList = (props: {
     let arrowKey: string
     let vimKey: string
     if (access(defaultedProps.orientation) === 'vertical') {
-      arrowKey = 'ArrowDown'
+      arrowKey = 'arrowdown'
       vimKey = vimKeys.down
     } else if (access(defaultedProps.textDirection) === 'ltr') {
-      arrowKey = 'ArrowRight'
+      arrowKey = 'arrowright'
       vimKey = vimKeys.right
     } else {
-      arrowKey = 'ArrowLeft'
+      arrowKey = 'arrowleft'
       vimKey = vimKeys.left
     }
     return access(defaultedProps.vimMode) ? [arrowKey, vimKey] : [arrowKey]
@@ -84,69 +83,62 @@ const createList = (props: {
     let arrowKey: string
     let vimKey: string
     if (access(defaultedProps.orientation) === 'vertical') {
-      arrowKey = 'ArrowUp'
+      arrowKey = 'arrowup'
       vimKey = vimKeys.up
     } else if (access(defaultedProps.textDirection) === 'ltr') {
-      arrowKey = 'ArrowLeft'
+      arrowKey = 'arrowleft'
       vimKey = vimKeys.left
     } else {
-      arrowKey = 'ArrowRight'
+      arrowKey = 'arrowright'
       vimKey = vimKeys.right
     }
     return access(defaultedProps.vimMode) ? [arrowKey, vimKey] : [arrowKey]
   }
 
   const onKeyDown = (event: KeyboardEvent) => {
+    const eventKey = event.key.toLowerCase()
     const _itemCount = access(defaultedProps.itemCount)
     if (_itemCount < 2) return
 
-    const _selected = selected()
+    const _active = active()
 
-    if (nextKeys().includes(event.key)) {
+    if (nextKeys().includes(eventKey)) {
       event.preventDefault()
-      if (selected() === _itemCount - 1) {
+      if (_active === _itemCount - 1) {
         if (access(defaultedProps.loop)) {
-          setSelected(0)
+          setActive(0)
         }
       } else {
-        setSelected(_selected !== null ? _selected + 1 : 0)
+        setActive(_active !== null ? _active + 1 : 0)
       }
-    } else if (previousKeys().includes(event.key)) {
+    } else if (previousKeys().includes(eventKey)) {
       event.preventDefault()
-      if (_selected === 0) {
+      if (_active === 0) {
         if (access(defaultedProps.loop)) {
-          setSelected(_itemCount - 1)
+          setActive(_itemCount - 1)
         }
       } else {
-        setSelected(_selected !== null ? _selected - 1 : _itemCount - 1)
+        setActive(_active !== null ? _active - 1 : _itemCount - 1)
       }
-    } else if (event.key === 'Home') {
+    } else if (eventKey === 'home') {
       event.preventDefault()
-      setSelected(0)
-    } else if (event.key === 'End') {
+      setActive(0)
+    } else if (eventKey === 'end') {
       event.preventDefault()
-      setSelected(_itemCount - 1)
-    } else if (access(defaultedProps.handleTab) && _selected !== null) {
-      if (
-        event.key === 'Tab' &&
-        !event.shiftKey &&
-        _selected < _itemCount - 1
-      ) {
+      setActive(_itemCount - 1)
+    } else if (access(defaultedProps.handleTab) && _active !== null) {
+      if (eventKey === 'tab' && !event.shiftKey && _active < _itemCount - 1) {
         event.preventDefault()
-        setSelected(_selected + 1)
+        setActive(_active + 1)
       }
-      if (event.key === 'Tab' && event.shiftKey && _selected > 0) {
+      if (eventKey === 'tab' && event.shiftKey && _active > 0) {
         event.preventDefault()
-        setSelected(_selected - 1)
+        setActive(_active - 1)
       }
     }
   }
 
-  const onFocus = (index: number) => {
-    setSelected(index)
-  }
-
-  return { selected, setSelected, onKeyDown, onFocus }
+  return { active, setActive, onKeyDown }
 }
 
 export default createList

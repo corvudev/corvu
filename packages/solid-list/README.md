@@ -10,30 +10,32 @@ SolidJS utility to create accessible, keyboard navigable lists like search resul
 ## Features
 
 - Vertical and horizontal lists
+- Utilities for both single and multi select lists
 - Supports both rtl and ltr text directions
 - Is unopinonated and works with any kind of lists, even virtual lists
-- Optionally loops
+- Optionally loops, vim mode and handles tab key
 
 ## Usage
 
 Import the `createList` utility and attach your list to it. This example shows how a simple search list could look like.
 
 ```tsx
-import createList from 'solid-list'
+import { createList } from 'solid-list'
 ```
 
 ```tsx
 const Search = () => {
   const [results, setResults] = createSignal([])
 
-  const { selected, setSelected, onKeyDown } = createList({
+  const { active, setActive, onKeyDown } = createList({
     itemCount: () => results().length, // required
-    initialSelected: 0, // default = null, number | null
+    initialActive: 0, // default = null, number | null
     orientation: 'vertical', // default, 'vertical' | 'horizontal'
     loop: true, // default
     textDirection: 'ltr', // default, 'ltr' | 'rtl'
     handleTab: false, // default = true
-    onSelectChange: (selected) => {} // optional callback to handle changes
+    vimMode: false, // default
+    onActiveChange: (active) => {} // optional callback to handle changes
   })
 
   return (
@@ -41,7 +43,7 @@ const Search = () => {
       <input onKeyDown={onKeyDown} />
       <For each={result}>
         {(item, index) => (
-            <a href={result.href} aria-selected={selected() === index()}>{result.name}<a>
+            <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
         )}
       </For>
     </>

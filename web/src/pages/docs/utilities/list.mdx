@@ -4,11 +4,16 @@ title: SolidJS List
 description: Create accessible, keyboard navigable lists like search results, selects or autocompletes.
 image: https://corvu.dev/banner.jpg
 ---
-import Features from '@components/docs/Features.astro'
-import Code from '@components/docs/code/Code.astro'
-import ApiReference from '@components/docs/api/ApiReference.astro'
 import { List } from '@lib/typedoc/libraries'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import Code from '@components/docs/code/Code.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import Features from '@components/docs/Features.astro'
+import MultiExample from '@examples/utilities/list/multi'
+import MultiTailwindTsx from '@examples/utilities/list/multi?raw'
 import PackageInfo from '@components/docs/PackageInfo.astro'
+import RawCode from '@components/docs/code/RawCode.astro'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -22,9 +27,10 @@ A small utility to create accessible, keyboard navigable lists like search resul
 ## Features
 <Features features={[
   'Vertical and horizontal lists',
+  'Utilities for both single and multi select lists',
   'Supports both rtl and ltr text directions',
   'Is unopinonated and works with any kind of lists, even virtual lists',
-  'Optionally loops',
+  'Optionally loops, vim mode and handles tab key',
 ]} />
 
 ## Installation
@@ -36,21 +42,22 @@ npm install solid-list
 ## Usage
 
 <Code code={`
-import createList from 'solid-list'
+import { createList, createMultiList } from 'solid-list'
 `} lang="tsx" copyButton />
 
 <Code code={`
 const Search = () => {
   const [results, setResults] = createSignal([])
 
-  const { selected, setSelected, onKeyDown } = createList({
-    itemCount: () => results().length,
-    initialSelected: 0,
-    orientation: 'vertical',
-    loop: true,
-    textDirection: 'ltr',
-    handleTab: false,
-    onSelectChange: (selected) => {}
+  const { active, setActive, onKeyDown } = createList({
+    itemCount: () => results().length, // required
+    initialActive: 0, // default = null, number | null
+    orientation: 'vertical', // default, 'vertical' | 'horizontal'
+    loop: true, // default
+    textDirection: 'ltr', // default, 'ltr' | 'rtl'
+    handleTab: false, // default = true
+    vimMode: false, // default
+    onActiveChange: (active) => {} // optional callback to handle changes
   })
 
   return (
@@ -58,13 +65,35 @@ const Search = () => {
       <input onKeyDown={onKeyDown} />
       <For each={result}>
         {(item, index) => (
-            <a href={result.href} aria-selected={selected() === index()}>{result.name}<a>
+            <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
         )}
       </For>
     </>
   )
 }
 `} lang="tsx" copyButton />
+
+### Multi select list
+
+A tabbable multi select list with keyboard navigation and selection.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} height="dynamic" client:load>
+  <MultiExample client:load />
+  <RawCode slot="tailwindTsx" code={MultiTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
 
 ## API reference
 

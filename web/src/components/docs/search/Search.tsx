@@ -1,5 +1,5 @@
 import { createEffect, For, on, Show } from 'solid-js'
-import createList from 'solid-list'
+import { createList } from 'solid-list'
 import SearchItem from '@components/docs/search/SearchItem'
 
 export type SearchResult = {
@@ -36,8 +36,8 @@ const Search = (props: {
   setResult: (result: SearchResult | null) => void
   closeSearch: () => void
 }) => {
-  const { selected, setSelected, onKeyDown } = createList({
-    initialSelected: 0,
+  const { active, setActive, onKeyDown } = createList({
+    initialActive: 0,
     itemCount: () =>
       props.result
         ? Object.values(props.result).flatMap((items) => items).length
@@ -49,7 +49,7 @@ const Search = (props: {
     on(
       () => props.result,
       () => {
-        setSelected(0)
+        setActive(0)
       },
     ),
   )
@@ -113,15 +113,15 @@ const Search = (props: {
           onInput={(e) =>
             props.setSearchValue((e.target as HTMLInputElement).value)
           }
-          onFocus={() => setSelected(0)}
-          onBlur={() => setSelected(null)}
+          onFocus={() => setActive(0)}
+          onBlur={() => setActive(null)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               if (!props.result) return
               const resultArray = Object.values(props.result).flatMap(
                 (items) => items,
               )
-              window.location.href = resultArray[selected()!].pathname
+              window.location.href = resultArray[active()!].pathname
               props.closeSearch()
               return
             }
@@ -182,8 +182,8 @@ const Search = (props: {
                       return (
                         <SearchItem
                           item={item}
-                          onMouseMove={() => setSelected(itemIndex)}
-                          isActive={itemIndex === selected()}
+                          onMouseMove={() => setActive(itemIndex)}
+                          isActive={itemIndex === active()}
                           closeSearch={props.closeSearch}
                         />
                       )
