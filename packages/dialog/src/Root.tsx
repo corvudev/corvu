@@ -213,12 +213,10 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       initialOpen: false,
       modal: true,
       closeOnEscapeKeyDown: true,
-      closeOnOutsidePointer: () =>
-        props.modal ?? DEFAULT_MODAL ? true : false,
+      closeOnOutsidePointer: () => props.modal ?? DEFAULT_MODAL,
       closeOnOutsidePointerStrategy: 'pointerup' as const,
-      noOutsidePointerEvents: () =>
-        props.modal ?? DEFAULT_MODAL ? true : false,
-      preventScroll: () => (props.modal ?? DEFAULT_MODAL ? true : false),
+      noOutsidePointerEvents: () => props.modal ?? DEFAULT_MODAL,
+      preventScroll: () => props.modal ?? DEFAULT_MODAL,
       hideScrollbar: true,
       preventScrollbarShift: true,
       preventScrollbarShiftMode: 'padding' as const,
