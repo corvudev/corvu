@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/corvudev/corvu/compare/solid-list@0.2.0...solid-list@0.3.0) (2024-07-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* use keys instead of indexes, improve shift selection
+
+### Features
+
+* use keys instead of indexes, improve shift selection ([e17c024](https://github.com/corvudev/corvu/commit/e17c0249eb9af50c13e35400da861cf5d346c1b6))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/solid-list@0.1.0...solid-list@0.2.0) (2024-07-16)
 
 

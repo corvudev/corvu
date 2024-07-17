@@ -1,6 +1,6 @@
 {
   "name": "solid-list",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "description": "SolidJS utility to create accessible, keyboard navigable lists like search results, selects or autocompletes.",
   "keywords": [

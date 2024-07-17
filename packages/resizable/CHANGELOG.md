@@ -1,5 +1,12 @@
 # @corvu/resizable
 
+## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.2...@corvu/resizable@0.2.3) (2024-07-17)
+
+
+### Bug Fixes
+
+* properly recognize initialSizes on Root ([d415d7c](https://github.com/corvudev/corvu/commit/d415d7ce38561caceb8f9c05883d53cd09a04a5d))
+
 ## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.1...@corvu/resizable@0.2.2) (2024-06-18)
 
 
