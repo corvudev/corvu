@@ -90,7 +90,7 @@ const resolveFunctionProps = (functionDeclaration: DeclarationVariant) => {
     )
   }
   const propTypes = getTypeProps(
-    functionDeclaration.signatures[0].parameters[0].type,
+    functionDeclaration.signatures[0].parameters![0].type,
   )
 
   return propTypes

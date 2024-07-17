@@ -50,8 +50,8 @@ const Search = () => {
   const [results, setResults] = createSignal([])
 
   const { active, setActive, onKeyDown } = createList({
-    itemCount: () => results().length, // required
-    initialActive: 0, // default = null, number | null
+    items: () => results().map(result => result.id), // required
+    initialActive: null, // default, T | null
     orientation: 'vertical', // default, 'vertical' | 'horizontal'
     loop: true, // default
     textDirection: 'ltr', // default, 'ltr' | 'rtl'

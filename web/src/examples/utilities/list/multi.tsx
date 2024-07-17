@@ -15,11 +15,11 @@ const MultiListExample = () => {
     toggleSelected,
     onKeyDown,
   } = createMultiList({
-    itemCount: ITEMS.length,
+    items: ITEMS,
     vimMode: true,
-    onCursorChange: (index) => {
-      if (index === null) return
-      refs()[index]?.focus()
+    onCursorChange: (item) => {
+      if (item === null) return
+      refs()[ITEMS.indexOf(item)]?.focus()
     },
   })
 
@@ -32,33 +32,33 @@ const MultiListExample = () => {
   return (
     <div class="flex w-full flex-col items-center space-y-2 p-5 md:px-10">
       <For each={ITEMS}>
-        {(crow, index) => (
+        {(crow) => (
           <div
             ref={(ref) => setRefs((refs) => [...refs, ref])}
             role="checkbox"
-            aria-checked={selected().includes(index())}
+            aria-checked={selected().includes(crow)}
             tabindex="0"
             onFocus={() => {
               if (cursor() !== null) return
-              setCursorActive(index())
+              setCursorActive(crow)
             }}
             onKeyDown={(e) => {
               if (e.key === 'x' || e.key === ' ' || e.key === 'Enter') {
-                toggleSelected(index())
+                toggleSelected(crow)
                 e.preventDefault()
                 return
               }
               onKeyDown(e)
             }}
             onClick={() => {
-              setCursorActive(index())
-              toggleSelected(index())
+              setCursorActive(crow)
+              toggleSelected(crow)
             }}
             class={clsx(
               'flex w-full max-w-80 cursor-pointer items-center space-x-2 rounded-md px-4 py-2 transition-all hover:scale-[1.01] hover:bg-corvu-200 focus:outline-none',
               {
-                'bg-corvu-bg': !active().includes(index()),
-                'bg-corvu-200 scale-[1.01]': active().includes(index()),
+                'bg-corvu-bg': !active().includes(crow),
+                'bg-corvu-200 scale-[1.01]': active().includes(crow),
               },
             )}
           >
@@ -68,8 +68,8 @@ const MultiListExample = () => {
                 fill="none"
                 viewBox="0 0 22 22"
                 class={clsx('size-3 transition-all', {
-                  'opacity-0': !selected().includes(index()),
-                  'opacity-100': selected().includes(index()),
+                  'opacity-0': !selected().includes(crow),
+                  'opacity-100': selected().includes(crow),
                 })}
               >
                 <path

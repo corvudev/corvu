@@ -37,7 +37,7 @@ export type SignatureVariant = {
   comment?: Comment
   sources?: Source[]
   typeParameters?: TypeParamVariant[]
-  parameters: ParamVariant[]
+  parameters?: ParamVariant[]
   type: Type
   default?: Type
 }
@@ -84,7 +84,7 @@ export type TypeParamVariant = {
   variant: 'typeParam'
   kind: number
   flags: object
-  type: Type
+  type?: Type
   default?: Type
 }
 

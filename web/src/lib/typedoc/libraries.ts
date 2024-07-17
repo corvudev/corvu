@@ -828,7 +828,7 @@ const List: Library = {
     createList: {
       kind: 'function',
       propsSorting: [
-        'itemCount',
+        'items',
         'initialActive',
         'orientation',
         'loop',
@@ -843,7 +843,7 @@ const List: Library = {
     createMultiList: {
       kind: 'function',
       propsSorting: [
-        'itemCount',
+        'items',
         'initialCursor',
         'initialActive',
         'initialSelected',

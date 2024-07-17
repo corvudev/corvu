@@ -65,7 +65,7 @@ const resolveComponent = (
 
 const resolveComponentProps = (component: DeclarationVariant) => {
   // Components always have their props inside a separate type
-  let propsType = component.signatures![0].parameters[0].type
+  let propsType = component.signatures![0].parameters![0].type
 
   if (propsType.type === 'intersection') {
     propsType = propsType.types[0]

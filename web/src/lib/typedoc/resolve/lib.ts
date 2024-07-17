@@ -12,6 +12,7 @@ const resolveDenyList = ['Side', 'Size', 'FloatingOptions', 'FloatingState']
 const resolveReferenceType = (
   type: ReferenceType,
 ): DeclarationVariant | string => {
+  if (type.refersToTypeParameter === true) return type.name
   if (resolveDenyList.includes(type.name)) {
     return type.name
   }

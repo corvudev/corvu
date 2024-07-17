@@ -37,11 +37,15 @@ const Search = (props: {
   closeSearch: () => void
 }) => {
   const { active, setActive, onKeyDown } = createList({
-    initialActive: 0,
-    itemCount: () =>
+    items: () =>
       props.result
-        ? Object.values(props.result).flatMap((items) => items).length
-        : 0,
+        ? [
+            ...Array(
+              Object.values(props.result).flatMap((items) => items).length,
+            ).keys(),
+          ]
+        : [],
+    initialActive: 0,
     handleTab: false,
   })
 
