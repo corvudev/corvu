@@ -157,7 +157,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
   })
 
   const { setActive, onKeyDown: onTriggerKeyDown } = createList({
-    itemCount: () => selectableTriggers().length,
+    items: () => [...Array(selectableTriggers().length).keys()],
     orientation: () => defaultedProps.orientation,
     loop: () => defaultedProps.loop,
     textDirection: () => defaultedProps.textDirection,
