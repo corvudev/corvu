@@ -168,12 +168,12 @@ const ResizableHandle = <T extends ValidComponent = 'button'>(
     const ariaControls = precidingPanels[precidingPanels.length - 1]?.data.id
     const ariaValueMax = followingPanels.reduce(
       (acc, panel) =>
-        acc - resolveSize(panel.data.minSize ?? 0, context().rootSize()),
+        acc - resolveSize(panel.data.minSize, context().rootSize()),
       1,
     )
     const ariaValueMin = precidingPanels.reduce(
       (acc, panel) =>
-        acc + resolveSize(panel.data.minSize ?? 0, context().rootSize()),
+        acc + resolveSize(panel.data.minSize, context().rootSize()),
       0,
     )
     const ariaValueNow = precidingPanels.reduce(

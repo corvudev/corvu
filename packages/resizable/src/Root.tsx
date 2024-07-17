@@ -160,7 +160,7 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
     const sizeExists = sizes()[panelIndex] !== undefined
 
     let panelSize: number | null = null
-    if (panelData.initialSize !== undefined) {
+    if (panelData.initialSize !== null) {
       panelSize = resolveSize(panelData.initialSize, rootSize())
     } else if (localProps.initialSizes[panelIndex] !== undefined && idExists) {
       panelSize = resolveSize(localProps.initialSizes[panelIndex]!, rootSize())
@@ -254,8 +254,8 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
     untrack(() => {
       const panel = panels()[panelIndex]
       if (!panel) return
-      const minSize = resolveSize(panel.data.minSize ?? 0, rootSize())
-      const maxSize = resolveSize(panel.data.maxSize ?? 1, rootSize())
+      const minSize = resolveSize(panel.data.minSize, rootSize())
+      const maxSize = resolveSize(panel.data.maxSize, rootSize())
       const newSize = resolveSize(size, rootSize())
       const allowedSize = Math.max(minSize, Math.min(newSize, maxSize))
       const deltaPercentage = allowedSize - sizes()[panelIndex]!
@@ -315,7 +315,7 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
         rootSize(),
       )
       if (!panel.data.collapsible || panelSize !== collapsedSize) return
-      const minSize = resolveSize(panel.data.minSize ?? 0, rootSize())
+      const minSize = resolveSize(panel.data.minSize, rootSize())
       const deltaPercentage = minSize - panelSize
 
       resizePanel({

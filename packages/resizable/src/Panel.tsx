@@ -133,7 +133,7 @@ const ResizablePanel = <T extends ValidComponent = 'div'>(
 ) => {
   const defaultedProps = mergeProps(
     {
-      initialSize: 0.5,
+      initialSize: null,
       minSize: 0,
       maxSize: 1,
       collapsible: false,
