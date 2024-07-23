@@ -23,6 +23,9 @@ export default defineConfig({
     tailwind(),
     solid(),
   ],
+  prefetch: {
+    prefetchAll: true,
+  },
   redirects: {
     '/docs/usage/': {
       status: 307,
