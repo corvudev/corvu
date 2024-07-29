@@ -18,7 +18,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.2",
+    "@astrojs/check": "^0.8.3",
     "@astrojs/mdx": "^3.1.3",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/solid-js": "^4.4.0",
@@ -39,8 +39,8 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.13",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "astro": "^4.12.0",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "astro": "^4.12.2",
     "astro-eslint-parser": "^1.0.2",
     "clsx": "^2.1.1",
     "eslint": "^8.57.0",
@@ -51,11 +51,11 @@
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.33.4",
-    "shiki": "^1.10.3",
-    "solid-js": "^1.8.18",
+    "shiki": "^1.12.0",
+    "solid-js": "^1.8.19",
     "solid-list": "workspace:*",
     "solid-persistent": "workspace:*",
-    "tailwindcss": "^3.4.6",
-    "typescript": "^5.5.3"
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4"
   }
 }

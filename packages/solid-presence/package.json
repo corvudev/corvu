@@ -55,16 +55,16 @@
     "@corvu/utils": "workspace:~"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
     "esbuild-plugin-solid": "^0.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-solid": "^0.14.1",
     "prettier": "^3.3.3",
-    "solid-js": "^1.8.18",
-    "tsup": "^8.1.2",
-    "typedoc": "^0.26.4",
-    "typescript": "^5.5.3"
+    "solid-js": "^1.8.19",
+    "tsup": "^8.2.3",
+    "typedoc": "^0.26.5",
+    "typescript": "^5.5.4"
   },
   "peerDependencies": {
     "solid-js": "^1.8"
