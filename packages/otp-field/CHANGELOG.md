@@ -1,5 +1,12 @@
 # @corvu/otp-field
 
+## [0.1.2](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.1...@corvu/otp-field@0.1.2) (2024-07-29)
+
+
+### Bug Fixes
+
+* properly update input value on form reset event ([ff421a9](https://github.com/corvudev/corvu/commit/ff421a9459551e6b3215aa3637c736a636a57d5e))
+
 ## [0.1.1](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.0...@corvu/otp-field@0.1.1) (2024-05-29)
 
 
