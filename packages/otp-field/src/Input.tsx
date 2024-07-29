@@ -1,4 +1,5 @@
 import {
+  afterPaint,
   callEventHandler,
   combineStyle,
   type ElementOf,
@@ -115,6 +116,22 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     document.addEventListener('selectionchange', onSelectionChange)
     onCleanup(() => {
       document.removeEventListener('selectionchange', onSelectionChange)
+    })
+  })
+
+  createEffect(() => {
+    const element = ref()
+    if (!element) return
+    const form = element.form
+    if (!form) return
+    const onReset = () => {
+      afterPaint(() => {
+        context().setValue(element.value)
+      })
+    }
+    form.addEventListener('reset', onReset)
+    onCleanup(() => {
+      form.removeEventListener('reset', onReset)
     })
   })
 
