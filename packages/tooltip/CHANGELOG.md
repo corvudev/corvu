@@ -1,5 +1,12 @@
 # @corvu/tooltip
 
+## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/tooltip@0.2.0...@corvu/tooltip@0.2.1) (2024-08-03)
+
+
+### Features
+
+* use solid-dismissible ([abe0c87](https://github.com/corvudev/corvu/commit/abe0c8775e9cfbf6662ed45cc3626beb395d66d4))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/tooltip@0.1.0...@corvu/tooltip@0.2.0) (2024-05-21)
 
 

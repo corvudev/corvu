@@ -1,5 +1,12 @@
 # solid-presence
 
+## [0.1.8](https://github.com/corvudev/corvu/compare/solid-presence@0.1.7...solid-presence@0.1.8) (2024-08-03)
+
+
+### Features
+
+* expose setState ([1a64bbd](https://github.com/corvudev/corvu/commit/1a64bbdbc15eedb8f0b84f425525a1e0e40847d2))
+
 ## [0.1.7](https://github.com/corvudev/corvu/compare/solid-presence@0.1.6...solid-presence@0.1.7) (2024-06-19)
 
 
