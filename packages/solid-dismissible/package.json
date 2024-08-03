@@ -1,6 +1,6 @@
 {
   "name": "solid-dismissible",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "description": "SolidJS utility for creating dismissible, nestable layers.",
   "keywords": [

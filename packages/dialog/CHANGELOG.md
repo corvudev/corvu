@@ -1,5 +1,12 @@
 # @corvu/dialog
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.1...@corvu/dialog@0.2.2) (2024-08-03)
+
+
+### Features
+
+* use solid-dismissible, add closeOnOutsideFocus ([45944a7](https://github.com/corvudev/corvu/commit/45944a7a92234a0c42e48d1e1f6a4bf40e214186))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.0...@corvu/dialog@0.2.1) (2024-07-04)
 
 
