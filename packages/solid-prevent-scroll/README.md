@@ -40,7 +40,7 @@ const DialogContent: Component<{
   })
 
   return (
-    <Show when={props.open}>
+    <Show when={props.open()}>
       <div ref={setRef}>Dialog</div>
     </Show>
   )

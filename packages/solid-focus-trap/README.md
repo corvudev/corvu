@@ -33,7 +33,7 @@ const DialogContent: Component<{
   })
 
   return (
-    <Show when={props.open}>
+    <Show when={props.open()}>
       <div ref={setContentRef}>Dialog</div>
     </Show>
   )
@@ -60,7 +60,7 @@ const DialogContent: Component<{
   })
 
   return (
-    <Show when={props.open}>
+    <Show when={props.open()}>
       <div ref={setContentRef}>Dialog</div>
       <button>Close</button>
       <input ref={setInitialFocusRef} />
