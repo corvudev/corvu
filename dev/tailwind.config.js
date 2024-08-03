@@ -1,3 +1,4 @@
+import corvuPlugin from '@corvu/tailwind'
 import plugin from 'tailwindcss/plugin'
 
 /** @type {import('tailwindcss').Config} */
@@ -48,7 +49,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('@corvu/tailwind'),
+    corvuPlugin,
     plugin(
       ({ addUtilities, matchUtilities, theme }) => {
         addUtilities({

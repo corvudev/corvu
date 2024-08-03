@@ -39,10 +39,13 @@ function createControllableSignal<T>(props: {
 
   const setValue: Setter<T | undefined> = (next?: unknown) => {
     return untrack(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
       let nextValue: Exclude<T, Function>
       if (typeof next === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         nextValue = next(value()) as Exclude<T, Function>
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         nextValue = next as Exclude<T, Function>
       }
 

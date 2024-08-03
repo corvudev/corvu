@@ -15,7 +15,7 @@ export type DialogLabelCorvuProps = {
   contextId?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars
 export type DialogLabelSharedElementProps<T extends ValidComponent = 'h2'> = {}
 
 export type DialogLabelElementProps = DialogLabelSharedElementProps & {

@@ -28,13 +28,12 @@ module.exports = {
       },
     ],
     '@typescript-eslint/method-signature-style': 'error',
-    '@typescript-eslint/ban-types': [
+    '@typescript-eslint/no-empty-object-type': 'error',
+    '@typescript-eslint/no-wrapper-object-types': 'error',
+    '@typescript-eslint/no-unused-expressions': [
       'error',
       {
-        types: {
-          Function: false,
-        },
-        extendDefaults: true,
+        allowShortCircuit: true,
       },
     ],
 

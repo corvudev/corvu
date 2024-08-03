@@ -30,7 +30,15 @@ module.exports = {
       },
     ],
     '@typescript-eslint/method-signature-style': 'error',
+    '@typescript-eslint/no-empty-object-type': 'off',
+    '@typescript-eslint/no-wrapper-object-types': 'error',
     '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+      },
+    ],
 
     'tailwindcss/classnames-order': 'error',
     'tailwindcss/enforces-negative-arbitrary-values': 'error',

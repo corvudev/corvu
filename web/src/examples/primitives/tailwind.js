@@ -1,3 +1,7 @@
+import animatePlugin from 'tailwindcss-animate'
+import corvuPlugin from '@corvu/tailwind'
+import formsPlugin from '@tailwindcss/forms'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{ts,tsx}'],
@@ -15,9 +19,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('tailwindcss-animate'),
-    require('@corvu/tailwind'),
-  ],
+  plugins: [animatePlugin, corvuPlugin, formsPlugin],
 }

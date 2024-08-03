@@ -1,5 +1,10 @@
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
+import containerQueriesPlugin from '@tailwindcss/container-queries'
+import corvuPlugin from '@corvu/tailwind'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import formsPlugin from '@tailwindcss/forms'
 import plugin from 'tailwindcss/plugin'
+import typographyPlugin from '@tailwindcss/typography'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -72,11 +77,11 @@ export default {
     },
   },
   plugins: [
-    require('@corvu/tailwind'),
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
+    aspectRatioPlugin,
+    containerQueriesPlugin,
+    corvuPlugin,
+    formsPlugin,
+    typographyPlugin,
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-thin': {

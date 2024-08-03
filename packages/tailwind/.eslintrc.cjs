@@ -27,6 +27,14 @@ module.exports = {
       },
     ],
     '@typescript-eslint/method-signature-style': 'error',
+    '@typescript-eslint/no-empty-object-type': 'error',
+    '@typescript-eslint/no-wrapper-object-types': 'error',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+      },
+    ],
 
     'solid/reactivity': 'off',
 

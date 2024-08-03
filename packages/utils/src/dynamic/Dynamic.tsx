@@ -14,6 +14,7 @@ const Dynamic = <ElementProps,>(
 ) => {
   const [localProps, otherProps] = splitProps(props, ['as'])
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const cached = createMemo<Function | string>(() => localProps.as ?? 'div')
   const memoizedDynamic = createMemo(() => {
     const component = cached()

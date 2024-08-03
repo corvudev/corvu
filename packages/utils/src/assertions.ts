@@ -5,6 +5,7 @@
  * https://github.com/ariakit/ariakit/blob/b26cdee02011d2a6b4b544a80842a6fa4ae9e7c5/packages/ariakit-core/src/utils/dom.ts#L90
  */
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const isFunction = <T extends Function = Function>(
   value: unknown,
 ): value is T => {

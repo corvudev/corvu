@@ -18,7 +18,6 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.3",
     "@astrojs/mdx": "^3.1.3",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/solid-js": "^4.4.0",
@@ -39,8 +38,8 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.13",
-    "@typescript-eslint/eslint-plugin": "^7.17.0",
-    "astro": "^4.12.2",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "astro": "^4.13.1",
     "astro-eslint-parser": "^1.0.2",
     "clsx": "^2.1.1",
     "eslint": "^8.57.0",
@@ -51,7 +50,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.33.4",
-    "shiki": "^1.12.0",
+    "shiki": "^1.12.1",
     "solid-js": "^1.8.19",
     "solid-list": "workspace:*",
     "solid-persistent": "workspace:*",

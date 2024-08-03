@@ -18,7 +18,7 @@ export type DialogDescriptionCorvuProps = {
 export type DialogDescriptionSharedElementProps<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   T extends ValidComponent = 'p',
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 > = {}
 
 export type DialogDescriptionElementProps =
