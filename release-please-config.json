@@ -32,8 +32,7 @@
       "component": "@corvu/resizable"
     },
     "packages/solid-dismissible": {
-      "component": "solid-dismissible",
-      "release-as": "0.1.0"
+      "component": "solid-dismissible"
     },
     "packages/solid-focus-trap": {
       "component": "solid-focus-trap"
