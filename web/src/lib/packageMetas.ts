@@ -2,6 +2,7 @@ import accordion from '../../../packages/accordion/package.json'
 import corvu from '../../../packages/corvu/package.json'
 import dialog from '../../../packages/dialog/package.json'
 import disclosure from '../../../packages/disclosure/package.json'
+import dismissible from '../../../packages/solid-dismissible/package.json'
 import drawer from '../../../packages/drawer/package.json'
 import focusTrap from '../../../packages/solid-focus-trap/package.json'
 import list from '../../../packages/solid-list/package.json'
@@ -69,6 +70,12 @@ const packageMetas: {
     version: tooltip.version,
     npmHref: 'https://www.npmjs.com/package/@corvu/tooltip',
     sourceHref: 'https://github.com/corvudev/corvu/tree/main/packages/tooltip',
+  },
+  'solid-dismissible': {
+    version: dismissible.version,
+    npmHref: 'https://www.npmjs.com/package/solid-dismissible',
+    sourceHref:
+      'https://github.com/corvudev/corvu/tree/main/packages/solid-dismissible',
   },
   'solid-focus-trap': {
     version: focusTrap.version,

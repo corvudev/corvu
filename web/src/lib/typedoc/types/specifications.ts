@@ -17,6 +17,7 @@ export type TypeSpecification =
   | TemporaryTypeSpecification
 
 export type ComponentTypeSpecification = {
+  isDefaultExport?: boolean
   kind: 'component'
   sorting: string[]
   inherits?: {

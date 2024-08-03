@@ -1,4 +1,4 @@
-import { access, type MaybeAccessor } from '@src/reactivity'
+import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
 
 /**
@@ -14,7 +14,7 @@ const createOutsidePointer = (props: {
   element: MaybeAccessor<HTMLElement | null>
   enabled?: MaybeAccessor<boolean>
   strategy?: MaybeAccessor<'pointerdown' | 'pointerup'>
-  ignore?: MaybeAccessor<HTMLElement | null>
+  ignore?: MaybeAccessor<(HTMLElement | null)[]>
   onPointer: (event: PointerEvent) => void
 }) => {
   const defaultedProps = mergeProps(
@@ -44,7 +44,13 @@ const createOutsidePointer = (props: {
     if (
       element &&
       !element.contains(event.target as Node) &&
-      !(ignore && ignore.contains(event.target as Node))
+      !(
+        ignore &&
+        ignore.some(
+          (ignoreElement) =>
+            ignoreElement && ignoreElement.contains(event.target as Node),
+        )
+      )
     ) {
       defaultedProps.onPointer(event)
     }

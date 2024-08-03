@@ -188,6 +188,9 @@ importers:
       '@corvu/utils':
         specifier: workspace:~
         version: link:../utils
+      solid-dismissible:
+        specifier: workspace:~
+        version: link:../solid-dismissible
       solid-focus-trap:
         specifier: workspace:~
         version: link:../solid-focus-trap
@@ -396,6 +399,43 @@ importers:
         version: 5.5.4
 
   packages/resizable:
+    dependencies:
+      '@corvu/utils':
+        specifier: workspace:~
+        version: link:../utils
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.17.0
+        version: 7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      esbuild-plugin-solid:
+        specifier: ^0.6.0
+        version: 0.6.0(esbuild@0.23.0)(solid-js@1.8.19)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.57.0)
+      eslint-plugin-solid:
+        specifier: ^0.14.1
+        version: 0.14.1(eslint@8.57.0)(typescript@5.5.4)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      solid-js:
+        specifier: ^1.8.19
+        version: 1.8.19
+      tsup:
+        specifier: ^8.2.3
+        version: 8.2.3(jiti@1.21.6)(postcss@8.4.40)(typescript@5.5.4)(yaml@2.5.0)
+      typedoc:
+        specifier: ^0.26.5
+        version: 0.26.5(typescript@5.5.4)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
+
+  packages/solid-dismissible:
     dependencies:
       '@corvu/utils':
         specifier: workspace:~
@@ -685,6 +725,9 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.6.8
         version: 1.6.8
+      solid-dismissible:
+        specifier: workspace:~
+        version: link:../solid-dismissible
       solid-presence:
         specifier: workspace:~
         version: link:../solid-presence

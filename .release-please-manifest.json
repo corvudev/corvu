@@ -7,6 +7,7 @@
   "packages/otp-field": "0.1.2",
   "packages/popover": "0.2.0",
   "packages/resizable": "0.2.3",
+  "packages/solid-dismissible": "0.0.0",
   "packages/solid-focus-trap": "0.1.7",
   "packages/solid-list": "0.3.0",
   "packages/solid-persistent": "0.1.0",

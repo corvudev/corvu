@@ -13,10 +13,10 @@ import {
   untrack,
   useContext,
 } from 'solid-js'
-import { access } from '@src/reactivity'
-import type { CreateDismissableProps } from '@src/create/dismissible'
+import { access } from '@corvu/utils/reactivity'
 import createDismissible from '@src/create/dismissible'
-import { isFunction } from '@src/assertions'
+import type { CreateDismissibleProps } from '@src/create/dismissible'
+import { isFunction } from '@corvu/utils'
 
 type DismissibleContextValue = {
   layers: Accessor<string[]>
@@ -26,32 +26,46 @@ type DismissibleContextValue = {
 
 const DismissibleContext = createContext<DismissibleContextValue>()
 
-type DismissibleProps = {
+export type DismissibleProps = {
   /**
    * Whether the dismissible is enabled.
    * @defaultValue `true`
    */
   enabled: boolean
-  children: JSX.Element | ((props: { isLastLayer: boolean }) => JSX.Element)
-} & CreateDismissableProps
+  dismissibleId?: string
+  /** @hidden */
+  children: JSX.Element | ((props: DismissibleChildrenProps) => JSX.Element)
+} & CreateDismissibleProps
+
+export type DismissibleChildrenProps = {
+  isLastLayer: boolean
+}
 
 /** A component that can be dismissed by pressing the escape key or clicking outside of it. Can be nested. */
 const Dismissible: Component<DismissibleProps> = (props) => {
+  const defaultedProps = mergeProps(
+    {
+      dismissibleId: createUniqueId(),
+    },
+    props,
+  )
+
   const memoizedDismissible = createMemo(() => {
-    const upperContext = useContext(DismissibleContext)
-    if (upperContext) {
+    const dismissibleContext = useContext(DismissibleContext)
+    if (dismissibleContext) {
       return <DismissibleLayer {...props} />
     }
 
-    const layerId = createUniqueId()
-    const [layers, setLayers] = createSignal<string[]>([layerId])
+    const [layers, setLayers] = createSignal<string[]>([
+      defaultedProps.dismissibleId,
+    ])
 
-    const onLayerShow = (layerId: string) => {
-      setLayers((layers) => [...layers, layerId])
+    const onLayerShow = (dismissibleId: string) => {
+      setLayers((layers) => [...layers, dismissibleId])
     }
 
-    const onLayerDismiss = (layerId: string) => {
-      setLayers((layers) => layers.filter((layer) => layer !== layerId))
+    const onLayerDismiss = (dismissibleId: string) => {
+      setLayers((layers) => layers.filter((layer) => layer !== dismissibleId))
     }
 
     return (
@@ -70,13 +84,17 @@ const Dismissible: Component<DismissibleProps> = (props) => {
   return memoizedDismissible as unknown as JSX.Element
 }
 
+const [activeDismissibles, setActiveDismissibles] = createSignal<string[]>([])
+
 const DismissibleLayer: Component<DismissibleProps> = (props) => {
   const defaultedProps = mergeProps(
     {
       enabled: true,
+      dismissibleId: createUniqueId(),
       dismissOnEscapeKeyDown: true,
+      dismissOnOutsideFocus: true,
       dismissOnOutsidePointer: true,
-      dismissOnOutsidePointerStrategy: 'pointerup' as const,
+      outsidePointerStrategy: 'pointerup' as const,
       noOutsidePointerEvents: true,
     },
     props,
@@ -86,31 +104,47 @@ const DismissibleLayer: Component<DismissibleProps> = (props) => {
     'enabled',
     'children',
     'dismissOnEscapeKeyDown',
+    'dismissOnOutsideFocus',
     'dismissOnOutsidePointer',
-    'dismissOnOutsidePointerStrategy',
-    'dismissOnOutsidePointerIgnore',
+    'outsidePointerStrategy',
+    'outsidePointerIgnore',
     'noOutsidePointerEvents',
     'onDismiss',
   ])
 
   const context = useContext(DismissibleContext) as DismissibleContextValue
 
-  const layerId = createUniqueId()
-
   onCleanup(() => {
-    context.onLayerDismiss(layerId)
+    context.onLayerDismiss(defaultedProps.dismissibleId)
+    setActiveDismissibles((activeDismissibles) =>
+      activeDismissibles.filter(
+        (dismissibleId) => dismissibleId !== defaultedProps.dismissibleId,
+      ),
+    )
   })
 
   createEffect(() => {
     if (localProps.enabled) {
-      context.onLayerShow(layerId)
+      context.onLayerShow(defaultedProps.dismissibleId)
+      setActiveDismissibles((activeDismissibles) => [
+        ...activeDismissibles,
+        defaultedProps.dismissibleId,
+      ])
     } else {
-      context.onLayerDismiss(layerId)
+      context.onLayerDismiss(defaultedProps.dismissibleId)
+      setActiveDismissibles((activeDismissibles) =>
+        activeDismissibles.filter(
+          (dismissibleId) => dismissibleId !== defaultedProps.dismissibleId,
+        ),
+      )
     }
   })
 
   const isLastLayer = () => {
-    return context.layers()[context.layers().length - 1] === layerId
+    return (
+      context.layers()[context.layers().length - 1] ===
+      defaultedProps.dismissibleId
+    )
   }
 
   createDismissible({
@@ -118,12 +152,16 @@ const DismissibleLayer: Component<DismissibleProps> = (props) => {
       access(localProps.dismissOnEscapeKeyDown) &&
       isLastLayer() &&
       localProps.enabled,
+    dismissOnOutsideFocus: () =>
+      access(localProps.dismissOnOutsideFocus) &&
+      isLastLayer() &&
+      localProps.enabled,
     dismissOnOutsidePointer: () =>
       access(localProps.dismissOnOutsidePointer) &&
       isLastLayer() &&
       localProps.enabled,
-    dismissOnOutsidePointerStrategy: localProps.dismissOnOutsidePointerStrategy,
-    dismissOnOutsidePointerIgnore: localProps.dismissOnOutsidePointerIgnore,
+    outsidePointerStrategy: localProps.outsidePointerStrategy,
+    outsidePointerIgnore: localProps.outsidePointerIgnore,
     noOutsidePointerEvents: () =>
       access(localProps.noOutsidePointerEvents) && localProps.enabled,
     onDismiss: (reason) => {
@@ -148,5 +186,7 @@ const DismissibleLayer: Component<DismissibleProps> = (props) => {
 
   return untrack(() => resolveChildren())
 }
+
+export { activeDismissibles }
 
 export default Dismissible

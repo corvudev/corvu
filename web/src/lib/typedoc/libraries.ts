@@ -2,6 +2,7 @@ import accordionTypedoc from '../../../../packages/accordion/api.json'
 import type { ApiDeclaration } from '@lib/typedoc/types/typedoc'
 import dialogTypedoc from '../../../../packages/dialog/api.json'
 import disclosureTypedoc from '../../../../packages/disclosure/api.json'
+import dismissibleTypedoc from '../../../../packages/solid-dismissible/api.json'
 import drawerTypedoc from '../../../../packages/drawer/api.json'
 import focusTrapTypedoc from '../../../../packages/solid-focus-trap/api.json'
 import type { Library } from '@lib/typedoc/types/specifications'
@@ -26,6 +27,7 @@ export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/resizable': resizableTypedoc as ApiDeclaration,
   '@corvu/tooltip': tooltipTypedoc as ApiDeclaration,
   '@corvu/utils': utilsTypedoc as ApiDeclaration,
+  'solid-dismissible': dismissibleTypedoc as ApiDeclaration,
   'solid-focus-trap': focusTrapTypedoc as ApiDeclaration,
   'solid-list': listTypedoc as ApiDeclaration,
   'solid-persistent': persistentTypedoc as ApiDeclaration,
@@ -189,8 +191,10 @@ const Dialog: Library = {
         'modal',
         'closeOnEscapeKeyDown',
         'onEscapeKeyDown',
+        'closeOnOutsideFocus',
         'closeOnOutsidePointer',
         'closeOnOutsidePointerStrategy',
+        'onOutsideFocus',
         'onOutsidePointer',
         'noOutsidePointerEvents',
         'preventScroll',
@@ -247,6 +251,7 @@ const Dialog: Library = {
         'setOpen',
         'modal',
         'closeOnEscapeKeyDown',
+        'closeOnOutsideFocus',
         'closeOnOutsidePointer',
         'closeOnOutsidePointerStrategy',
         'noOutsidePointerEvents',
@@ -277,6 +282,7 @@ const Dialog: Library = {
         'setOpen',
         'modal',
         'closeOnEscapeKeyDown',
+        'closeOnOutsideFocus',
         'closeOnOutsidePointer',
         'closeOnOutsidePointerStrategy',
         'noOutsidePointerEvents',
@@ -800,6 +806,39 @@ const Tooltip: Library = {
   },
 }
 
+const Dismissible: Library = {
+  api: Typedoc['solid-dismissible'],
+  name: 'Dismissible',
+  items: {
+    Dismissible: {
+      isDefaultExport: true,
+      kind: 'component',
+      sorting: [
+        'enabled',
+        'dismissibleId',
+        'element',
+        'onDismiss',
+        'dismissOnEscapeKeyDown',
+        'dismissOnOutsideFocus',
+        'dismissOnOutsidePointer',
+        'outsidePointerStrategy',
+        'outsidePointerIgnore',
+        'noOutsidePointerEvents',
+        'onEscapeKeyDown',
+        'onOutsideFocus',
+        'onOutsidePointer',
+      ],
+    },
+    DismissibleChildrenProps: {
+      kind: 'childrenProps',
+      sorting: ['isLastLayer'],
+    },
+    activeDismissibles: {
+      kind: 'simple',
+    },
+  },
+}
+
 const FocusTrap: Library = {
   api: Typedoc['solid-focus-trap'],
   name: 'Focus Trap',
@@ -937,6 +976,7 @@ export {
   Popover,
   Resizable,
   Tooltip,
+  Dismissible,
   FocusTrap,
   List,
   Persistent,
@@ -954,6 +994,7 @@ export default [
   Popover,
   Resizable,
   Tooltip,
+  Dismissible,
   FocusTrap,
   List,
   Persistent,

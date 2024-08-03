@@ -1,6 +1,6 @@
-import { access, type MaybeAccessor } from '@src/reactivity'
+import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
 import { createEffect, mergeProps } from 'solid-js'
-import createStyle from '@src/create/style'
+import createStyle from '@corvu/utils/create/style'
 
 /**
  * Disables pointer events on the `<body>` element.

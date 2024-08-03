@@ -20,12 +20,17 @@ import {
 } from '@lib/typedoc/resolve/lib'
 import type { ComponentTypeSpecification } from '@lib/typedoc/types/specifications'
 
+const inheritAllowList = ['CreateDismissibleProps']
+
 const resolveComponent = (
   api: ApiDeclaration,
   name: string,
   component: ComponentTypeSpecification,
 ): ApiReference => {
-  const componentDeclaration = api.children.find((child) => child.name === name)
+  const componentDeclaration = api.children.find(
+    (child) =>
+      child.name === (component.isDefaultExport === true ? 'default' : name),
+  )
   if (!componentDeclaration) {
     throw new Error(`Component declaration not found: ${name}`)
   }
@@ -119,7 +124,7 @@ const resolveComponentProps = (component: DeclarationVariant) => {
       type = typeArgument
       break
     case 'intersection':
-      type = propsDeclaration.type.types[0]
+      type = propsDeclaration.type
       break
     default:
       throw new Error(`Unexpected type ${propsDeclaration.type.type}`)
@@ -270,6 +275,14 @@ const getTypeProps = (type: Type): PropType[] => {
       break
     case 'intersection':
       propTypes.push(...getTypeProps(type.types[0]))
+      for (const inheritType of type.types.slice(1)) {
+        if (
+          inheritType.type === 'reference' &&
+          inheritAllowList.includes(inheritType.name)
+        ) {
+          propTypes.push(...getTypeProps(inheritType))
+        }
+      }
       break
     default:
       throw new Error(`Unknown type ${type.type}`)

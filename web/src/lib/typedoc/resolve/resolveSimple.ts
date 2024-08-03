@@ -4,11 +4,23 @@ import { resolveTypeTopLevel } from '@lib/typedoc/resolve/lib'
 
 const resolveSimple = (api: ApiDeclaration, name: string): ApiReference => {
   const simpleDeclaration = api.children.find((child) => child.name === name)
-  if (!simpleDeclaration || !simpleDeclaration.type) {
-    throw new Error(`Simlpe declaration not found: ${name}`)
+  if (
+    !simpleDeclaration ||
+    (!simpleDeclaration.type && !simpleDeclaration.signatures?.[0].type)
+  ) {
+    throw new Error(`Simple declaration not found: ${name}`)
   }
 
-  const type = resolveTypeTopLevel(simpleDeclaration.type)
+  let type
+  if (simpleDeclaration.type) {
+    type = resolveTypeTopLevel(simpleDeclaration.type)
+  } else {
+    type = resolveTypeTopLevel(
+      simpleDeclaration.signatures![0].type,
+      undefined,
+      [],
+    )
+  }
 
   return {
     name,

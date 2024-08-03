@@ -1,37 +1,43 @@
+import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
 import createEscapeKeyDown from '@src/create/escapeKeyDown'
 import createNoPointerEvents from '@src/create/noPointerEvents'
+import createOutsideFocus from '@src/create/outsideFocus'
 import createOutsidePointer from '@src/create/outsidePointer'
-import type { MaybeAccessor } from '@src/reactivity'
 import { mergeProps } from 'solid-js'
 
-export type CreateDismissableProps = {
+export type CreateDismissibleProps = {
   /**
-   * The element to make dismissable.
+   * The element to make dismissible.
    */
   element: MaybeAccessor<HTMLElement | null>
   /**
    * Callback fired when the element is being dismissed.
    */
-  onDismiss: (reason: 'escapeKey' | 'pointerOutside') => void
+  onDismiss: (reason: 'escapeKey' | 'outsidePointer' | 'outsideFocus') => void
   /**
    * Whether to dismiss the element when the escape key is pressed.
    * @defaultValue `true`
    */
   dismissOnEscapeKeyDown?: MaybeAccessor<boolean>
   /**
+   * Whether to dismiss the element when a focus event happens outside the element.
+   * @defaultValue `true`
+   */
+  dismissOnOutsideFocus?: MaybeAccessor<boolean>
+  /**
    * Whether to dismiss the element when a pointer down event happens outside the element.
    * @defaultValue `true`
    */
   dismissOnOutsidePointer?: MaybeAccessor<boolean>
   /**
-   * Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`.
+   * Whether `dismissOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`.
    * @defaultValue `pointerup`
    */
-  dismissOnOutsidePointerStrategy?: MaybeAccessor<'pointerdown' | 'pointerup'>
+  outsidePointerStrategy?: MaybeAccessor<'pointerdown' | 'pointerup'>
   /**
    * Ignore pointer events that occur inside of this element.
    */
-  dismissOnOutsidePointerIgnore?: MaybeAccessor<HTMLElement | null>
+  outsidePointerIgnore?: MaybeAccessor<(HTMLElement | null)[]>
   /**
    * Whether to disable pointer events outside the element.
    * @defaultValue `true`
@@ -42,36 +48,42 @@ export type CreateDismissableProps = {
    */
   onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
+   * Callback fired when a focus event happens outside the element. Can be prevented by calling `event.preventDefault`.
+   */
+  onOutsideFocus?: (event: CustomEvent) => void
+  /**
    * Callback fired when a pointer down event happens outside the element. Can be prevented by calling `event.preventDefault`.
    */
-  onOutsidePointer?: (event: MouseEvent) => void
+  onOutsidePointer?: (event: PointerEvent) => void
 }
 
 /**
- * Creates a dismissible element that can be dismissed by pressing the escape key or clicking outside the element.
+ * Creates a dismissible element that can be dismissed by pressing the escape key or clicking/focusing outside of the element.
  *
- * @param props.element - The element to make dismissable.
+ * @param props.element - The element to make dismissible.
  * @param props.onDismiss - Callback fired when the element is being dismissed.
  * @param props.dismissOnEscapeKeyDown - Whether to dismiss the element when the escape key is pressed. *Default = `true`*
+ * @param props.dismissOnOutsideFocus - Whether to dismiss the element when a focus event happens outside the element. *Default = `true`*
  * @param props.dismissOnOutsidePointer - Whether to dismiss the element when a pointer down event happens outside the element. *Default = `true`*
- * @param props.closeOnOutsidePointerStrategy - Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. *Default = `pointerup`*
+ * @param props.outsidePointerStrategy - Whether `dismissOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. *Default = `pointerup`*
  * @param props.noOutsidePointerEvents - Whether to disable pointer events outside the element. *Default = `true`*
  * @param props.onEscapeKeyDown - Callback fired when the escape key is pressed. Can be prevented by calling `event.preventDefault`.
  * @param props.onOutsidePointer - Callback fired when a pointer down event happens outside the element. Can be prevented by calling `event.preventDefault`.
  */
-const createDismissible = (props: CreateDismissableProps) => {
+const createDismissible = (props: CreateDismissibleProps) => {
   const defaultedProps = mergeProps(
     {
       dismissOnEscapeKeyDown: true,
+      dismissOnOutsideFocus: true,
       dismissOnOutsidePointer: true,
-      closeOnOutsidePointerStrategy: 'pointerup' as const,
+      outsidePointerStrategy: 'pointerup' as const,
       noOutsidePointerEvents: true,
     },
     props,
   )
 
   createEscapeKeyDown({
-    enabled: defaultedProps.dismissOnEscapeKeyDown,
+    enabled: () => access(defaultedProps.dismissOnEscapeKeyDown),
     onEscapeKeyDown: (event) => {
       defaultedProps.onEscapeKeyDown?.(event)
       if (!event.defaultPrevented) {
@@ -80,10 +92,24 @@ const createDismissible = (props: CreateDismissableProps) => {
     },
   })
 
+  createOutsideFocus({
+    enabled: () => access(defaultedProps.dismissOnOutsideFocus),
+    onFocus: (event) => {
+      defaultedProps.onOutsideFocus?.(event)
+      if (!event.defaultPrevented) {
+        defaultedProps.onDismiss('outsideFocus')
+      }
+    },
+    element: () => access(defaultedProps.element),
+    ignorePointerEvents: () =>
+      access(defaultedProps.noOutsidePointerEvents) ||
+      access(defaultedProps.dismissOnOutsidePointer),
+  })
+
   createOutsidePointer({
-    enabled: defaultedProps.dismissOnOutsidePointer,
-    strategy: defaultedProps.closeOnOutsidePointerStrategy,
-    ignore: defaultedProps.dismissOnOutsidePointerIgnore,
+    enabled: () => access(defaultedProps.dismissOnOutsidePointer),
+    strategy: () => access(defaultedProps.outsidePointerStrategy),
+    ignore: () => access(defaultedProps.outsidePointerIgnore) ?? [],
     onPointer: (event) => {
       defaultedProps.onOutsidePointer?.(event)
       if (!event.defaultPrevented) {
@@ -93,14 +119,14 @@ const createDismissible = (props: CreateDismissableProps) => {
 
         if (isRightClick) return
 
-        defaultedProps.onDismiss('pointerOutside')
+        defaultedProps.onDismiss('outsidePointer')
       }
     },
-    element: defaultedProps.element,
+    element: () => access(defaultedProps.element),
   })
 
   createNoPointerEvents({
-    enabled: defaultedProps.noOutsidePointerEvents,
+    enabled: () => access(defaultedProps.noOutsidePointerEvents),
   })
 }
 
