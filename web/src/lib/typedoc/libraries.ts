@@ -929,7 +929,7 @@ const Presence: Library = {
       isDefaultExport: true,
       kind: 'function',
       propsSorting: ['show', 'element'],
-      returnsSorting: ['present', 'state'],
+      returnsSorting: ['present', 'state', 'setState'],
     },
   },
 }

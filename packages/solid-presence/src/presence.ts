@@ -5,6 +5,7 @@ import {
   createMemo,
   createSignal,
   onCleanup,
+  type Setter,
   untrack,
 } from 'solid-js'
 
@@ -26,6 +27,7 @@ const createPresence = (props: {
 }): {
   present: Accessor<boolean>
   state: Accessor<'present' | 'hiding' | 'hidden'>
+  setState: Setter<'present' | 'hiding' | 'hidden'>
 } => {
   const refStyles = createMemo(() => {
     const element = access(props.element)
@@ -112,6 +114,7 @@ const createPresence = (props: {
   return {
     present: () => presentState() === 'present' || presentState() === 'hiding',
     state: presentState,
+    setState: setPresentState,
   }
 }
 
