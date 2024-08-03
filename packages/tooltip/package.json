@@ -57,6 +57,7 @@
   "dependencies": {
     "@corvu/utils": "workspace:~",
     "@floating-ui/dom": "^1.6.8",
+    "solid-dismissible": "workspace:~",
     "solid-presence": "workspace:~"
   },
   "devDependencies": {

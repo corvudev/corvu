@@ -9,7 +9,7 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
-import Dismissible from '@corvu/utils/components/Dismissible'
+import Dismissible from 'solid-dismissible'
 import { getFloatingStyle } from '@corvu/utils/floating'
 import type { Placement } from '@floating-ui/dom'
 import { useInternalTooltipContext } from '@src/context'
@@ -68,12 +68,18 @@ const TooltipContent = <T extends ValidComponent = 'div'>(
   const show = () =>
     some(context().open, () => localProps.forceMount, context().contentPresent)
 
+  const enableDismissible = createMemo(
+    () => context().open() || context().contentPresent(),
+  )
+
   return (
     <Dismissible
       element={context().contentRef}
-      enabled={context().open() || context().contentPresent()}
+      enabled={enableDismissible()}
+      dismissibleId={context().tooltipId()}
       onDismiss={() => context().setOpen(false)}
       dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+      dismissOnOutsideFocus={false}
       dismissOnOutsidePointer={false}
       noOutsidePointerEvents={false}
       onEscapeKeyDown={context().onEscapeKeyDown}
