@@ -15,6 +15,8 @@ export type DialogContextValue = {
   modal: Accessor<boolean>
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: Accessor<boolean>
+  /** Whether the dialog should be closed if a focus event happens outside the bounds of `<Dialog.Content />`. */
+  closeOnOutsideFocus: Accessor<boolean>
   /** Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`. */
   closeOnOutsidePointer: Accessor<boolean>
   /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. */
@@ -91,7 +93,8 @@ export type InternalDialogContextValue = DialogContextValue & {
   setContentRef: (element: HTMLElement) => void
   setOverlayRef: (element: HTMLElement) => void
   onEscapeKeyDown?: (event: KeyboardEvent) => void
-  onOutsidePointer?: (event: MouseEvent) => void
+  onOutsideFocus?: (event: CustomEvent) => void
+  onOutsidePointer?: (event: PointerEvent) => void
   registerLabelId: () => void
   unregisterLabelId: () => void
   registerDescriptionId: () => void

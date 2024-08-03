@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "@corvu/utils": "workspace:~",
+    "solid-dismissible": "workspace:~",
     "solid-focus-trap": "workspace:~",
     "solid-presence": "workspace:~",
     "solid-prevent-scroll": "workspace:~"

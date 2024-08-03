@@ -9,7 +9,7 @@ import {
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { mergeRefs, some } from '@corvu/utils/reactivity'
 import { dataIf } from '@corvu/utils'
-import Dismissible from '@corvu/utils/components/Dismissible'
+import Dismissible from 'solid-dismissible'
 import { useInternalDialogContext } from '@src/context'
 
 export type DialogContentCorvuProps = {
@@ -68,17 +68,24 @@ const DialogContent = <T extends ValidComponent = 'div'>(
   const show = () =>
     some(context().open, () => localProps.forceMount, context().contentPresent)
 
+  const enableDismissible = createMemo(
+    () => context().open() || context().contentPresent(),
+  )
+
   return (
     <Dismissible
       element={context().contentRef}
-      enabled={context().open() || context().contentPresent()}
+      enabled={enableDismissible()}
+      dismissibleId={context().dialogId()}
       onDismiss={() => context().setOpen(false)}
       dismissOnEscapeKeyDown={context().closeOnEscapeKeyDown}
+      dismissOnOutsideFocus={context().closeOnOutsideFocus}
       dismissOnOutsidePointer={context().closeOnOutsidePointer}
-      dismissOnOutsidePointerStrategy={context().closeOnOutsidePointerStrategy}
-      dismissOnOutsidePointerIgnore={context().triggerRef}
+      outsidePointerStrategy={context().closeOnOutsidePointerStrategy}
+      outsidePointerIgnore={() => [context().triggerRef()]}
       noOutsidePointerEvents={context().noOutsidePointerEvents}
       onEscapeKeyDown={context().onEscapeKeyDown}
+      onOutsideFocus={context().onOutsideFocus}
       onOutsidePointer={context().onOutsidePointer}
     >
       {(props) => (

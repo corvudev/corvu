@@ -52,6 +52,11 @@ export type DialogRootProps = {
    */
   onEscapeKeyDown?: (event: KeyboardEvent) => void
   /**
+   * Whether the dialog should be closed if a focus event happens outside the bounds of `<Dialog.Content />`.
+   * @defaultValue `true` if `trapFocus` is `true`, `false` otherwise
+   */
+  closeOnOutsideFocus?: boolean
+  /**
    * Whether the dialog should be closed if the user interacts outside the bounds of `<Dialog.Content />`.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
    */
@@ -62,9 +67,13 @@ export type DialogRootProps = {
    */
   closeOnOutsidePointerStrategy?: 'pointerdown' | 'pointerup'
   /**
+   * Callback fired when a focus event happens outside the bounds of `<Dialog.Content />`. Can only happen if `trapFocus` is set to `false` and can be prevented by calling `event.preventDefault`.
+   */
+  onOutsideFocus?: (event: CustomEvent) => void
+  /**
    * Callback fired when the user interacts outside the bounds of `<Dialog.Content />`. Can be prevented by calling `event.preventDefault`.
    */
-  onOutsidePointer?: (event: MouseEvent) => void
+  onOutsidePointer?: (event: PointerEvent) => void
   /**
    * Whether pointer events outside of `<Dialog.Content />` should be disabled.
    * @defaultValue `true` if `modal` is `true`, `false` otherwise
@@ -161,6 +170,8 @@ export type DialogRootChildrenProps = {
   modal: boolean
   /** Whether the dialog should close when the user presses the `Escape` key. */
   closeOnEscapeKeyDown: boolean
+  /** Whether the dialog should be closed if a focus event happens outside the bounds of `<Dialog.Content />`. */
+  closeOnOutsideFocus: boolean
   /** Whether the dialog should be closed if the user interacts outside the bounds of the dialog content. */
   closeOnOutsidePointer: boolean
   /** Whether `closeOnOutsidePointer` should be triggered on `pointerdown` or `pointerup`. */
@@ -213,6 +224,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
       initialOpen: false,
       modal: true,
       closeOnEscapeKeyDown: true,
+      closeOnOutsideFocus: () => props.trapFocus ?? true,
       closeOnOutsidePointer: () => props.modal ?? DEFAULT_MODAL,
       closeOnOutsidePointerStrategy: 'pointerup' as const,
       noOutsidePointerEvents: () => props.modal ?? DEFAULT_MODAL,
@@ -289,6 +301,9 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
     },
     get closeOnEscapeKeyDown() {
       return defaultedProps.closeOnEscapeKeyDown
+    },
+    get closeOnOutsideFocus() {
+      return access(defaultedProps.closeOnOutsideFocus)
     },
     get closeOnOutsidePointer() {
       return access(defaultedProps.closeOnOutsidePointer)
@@ -376,6 +391,7 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
           setOpen,
           modal: () => defaultedProps.modal,
           closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
+          closeOnOutsideFocus: () => access(defaultedProps.closeOnOutsideFocus),
           closeOnOutsidePointer: () =>
             access(defaultedProps.closeOnOutsidePointer),
           closeOnOutsidePointerStrategy: () =>
@@ -411,10 +427,13 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
             modal: () => defaultedProps.modal,
             closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
             onEscapeKeyDown: defaultedProps.onEscapeKeyDown,
+            closeOnOutsideFocus: () =>
+              access(defaultedProps.closeOnOutsideFocus),
             closeOnOutsidePointer: () =>
               access(defaultedProps.closeOnOutsidePointer),
             closeOnOutsidePointerStrategy: () =>
               defaultedProps.closeOnOutsidePointerStrategy,
+            onOutsideFocus: defaultedProps.onOutsideFocus,
             onOutsidePointer: defaultedProps.onOutsidePointer,
             noOutsidePointerEvents: () =>
               access(defaultedProps.noOutsidePointerEvents),
