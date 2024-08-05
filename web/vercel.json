@@ -12,7 +12,7 @@
   "trailingSlash": true,
   "headers": [
     {
-      "source": "/fonts/MonaspaceNeon-Regular-v1.100.woff2",
+      "source": "/fonts/MonaspaceNeon-Regular-v1.101.woff2",
       "headers": [
         {
           "key": "Cache-Control",

@@ -1,11 +1,12 @@
 ---
-import '@fontsource-variable/rubik'
+import '@fontsource-variable/rubik/wght.css'
 import '@assets/global.css'
 import '@assets/shiki.css'
 import Background from '@components/Background'
 import getApiReferenceHeadings from '@lib/typedoc/headings'
 import Head from '@components/Head.astro'
 import Navigation from '@components/docs/nav/Navigation.astro'
+import rubikWoff2 from '@fontsource-variable/rubik/files/rubik-latin-wght-normal.woff2?url'
 import TableOfContents from '@components/docs/TableOfContents'
 import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar.astro'
@@ -35,6 +36,20 @@ const { frontmatter, headings } = Astro.props
     <meta name="generator" content={Astro.generator} />
     <Head {...frontmatter} />
     <link rel="canonical" href={Astro.url} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={rubikWoff2}
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/MonaspaceNeon-Regular-v1.101.woff2"
+      crossorigin="anonymous"
+    />
     <ThemeScript />
     <script
       defer

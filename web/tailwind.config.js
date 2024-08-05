@@ -24,7 +24,6 @@ export default {
       fontFamily: {
         sans: ['Rubik Variable', ...defaultTheme.fontFamily.sans],
         mono: ['Mona Space', ...defaultTheme.fontFamily.sans],
-        dosis: ['Dosis Variable', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         corvu: {

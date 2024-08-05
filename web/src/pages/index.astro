@@ -1,11 +1,11 @@
 ---
-import '@fontsource-variable/dosis'
-import '@fontsource-variable/rubik'
+import '@fontsource-variable/rubik/wght.css'
 import '@assets/global.css'
 import Background from '@components/Background'
 import Head from '@components/Head.astro'
 import LogoDark from '@assets/logo_dark.svg'
 import LogoLight from '@assets/logo_light.svg'
+import rubikWoff2 from '@fontsource-variable/rubik/files/rubik-latin-wght-normal.woff2?url'
 import ThemeScript from '@components/ThemeScript.astro'
 import Topbar from '@components/Topbar.astro'
 ---
@@ -23,6 +23,20 @@ import Topbar from '@components/Topbar.astro'
       image="https://corvu.dev/banner.jpg"
     />
     <link rel="canonical" href={Astro.url} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={rubikWoff2}
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/MonaspaceNeon-Regular-v1.101.woff2"
+      crossorigin="anonymous"
+    />
     <ThemeScript />
     <script
       defer

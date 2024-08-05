@@ -31,7 +31,6 @@
     "@corvu/resizable": "workspace:*",
     "@corvu/tailwind": "workspace:*",
     "@corvu/tooltip": "workspace:*",
-    "@fontsource-variable/dosis": "^5.0.20",
     "@fontsource-variable/rubik": "^5.0.22",
     "@solid-primitives/storage": "^3.8.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",

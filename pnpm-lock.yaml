@@ -841,9 +841,6 @@ importers:
       '@corvu/tooltip':
         specifier: workspace:*
         version: link:../packages/tooltip
-      '@fontsource-variable/dosis':
-        specifier: ^5.0.20
-        version: 5.0.20
       '@fontsource-variable/rubik':
         specifier: ^5.0.22
         version: 5.0.22
@@ -1426,9 +1423,6 @@ packages:
 
   '@floating-ui/utils@0.2.5':
     resolution: {integrity: sha512-sTcG+QZ6fdEUObICavU+aB3Mp8HY4n14wYHdxK4fXjPmv3PXZZeY5RaguJmGyeH/CJQhX3fqKUtS4qc1LoHwhQ==}
-
-  '@fontsource-variable/dosis@5.0.20':
-    resolution: {integrity: sha512-lx0Tuv+euHoD1IaaNIt7Pc3pL6YSrlRrNrIa3khBpUVCOMWykj1UuFvwO7hYOBvfBHl+5IARCw0e4qGHjY9+4w==}
 
   '@fontsource-variable/rubik@5.0.22':
     resolution: {integrity: sha512-QwMlj57+k5+IsShA8q6FECU6zlR4CIm4TAy49GIIiMxxpmRwDXbMynrTp2kBNZmlN4b/myXzSRBnI2DXmnWBJA==}
@@ -2142,8 +2136,8 @@ packages:
     resolution: {integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==}
     engines: {node: '>=14.16'}
 
-  caniuse-lite@1.0.30001647:
-    resolution: {integrity: sha512-n83xdNiyeNcHpzWY+1aFbqCK7LuLfBricc4+alSQL2Xb6OR3XpnQAmlDG+pQcdTfiHRuLcQ96VOfrPSGiNJYSg==}
+  caniuse-lite@1.0.30001649:
+    resolution: {integrity: sha512-fJegqZZ0ZX8HOWr6rcafGr72+xcgJKI9oWfDW5DrD7ExUtgZC7a7R7ZYmZqplh7XDocFdGeIFn7roAxhOeYrPQ==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -4901,8 +4895,6 @@ snapshots:
 
   '@floating-ui/utils@0.2.5': {}
 
-  '@fontsource-variable/dosis@5.0.20': {}
-
   '@fontsource-variable/rubik@5.0.22': {}
 
   '@google-automations/git-file-utils@2.0.0':
@@ -5617,7 +5609,7 @@ snapshots:
   autoprefixer@10.4.20(postcss@8.4.40):
     dependencies:
       browserslist: 4.23.3
-      caniuse-lite: 1.0.30001647
+      caniuse-lite: 1.0.30001649
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
@@ -5678,7 +5670,7 @@ snapshots:
 
   browserslist@4.23.3:
     dependencies:
-      caniuse-lite: 1.0.30001647
+      caniuse-lite: 1.0.30001649
       electron-to-chromium: 1.5.4
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
@@ -5704,7 +5696,7 @@ snapshots:
 
   camelcase@7.0.1: {}
 
-  caniuse-lite@1.0.30001647: {}
+  caniuse-lite@1.0.30001649: {}
 
   ccount@2.0.1: {}
 
