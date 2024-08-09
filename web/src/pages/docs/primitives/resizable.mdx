@@ -148,7 +148,7 @@ You can also disable this behavior by setting `altKey={false}` on the `<Handle /
 
 ### Nested resizables
 
-You can nest resizables to create more complex layouts. Resize handles automatically detect intesecting handles and allow resizing in both directions at once. You can disable these intersections if you'd like to. Check out the [Handle API](#Resizable.Handle) for more information.
+You can nest resizables to create more complex layouts. Resize handles automatically detect intersecting handles and allow resizing in both directions at once. You can disable these intersections if you'd like to. Check out the [Handle API](#Handle) for more information.
 
 <ExampleWrapper codeSnippets={[{
   name: 'Tailwind',
@@ -315,7 +315,7 @@ const Component = () => {
 
 ### Persistent layout with SSR
 
-To avoid content shift when using server side rendering, we have to define the `initialSize` property on every `<Panel />` component. This makes sure that the panel renders with the correct size on the server. We can use the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility with the <Link href="https://primitives.solidjs.community/package/storage#cookiestorage" newTab>`cookieStorage`</Link> from Solid Primitives:
+To avoid content shift when using server side rendering, we have to define the `initialSize` property on every `<Panel />` component. This makes sure that the panel renders with the correct size on the server. We can use the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility with the `cookieStorage` from Solid Primitives:
 
 <Code code={`
 import { createSignal } from 'solid-js'

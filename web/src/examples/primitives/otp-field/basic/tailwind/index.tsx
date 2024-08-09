@@ -12,7 +12,9 @@ const OtpFieldExample: VoidComponent = () => {
           <Slot index={1} />
           <Slot index={2} />
         </div>
-        <div class="flex size-10 items-center justify-center font-bold">-</div>
+        <div class="flex size-10 items-center justify-center font-bold text-corvu-text-dark">
+          -
+        </div>
         <div class="flex items-center space-x-2">
           <Slot index={3} />
           <Slot index={4} />
