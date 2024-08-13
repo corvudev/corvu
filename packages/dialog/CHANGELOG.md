@@ -1,5 +1,12 @@
 # @corvu/dialog
 
+## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.2...@corvu/dialog@0.2.3) (2024-08-13)
+
+
+### Bug Fixes
+
+* remove tabIndex from Overlay ([1d8dae4](https://github.com/corvudev/corvu/commit/1d8dae428488a1f6d450f89d86e5874b8f911542))
+
 ## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.1...@corvu/dialog@0.2.2) (2024-08-03)
 
 
