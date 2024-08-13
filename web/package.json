@@ -50,7 +50,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.33.4",
     "shiki": "^1.12.1",
-    "solid-js": "^1.8.20",
+    "solid-js": "1.8.19",
     "solid-list": "workspace:*",
     "solid-persistent": "workspace:*",
     "tailwindcss": "^3.4.9",
