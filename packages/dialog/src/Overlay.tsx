@@ -30,7 +30,6 @@ export type DialogOverlaySharedElementProps<T extends ValidComponent = 'div'> =
   }
 
 export type DialogOverlayElementProps = DialogOverlaySharedElementProps & {
-  tabIndex: '-1'
   'aria-hidden': 'true' | undefined
   'data-closed': '' | undefined
   'data-open': '' | undefined
@@ -76,7 +75,6 @@ const DialogOverlay = <T extends ValidComponent = 'div'>(
           localProps.style,
         )}
         // === ElementProps ===
-        tabIndex="-1"
         aria-hidden="true"
         data-closed={dataIf(!context().open())}
         data-open={dataIf(context().open())}
