@@ -1,7 +1,7 @@
 {
   "packages/accordion": "0.2.3",
   "packages/corvu": "0.7.1",
-  "packages/dialog": "0.2.2",
+  "packages/dialog": "0.2.3",
   "packages/disclosure": "0.2.0",
   "packages/drawer": "0.2.2",
   "packages/otp-field": "0.1.2",
