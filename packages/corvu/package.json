@@ -68,7 +68,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-solid": "^0.14.1",
     "prettier": "^3.3.3",
-    "solid-js": "^1.8.20",
+    "solid-js": "^1.8.21",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4"
   },
