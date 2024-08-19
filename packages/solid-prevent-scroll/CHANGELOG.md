@@ -1,5 +1,12 @@
 # solid-prevent-scroll
 
+## [0.1.10](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.9...solid-prevent-scroll@0.1.10) (2024-08-19)
+
+
+### Features
+
+* move custom `contains` method into @corvu/utils ([6c6df6a](https://github.com/corvudev/corvu/commit/6c6df6a9c3e24b549285aa604adb6a3742dcec4e))
+
 ## [0.1.9](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.8...solid-prevent-scroll@0.1.9) (2024-07-04)
 
 
