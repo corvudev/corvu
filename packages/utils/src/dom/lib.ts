@@ -46,6 +46,25 @@ const callEventHandler = <T, E extends Event>(
   return event.defaultPrevented
 }
 
+/**
+ * Checks whether an element contains another element.
+ * Works with SolidJS portals by using their `_$host` property.
+ *
+ * @param wrapper - The wrapper element that should contain the target element.
+ * @param target - The target element.
+ * @returns Whether the wrapper contains the target element.
+ */
+const contains = (wrapper: HTMLElement, target: HTMLElement) => {
+  if (wrapper.contains(target)) return true
+  let currentElement: HTMLElement | null = target
+  while (currentElement) {
+    if (currentElement === wrapper) return true
+    // @ts-expect-error: _$host is a custom SolidJS property
+    currentElement = currentElement._$host ?? currentElement.parentElement
+  }
+  return false
+}
+
 const sortByDocumentPosition = (a: HTMLElement, b: HTMLElement) => {
   const relativePosition = a.compareDocumentPosition(b)
   if (
@@ -63,4 +82,10 @@ const sortByDocumentPosition = (a: HTMLElement, b: HTMLElement) => {
   return 0
 }
 
-export { afterPaint, callEventHandler, combineStyle, sortByDocumentPosition }
+export {
+  afterPaint,
+  callEventHandler,
+  combineStyle,
+  contains,
+  sortByDocumentPosition,
+}

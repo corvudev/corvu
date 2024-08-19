@@ -14,6 +14,7 @@ import {
   onCleanup,
 } from 'solid-js'
 import type { Axis } from '@corvu/utils'
+import { contains } from '@corvu/utils/dom'
 import createStyle from '@corvu/utils/create/style'
 import { getScrollAtLocation } from '@corvu/utils/scroll'
 
@@ -264,25 +265,6 @@ const wouldScroll = (
   }
 
   return true
-}
-
-/**
- * Checks whether an element contains another element.
- * Works with SolidJS portals by using their `_$host` property.
- *
- * @param wrapper - The wrapper element that should contain the target element.
- * @param target - The target element.
- * @returns Whether the wrapper contains the target element.
- */
-const contains = (wrapper: HTMLElement, target: HTMLElement) => {
-  if (wrapper.contains(target)) return true
-  let currentElement: HTMLElement | null = target
-  while (currentElement) {
-    if (currentElement === wrapper) return true
-    // @ts-expect-error: _$host is a custom SolidJS property
-    currentElement = currentElement._$host ?? currentElement.parentElement
-  }
-  return false
 }
 
 export default createPreventScroll
