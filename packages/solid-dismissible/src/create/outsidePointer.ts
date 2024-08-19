@@ -1,5 +1,6 @@
 import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
+import { contains } from '@corvu/utils/dom'
 
 /**
  * Calls the `onPointer` callback when a `pointerdown` or `pointerup` event occurs outside of the given element.
@@ -43,12 +44,13 @@ const createOutsidePointer = (props: {
     const ignore = access(defaultedProps.ignore)
     if (
       element &&
-      !element.contains(event.target as Node) &&
+      !contains(element, event.target as HTMLElement) &&
       !(
         ignore &&
         ignore.some(
           (ignoreElement) =>
-            ignoreElement && ignoreElement.contains(event.target as Node),
+            ignoreElement &&
+            contains(ignoreElement, event.target as HTMLElement),
         )
       )
     ) {

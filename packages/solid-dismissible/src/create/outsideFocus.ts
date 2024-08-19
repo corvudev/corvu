@@ -1,5 +1,6 @@
 import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
+import { contains } from '@corvu/utils/dom'
 
 const EVENT_ON_FOCUS = 'dismissible.outsideFocus'
 const EVENT_OPTIONS = { bubbles: false, cancelable: true }
@@ -54,7 +55,7 @@ const createOutsideFocus = (props: {
       return
     }
     const element = access(defaultedProps.element)
-    if (element && !element.contains(event.target as Node)) {
+    if (element && !contains(element, event.target as HTMLElement)) {
       const customEvent = new CustomEvent(EVENT_ON_FOCUS, EVENT_OPTIONS)
       element.dispatchEvent(customEvent)
       defaultedProps.onFocus(customEvent)
