@@ -51,12 +51,12 @@ const { inDocs } = Astro.props
       {
         inDocs === true && (
           <>
-            <SearchDialog client:media="(min-width: 768px)" />
-            <SearchDrawer client:media="(max-width: 767px)" />
+            <SearchDialog client:search="(min-width: 768px)" />
+            <SearchDrawer client:search="(max-width: 767px)" />
           </>
         )
       }
-      <ThemeSelect client:idle />
+      <ThemeSelect client:click />
       <a href="https://github.com/corvudev/corvu/" target="_blank" class="p-2">
         <span class="sr-only">GitHub repository</span>
         <svg
@@ -73,7 +73,7 @@ const { inDocs } = Astro.props
             clip-rule="evenodd"></path>
         </svg>
       </a>
-      <Drawer client:media="(max-width: 767px)">
+      <Drawer client:click>
         <Navigation />
       </Drawer>
     </div>
