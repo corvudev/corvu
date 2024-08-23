@@ -47,8 +47,8 @@ const { inDocs } = Astro.props
       />
     </a>
     <div class="flex items-center lg:pointer-events-auto">
-      <Search client:idle />
-      <ThemeSelect client:idle />
+      <Search client:search />
+      <ThemeSelect client:click />
       <a href="https://github.com/corvudev/corvu/" target="_blank" class="p-2">
         <span class="sr-only">GitHub repository</span>
         <svg
@@ -65,7 +65,7 @@ const { inDocs } = Astro.props
             clip-rule="evenodd"></path>
         </svg>
       </a>
-      <Drawer client:media="(max-width: 767px)">
+      <Drawer client:click>
         <Navigation />
       </Drawer>
     </div>

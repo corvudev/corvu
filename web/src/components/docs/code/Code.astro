@@ -17,5 +17,5 @@ const trimmedCode = code.trim()
   class="not-prose relative mb-6 mt-4 grid rounded-md border-2 border-corvu-200 overflow-hidden"
 >
   <RawCode code={trimmedCode} lang={lang} />
-  {copyButton === true && <CopyToClipboard code={trimmedCode} client:visible />}
+  {copyButton === true && <CopyToClipboard code={trimmedCode} client:click />}
 </div>

@@ -1,12 +1,16 @@
 import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap'
+import clickDirective from './src/lib/directives/click/register'
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
+import searchDirective from './src/lib/directives/search/register'
 import solid from '@astrojs/solid-js'
 import tailwind from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    clickDirective(),
+    searchDirective(),
     mdx(),
     sitemap({
       serialize(item) {
