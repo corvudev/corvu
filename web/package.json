@@ -18,7 +18,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/mdx": "4.0.0-alpha.0",
+    "@astrojs/mdx": "4.0.0-alpha.1",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/solid-js": "^4.4.1",
     "@astrojs/tailwind": "6.0.0-alpha.0",
@@ -38,7 +38,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.14",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
-    "astro": "5.0.0-alpha.0",
+    "astro": "5.0.0-alpha.1",
     "astro-eslint-parser": "^1.0.2",
     "clsx": "^2.1.1",
     "eslint": "^8.57.0",
