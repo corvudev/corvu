@@ -72,7 +72,7 @@ const createTooltip = (props: {
   onPointerDown?: (event: PointerEvent) => void
   onScroll?: (event: Event) => void
 }) => {
-  let tooltipState: 'focus' | 'hover' | null = null
+  let tooltipState: 'focus' | 'entering' | 'hover' | null = null
   let clickedTrigger = false
 
   let timeout: number | null = null
@@ -218,7 +218,13 @@ const createTooltip = (props: {
           }
           document.addEventListener('pointermove', onSafeAreaMove)
         } else {
+          tooltipState = 'entering'
+          document.addEventListener('pointermove', onSafeAreaMove)
           timeout = setTimeout(() => {
+            if (!insideSafeArea) {
+              tooltipState = null
+              return
+            }
             timeout = null
             tooltipState = 'hover'
             props.onHover?.(pointerEvent)
@@ -226,7 +232,6 @@ const createTooltip = (props: {
             if (access(props.closeOnScroll)) {
               document.addEventListener('scroll', onScroll, { capture: true })
             }
-            document.addEventListener('pointermove', onSafeAreaMove)
           }, openDelay)
         }
         break
