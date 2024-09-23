@@ -1,5 +1,12 @@
 # @corvu/utils
 
+## [0.4.2](https://github.com/corvudev/corvu/compare/@corvu/utils@0.4.1...@corvu/utils@0.4.2) (2024-09-23)
+
+
+### Bug Fixes
+
+* **tooltip:** prevent timeout race conditions ([006af76](https://github.com/corvudev/corvu/commit/006af76bbc117de33371e0e93e9f2c8f5440df22))
+
 ## [0.4.1](https://github.com/corvudev/corvu/compare/@corvu/utils@0.4.0...@corvu/utils@0.4.1) (2024-08-19)
 
 
