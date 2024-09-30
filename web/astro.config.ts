@@ -53,4 +53,7 @@ export default defineConfig({
   },
   site: 'https://corvu.dev',
   trailingSlash: 'always',
+  build: {
+    inlineStylesheets: 'always',
+  },
 })
