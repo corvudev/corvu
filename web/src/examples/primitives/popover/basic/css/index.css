@@ -30,6 +30,7 @@
 }
 
 [data-corvu-tooltip-content] {
+  z-index: 50;
   border-radius: 0.5rem;
   background-color: hsl(249, 87%, 94%);
   padding-left: 0.75rem;
