@@ -12,6 +12,9 @@ jobs:
     - name: Check out
       uses: actions/checkout@v4
 
+    - name: Install Vercel CLI
+      run: npm install -g vercel@37.8.0
+
     - name: Deploy to vercel
       uses: BetaHuhn/deploy-to-vercel-action@v1
       with:

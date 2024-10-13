@@ -4,4 +4,4 @@
 dist
 node_modules
 packages/*/api.json
-tsup.config.**.mjs
+tsup.config.*.mjs
