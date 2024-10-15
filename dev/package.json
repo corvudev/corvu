@@ -18,14 +18,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@corvu/accordion": "workspace:*",
-    "@corvu/dialog": "workspace:*",
-    "@corvu/disclosure": "workspace:*",
-    "@corvu/drawer": "workspace:*",
-    "@corvu/popover": "workspace:*",
-    "@corvu/resizable": "workspace:*",
-    "@corvu/tailwind": "workspace:*",
-    "@corvu/tooltip": "workspace:*",
     "clsx": "^2.1.1",
     "solid-js": "^1.9.2"
   },
