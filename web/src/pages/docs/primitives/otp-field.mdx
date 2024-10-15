@@ -175,6 +175,10 @@ It is suggested that you add a label to describe the input:
 </OtpField>
 `} lang="tsx" copyButton />
 
+## Limitations
+
+To ensure accessibility for screen readers assistive technology, the OTP Field renders a single input field that gets placed invisibly above the slots with `position: absolute; inset: 0px;`. The slots are visual only, i.e. mouse and touch interactions are restricted. You cannot select a specific field to edit it with the mouse or drag a selection on touch devices.
+
 ## Credits
 
 The implementation of this OTP Field is inspired by Guilherme's <Link href="https://github.com/guilhermerodz/input-otp" newTab>React OTP Input</Link>.
