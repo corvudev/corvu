@@ -111,6 +111,7 @@ const Search = (props: {
         <input
           placeholder="Search docs"
           aria-label="Search docs"
+          role="searchbox"
           spellcheck={false}
           value={props.searchValue}
           class="w-full rounded border border-corvu-200 bg-corvu-bg px-3 py-2 ring-2 ring-corvu-400 focus-visible:border focus-visible:border-corvu-200 focus-visible:ring-2 focus-visible:ring-corvu-400"
@@ -175,25 +176,27 @@ const Search = (props: {
           {(result) => (
             <For each={Object.entries(result())}>
               {([title, items]) => (
-                <div class="overflow-hidden rounded-md">
-                  <p class="bg-corvu-200 p-2 text-sm font-bold">{title}</p>
-                  <For each={items}>
-                    {(item) => {
-                      const itemIndex = Object.values(result())
-                        .flatMap((items) => items)
-                        .findIndex((i) => i === item)
+                <section class="overflow-hidden rounded-md">
+                  <h2 class="bg-corvu-200 p-2 text-sm font-bold">{title}</h2>
+                  <ul role="listbox">
+                    <For each={items}>
+                      {(item) => {
+                        const itemIndex = Object.values(result())
+                          .flatMap((items) => items)
+                          .findIndex((i) => i === item)
 
-                      return (
-                        <SearchItem
-                          item={item}
-                          onMouseMove={() => setActive(itemIndex)}
-                          isActive={itemIndex === active()}
-                          closeSearch={props.closeSearch}
-                        />
-                      )
-                    }}
-                  </For>
-                </div>
+                        return (
+                          <SearchItem
+                            item={item}
+                            onMouseMove={() => setActive(itemIndex)}
+                            isActive={itemIndex === active()}
+                            closeSearch={props.closeSearch}
+                          />
+                        )
+                      }}
+                    </For>
+                  </ul>
+                </section>
               )}
             </For>
           )}

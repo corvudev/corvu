@@ -38,7 +38,7 @@ const { kind, componentName, tags } = Astro.props
       </tr>
       {
         tags.map((prop) => (
-          <tr class="border-b border-corvu-100">
+          <tr tabindex="0" class="border-b border-corvu-100">
             <td class="not-prose py-5 pr-5 align-top text-sm">
               <p class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 pb-0.5 pt-1.5 font-mono">
                 {prop.name}

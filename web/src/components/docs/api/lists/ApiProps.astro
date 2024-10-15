@@ -41,7 +41,7 @@ const { title, descriptionHtml, props, inherits } = Astro.props
       </tr>
       {
         props.map((prop) => (
-          <tr class="border-b border-corvu-100">
+          <tr tabindex="0" class="border-b border-corvu-100">
             <td class="not-prose py-5 pr-5 align-top text-sm">
               <p
                 class:list={[
