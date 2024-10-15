@@ -113,9 +113,10 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
 
   createEffect(() => {
     createOtpFieldStyleElement()
-    document.addEventListener('selectionchange', onSelectionChange)
+    const onSelectionChangeWrapper = () => onSelectionChange()
+    document.addEventListener('selectionchange', onSelectionChangeWrapper)
     onCleanup(() => {
-      document.removeEventListener('selectionchange', onSelectionChange)
+      document.removeEventListener('selectionchange', onSelectionChangeWrapper)
     })
   })
 
@@ -185,7 +186,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     }
 
     if (finalValue.length < contextValue.length) {
-      onSelectionChange()
+      onSelectionChange(event.inputType)
     }
 
     context().setValue(finalValue)
@@ -243,7 +244,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     shiftKeyDown = false
   }
 
-  const onSelectionChange = () => {
+  const onSelectionChange = (inputType?: string) => {
     const element = ref()
     if (!element) return
     if (
@@ -299,13 +300,15 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
           Math.abs(previousSelection.start - previousSelection.end) === 1
         direction = navigatedBackwards ? 'backward' : 'forward'
         if (
-          (navigatedBackwards && !previousSelection.inserting) ||
+          (navigatedBackwards &&
+            !previousSelection.inserting &&
+            inputType !== 'deleteContentForward') ||
           (!navigatedBackwards && shiftKeyDown)
         ) {
           startOffset += -1
         }
       }
-      if (shiftKeyDown) {
+      if (shiftKeyDown && inputType === undefined) {
         endOffset += 1
       }
       selectionStart = element.selectionStart + startOffset
