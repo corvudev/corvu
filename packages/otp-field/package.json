@@ -1,6 +1,6 @@
 {
   "name": "@corvu/otp-field",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "description": "Unstyled, accessible and customizable UI primitives for SolidJS",
   "keywords": [

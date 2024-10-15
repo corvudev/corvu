@@ -1,5 +1,12 @@
 # @corvu/otp-field
 
+## [0.1.3](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.2...@corvu/otp-field@0.1.3) (2024-10-15)
+
+
+### Bug Fixes
+
+* move cursor right on forward delete ([f19ce06](https://github.com/corvudev/corvu/commit/f19ce0647ee8315314fbf9127885eedf96ebeb57))
+
 ## [0.1.2](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.1...@corvu/otp-field@0.1.2) (2024-07-29)
 
 
