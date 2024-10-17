@@ -37,7 +37,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
-    "@typescript-eslint/parser": "^8.9.0",
+    "@typescript-eslint/parser": "^8.10.0",
     "astro": "5.0.0-beta.5",
     "astro-eslint-parser": "^1.0.3",
     "clsx": "^2.1.1",
@@ -56,6 +56,6 @@
     "solid-persistent": "workspace:*",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
-    "typescript-eslint": "^8.9.0"
+    "typescript-eslint": "^8.10.0"
   }
 }
