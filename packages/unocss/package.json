@@ -1,0 +1,71 @@
+{
+  "name": "@corvu/unocss",
+  "version": "0.1.0",
+  "private": false,
+  "description": "UnoCSS preset for corvu, the unstyled, accessible and customizable UI primitive library for SolidJS",
+  "keywords": [
+    "solid",
+    "solidjs",
+    "headless",
+    "accessible",
+    "customizable",
+    "primitives",
+    "unocss",
+    "unocss-preset"
+  ],
+  "homepage": "https://corvu.dev",
+  "bugs": {
+    "url": "https://github.com/corvudev/corvu/issues",
+    "email": "code@jasi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corvudev/corvu.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jasmin Noetzli",
+    "email": "code@jasi.dev",
+    "url": "https://github.com/GiyoMoon"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf .turbo dist node_modules",
+    "lint": "eslint --max-warnings=0 ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^8.9.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.9.0"
+  },
+  "dependencies": {
+    "@unocss/core": "^0.63.4"
+  }
+}

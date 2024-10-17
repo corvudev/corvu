@@ -16,6 +16,7 @@
   "packages/solid-transition-size": "0.1.4",
   "packages/tailwind": "0.1.5",
   "packages/tooltip": "0.2.1",
+  "packages/unocss": "0.0.0",
   "packages/utils": "0.4.2"
 }
 

@@ -54,21 +54,15 @@ You can use it to style all components of the same kind at once:
 }
 `} lang="css" />
 
-## TailwindCSS plugin
+Additionally, corvu provides plugins for these CSS frameworks:
 
-corvu has a plugin for TailwindCSS which makes it easy to style components based on their current state using modifiers:
+- [TailwindCSS plugin](/docs/installation/#tailwindcss-plugin)
+- [UnoCSS preset](/docs/installation/#unocss-preset)
 
-<Code code={`
-<Dialog.Content
-  class="corvu-open:animate-in corvu-closed:animate-out"
->
-  ...
-</Dialog.Content>
-`} lang="tsx" />
+They make it easy to style components based on their current state using modifiers.
 
 **Available modifiers**
 
-Here's a list of all modifiers corvu provides and their corresponding data attributes:
 - `corvu-open` -> `&[data-open]`
 - `corvu-closed` -> `&[data-closed]`
 - `corvu-expanded` -> `&[data-expanded]`
@@ -82,7 +76,15 @@ Here's a list of all modifiers corvu provides and their corresponding data attri
 - `corvu-active` -> `&[data-active]`
 - `corvu-dragging` -> `&[data-dragging]`
 
-Check out the [Installation](/docs/installation/#tailwindcss-plugin) page on how to install and configure the plugin.
+These two plugins use the same syntax. You can style components like this:
+
+<Code code={`
+<Dialog.Content
+  class="corvu-open:animate-in corvu-closed:animate-out"
+>
+  ...
+</Dialog.Content>
+`} lang="tsx" />
 
 ## Animation
 corvu has built-in support for CSS animations and waits for any pending animation to finish before removing an element from the DOM. This means you can use CSS animations to animate the appearance and disappearance of primitives. Every unmountable component also provides a `forceMount` property which forces it to stay mounted in the DOM even when it is not visible. This is useful when using third-party animation libraries.

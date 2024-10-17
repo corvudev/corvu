@@ -47,4 +47,32 @@ module.exports = {
 }
 `} lang="js" />
 
-Check out the [TailwindCSS](/docs/styling/#tailwindcss-plugin) section in the styling guide to learn more about the tailwind plugin.
+Check out the [Styling](/docs/styling/) guide learn more about the tailwind plugin.
+
+## UnoCSS preset
+We also provide a preset for [UnoCSS](https://unocss.dev/) that adds the same modifiers.
+
+<Code code={`
+npm install @corvu/unocss
+`} lang="bash" copyButton />
+
+Add the preset to your `uno.config.tsx` file:
+
+<Code code={`
+import { defineConfig } from 'unocss'
+import presetCorvu from '@corvu/unocss'
+
+export default defineConfig({
+  // ...
+  presets: [
+    // Use it with the default prefix 'corvu'
+    presetCorvu(),
+    // or with a custom prefix
+    presetCorvu({ prefix: 'ui' }),
+    // ...
+  ],
+})
+`} lang="ts" />
+
+Check out the [Styling](/docs/styling/) guide learn more about the UnoCSS preset.
+

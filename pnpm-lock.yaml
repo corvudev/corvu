@@ -87,7 +87,7 @@ importers:
         version: 8.9.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.23.1)(solid-js@1.9.2)
+        version: 0.6.0(esbuild@0.24.0)(solid-js@1.9.2)
       eslint:
         specifier: ^9.12.0
         version: 9.12.0(jiti@1.21.6)
@@ -604,7 +604,7 @@ importers:
         version: 8.9.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.0)(solid-js@1.9.2)
+        version: 0.6.0(esbuild@0.23.1)(solid-js@1.9.2)
       eslint:
         specifier: ^9.12.0
         version: 9.12.0(jiti@1.21.6)
@@ -840,6 +840,37 @@ importers:
       typedoc:
         specifier: ^0.26.9
         version: 0.26.9(typescript@5.6.3)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+      typescript-eslint:
+        specifier: ^8.9.0
+        version: 8.9.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
+
+  packages/unocss:
+    dependencies:
+      '@unocss/core':
+        specifier: ^0.63.4
+        version: 0.63.4
+    devDependencies:
+      '@typescript-eslint/parser':
+        specifier: ^8.9.0
+        version: 8.9.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
+      eslint:
+        specifier: ^9.12.0
+        version: 9.12.0(jiti@1.21.6)
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@9.12.0(jiti@1.21.6))
+      eslint-plugin-prettier:
+        specifier: ^5.2.1
+        version: 5.2.1(eslint-config-prettier@9.1.0(eslint@9.12.0(jiti@1.21.6)))(eslint@9.12.0(jiti@1.21.6))(prettier@3.3.3)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      tsup:
+        specifier: ^8.3.0
+        version: 8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.3)(yaml@2.6.0)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -2211,6 +2242,9 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@unocss/core@0.63.4':
+    resolution: {integrity: sha512-VB4DJ5DsRWpX64si5tWYRXf1n5UkYQqe2s1V22qFiWmXa7Ec+Vf9s3cxWZmoWFC5P9RQiwM9kAqxdg1G+elVkQ==}
 
   '@xmldom/xmldom@0.8.10':
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
@@ -5778,6 +5812,8 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@unocss/core@0.63.4': {}
 
   '@xmldom/xmldom@0.8.10': {}
 
