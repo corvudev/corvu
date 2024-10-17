@@ -59,8 +59,7 @@
       "component": "@corvu/tooltip"
     },
     "packages/unocss": {
-      "component": "@corvu/unocss",
-      "release-as": "0.1.0"
+      "component": "@corvu/unocss"
     },
     "packages/utils": {
       "component": "@corvu/utils"
