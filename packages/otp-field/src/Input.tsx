@@ -40,9 +40,9 @@ export type OtpFieldInputSharedElementProps<
   T extends ValidComponent = 'input',
 > = {
   ref: Ref<ElementOf<T>>
-  onInput: JSX.InputEventHandlerUnion<ElementOf<T>, InputEvent>
-  onFocus: JSX.FocusEventHandlerUnion<ElementOf<T>, FocusEvent>
-  onBlur: JSX.FocusEventHandlerUnion<ElementOf<T>, FocusEvent>
+  onInput: JSX.EventHandlerUnion<ElementOf<T>, InputEvent>
+  onFocus: JSX.EventHandlerUnion<ElementOf<T>, FocusEvent>
+  onBlur: JSX.EventHandlerUnion<ElementOf<T>, FocusEvent>
   onMouseOver: JSX.EventHandlerUnion<ElementOf<T>, MouseEvent>
   onMouseLeave: JSX.EventHandlerUnion<ElementOf<T>, MouseEvent>
   onKeyDown: JSX.EventHandlerUnion<ElementOf<T>, KeyboardEvent>
@@ -147,7 +147,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     localProps.pattern !== null ? new RegExp(localProps.pattern) : undefined,
   )
 
-  const onInput: JSX.InputEventHandlerUnion<HTMLInputElement, InputEvent> = (
+  const onInput: JSX.EventHandlerUnion<HTMLInputElement, InputEvent> = (
     event,
   ) => {
     if (callEventHandler(localProps.onInput, event)) return
@@ -192,7 +192,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     context().setValue(finalValue)
   }
 
-  const onFocus: JSX.FocusEventHandlerUnion<HTMLInputElement, FocusEvent> = (
+  const onFocus: JSX.EventHandlerUnion<HTMLInputElement, FocusEvent> = (
     event,
   ) => {
     if (callEventHandler(localProps.onFocus, event)) return
@@ -204,7 +204,7 @@ const OtpFieldInput = <T extends ValidComponent = 'input'>(
     onSelectionChange()
   }
 
-  const onBlur: JSX.FocusEventHandlerUnion<HTMLInputElement, FocusEvent> = (
+  const onBlur: JSX.EventHandlerUnion<HTMLInputElement, FocusEvent> = (
     event,
   ) => {
     if (callEventHandler(localProps.onBlur, event)) return
