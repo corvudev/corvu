@@ -4,7 +4,7 @@
   "packages/dialog": "0.2.3",
   "packages/disclosure": "0.2.0",
   "packages/drawer": "0.2.2",
-  "packages/otp-field": "0.1.3",
+  "packages/otp-field": "0.1.4",
   "packages/popover": "0.2.0",
   "packages/resizable": "0.2.3",
   "packages/solid-dismissible": "0.1.1",
