@@ -1,5 +1,12 @@
 # @corvu/otp-field
 
+## [0.1.4](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.3...@corvu/otp-field@0.1.4) (2024-11-15)
+
+
+### Bug Fixes
+
+* use common EventHandlerUnion type everywhere ([73b1984](https://github.com/corvudev/corvu/commit/73b1984ae72fd2fece3cdedb65dd5665202e81ca))
+
 ## [0.1.3](https://github.com/corvudev/corvu/compare/@corvu/otp-field@0.1.2...@corvu/otp-field@0.1.3) (2024-10-15)
 
 
