@@ -8,7 +8,7 @@ import tsParser from '@typescript-eslint/parser'
 
 export default [
   {
-    ignores: ['dist/'],
+    ignores: ['dist/', '.astro/'],
   },
   ...pluginTypescript.configs.recommended,
   ...pluginTailwind.configs['flat/recommended'],
