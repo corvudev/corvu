@@ -150,8 +150,10 @@ const ResizableRoot = <T extends ValidComponent = 'div'>(
     const _panels = panels()
     const panelIndex = _panels.filter(
       (panel) =>
-        panelData.element.compareDocumentPosition(panel.data.element) &
-        Node.DOCUMENT_POSITION_PRECEDING,
+        !!(
+          panelData.element.compareDocumentPosition(panel.data.element) &
+          Node.DOCUMENT_POSITION_PRECEDING
+        ),
     ).length
 
     const idExists =

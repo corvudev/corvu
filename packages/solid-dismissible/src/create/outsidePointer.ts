@@ -49,7 +49,7 @@ const createOutsidePointer = (props: {
         ignore &&
         ignore.some(
           (ignoreElement) =>
-            ignoreElement &&
+            ignoreElement !== null &&
             contains(ignoreElement, event.target as HTMLElement),
         )
       )

@@ -480,8 +480,10 @@ const deltaResize = (props: {
     let panelIndex =
       props.panels.filter(
         (panel) =>
-          props.handle.compareDocumentPosition(panel.data.element) &
-          Node.DOCUMENT_POSITION_PRECEDING,
+          !!(
+            props.handle.compareDocumentPosition(panel.data.element) &
+            Node.DOCUMENT_POSITION_PRECEDING
+          ),
       ).length - 1
     const isPrecedingHandle = panelIndex === 0
     if (isPrecedingHandle) {

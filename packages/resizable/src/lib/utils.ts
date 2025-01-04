@@ -19,13 +19,17 @@ const splitPanels = (props: {
 }): [PanelInstance[], PanelInstance[]] => {
   const precedingPanels = props.panels.filter(
     (panel) =>
-      props.focusedElement.compareDocumentPosition(panel.data.element) &
-      Node.DOCUMENT_POSITION_PRECEDING,
+      !!(
+        props.focusedElement.compareDocumentPosition(panel.data.element) &
+        Node.DOCUMENT_POSITION_PRECEDING
+      ),
   )
   const followingPanels = props.panels.filter(
     (panel) =>
-      props.focusedElement.compareDocumentPosition(panel.data.element) &
-      Node.DOCUMENT_POSITION_FOLLOWING,
+      !!(
+        props.focusedElement.compareDocumentPosition(panel.data.element) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+      ),
   )
 
   return [precedingPanels, followingPanels]
