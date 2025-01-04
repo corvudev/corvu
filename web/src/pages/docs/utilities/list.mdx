@@ -36,42 +36,42 @@ A small utility to create accessible, keyboard navigable lists like search resul
 ## Installation
 
 <Code code={`
-npm install solid-list
+  npm install solid-list
 `} lang="bash" copyButton />
 
 ## Usage
 
 <Code code={`
-import { createList, createMultiList } from 'solid-list'
+  import { createList, createMultiList } from 'solid-list'
 `} lang="tsx" copyButton />
 
 <Code code={`
-const Search = () => {
-  const [results, setResults] = createSignal([])
+  const Search = () => {
+    const [results, setResults] = createSignal([])
 
-  const { active, setActive, onKeyDown } = createList({
-    items: () => results().map(result => result.id), // required
-    initialActive: null, // default, T | null
-    orientation: 'vertical', // default, 'vertical' | 'horizontal'
-    loop: true, // default
-    textDirection: 'ltr', // default, 'ltr' | 'rtl'
-    handleTab: false, // default = true
-    vimMode: false, // default
-    onActiveChange: (active) => {} // optional callback to handle changes
-  })
+    const { active, setActive, onKeyDown } = createList({
+      items: () => results().map(result => result.id), // required
+      initialActive: null, // default, T | null
+      orientation: 'vertical', // default, 'vertical' | 'horizontal'
+      loop: true, // default
+      textDirection: 'ltr', // default, 'ltr' | 'rtl'
+      handleTab: false, // default = true
+      vimMode: false, // default
+      onActiveChange: (active) => {} // optional callback to handle changes
+    })
 
-  return (
-    <>
-      <input onKeyDown={onKeyDown} />
-      <For each={result}>
-        {(item, index) => (
-            <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
-        )}
-      </For>
-    </>
-  )
-}
-`} lang="tsx" copyButton />
+    return (
+      <>
+        <input onKeyDown={onKeyDown} />
+        <For each={result}>
+          {(item, index) => (
+              <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
+          )}
+        </For>
+      </>
+    )
+  }
+  `} lang="tsx" copyButton />
 
 ### Multi select list
 

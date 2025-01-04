@@ -71,35 +71,35 @@ A popup that displays an anchored interactive dialog on click. It uses the aweso
 ## Installation
 
 <Code code={`
-npm install @corvu/popover
+  npm install @corvu/popover
 `} lang="bash" copyButton />
 
 The popover is also included in the main `corvu` package under `corvu/popover`.
 
 ## Usage
 <Code code={`
-import Popover from '@corvu/popover' // 'corvu/popover'
-// or
-// import { Root, Trigger, ... } from '@corvu/popover'
+  import Popover from '@corvu/popover' // 'corvu/popover'
+  // or
+  // import { Root, Trigger, ... } from '@corvu/popover'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 
 <Code code={`
-<Popover>
-  <Popover.Anchor>
-    <Popover.Trigger />
-  </Popover.Anchor>
-  <Popover.Portal>
-    <Popover.Overlay />
-    <Popover.Content>
-      <Popover.Arrow />
-      <Popover.Close />
-      <Popover.Label />
-      <Popover.Description />
-    </Popover.Content>
-  </Popover.Portal>
-</Popover>
+  <Popover>
+    <Popover.Anchor>
+      <Popover.Trigger />
+    </Popover.Anchor>
+    <Popover.Portal>
+      <Popover.Overlay />
+      <Popover.Content>
+        <Popover.Arrow />
+        <Popover.Close />
+        <Popover.Label />
+        <Popover.Description />
+      </Popover.Content>
+    </Popover.Portal>
+  </Popover>
 `} lang="tsx" copyButton />
 
 The anchor component can optionally be used to make the popover anchor itself to another element than the trigger.

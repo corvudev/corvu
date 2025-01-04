@@ -70,55 +70,55 @@ An interactive component which expands/collapses content.
 ## Installation
 
 <Code code={`
-npm install @corvu/disclosure
+  npm install @corvu/disclosure
 `} lang="bash" copyButton />
 
 The disclosure is also included in the main `corvu` package under `corvu/disclosure`.
 
 ## Usage
 <Code code={`
-import Disclosure from '@corvu/disclosure' // 'corvu/disclosure'
-// or
-// import { Root, Trigger, Content } from '@corvu/disclosure'
+  import Disclosure from '@corvu/disclosure' // 'corvu/disclosure'
+  // or
+  // import { Root, Trigger, Content } from '@corvu/disclosure'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 
 <Code code={`
-<Disclosure>
-  <Disclosure.Trigger />
-  <Disclosure.Content />
-</Disclosure>
+  <Disclosure>
+    <Disclosure.Trigger />
+    <Disclosure.Content />
+  </Disclosure>
 `} lang="tsx" copyButton />
 
 ### Animation
 corvu sets the `--corvu-disclosure-content-height` and `--corvu-disclosure-content-width` CSS properties on the disclosure content that make it possible to animate the height/width.
 
 <Code code={`
-[data-corvu-disclosure-content][data-collapsed] {
-  animation: collapse 200ms linear;
-}
-[data-corvu-disclosure-content][data-expanded] {
-  animation: expand 200ms linear;
-}
+  [data-corvu-disclosure-content][data-collapsed] {
+    animation: collapse 200ms linear;
+  }
+  [data-corvu-disclosure-content][data-expanded] {
+    animation: expand 200ms linear;
+  }
 
-@keyframes collapse {
-  0% {
-    height: var(--corvu-disclosure-content-height);
+  @keyframes collapse {
+    0% {
+      height: var(--corvu-disclosure-content-height);
+    }
+    100% {
+      height: 0px;
+    }
   }
-  100% {
-    height: 0px;
-  }
-}
 
-@keyframes expand {
-  0% {
-    height: 0px;
+  @keyframes expand {
+    0% {
+      height: 0px;
+    }
+    100% {
+      height: var(--corvu-disclosure-content-height);
+    }
   }
-  100% {
-    height: var(--corvu-disclosure-content-height);
-  }
-}
 `} lang="css" copyButton />
 
 ## Accessibility

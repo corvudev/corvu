@@ -20,20 +20,20 @@ corvu aims to be very customizable and provides various ways to control a primit
 The easiest way to control a primitive's state is by passing your own defined state to its `Root` component. Most of the time, this consists of a getter and setter property like in this example, where we control the open state of a dialog:
 
 <Code code={`
-import Dialog from '@corvu/dialog'
-import { createSignal } from 'solid-js'
+  import Dialog from '@corvu/dialog'
+  import { createSignal } from 'solid-js'
 
-const MyDialog = () => {
-  const [open, setOpen] = createSignal(false)
-  return (
-    <Dialog open={open()} onOpenChange={setOpen}>
-      <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-      <Dialog.Content>
-        <Dialog.Label>Label</Dialog.Label>
-      </Dialog.Content>
-    </Dialog>
-  )
-}
+  const MyDialog = () => {
+    const [open, setOpen] = createSignal(false)
+    return (
+      <Dialog open={open()} onOpenChange={setOpen}>
+        <Dialog.Trigger>Open Dialog</Dialog.Trigger>
+        <Dialog.Content>
+          <Dialog.Label>Label</Dialog.Label>
+        </Dialog.Content>
+      </Dialog>
+    )
+  }
 `} lang="tsx" />
 
 This allows you to use the open state anywhere in your code and alter it freely. The dialog will open and close accordingly.
@@ -43,31 +43,31 @@ This allows you to use the open state anywhere in your code and alter it freely.
 It's also possible to access the context of every primitive. This allows you to get the internal state of a primitive from anywhere in your code, as long as it's under the `Root` component, where the context gets provided. Accessing the context of a dialog looks like this:
 
 <Code code={`
-import Dialog from '@corvu/dialog'
-import { createSignal } from 'solid-js'
+  import Dialog from '@corvu/dialog'
+  import { createSignal } from 'solid-js'
 
-const DialogRoot = () => {
-  return (
-    <Dialog>
-      <DialogContent />
-    </Dialog>
-  )
-}
+  const DialogRoot = () => {
+    return (
+      <Dialog>
+        <DialogContent />
+      </Dialog>
+    )
+  }
 
-const DialogContent = () => {
-  const { open, setOpen } = Dialog.useContext()
-  return (
-    <>
-      <p>The dialog is {open() ? 'open' : 'closed'}</p>
-      <button onClick={() => setOpen(open => !open)}>
-        My own, custom trigger button
-      </button>
-      <Dialog.Content>
-        <Dialog.Label>Label</Dialog.Label>
-      </Dialog.Content>
-    </>
-  )
-}
+  const DialogContent = () => {
+    const { open, setOpen } = Dialog.useContext()
+    return (
+      <>
+        <p>The dialog is {open() ? 'open' : 'closed'}</p>
+        <button onClick={() => setOpen(open => !open)}>
+          My own, custom trigger button
+        </button>
+        <Dialog.Content>
+          <Dialog.Label>Label</Dialog.Label>
+        </Dialog.Content>
+      </>
+    )
+  }
 `} lang="tsx" />
 
 Every primitive provides different properties in its context, have a look at the API section of each primitive to see what's available.
@@ -77,27 +77,27 @@ Every primitive provides different properties in its context, have a look at the
 The `Root` component of every primitive (and in a few cases others) also accepts a function as its children. By doing this, we can pass the internal state to the children for you to access. An example of this looks like this:
 
 <Code code={`
-import Dialog from '@corvu/dialog'
-import { createSignal } from 'solid-js'
+  import Dialog from '@corvu/dialog'
+  import { createSignal } from 'solid-js'
 
-const MyDialog = () => {
-  return (
-    <Dialog>
-      {(props) => (
-        <>
-          <p>The dialog is {props.open() ? 'open' : 'closed'}</p>
-          <button onClick={() => props.setOpen(open => !open)}>
-          My own, custom trigger button
-          </button>
-          <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-          <Dialog.Content>
-            <Dialog.Label>Label</Dialog.Label>
-          </Dialog.Content>
-        </>
-      )}
-    </Dialog>
-  )
-}
+  const MyDialog = () => {
+    return (
+      <Dialog>
+        {(props) => (
+          <>
+            <p>The dialog is {props.open() ? 'open' : 'closed'}</p>
+            <button onClick={() => props.setOpen(open => !open)}>
+            My own, custom trigger button
+            </button>
+            <Dialog.Trigger>Open Dialog</Dialog.Trigger>
+            <Dialog.Content>
+              <Dialog.Label>Label</Dialog.Label>
+            </Dialog.Content>
+          </>
+        )}
+      </Dialog>
+    )
+  }
 `} lang="tsx" />
 
 Note that the props passed from the `Root` component include reactive getters. Make sure to access them in a reactive scope, like you would in any other Solid component.
@@ -108,26 +108,26 @@ There may be situations where you want to use nested instances of the same primi
 Here's how two nested dialogs would look like:
 
 <Code code={`
-<Dialog contextId="dialog-1">
-  <Dialog contextId="dialog-2">
+  <Dialog contextId="dialog-1">
+    <Dialog contextId="dialog-2">
 
-    <Dialog.Trigger contextId="dialog-1">Open Dialog 1</Dialog.Trigger>
-    <Dialog.Trigger contextId="dialog-2">Open Dialog 2</Dialog.Trigger>
+      <Dialog.Trigger contextId="dialog-1">Open Dialog 1</Dialog.Trigger>
+      <Dialog.Trigger contextId="dialog-2">Open Dialog 2</Dialog.Trigger>
 
-    <Dialog.Content contextId="dialog-1">
-      <Dialog.Label contextId="dialog-1">Dialog 1</Dialog.Label>
-    </Dialog.Content>
+      <Dialog.Content contextId="dialog-1">
+        <Dialog.Label contextId="dialog-1">Dialog 1</Dialog.Label>
+      </Dialog.Content>
 
-    <Dialog.Content contextId="dialog-2">
-      <Dialog.Label contextId="dialog-2">Dialog 2</Dialog.Label>
-    </Dialog.Content>
+      <Dialog.Content contextId="dialog-2">
+        <Dialog.Label contextId="dialog-2">Dialog 2</Dialog.Label>
+      </Dialog.Content>
 
+    </Dialog>
   </Dialog>
-</Dialog>
 `} lang="tsx" />
 
 When using keyed contexts, you can pass the same key to the `useContext()` function to access the context of the respective primitive.
 
 <Code code={`
-const { open, setOpen } = Dialog.useContext('dialog-1')
+  const { open, setOpen } = Dialog.useContext('dialog-1')
 `} lang="tsx" />

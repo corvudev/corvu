@@ -21,7 +21,7 @@ Manages the presence of an element in the DOM while being aware of pending anima
 ## Installation
 
 <Code code={`
-npm install solid-presence
+  npm install solid-presence
 `} lang="bash" copyButton />
 
 ## Usage
@@ -30,25 +30,26 @@ The `createPresence` utility returns a boolean called `present` which indicates 
 The `state` variable can be used to get the current state of the presence. Valid states are `present`, `hiding` or `hidden`.
 
 <Code code={`
-import createPresence from 'solid-presence'
+  import createPresence from 'solid-presence'
 `} lang="tsx" copyButton />
+
 <Code code={`
-const DialogContent: Component<{
-  open?: boolean
-}> = (props) => {
-  const [dialogRef, setDialogRef] = createSignal<HTMLElement | null>(null)
+  const DialogContent: Component<{
+    open?: boolean
+  }> = (props) => {
+    const [dialogRef, setDialogRef] = createSignal<HTMLElement | null>(null)
 
-  const { present } = createPresence({
-    show: () => props.open,
-    element: dialogRef,
-  })
+    const { present } = createPresence({
+      show: () => props.open,
+      element: dialogRef,
+    })
 
-  return (
-    <Show when={present()}>
-      <div ref={setDialogRef}>Dialog</div>
-    </Show>
-  )
-}
+    return (
+      <Show when={present()}>
+        <div ref={setDialogRef}>Dialog</div>
+      </Show>
+    )
+  }
 `} lang="tsx" copyButton />
 
 

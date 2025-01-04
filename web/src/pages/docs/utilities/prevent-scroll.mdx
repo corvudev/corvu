@@ -29,7 +29,7 @@ Utility that prevents scrolling outside of a given DOM element. Works by prevent
 ## Installation
 
 <Code code={`
-npm install solid-prevent-scroll
+  npm install solid-prevent-scroll
 `} lang="bash" copyButton />
 
 ## Usage
@@ -39,39 +39,40 @@ By default, it also hides the scrollbar of the body element and adds padding to 
 It also adds the CSS variable `--scrollbar-width` to the body element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to fixed elements, like a topbar.
 
 <Code code={`
-import createPreventScroll from 'solid-prevent-scroll'
+  import createPreventScroll from 'solid-prevent-scroll'
 `} lang="tsx" copyButton />
+
 <Code code={`
-const DialogContent: Component<{
-  open: boolean
-}> = (props) => {
-  const [ref, setRef] = createSignal(null)
+  const DialogContent: Component<{
+    open: boolean
+  }> = (props) => {
+    const [ref, setRef] = createSignal(null)
 
-  createPreventScroll({
-    element: ref,
-    enabled: () => props.open,
-    hideScrollbar: true, // default
-  })
+    createPreventScroll({
+      element: ref,
+      enabled: () => props.open,
+      hideScrollbar: true, // default
+    })
 
-  return (
-    <Show when={props.open()}>
-      <div ref={setRef}>Dialog</div>
-    </Show>
-  )
-}
+    return (
+      <Show when={props.open()}>
+        <div ref={setRef}>Dialog</div>
+      </Show>
+    )
+  }
 `} lang="tsx" copyButton />
 
 Use the `--scrollbar-width` CSS variable to add padding to fixed elements to prevent the content from shifting when the scrollbar is removed:
 
 <Code code={`
-<header
-  class="fixed top-0 inset-x-0 z-50"
-  style={{
-    'padding-right': 'var(--scrollbar-width, 0)',
-  }}
->
-  Header
-</header>
+  <header
+    class="fixed top-0 inset-x-0 z-50"
+    style={{
+      'padding-right': 'var(--scrollbar-width, 0)',
+    }}
+  >
+    Header
+  </header>
 `} lang="tsx" copyButton />
 
 ## API reference

@@ -29,31 +29,32 @@ Utility that traps focus inside a given DOM element.
 ## Installation
 
 <Code code={`
-npm install solid-focus-trap
+  npm install solid-focus-trap
 `} lang="bash" copyButton />
 
 ## Usage
 
 <Code code={`
-import createFocusTrap from 'solid-focus-trap'
+  import createFocusTrap from 'solid-focus-trap'
 `} lang="tsx" copyButton />
+
 <Code code={`
-const DialogContent: Component<{
-  open: boolean
-}> = (props) => {
-  const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
+  const DialogContent: Component<{
+    open: boolean
+  }> = (props) => {
+    const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
 
-  createFocusTrap({
-    element: contentRef,
-    enabled: () => props.open
-  })
+    createFocusTrap({
+      element: contentRef,
+      enabled: () => props.open
+    })
 
-  return (
-    <Show when={props.open()}>
-      <div ref={setContentRef}>Dialog</div>
-    </Show>
-  )
-}
+    return (
+      <Show when={props.open()}>
+        <div ref={setContentRef}>Dialog</div>
+      </Show>
+    )
+  }
 `} lang="tsx" copyButton />
 
 The first focusable element within the focus trap element will be focused initially. When the trap is disabled, the focus will be restored to the element that was focused before the trap was enabled.
@@ -62,27 +63,27 @@ The first focusable element within the focus trap element will be focused initia
 This example shows how to customize the initial focus element so that the focus moves to a specific element when the trap gets enabled.
 
 <Code code={`
-const DialogContent: Component<{
-  open: boolean
-}> = (props) => {
-  const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
-  const [initialFocusRef, setInitialFocusRef] =
-    createSignal<HTMLElement | null>(null)
+  const DialogContent: Component<{
+    open: boolean
+  }> = (props) => {
+    const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
+    const [initialFocusRef, setInitialFocusRef] =
+      createSignal<HTMLElement | null>(null)
 
-  createFocusTrap({
-    element: contentRef,
-    enabled: () => props.open,
-    initialFocusElement: initialFocusRef,
-  })
+    createFocusTrap({
+      element: contentRef,
+      enabled: () => props.open,
+      initialFocusElement: initialFocusRef,
+    })
 
-  return (
-    <Show when={props.open()}>
-      <div ref={setContentRef}>Dialog</div>
-      <button>Close</button>
-      <input ref={setInitialFocusRef} />
-    </Show>
-  )
-}
+    return (
+      <Show when={props.open()}>
+        <div ref={setContentRef}>Dialog</div>
+        <button>Close</button>
+        <input ref={setInitialFocusRef} />
+      </Show>
+    )
+  }
 `} lang="tsx" copyButton />
 
 ## API reference

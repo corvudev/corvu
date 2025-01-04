@@ -71,31 +71,31 @@ A popup that displays information when its trigger receives keyboard focus or th
 ## Installation
 
 <Code code={`
-npm install @corvu/tooltip
+  npm install @corvu/tooltip
 `} lang="bash" copyButton />
 
 The tooltip is also included in the main `corvu` package under `corvu/tooltip`.
 
 ## Usage
 <Code code={`
-import Tooltip from '@corvu/tooltip' // 'corvu/tooltip'
-// or
-// import { Root, Trigger, ... } from '@corvu/tooltip'
+  import Tooltip from '@corvu/tooltip' // 'corvu/tooltip'
+  // or
+  // import { Root, Trigger, ... } from '@corvu/tooltip'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 
 <Code code={`
-<Tooltip>
-  <Tooltip.Anchor>
-    <Tooltip.Trigger />
-  </Tooltip.Anchor>
-  <Tooltip.Portal>
-    <Tooltip.Content>
-      <Tooltip.Arrow />
-    </Tooltip.Content>
-  </Tooltip.Portal>
-</Tooltip>
+  <Tooltip>
+    <Tooltip.Anchor>
+      <Tooltip.Trigger />
+    </Tooltip.Anchor>
+    <Tooltip.Portal>
+      <Tooltip.Content>
+        <Tooltip.Arrow />
+      </Tooltip.Content>
+    </Tooltip.Portal>
+  </Tooltip>
 `} lang="tsx" copyButton />
 
 The anchor component can optionally be used to make the tooltip anchor itself to another element than the trigger.

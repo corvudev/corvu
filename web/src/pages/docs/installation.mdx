@@ -13,14 +13,15 @@ export const components = { h2: H2, h3: H3 }
 corvu provides every UI primitive as a separate package. This allows you to only install the primitives you need, to use the semver of every package as a reference for breaking/feature changes and progressively update packages in case of new versions.
 
 For example the drawer component is available as `@corvu/drawer`:
+
 <Code code={`
-npm install @corvu/drawer
+  npm install @corvu/drawer
 `} lang="bash" copyButton />
 
 If you want to install all primitives at once you can install the main package. Unused primitives will get tree-shaken by your bundler, so you don't have to worry about the bundle size.
 
 <Code code={`
-npm install corvu
+  npm install corvu
 `} lang="bash" copyButton />
 
 You're good to go! Head over to [Usage](/docs/state/) to learn how to use corvu.
@@ -29,22 +30,22 @@ You're good to go! Head over to [Usage](/docs/state/) to learn how to use corvu.
 If you want make use of the tailwind modifiers like `corvu-open:`, install the tailwind plugin:
 
 <Code code={`
-npm install @corvu/tailwind
+  npm install @corvu/tailwind
 `} lang="bash" copyButton />
 
 Then add the plugin to your `tailwind.config.js` file:
 
 <Code code={`
-module.exports = {
-  // ...
-  plugins: [
-    // Use it with the default prefix 'corvu'
-    require('@corvu/tailwind'),
-    // or with a custom prefix
-    require('@corvu/tailwind')({ prefix: 'ui' }),
+  module.exports = {
     // ...
-  ],
-}
+    plugins: [
+      // Use it with the default prefix 'corvu'
+      require('@corvu/tailwind'),
+      // or with a custom prefix
+      require('@corvu/tailwind')({ prefix: 'ui' }),
+      // ...
+    ],
+  }
 `} lang="js" />
 
 Check out the [Styling](/docs/styling/) guide learn how to use the tailwind plugin.
@@ -53,25 +54,25 @@ Check out the [Styling](/docs/styling/) guide learn how to use the tailwind plug
 We also provide a preset for [UnoCSS](https://unocss.dev/) that adds the same modifiers.
 
 <Code code={`
-npm install @corvu/unocss
+  npm install @corvu/unocss
 `} lang="bash" copyButton />
 
 Add the preset to your `uno.config.tsx` file:
 
 <Code code={`
-import { defineConfig } from 'unocss'
-import presetCorvu from '@corvu/unocss'
+  import { defineConfig } from 'unocss'
+  import presetCorvu from '@corvu/unocss'
 
-export default defineConfig({
-  // ...
-  presets: [
-    // Use it with the default prefix 'corvu'
-    presetCorvu(),
-    // or with a custom prefix
-    presetCorvu({ prefix: 'ui' }),
+  export default defineConfig({
     // ...
-  ],
-})
+    presets: [
+      // Use it with the default prefix 'corvu'
+      presetCorvu(),
+      // or with a custom prefix
+      presetCorvu({ prefix: 'ui' }),
+      // ...
+    ],
+  })
 `} lang="ts" />
 
 Check out the [Styling](/docs/styling/) guide learn how to use the UnoCSS preset.

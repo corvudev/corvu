@@ -70,27 +70,27 @@ A component that consists of multiple collapsible sections.
 ## Installation
 
 <Code code={`
-npm install @corvu/accordion
+  npm install @corvu/accordion
 `} lang="bash" copyButton />
 
 The accordion is also included in the main `corvu` package under `corvu/accordion`.
 
 ## Usage
 <Code code={`
-import Accordion from '@corvu/accordion' // 'corvu/accordion'
-// or
-// import { Root, Trigger, ... } from '@corvu/accordion'
+  import Accordion from '@corvu/accordion' // 'corvu/accordion'
+  // or
+  // import { Root, Trigger, ... } from '@corvu/accordion'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 
 <Code code={`
-<Accordion>
-  <Accordion.Item>
-    <Accordion.Trigger />
-    <Accordion.Content />
-  </Accordion.Item>
-</Accordion>
+  <Accordion>
+    <Accordion.Item>
+      <Accordion.Trigger />
+      <Accordion.Content />
+    </Accordion.Item>
+  </Accordion>
 `} lang="tsx" copyButton />
 
 The accordion item uses the [Disclosure](/docs/primitives/disclosure/) component under the hood. It forwards the same props in the Item children callback and the disclosure context is re-exported as `Accordion.useDisclosureContext`.
@@ -99,30 +99,30 @@ The accordion item uses the [Disclosure](/docs/primitives/disclosure/) component
 corvu sets the `--corvu-disclosure-content-height` and `--corvu-disclosure-content-width` css properties on every accordion item content that make it possible to animate the height/width.
 
 <Code code={`
-[data-corvu-accordion-content][data-collapsed] {
-  animation: collapse 200ms linear;
-}
-[data-corvu-accordion-content][data-expanded] {
-  animation: expand 200ms linear;
-}
+  [data-corvu-accordion-content][data-collapsed] {
+    animation: collapse 200ms linear;
+  }
+  [data-corvu-accordion-content][data-expanded] {
+    animation: expand 200ms linear;
+  }
 
-@keyframes collapse {
-  0% {
-    height: var(--corvu-disclosure-content-height);
+  @keyframes collapse {
+    0% {
+      height: var(--corvu-disclosure-content-height);
+    }
+    100% {
+      height: 0px;
+    }
   }
-  100% {
-    height: 0px;
-  }
-}
 
-@keyframes expand {
-  0% {
-    height: 0px;
+  @keyframes expand {
+    0% {
+      height: 0px;
+    }
+    100% {
+      height: var(--corvu-disclosure-content-height);
+    }
   }
-  100% {
-    height: var(--corvu-disclosure-content-height);
-  }
-}
 `} lang="css" copyButton />
 
 ## Accessibility

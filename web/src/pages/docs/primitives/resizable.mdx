@@ -82,26 +82,26 @@ SolidJS components for building resizable panels and splitters.
 ## Installation
 
 <Code code={`
-npm install @corvu/resizable
+  npm install @corvu/resizable
 `} lang="bash" copyButton />
 
 The resizable is also included in the main `corvu` package under `corvu/resizable`.
 
 ## Usage
 <Code code={`
-import Resizable from '@corvu/resizable' // 'corvu/resizable'
-// or
-// import { Root, Panel, Handle } from '@corvu/resizable'
+  import Resizable from '@corvu/resizable' // 'corvu/resizable'
+  // or
+  // import { Root, Panel, Handle } from '@corvu/resizable'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 
 <Code code={`
-<Resizable>
-  <Resizable.Panel />
-  <Resizable.Handle />
-  <Resizable.Panel />
-</Resizable>
+  <Resizable>
+    <Resizable.Panel />
+    <Resizable.Handle />
+    <Resizable.Panel />
+  </Resizable>
 `} lang="tsx" copyButton />
 
 ### Vertical orientation
@@ -109,11 +109,11 @@ import Resizable from '@corvu/resizable' // 'corvu/resizable'
 The resizable primitive is aligned horizontally per default. To make it vertical, set `orientation` to `vertical`:
 
 <Code code={`
-<Resizable orientation="vertical">
-  <Resizable.Panel />
-  <Resizable.Handle />
-  <Resizable.Panel />
-</Resizable>
+  <Resizable orientation="vertical">
+    <Resizable.Panel />
+    <Resizable.Handle />
+    <Resizable.Panel />
+  </Resizable>
 `} lang="tsx" copyButton />
 
 ### Preventing panel overflow
@@ -173,23 +173,23 @@ You can nest resizables to create more complex layouts. Resize handles automatic
 corvu itself doesn't provide a first party way to persist the layout of resizable panels. However, you can achieve this easily with something like the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility from Solid Primitives:
 
 <Code code={`
-import { createSignal } from 'solid-js'
-import { makePersisted } from '@solid-primitives/storage'
-import Resizable from '@corvu/resizable'
+  import { createSignal } from 'solid-js'
+  import { makePersisted } from '@solid-primitives/storage'
+  import Resizable from '@corvu/resizable'
 
-const PersistentResizable = () => {
-  const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
-    name: 'resizable-sizes'
-  })
+  const PersistentResizable = () => {
+    const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
+      name: 'resizable-sizes'
+    })
 
-  return (
-    <Resizable sizes={sizes()} onSizesChange={setSizes}>
-      <Resizable.Panel />
-      <Resizable.Handle />
-      <Resizable.Panel />
-    </Resizable>
-  )
-}
+    return (
+      <Resizable sizes={sizes()} onSizesChange={setSizes}>
+        <Resizable.Panel />
+        <Resizable.Handle />
+        <Resizable.Panel />
+      </Resizable>
+    )
+  }
 `} lang="tsx" copyButton />
 
 Edit the layout below and refresh the page to see how the panel sizes persist.
@@ -249,22 +249,22 @@ A common use case is to have expand or collapse buttons outside of your resizabl
 One approach is to use the `as` prop to provide a custom component where you can access the context:
 
 <Code code={`
-const ResizableWrapper = (props: object) => {
-  const context = Resizable.useContext()
-  // Access to the context outside of <Resizable />
+  const ResizableWrapper = (props: object) => {
+    const context = Resizable.useContext()
+    // Access to the context outside of <Resizable />
 
-  return <div {...props} />
-}
+    return <div {...props} />
+  }
 
-const Component = () => {
-  return (
-    <Resizable as={ResizableWrapper}>
-      <Resizable.Panel />
-      <Resizable.Handle />
-      <Resizable.Panel />
-    </Resizable>
-  )
-}
+  const Component = () => {
+    return (
+      <Resizable as={ResizableWrapper}>
+        <Resizable.Panel />
+        <Resizable.Handle />
+        <Resizable.Panel />
+      </Resizable>
+    )
+  }
 `} lang="tsx" copyButton />
 
 Here is an example that uses this approach:
@@ -290,27 +290,27 @@ Here is an example that uses this approach:
 The other approach is to use a signal to hoist the context:
 
 <Code code={`
-const Component = () => {
-  const [resizableContext, setResizableContext] =
-    createSignal<ContextValue | null>(null)
-  // Access to the context outside of <Resizable />
-  return (
-    <Resizable>
-      {() => {
-        const context = Resizable.useContext()
-        setResizableContext(context)
+  const Component = () => {
+    const [resizableContext, setResizableContext] =
+      createSignal<ContextValue | null>(null)
+    // Access to the context outside of <Resizable />
+    return (
+      <Resizable>
+        {() => {
+          const context = Resizable.useContext()
+          setResizableContext(context)
 
-        return (
-          <>
-            <Resizable.Panel />
-            <Resizable.Handle />
-            <Resizable.Panel />
-          </>
-        )
-      }}
-    </Resizable>
-  )
-}
+          return (
+            <>
+              <Resizable.Panel />
+              <Resizable.Handle />
+              <Resizable.Panel />
+            </>
+          )
+        }}
+      </Resizable>
+    )
+  }
 `} lang="tsx" copyButton />
 
 ### Persistent layout with SSR
@@ -318,24 +318,24 @@ const Component = () => {
 To avoid content shift when using server side rendering, we have to define the `initialSize` property on every `<Panel />` component. This makes sure that the panel renders with the correct size on the server. We can use the <Link href="https://primitives.solidjs.community/package/storage" newTab>`makePersisted`</Link> utility with the `cookieStorage` from Solid Primitives:
 
 <Code code={`
-import { createSignal } from 'solid-js'
-import { cookieStorage, makePersisted } from '@solid-primitives/storage'
-import Resizable from '@corvu/resizable'
+  import { createSignal } from 'solid-js'
+  import { cookieStorage, makePersisted } from '@solid-primitives/storage'
+  import Resizable from '@corvu/resizable'
 
-const SSRPersistentResizable = () => {
-  const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
-    storage: cookieStorage,
-    name: 'resizable-sizes'
-  })
+  const SSRPersistentResizable = () => {
+    const [sizes, setSizes] = makePersisted(createSignal<number[]>([]), {
+      storage: cookieStorage,
+      name: 'resizable-sizes'
+    })
 
-  return (
-    <Resizable sizes={sizes()} onSizesChange={setSizes}>
-      <Resizable.Panel initialSize={sizes()[0] ?? 0.5} />
-      <Resizable.Handle />
-      <Resizable.Panel initialSize={sizes()[1] ?? 0.5} />
-    </Resizable>
-  )
-}
+    return (
+      <Resizable sizes={sizes()} onSizesChange={setSizes}>
+        <Resizable.Panel initialSize={sizes()[0] ?? 0.5} />
+        <Resizable.Handle />
+        <Resizable.Panel initialSize={sizes()[1] ?? 0.5} />
+      </Resizable>
+    )
+  }
 `} lang="tsx" copyButton />
 
 ## Accessibility

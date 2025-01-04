@@ -29,7 +29,7 @@ Utility which makes it possible to transition the width and height of elements t
 ## Installation
 
 <Code code={`
-npm install solid-transition-size
+  npm install solid-transition-size
 `} lang="bash" copyButton />
 
 ## Usage
@@ -37,34 +37,35 @@ npm install solid-transition-size
 The utility returns two signals: `transitioning` and `transitionSize`. `transitioning` can be used to know when the transition is happening, and `transitionSize` returns the fixed size of the element while transitioning. You **have** to use it to style the element you want to transition.
 
 <Code code={`
-import createTransitionSize from 'solid-transition-size';
+  import createTransitionSize from 'solid-transition-size';
 `} lang="tsx" copyButton />
+
 <Code code={`
-const Details = () => {
-  const [ref, setRef] = createSignal<HTMLElement | null>(null)
-  const { transitionSize } = createTransitionSize({
-    element: ref,
-    dimension: 'height',
-  })
+  const Details = () => {
+    const [ref, setRef] = createSignal<HTMLElement | null>(null)
+    const { transitionSize } = createTransitionSize({
+      element: ref,
+      dimension: 'height',
+    })
 
-  const height = () => {
-    if (!transitionSize()) return undefined
-    return transitionSize() + 'px'
+    const height = () => {
+      if (!transitionSize()) return undefined
+      return transitionSize() + 'px'
+    }
+
+    return (
+      <details
+        ref={setRef}
+        class="transition-[height] overflow-hidden"
+        style={{
+          height: height(),
+        }}
+      >
+        <summary>Show detail</summary>
+        Detail
+      </details>
+    )
   }
-
-  return (
-    <details
-      ref={setRef}
-      class="transition-[height] overflow-hidden"
-      style={{
-        height: height(),
-      }}
-    >
-      <summary>Show detail</summary>
-      Detail
-    </details>
-  )
-}
 `} lang="tsx" copyButton />
 
 ## API reference

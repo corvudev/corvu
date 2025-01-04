@@ -85,31 +85,31 @@ A drawer is a draggable dialog that is attached to any side of the viewport. It 
 ## Installation
 
 <Code code={`
-npm install @corvu/drawer
+  npm install @corvu/drawer
 `} lang="bash" copyButton />
 
 The drawer is also included in the main `corvu` package under `corvu/drawer`.
 
 ## Usage
 <Code code={`
-import Drawer from '@corvu/drawer' // 'corvu/drawer'
-// or
-// import { Root, Trigger, ... } from '@corvu/drawer'
+  import Drawer from '@corvu/drawer' // 'corvu/drawer'
+  // or
+  // import { Root, Trigger, ... } from '@corvu/drawer'
 `} lang="tsx" copyButton />
 
 ### Anatomy
 <Code code={`
-<Drawer>
-  <Drawer.Trigger />
-  <Drawer.Portal>
-    <Drawer.Overlay />
-    <Drawer.Content>
-      <Drawer.Close />
-      <Drawer.Label />
-      <Drawer.Description />
-    </Drawer.Content>
-  </Drawer.Portal>
-</Drawer>
+  <Drawer>
+    <Drawer.Trigger />
+    <Drawer.Portal>
+      <Drawer.Overlay />
+      <Drawer.Content>
+        <Drawer.Close />
+        <Drawer.Label />
+        <Drawer.Description />
+      </Drawer.Content>
+    </Drawer.Portal>
+  </Drawer>
 `} lang="tsx" copyButton />
 
 Every component besides the `Root` and `Content` components are just re-exports from the Dialog primitive. You can find more information about them in the [Dialog documentation](/docs/primitives/dialog/).
@@ -122,23 +122,23 @@ Animation is done by applying CSS transition properties when the drawer is in th
 A plain CSS example would look like this:
 
 <Code code={`
-[data-corvu-dialog-content][data-transitioning] {
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-  transition-duration: 500ms;
-}
+  [data-corvu-dialog-content][data-transitioning] {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+    transition-duration: 500ms;
+  }
 `} lang="css" copyButton />
 
 corvu's tailwind plugin also provides a `corvu-transitioning` modifier that you can use:
 
 <Code code={`
-<Drawer.Content
-  class="
-    corvu-transitioning:transition-transform
-    corvu-transitioning:duration-500
-  "
->
-</Drawer.Content>
+  <Drawer.Content
+    class="
+      corvu-transitioning:transition-transform
+      corvu-transitioning:duration-500
+    "
+  >
+  </Drawer.Content>
 `} lang="tsx" copyButton />
 
 Additionally, there are different data attributes applied depending on the current state of the drawer:
@@ -152,27 +152,27 @@ This allows you to apply different transitions based on the transition state of 
 You can also use the `openPercentage` property returned by the `Drawer.useContext()` or the root children callback and use it to animate the background for example:
 
 <Code code={`
-<Drawer>
-  {(props) => (
-    <Drawer.Overlay
-      class="fixed inset-0 z-40 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
-      style={{
-        'background-color': \`rgb(0 0 0 / \${
-          0.5 * props.openPercentage
-        })\`,
-      }}
-    />
-  )}
-</Drawer>
+  <Drawer>
+    {(props) => (
+      <Drawer.Overlay
+        class="fixed inset-0 z-40 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+        style={{
+          'background-color': \`rgb(0 0 0 / \${
+            0.5 * props.openPercentage
+          })\`,
+        }}
+      />
+    )}
+  </Drawer>
 `} lang="tsx" copyButton />
 
 ### Snap- and breakpoints
 The drawer root accepts a `snapPoints` array to customize the points to snap to. Valid values are either percentages or pixel values. The drawer will snap to the closest snap point when the user stops dragging (With the `velocityFunction` in mind. See the [API Reference](#api-reference) for more information)
 
 <Code code={`
-<Drawer snapPoints={[0, 0.5, 1]}>
-  ...
-</Drawer>
+  <Drawer snapPoints={[0, 0.5, 1]}>
+    ...
+  </Drawer>
 `} lang="tsx" copyButton />
 
 Here, the drawer additionally snaps to 50% of its height.
@@ -198,9 +198,9 @@ Here, the drawer additionally snaps to 50% of its height.
 Per default, the drawer will snap to the closest snap point. You can change this behavior by providing custom `breakPoints` to the root component:
 
 <Code code={`
-<Drawer breakPoints={[0.75]}>
-  ...
-</Drawer>
+  <Drawer breakPoints={[0.75]}>
+    ...
+  </Drawer>
 `} lang="tsx" copyButton />
 
 Here, the drawer will close when the user drags below 75% of the drawer's height.
@@ -293,13 +293,13 @@ A common example would be a comment section which can be expanded:
 To achieve this, you can use the `props.openPercentage` property and change the height of the drawer accordingly. Make sure to create a wrapper element inside `Drawer.Content` and not apply the height directly to the `Content` component, otherwise the drawer will not be able to calculate the correct height.
 
 <Code code={`
-style={{
-  height: \`\${
-    props.openPercentage < 0.7
-      ? 70
-      : props.openPercentage * 100
-  }%\`,
-}}
+  style={{
+    height: \`\${
+      props.openPercentage < 0.7
+        ? 70
+        : props.openPercentage * 100
+    }%\`,
+  }}
 `} lang="tsx" copyButton />
 
 The height will adjust to match the drawer's height until it's under 70%, which is the last snap point. Don't forget to apply the same transition function as you defined for your drawer transform and you're good to go!
@@ -329,24 +329,24 @@ You can disable drag on an element by giving it the `data-corvu-no-drag` attribu
 To persist the content of the drawer even when it's unmounted, you can use corvu's <Link href="/docs/utilities/persistent/">`createPersistent`</Link> utility. It will cache the content when the drawer is opened for the first time and preserve its state and HTML elements.
 
 <Code code={`
-const PersistedDrawerContent = () => {
-  const persistedContent = createPersistent(() => {
-    return <input />
-  })
+  const PersistedDrawerContent = () => {
+    const persistedContent = createPersistent(() => {
+      return <input />
+    })
 
-  return (
-  <Drawer>
-      <Drawer.Trigger>
-        Open
-      </Drawer.Trigger>
-      <Drawer.Portal>
-        <Drawer.Content>
-          {persistedContent()}
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer>
-  )
-}
+    return (
+      <Drawer>
+        <Drawer.Trigger>
+          Open
+        </Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Content>
+            {persistedContent()}
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer>
+    )
+  }
 `} lang="tsx" copyButton />
 
 Give it a try! 🐦‍⬛

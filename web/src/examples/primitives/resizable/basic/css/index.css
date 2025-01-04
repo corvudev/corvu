@@ -43,11 +43,11 @@
   transition-duration: 150ms;
 }
 
-[data-corvu-resizable-handle][data-active] .inner_handle { 
+[data-corvu-resizable-handle][data-active] .inner_handle {
   border-color: hsl(253, 80%, 82%);
 }
 
-[data-corvu-resizable-handle][data-dragging] .inner_handle { 
+[data-corvu-resizable-handle][data-dragging] .inner_handle {
   background-color: hsl(249, 87%, 94%);
 }
 

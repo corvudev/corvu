@@ -16,10 +16,11 @@ All primitive components that render a DOM element are dynamic, which means that
 ## Native elements
 
 In most cases, you shouldn't need to change the DOM element that the primitive component renders. corvu has sensible defaults for all components. But there are cases where it makes sense to change them. An example would be the `Tooltip` trigger which renders as a `button` element. You may want to render a tooltip on a link (`a` tag) instead. To do this, you have to specify the `as` property on the trigger component:
+
 <Code code={`
-<Tooltip.Trigger as="a" href="https://corvu.dev">
-  corvu.dev
-</Tooltip.Trigger>
+  <Tooltip.Trigger as="a" href="https://corvu.dev">
+    corvu.dev
+  </Tooltip.Trigger>
 `} lang="tsx" />
 
 ## Solid components
@@ -27,26 +28,27 @@ In most cases, you shouldn't need to change the DOM element that the primitive c
 A much more common use case is to render a primitive component as a custom Solid component. This is useful to apply default styling or to add additional functionality.
 
 For example, you might have your own, custom-styled button component and want to use it as a trigger for a dialog:
+
 <Code code={`
-import {
-  ComponentProps,
-  splitProps,
-} from 'solid-js'
-import Dialog from '@corvu/dialog'
+  import {
+    ComponentProps,
+    splitProps,
+  } from 'solid-js'
+  import Dialog from '@corvu/dialog'
 
-const CustomButton = (
-  props: ComponentProps<'button'> & { variant: 'fill' | 'outline' },
-) => {
-  const [local, rest] = splitProps(props, ['variant'])
-  // Apply your custom styling here
-  return <button class={local.variant} {...rest} />
-}
+  const CustomButton = (
+    props: ComponentProps<'button'> & { variant: 'fill' | 'outline' },
+  ) => {
+    const [local, rest] = splitProps(props, ['variant'])
+    // Apply your custom styling here
+    return <button class={local.variant} {...rest} />
+  }
 
-const DialogTrigger = () => (
-  <Dialog.Trigger as={CustomButton} variant="outline">
-    Open
-  </Dialog.Trigger>
-)
+  const DialogTrigger = () => (
+    <Dialog.Trigger as={CustomButton} variant="outline">
+      Open
+    </Dialog.Trigger>
+  )
 `} lang="tsx" />
 
 Props not belonging to the primitive component will be passed through to your custom component. In this case, the `variant` prop is passed to the `CustomButton` component.
@@ -84,37 +86,37 @@ This is the type that defines what props that corvu expects from the user. It's 
 `DynamicProps` is a helper type that allows you to expose the dynamic aspect of corvu components from your custom component. Let's look at an example:
 
 <Code code={`
-import {
-  type ValidComponent,
-  ComponentProps,
-  splitProps,
-} from 'solid-js'
-import Dialog, { type TriggerProps, type DynamicProps } from '@corvu/dialog'
+  import {
+    type ValidComponent,
+    ComponentProps,
+    splitProps,
+  } from 'solid-js'
+  import Dialog, { type TriggerProps, type DynamicProps } from '@corvu/dialog'
 
-// Define your custom props, including \`TriggerProps\` from corvu
-export type CustomDisclosureTriggerProps<T extends ValidComponent = 'button'> = TriggerProps<T> & {
-  variant: 'fill' | 'outline'
-}
+  // Define your custom props, including \`TriggerProps\` from corvu
+  export type CustomDisclosureTriggerProps<T extends ValidComponent = 'button'> = TriggerProps<T> & {
+    variant: 'fill' | 'outline'
+  }
 
-// The generic \`T\` allows the user to specify
-// the element this component should render as
-const CustomDialogTrigger = <T extends ValidComponent = 'button'>(
-  props: DynamicProps<T, CustomDisclosureTriggerProps<T>>,
-) => {
-  const [local, rest] = splitProps(props as CustomDisclosureTriggerProps, [
-    'variant',
-  ])
-  // Define the default dynamic type, in this case 'button'.
-  // This can be overridden by the user.
-  return <Dialog.Trigger as="button" class={local.variant} {...rest} />
-}
+  // The generic \`T\` allows the user to specify
+  // the element this component should render as
+  const CustomDialogTrigger = <T extends ValidComponent = 'button'>(
+    props: DynamicProps<T, CustomDisclosureTriggerProps<T>>,
+  ) => {
+    const [local, rest] = splitProps(props as CustomDisclosureTriggerProps, [
+      'variant',
+    ])
+    // Define the default dynamic type, in this case 'button'.
+    // This can be overridden by the user.
+    return <Dialog.Trigger as="button" class={local.variant} {...rest} />
+  }
 `} lang="tsx" />
 
 If you don't want to expose the dynamic aspect of corvu's components, you can define the generic explicitly:
 
 <Code code={`
-const CustomDialogTrigger = (
-  props: DynamicProps<'button', CustomDisclosureTriggerProps<'button'>>,
-) => {
+  const CustomDialogTrigger = (
+    props: DynamicProps<'button', CustomDisclosureTriggerProps<'button'>>,
+  ) => {
 `} lang="tsx" />
 

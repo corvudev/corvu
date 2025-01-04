@@ -32,44 +32,45 @@ Utility for creating dismissible, nestable layers. Offers different strategies t
 ## Installation
 
 <Code code={`
-npm install solid-dismissible
+  npm install solid-dismissible
 `} lang="bash" copyButton />
 
 ## Usage
 
 <Code code={`
-import Dismissible from 'solid-dismissible'
+  import Dismissible from 'solid-dismissible'
 `} lang="tsx" copyButton />
-<Code code={`
-const DialogContent: Component<{
-  open: boolean
-  setOpen: (open: boolean) => void
-}> = (props) => {
-  const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
 
-  return (
-    <Dismissible
-      element={contentRef}
-      enabled={open()}
-      onDismiss={() => setOpen(false)}
-    >
-      <Show when={props.open()}>
-        <div ref={setContentRef}>Dialog</div>
-      </Show>
-    </Dismissible>
-  )
-}
+<Code code={`
+  const DialogContent: Component<{
+    open: boolean
+    setOpen: (open: boolean) => void
+  }> = (props) => {
+    const [contentRef, setContentRef] = createSignal<HTMLElement | null>(null)
+
+    return (
+      <Dismissible
+        element={contentRef}
+        enabled={open()}
+        onDismiss={() => setOpen(false)}
+      >
+        <Show when={props.open()}>
+          <div ref={setContentRef}>Dialog</div>
+        </Show>
+      </Dismissible>
+    )
+  }
 `} lang="tsx" copyButton />
 
 ### Tracking active dismissibles
 The utility exports a `activeDismissibles` signal that can be used to track active dismissibles. It includes an array of all currently active dismissible ids.
 
 <Code code={`
-import { activeDismissibles } from 'solid-dismissible'
+  import { activeDismissibles } from 'solid-dismissible'
 
-createEffect(() => {
-  console.log('Currently active dismissibles: ', activeDismissibles())
-})
+  createEffect(() => {
+    console.log('Currently active dismissibles: ', activeDismissibles())
+  })
 `} lang="tsx" copyButton />
 
 ## API reference
