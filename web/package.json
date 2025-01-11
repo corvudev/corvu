@@ -18,7 +18,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.3",
+    "@astrojs/mdx": "^4.0.5",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/solid-js": "^5.0.1",
     "@astrojs/tailwind": "^5.1.4",
@@ -35,13 +35,13 @@
     "@solid-primitives/storage": "^4.2.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/typography": "^0.5.15",
-    "@typescript-eslint/parser": "^8.19.0",
-    "astro": "^5.1.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@typescript-eslint/parser": "^8.19.1",
+    "astro": "^5.1.5",
     "astro-eslint-parser": "^1.1.0",
     "clsx": "^2.1.1",
-    "eslint": "^9.17.0",
+    "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.3.1",
     "eslint-plugin-prettier": "^5.2.1",
@@ -51,11 +51,11 @@
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.33.5",
     "shiki": "^1.26.1",
-    "solid-js": "^1.9.3",
+    "solid-js": "^1.9.4",
     "solid-list": "workspace:*",
     "solid-persistent": "workspace:*",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.19.0"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.19.1"
   }
 }
