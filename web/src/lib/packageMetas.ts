@@ -1,4 +1,5 @@
 import accordion from '../../../packages/accordion/package.json'
+import calendar from '../../../packages/calendar/package.json'
 import corvu from '../../../packages/corvu/package.json'
 import dialog from '../../../packages/dialog/package.json'
 import disclosure from '../../../packages/disclosure/package.json'
@@ -32,6 +33,11 @@ const packageMetas: {
     npmHref: 'https://www.npmjs.com/package/@corvu/accordion',
     sourceHref:
       'https://github.com/corvudev/corvu/tree/main/packages/accordion',
+  },
+  '@corvu/calendar': {
+    version: calendar.version,
+    npmHref: 'https://www.npmjs.com/package/@corvu/calendar',
+    sourceHref: 'https://github.com/corvudev/corvu/tree/main/packages/calendar',
   },
   '@corvu/dialog': {
     version: dialog.version,

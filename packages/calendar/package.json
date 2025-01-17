@@ -1,6 +1,6 @@
 {
-  "name": "corvu",
-  "version": "0.7.1",
+  "name": "@corvu/calendar",
+  "version": "0.0.0",
   "private": false,
   "description": "Unstyled, accessible and customizable UI primitives for SolidJS",
   "keywords": [
@@ -29,16 +29,18 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "solid": "./dist/*.jsx",
-      "default": "./dist/*.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "solid": "./dist/index.jsx",
+      "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
-        "./dist/*.d.ts"
+        "./dist/index.d.ts"
       ]
     }
   },
@@ -47,33 +49,27 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rm -rf .turbo dist node_modules",
+    "clean": "rm -rf .turbo dist node_modules api.json",
     "dev": "tsup --watch",
-    "lint": "eslint --max-warnings=0 ."
+    "lint": "eslint --max-warnings=0 .",
+    "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts"
   },
   "dependencies": {
-    "@corvu/accordion": "workspace:~",
-    "@corvu/calendar": "workspace:~",
-    "@corvu/dialog": "workspace:~",
-    "@corvu/disclosure": "workspace:~",
-    "@corvu/drawer": "workspace:~",
-    "@corvu/otp-field": "workspace:~",
-    "@corvu/popover": "workspace:~",
-    "@corvu/resizable": "workspace:~",
-    "@corvu/tooltip": "workspace:~"
+    "@corvu/utils": "workspace:~"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.21.0",
+    "@typescript-eslint/parser": "^8.19.1",
     "esbuild-plugin-solid": "^0.6.0",
     "eslint": "^9.18.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-solid": "^0.14.5",
     "prettier": "^3.4.2",
     "solid-js": "^1.9.4",
     "tsup": "^8.3.5",
+    "typedoc": "^0.27.6",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.21.0"
+    "typescript-eslint": "^8.19.1"
   },
   "peerDependencies": {
     "solid-js": "^1.8"

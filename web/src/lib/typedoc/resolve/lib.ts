@@ -191,6 +191,10 @@ const resolveTypeTopLevel = (
         typeName += resolveTypeTopLevel(type.elementType, nestLevel)
         typeName += '[]'
         break
+      } else if (type.elementType.type === 'array') {
+        typeName += resolveTypeTopLevel(type.elementType, nestLevel)
+        typeName += '[]'
+        break
       } else {
         throw new Error(
           `Unexpected array element type ${type.elementType.type}`,

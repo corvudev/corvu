@@ -1,5 +1,6 @@
 import accordionTypedoc from '../../../../packages/accordion/api.json'
 import type { ApiDeclaration } from '@lib/typedoc/types/typedoc'
+import calendarTypedoc from '../../../../packages/calendar/api.json'
 import dialogTypedoc from '../../../../packages/dialog/api.json'
 import disclosureTypedoc from '../../../../packages/disclosure/api.json'
 import dismissibleTypedoc from '../../../../packages/solid-dismissible/api.json'
@@ -19,6 +20,7 @@ import utilsTypedoc from '../../../../packages/utils/api.json'
 
 export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/accordion': accordionTypedoc as ApiDeclaration,
+  '@corvu/calendar': calendarTypedoc as ApiDeclaration,
   '@corvu/dialog': dialogTypedoc as ApiDeclaration,
   '@corvu/disclosure': disclosureTypedoc as ApiDeclaration,
   '@corvu/drawer': drawerTypedoc as ApiDeclaration,
@@ -85,6 +87,7 @@ const Disclosure: Library = {
     },
   },
 }
+
 const Accordion: Library = {
   api: Typedoc['@corvu/accordion'],
   name: 'Accordion',
@@ -173,6 +176,91 @@ const Accordion: Library = {
         library: Disclosure,
         name: 'RootChildrenProps',
       },
+    },
+  },
+}
+
+const Calendar: Library = {
+  api: Typedoc['@corvu/calendar'],
+  name: 'Calendar',
+  items: {
+    Root: {
+      kind: 'component',
+      sorting: [
+        'mode',
+        'value',
+        'onValueChange',
+        'initialValue',
+        'month',
+        'onMonthChange',
+        'initialMonth',
+        'focusedDate',
+        'onFocusedDateChange',
+        'initialFocusedDate',
+        'view',
+        'onViewChange',
+        'initialView',
+        'required',
+        'startOfWeek',
+        'disableOutsideDays',
+        'disabled',
+        'fixedWeeks',
+        'min',
+        'max',
+        'labelId',
+        'contextId',
+      ],
+    },
+    useContext: {
+      kind: 'context',
+      sorting: [
+        'mode',
+        'value',
+        'setValue',
+        'month',
+        'setMonth',
+        'focusedDate',
+        'setFocusedDate',
+        'view',
+        'setView',
+        'required',
+        'startOfWeek',
+        'disableOutsideDays',
+        'fixedWeeks',
+        'min',
+        'max',
+        'weekdays',
+        'weeks',
+        'navigate',
+        'labelId',
+      ],
+    },
+    RootChildrenProps: {
+      kind: 'childrenProps',
+      sorting: [
+        'mode',
+        'value',
+        'setValue',
+        'month',
+        'setMonth',
+        'focusedDate',
+        'setFocusedDate',
+        'view',
+        'setView',
+        'required',
+        'startOfWeek',
+        'disableOutsideDays',
+        'fixedWeeks',
+        'min',
+        'max',
+        'weekdays',
+        'weeks',
+        'navigate',
+        'labelId',
+      ],
+    },
+    DateValue: {
+      kind: 'simple',
     },
   },
 }
@@ -969,6 +1057,7 @@ const TransitionSize: Library = {
 
 export {
   Accordion,
+  Calendar,
   Dialog,
   Disclosure,
   Drawer,
@@ -987,6 +1076,7 @@ export {
 
 export default [
   Accordion,
+  Calendar,
   Dialog,
   Disclosure,
   Drawer,
