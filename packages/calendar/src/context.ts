@@ -13,8 +13,6 @@ export type CalendarContextValue = {
   setMonth: Setter<Date>
   focusedDate: Accessor<Date>
   setFocusedDate: Setter<Date>
-  view: Accessor<'day' | 'month' | 'year'>
-  setView: Setter<'day' | 'month' | 'year'>
   required: Accessor<boolean>
   startOfWeek: Accessor<number>
   numberOfMonths: Accessor<number>

@@ -53,7 +53,7 @@ export default () => {
                 </svg>
               </Calendar.Nav>
             </div>
-            <Calendar.View view="day" class="mt-2 flex space-x-4">
+            <div class="mt-2 flex space-x-4">
               <Index each={props.months()}>
                 {(month) => (
                   <div>
@@ -104,7 +104,7 @@ export default () => {
                   </div>
                 )}
               </Index>
-            </Calendar.View>
+            </div>
           </div>
         )}
       </Calendar>

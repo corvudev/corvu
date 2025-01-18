@@ -43,12 +43,6 @@ import Table, {
   type CalendarTableProps as TableProps,
   type CalendarTableSharedElementProps as TableSharedElementProps,
 } from '@src/Table'
-import View, {
-  type CalendarViewCorvuProps as ViewCorvuProps,
-  type CalendarViewElementProps as ViewElementProps,
-  type CalendarViewProps as ViewProps,
-  type CalendarViewSharedElementProps as ViewSharedElementProps,
-} from '@src/View'
 import type { DynamicProps } from '@corvu/utils/dynamic'
 
 export type {
@@ -62,10 +56,6 @@ export type {
   NavSharedElementProps,
   NavElementProps,
   NavProps,
-  ViewCorvuProps,
-  ViewSharedElementProps,
-  ViewElementProps,
-  ViewProps,
   TableCorvuProps,
   TableSharedElementProps,
   TableElementProps,
@@ -92,7 +82,6 @@ export { Root, useContext }
 const Calendar = Object.assign(Root, {
   Label,
   Nav,
-  View,
   Table,
   HeadCell,
   Cell,

@@ -42,9 +42,6 @@ export type CalendarRootProps = {
   focusedDate?: Date
   onFocusedDateChange?: (focusedDate: Date) => void
   initialFocusedDate?: Date
-  view?: 'day' | 'month' | 'year'
-  onViewChange?: (view: 'day' | 'month' | 'year') => void
-  initialView?: 'day' | 'month' | 'year'
   required?: boolean
   startOfWeek?: number
   // Number of months to be rendered. Is used for keyboard navigation. Default: 1
@@ -85,8 +82,6 @@ export type CalendarRootChildrenProps = {
   setMonth: Setter<Date>
   focusedDate: Date
   setFocusedDate: Setter<Date>
-  view: 'day' | 'month' | 'year'
-  setView: Setter<'day' | 'month' | 'year'>
   required: boolean
   startOfWeek: number
   numberOfMonths: number
@@ -119,7 +114,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             : { from: null, to: null },
       initialMonth: new Date(),
       initialFocusedDate: new Date(),
-      initialView: 'day' as const,
       required: false,
       startOfWeek: 1,
       numberOfMonths: 1,
@@ -150,12 +144,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     value: () => defaultedProps.focusedDate,
     initialValue: defaultedProps.initialFocusedDate,
     onChange: defaultedProps.onFocusedDateChange,
-  })
-
-  const [view, setView] = createControllableSignal({
-    value: () => defaultedProps.view,
-    initialValue: defaultedProps.initialView,
-    onChange: defaultedProps.onViewChange,
   })
 
   const [labelId, registerLabelId, unregisterLabelId] = createRegister({
@@ -417,10 +405,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       return focusedDate()
     },
     setFocusedDate,
-    get view() {
-      return view()
-    },
-    setView,
     get required() {
       return defaultedProps.required
     },
@@ -485,8 +469,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           setMonth,
           focusedDate,
           setFocusedDate,
-          view,
-          setView,
           required: () => defaultedProps.required,
           startOfWeek: () => defaultedProps.startOfWeek,
           numberOfMonths: () => defaultedProps.numberOfMonths,
@@ -512,8 +494,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             setMonth,
             focusedDate,
             setFocusedDate,
-            view,
-            setView,
             required: () => defaultedProps.required,
             startOfWeek: () => defaultedProps.startOfWeek,
             numberOfMonths: () => defaultedProps.numberOfMonths,
