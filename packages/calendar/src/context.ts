@@ -22,6 +22,8 @@ export type CalendarContextValue = {
   fixedWeeks: Accessor<boolean>
   min: Accessor<number | null>
   max: Accessor<number | null>
+  /** The text direction of the accordion. */
+  textDirection: Accessor<'ltr' | 'rtl'>
   weekdays: Accessor<Date[]>
   excludeDisabled: Accessor<boolean>
   months: () => { month: Date; weeks: Date[][] }[]

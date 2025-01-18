@@ -59,6 +59,11 @@ export type CalendarRootProps = {
   // TODO: multiple mode only
   max?: number | null
   /**
+   * The text direction of the accordion.
+   * @defaultValue `ltr`
+   */
+  textDirection?: 'ltr' | 'rtl'
+  /**
    * The `id` attribute of the calendar label element.
    * @defaultValue `createUniqueId()`
    */
@@ -89,6 +94,8 @@ export type CalendarRootChildrenProps = {
   fixedWeeks: boolean
   min: number | null
   max: number | null
+  /** The text direction of the accordion. */
+  textDirection: 'ltr' | 'rtl'
   excludeDisabled: boolean
   weekdays: Date[]
   months: () => { month: Date; weeks: Date[][] }[]
@@ -122,6 +129,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       max: null,
       disabled: () => false,
       excludeDisabled: false,
+      textDirection: 'ltr' as const,
     },
     props,
   )
@@ -437,6 +445,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get excludeDisabled() {
       return defaultedProps.excludeDisabled
     },
+    get textDirection() {
+      return defaultedProps.textDirection
+    },
     get labelId() {
       return labelId()
     },
@@ -488,6 +499,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           months,
           weeks,
           navigate,
+          textDirection: () => defaultedProps.textDirection,
           labelId,
         }}
       >
@@ -515,6 +527,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             weeks,
             navigate,
             onDaySelect,
+            textDirection: () => defaultedProps.textDirection,
             labelId,
             registerLabelId,
             unregisterLabelId,

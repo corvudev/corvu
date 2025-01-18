@@ -12,13 +12,7 @@ const { format: formatWeekdayShort } = new Intl.DateTimeFormat('en', {
 export default () => {
   return (
     <div class="flex h-full items-center justify-center">
-      <Calendar
-        mode="range"
-        fixedWeeks
-        numberOfMonths={2}
-        disabled={(date) => date.getDay() === 0}
-        excludeDisabled
-      >
+      <Calendar mode="range" fixedWeeks numberOfMonths={2}>
         {(props) => (
           <div class="z-50 rounded-md border bg-corvu-bg p-3 text-corvu-text shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
             <div class="flex items-center justify-between gap-4">
