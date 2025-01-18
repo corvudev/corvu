@@ -17,12 +17,14 @@ export type CalendarContextValue = {
   setView: Setter<'day' | 'month' | 'year'>
   required: Accessor<boolean>
   startOfWeek: Accessor<number>
+  numberOfMonths: Accessor<number>
   disableOutsideDays: Accessor<boolean>
   fixedWeeks: Accessor<boolean>
   min: Accessor<number | null>
   max: Accessor<number | null>
   weekdays: Accessor<Date[]>
-  weeks: Accessor<Date[][]>
+  months: () => { month: Date; weeks: Date[][] }[]
+  weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
@@ -67,7 +69,7 @@ type InternalCalendarContextValue = CalendarContextValue & {
   unregisterLabelId: () => void
   onDaySelect: (day: Date) => void
   isSelected: (date: Date) => boolean
-  isDisabled: (date: Date) => boolean
+  isDisabled: (date: Date, month?: Date) => boolean
   isFocusing: Accessor<boolean>
   setIsFocusing: Setter<boolean>
 }

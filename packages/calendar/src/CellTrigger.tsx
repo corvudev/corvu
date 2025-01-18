@@ -16,7 +16,9 @@ import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarCellTriggerCorvuProps = {
-  day: Date
+  value: Date
+  // The month that this cell belongs to. Used to determine if the cell is outside the current month and should be disabled.
+  month?: Date
   /**
    * The `id` of the calendar context to use.
    */
@@ -55,7 +57,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
 ) => {
   const [localProps, otherProps] = splitProps(
     props as CalendarCellTriggerProps,
-    ['day', 'contextId', 'ref', 'onClick', 'onKeyDown', 'disabled'],
+    ['value', 'month', 'contextId', 'ref', 'onClick', 'onKeyDown', 'disabled'],
   )
 
   const [ref, setRef] = createSignal<HTMLButtonElement | null>(null)
@@ -65,18 +67,22 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
   )
 
   createEffect(
-    on([context().focusedDate, () => localProps.day], ([focusedDate, day]) => {
-      if (!context().isFocusing()) return
-      if (isSameDay(focusedDate, day)) {
-        ref()?.focus()
-        context().setIsFocusing(false)
-      }
-    }),
+    on(
+      [context().focusedDate, () => localProps.value, () => localProps.month],
+      ([focusedDate, value, month]) => {
+        if (!context().isFocusing()) return
+        if (context().isDisabled(value, month)) return
+        if (isSameDay(focusedDate, value)) {
+          ref()?.focus()
+          context().setIsFocusing(false)
+        }
+      },
+    ),
   )
 
   const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (e) => {
     !callEventHandler(localProps.onClick, e) &&
-      context().onDaySelect(localProps.day)
+      context().onDaySelect(localProps.value)
   }
 
   const onKeyDown: JSX.EventHandlerUnion<HTMLButtonElement, KeyboardEvent> = (
@@ -88,26 +94,26 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       switch (event.key) {
         case 'ArrowLeft':
           context().setIsFocusing(true)
-          context().setFocusedDate(modifyDate(localProps.day, { day: -1 }))
+          context().setFocusedDate(modifyDate(localProps.value, { day: -1 }))
           break
         case 'ArrowRight':
           context().setIsFocusing(true)
-          context().setFocusedDate(modifyDate(localProps.day, { day: 1 }))
+          context().setFocusedDate(modifyDate(localProps.value, { day: 1 }))
           break
         case 'ArrowUp':
           context().setIsFocusing(true)
-          context().setFocusedDate(modifyDate(localProps.day, { day: -7 }))
+          context().setFocusedDate(modifyDate(localProps.value, { day: -7 }))
           break
         case 'ArrowDown':
           context().setIsFocusing(true)
-          context().setFocusedDate(modifyDate(localProps.day, { day: 7 }))
+          context().setFocusedDate(modifyDate(localProps.value, { day: 7 }))
           break
         case 'Home':
           context().setIsFocusing(true)
           context().setFocusedDate(
-            modifyDate(localProps.day, {
+            modifyDate(localProps.value, {
               day: -(
-                (localProps.day.getDay() - context().startOfWeek() + 7) %
+                (localProps.value.getDay() - context().startOfWeek() + 7) %
                 7
               ),
             }),
@@ -116,26 +122,29 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
         case 'End':
           context().setIsFocusing(true)
           context().setFocusedDate(
-            modifyDate(localProps.day, {
+            modifyDate(localProps.value, {
               day:
-                (context().startOfWeek() + 6 - localProps.day.getDay() + 7) % 7,
+                (context().startOfWeek() + 6 - localProps.value.getDay() + 7) %
+                7,
             }),
           )
           break
         case 'PageUp':
           context().setIsFocusing(true)
           if (event.shiftKey) {
-            context().setFocusedDate(modifyDate(localProps.day, { year: -1 }))
+            context().setFocusedDate(modifyDate(localProps.value, { year: -1 }))
           } else {
-            context().setFocusedDate(modifyDate(localProps.day, { month: -1 }))
+            context().setFocusedDate(
+              modifyDate(localProps.value, { month: -1 }),
+            )
           }
           break
         case 'PageDown':
           context().setIsFocusing(true)
           if (event.shiftKey) {
-            context().setFocusedDate(modifyDate(localProps.day, { year: 1 }))
+            context().setFocusedDate(modifyDate(localProps.value, { year: 1 }))
           } else {
-            context().setFocusedDate(modifyDate(localProps.day, { month: 1 }))
+            context().setFocusedDate(modifyDate(localProps.value, { month: 1 }))
           }
           break
       }
@@ -151,33 +160,41 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       onKeyDown={onKeyDown}
       disabled={
         localProps.disabled === true ||
-        context().isDisabled(localProps.day) ||
+        context().isDisabled(localProps.value, localProps.month) ||
         undefined
       }
       // === ElementProps ===
       role="gridcell"
-      tabIndex={isSameDay(context().focusedDate(), localProps.day) ? 0 : -1}
-      aria-selected={context().isSelected(localProps.day) ? 'true' : undefined}
-      aria-disabled={context().isDisabled(localProps.day) ? 'true' : undefined}
-      data-selected={dataIf(context().isSelected(localProps.day))}
-      data-disabled={dataIf(context().isDisabled(localProps.day))}
-      data-today={dataIf(isSameDay(new Date(), localProps.day))}
+      tabIndex={isSameDay(context().focusedDate(), localProps.value) ? 0 : -1}
+      aria-selected={
+        context().isSelected(localProps.value) ? 'true' : undefined
+      }
+      aria-disabled={
+        context().isDisabled(localProps.value, localProps.month)
+          ? 'true'
+          : undefined
+      }
+      data-selected={dataIf(context().isSelected(localProps.value))}
+      data-disabled={dataIf(
+        context().isDisabled(localProps.value, localProps.month),
+      )}
+      data-today={dataIf(isSameDay(new Date(), localProps.value))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() === localProps.day.getTime(),
+          context().value()?.from.getTime() === localProps.value.getTime(),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() === localProps.day.getTime(),
+          context().value()?.to.getTime() === localProps.value.getTime(),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() <= localProps.day.getTime() &&
+          context().value()?.from.getTime() <= localProps.value.getTime() &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() >= localProps.day.getTime(),
+          context().value()?.to.getTime() >= localProps.value.getTime(),
       )}
       data-corvu-calendar-celltrigger=""
       {...otherProps}

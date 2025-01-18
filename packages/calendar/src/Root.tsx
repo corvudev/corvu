@@ -13,7 +13,7 @@ import {
   createCalendarContext,
   createInternalCalendarContext,
 } from '@src/context'
-import { isSameDay, modifyDate } from '@src/utils'
+import { dateIsInRange, isSameDay, modifyDate } from '@src/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createRegister from '@corvu/utils/create/register'
@@ -37,6 +37,8 @@ export type CalendarRootProps = {
   initialView?: 'day' | 'month' | 'year'
   required?: boolean
   startOfWeek?: number
+  // Number of months to be rendered. Is used for keyboard navigation. Default: 1
+  numberOfMonths?: number
   disableOutsideDays?: boolean
   disabled?: (date: Date) => boolean
   fixedWeeks?: boolean
@@ -70,12 +72,14 @@ export type CalendarRootChildrenProps = {
   setView: Setter<'day' | 'month' | 'year'>
   required: boolean
   startOfWeek: number
+  numberOfMonths: number
   disableOutsideDays: boolean
   fixedWeeks: boolean
   min: number | null
   max: number | null
   weekdays: Date[]
-  weeks: Date[][]
+  months: () => { month: Date; weeks: Date[][] }[]
+  weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
@@ -93,6 +97,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       initialView: 'day' as const,
       required: false,
       startOfWeek: 1,
+      numberOfMonths: 1,
       disableOutsideDays: true,
       fixedWeeks: false,
       min: null,
@@ -142,14 +147,22 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       }
       batch(() => {
         setMonthInternal(nextValue as Date)
-        setFocusedDateInternal(
-          (focusedDate) =>
-            new Date(
-              nextValue.getFullYear(),
-              nextValue.getMonth(),
-              focusedDate.getDate(),
-            ),
-        )
+        if (
+          !dateIsInRange(
+            focusedDate(),
+            nextValue,
+            defaultedProps.numberOfMonths,
+          )
+        ) {
+          setFocusedDateInternal(
+            (focusedDate) =>
+              new Date(
+                nextValue.getFullYear(),
+                nextValue.getMonth(),
+                focusedDate.getDate(),
+              ),
+          )
+        }
       })
       return nextValue
     })
@@ -166,10 +179,17 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       if (defaultedProps.disabled(nextValue)) return
       batch(() => {
         setFocusedDateInternal(nextValue as Date)
-
-        const newMonth = new Date(nextValue.getFullYear(), nextValue.getMonth())
-        if (month().getTime() !== newMonth.getTime()) {
-          setMonthInternal(newMonth)
+        if (!dateIsInRange(nextValue, month(), defaultedProps.numberOfMonths)) {
+          const isBefore = nextValue < month()
+          const newMonth = new Date(
+            month().getFullYear(),
+            isBefore
+              ? month().getMonth() - defaultedProps.numberOfMonths
+              : month().getMonth() + defaultedProps.numberOfMonths,
+          )
+          if (month().getTime() !== newMonth.getTime()) {
+            setMonthInternal(newMonth)
+          }
         }
       })
       return nextValue
@@ -184,17 +204,29 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     })
   }
 
-  const weeks = () => {
+  const months = () => {
+    const months = []
+    for (let i = 0; i < defaultedProps.numberOfMonths; i++) {
+      months.push(weeks(i))
+    }
+    return months
+  }
+
+  const weeks = (monthOffset = 0) => {
+    const adjustedMonth = new Date(
+      month().getFullYear(),
+      month().getMonth() + monthOffset,
+    )
     const calendar = []
 
     const firstDayOfMonth = new Date(
-      month().getFullYear(),
-      month().getMonth(),
+      adjustedMonth.getFullYear(),
+      adjustedMonth.getMonth(),
       1,
     )
     const lastDayOfMonth = new Date(
-      month().getFullYear(),
-      month().getMonth() + 1,
+      adjustedMonth.getFullYear(),
+      adjustedMonth.getMonth() + 1,
       0,
     )
     const prefixedDays =
@@ -204,8 +236,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       : Math.ceil((lastDayOfMonth.getDate() + prefixedDays) / 7)
 
     const currentDate = new Date(
-      month().getFullYear(),
-      month().getMonth(),
+      adjustedMonth.getFullYear(),
+      adjustedMonth.getMonth(),
       1 - prefixedDays,
     )
     for (let i = 0; i < weekCount; i++) {
@@ -217,7 +249,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       calendar.push(week)
     }
 
-    return calendar
+    return { month: adjustedMonth, weeks: calendar }
   }
 
   const navigate = (
@@ -226,13 +258,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     if (typeof action === 'function') {
       const newDate = action(month())
       setMonth(newDate)
-      setFocusedDate(
-        new Date(
-          newDate.getFullYear(),
-          newDate.getMonth(),
-          focusedDate().getDate(),
-        ),
-      )
       return
     }
     switch (action) {
@@ -309,26 +334,28 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     if (_value === null) return false
     switch (defaultedProps.mode) {
       case 'single':
-        return _value === date
+        // @ts-expect-error: TODO: Type narrowing
+        return isSameDay(_value, date)
       case 'multiple':
         // @ts-expect-error: TODO: Type narrowing
-        return _value.includes(date)
+        return _value.some((value) => isSameDay(value, date))
       case 'range':
         return (
           // @ts-expect-error: TODO: Type narrowing
-          _value.from === date ||
+          isSameDay(_value.from, date) ||
           // @ts-expect-error: TODO: Type narrowing
-          (_value.from <= date &&
+          (_value.from < date &&
             // @ts-expect-error: TODO: Type narrowing
-            _value.to >= date)
+            (_value.to > date || isSameDay(_value.to, date)))
         )
     }
   }
 
-  const isDisabled = (date: Date) => {
+  const isDisabled = (date: Date, _month?: Date) => {
+    _month = _month ?? month()
     if (
       defaultedProps.disableOutsideDays &&
-      date.getMonth() !== month().getMonth()
+      date.getMonth() !== _month.getMonth()
     ) {
       return true
     }
@@ -358,6 +385,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get required() {
       return defaultedProps.required
     },
+    get numberOfMonths() {
+      return defaultedProps.numberOfMonths
+    },
     get startOfWeek() {
       return defaultedProps.startOfWeek
     },
@@ -379,9 +409,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get weekdays() {
       return weekdays()
     },
-    get weeks() {
-      return weeks()
-    },
+    months,
+    weeks,
     navigate,
   }
 
@@ -415,11 +444,13 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           setView,
           required: () => defaultedProps.required,
           startOfWeek: () => defaultedProps.startOfWeek,
+          numberOfMonths: () => defaultedProps.numberOfMonths,
           disableOutsideDays: () => defaultedProps.disableOutsideDays,
           fixedWeeks: () => defaultedProps.fixedWeeks,
           min: () => defaultedProps.min,
           max: () => defaultedProps.max,
           weekdays,
+          months,
           weeks,
           navigate,
           labelId,
@@ -438,11 +469,13 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             setView,
             required: () => defaultedProps.required,
             startOfWeek: () => defaultedProps.startOfWeek,
+            numberOfMonths: () => defaultedProps.numberOfMonths,
             disableOutsideDays: () => defaultedProps.disableOutsideDays,
             fixedWeeks: () => defaultedProps.fixedWeeks,
             min: () => defaultedProps.min,
             max: () => defaultedProps.max,
             weekdays,
+            months,
             weeks,
             navigate,
             onDaySelect,

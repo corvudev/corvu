@@ -191,6 +191,10 @@ const resolveTypeTopLevel = (
         typeName += resolveTypeTopLevel(type.elementType, nestLevel)
         typeName += '[]'
         break
+      } else if (type.elementType.type === 'reflection') {
+        typeName += resolveTypeTopLevel(type.elementType, nestLevel)
+        typeName += '[]'
+        break
       } else if (type.elementType.type === 'array') {
         typeName += resolveTypeTopLevel(type.elementType, nestLevel)
         typeName += '[]'
