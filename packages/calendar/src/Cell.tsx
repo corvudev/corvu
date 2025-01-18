@@ -52,19 +52,19 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
       data-range-start={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value().from?.getTime() === localProps.day.getTime(),
+          context().value()?.from.getTime() === localProps.day.getTime(),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value().to?.getTime() === localProps.day.getTime(),
+          context().value()?.to.getTime() === localProps.day.getTime(),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value().from?.getTime() <= localProps.day.getTime() &&
+          context().value()?.from.getTime() <= localProps.day.getTime() &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value().to?.getTime() >= localProps.day.getTime(),
+          context().value()?.to.getTime() >= localProps.day.getTime(),
       )}
       data-corvu-calendar-cell=""
       {...otherProps}

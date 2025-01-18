@@ -1,6 +1,7 @@
 import {
   batch,
   type Component,
+  createEffect,
   createMemo,
   createSignal,
   createUniqueId,
@@ -13,17 +14,13 @@ import {
   createCalendarContext,
   createInternalCalendarContext,
 } from '@src/context'
+import { isSameDay, modifyDate } from '@src/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createRegister from '@corvu/utils/create/register'
 import { isFunction } from '@corvu/utils'
-import { modifyDate } from '@src/utils'
 
-export type DateValue =
-  | Date
-  | Date[]
-  | { from: Date | null; to: Date | null }
-  | null
+export type DateValue = Date | Date[] | { from: Date; to: Date } | null
 
 export type CalendarRootProps = {
   mode: 'single' | 'multiple' | 'range'
@@ -92,11 +89,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
       initialValue:
-        props.mode === 'single'
-          ? null
-          : props.mode === 'multiple'
-            ? []
-            : { from: null, to: null },
+        props.mode === 'multiple' ? [] : null,
       initialMonth: new Date(),
       initialFocusedDate: new Date(),
       initialView: 'day' as const,
@@ -290,46 +283,46 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       case 'range':
         setValue((value) => {
           // TODO: Fix after type narrowing
-          value = value as { from: Date | null; to: Date | null }
+          const newValue = value as { from: Date; to: Date } | null
 
-          if (value.from === null) {
-            return { from: day, to: null }
+          if (newValue === null) {
+            return { from: day, to: day }
           }
-          if (value.to === null) {
-            if (day < value.from) {
-              return { from: day, to: value.from }
-            }
-            return { from: value.from, to: day }
+          if (
+            isSameDay(day, newValue.from) &&
+            isSameDay(day, newValue.to) &&
+            !defaultedProps.required
+          ) {
+            return null
           }
-          if (day < value.from) {
-            return { from: day, to: value.to }
+          if (isSameDay(day, newValue.from) || isSameDay(day, newValue.to)) {
+            return { from: day, to: day }
           }
-          if (day === value.from) {
-            return { from: null, to: null }
+          if (day < newValue.from) {
+            return { from: day, to: newValue.to }
           }
-          if (day === value.to) {
-            return { from: day, to: null }
-          }
-          return { from: value.from, to: day }
+          return { from: newValue.from, to: day }
         })
     }
   }
 
   const isSelected = (date: Date) => {
+    const _value = value()
+    if (_value === null) return false
     switch (defaultedProps.mode) {
       case 'single':
-        return value() === date
+        return _value === date
       case 'multiple':
         // @ts-expect-error: TODO: Type narrowing
-        return value().includes(date)
+        return _value.includes(date)
       case 'range':
         return (
           // @ts-expect-error: TODO: Type narrowing
-          value().from === date ||
+          _value.from === date ||
           // @ts-expect-error: TODO: Type narrowing
-          (value().from <= date &&
+          (_value.from <= date &&
             // @ts-expect-error: TODO: Type narrowing
-            value().to >= date)
+            _value.to >= date)
         )
     }
   }
