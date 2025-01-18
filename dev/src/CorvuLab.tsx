@@ -16,7 +16,7 @@ export default () => {
         {(props) => (
           <div class="z-50 rounded-md border bg-corvu-bg p-3 text-corvu-text shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
             <div class="flex items-center justify-between gap-4">
-              <Calendar.Navigation
+              <Calendar.Nav
                 action="prev-month"
                 class="inline-flex size-7 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-corvu-100 bg-transparent p-0 text-sm font-medium opacity-50 ring-offset-corvu-100 hover:bg-corvu-200 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-corvu-200 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
               >
@@ -33,11 +33,11 @@ export default () => {
                   <path d="M15 6l-6 6l6 6" />
                   <title>Previous</title>
                 </svg>
-              </Calendar.Navigation>
+              </Calendar.Nav>
               <Calendar.Label>
                 {format(props.month, 'MMMM yyyy')}
               </Calendar.Label>
-              <Calendar.Navigation
+              <Calendar.Nav
                 action="next-month"
                 class="inline-flex size-7 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-corvu-100 bg-transparent p-0 text-sm font-medium opacity-50 ring-offset-corvu-100 hover:bg-corvu-200 hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-corvu-200 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
               >
@@ -54,7 +54,7 @@ export default () => {
                   <path d="M9 6l6 6l-6 6" />
                   <title>Next</title>
                 </svg>
-              </Calendar.Navigation>
+              </Calendar.Nav>
             </div>
             <Calendar.View view="day" class="mt-2">
               <Calendar.Table>

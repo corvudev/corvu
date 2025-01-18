@@ -26,12 +26,12 @@ import Label, {
   type CalendarLabelProps as LabelProps,
   type CalendarLabelSharedElementProps as LabelSharedElementProps,
 } from '@src/Label'
-import Navigation, {
-  type CalendarNavigationCorvuProps as NavigationCorvuProps,
-  type CalendarNavigationElementProps as NavigationElementProps,
-  type CalendarNavigationProps as NavigationProps,
-  type CalendarNavigationSharedElementProps as NavigationSharedElementProps,
-} from '@src/Navigation'
+import Nav, {
+  type CalendarNavCorvuProps as NavCorvuProps,
+  type CalendarNavElementProps as NavElementProps,
+  type CalendarNavProps as NavProps,
+  type CalendarNavSharedElementProps as NavSharedElementProps,
+} from '@src/Nav'
 import Root, {
   type CalendarRootChildrenProps,
   type CalendarRootProps,
@@ -58,10 +58,10 @@ export type {
   LabelSharedElementProps,
   LabelElementProps,
   LabelProps,
-  NavigationCorvuProps,
-  NavigationSharedElementProps,
-  NavigationElementProps,
-  NavigationProps,
+  NavCorvuProps,
+  NavSharedElementProps,
+  NavElementProps,
+  NavProps,
   ViewCorvuProps,
   ViewSharedElementProps,
   ViewElementProps,
@@ -91,7 +91,7 @@ export { Root, useContext }
 
 const Calendar = Object.assign(Root, {
   Label,
-  Navigation,
+  Nav,
   View,
   Table,
   HeadCell,

@@ -1,7 +1,6 @@
 import {
   batch,
   type Component,
-  createEffect,
   createMemo,
   createSignal,
   createUniqueId,
@@ -88,8 +87,7 @@ export type CalendarRootChildrenProps = {
 const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
-      initialValue:
-        props.mode === 'multiple' ? [] : null,
+      initialValue: props.mode === 'multiple' ? [] : null,
       initialMonth: new Date(),
       initialFocusedDate: new Date(),
       initialView: 'day' as const,
