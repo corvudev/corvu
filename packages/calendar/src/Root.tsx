@@ -13,13 +13,23 @@ import {
   createCalendarContext,
   createInternalCalendarContext,
 } from '@src/context'
-import { dateIsInRange, isSameDay, modifyDate } from '@src/utils'
+import {
+  dateIsInRange,
+  isSameDay,
+  isSameDayOrAfter,
+  isSameDayOrBefore,
+  modifyDate,
+} from '@src/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createRegister from '@corvu/utils/create/register'
 import { isFunction } from '@corvu/utils'
 
-export type DateValue = Date | Date[] | { from: Date; to: Date } | null
+export type DateValue =
+  | Date
+  | Date[]
+  | { from: Date | null; to: Date | null }
+  | null
 
 export type CalendarRootProps = {
   mode: 'single' | 'multiple' | 'range'
@@ -91,7 +101,12 @@ export type CalendarRootChildrenProps = {
 const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
-      initialValue: props.mode === 'multiple' ? [] : null,
+      initialValue:
+        props.mode === 'single'
+          ? null
+          : props.mode === 'multiple'
+            ? []
+            : { from: null, to: null },
       initialMonth: new Date(),
       initialFocusedDate: new Date(),
       initialView: 'day' as const,
@@ -277,6 +292,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   }
 
   const onDaySelect = (day: Date) => {
+    setFocusedDate(day)
     switch (defaultedProps.mode) {
       case 'single':
         if (value() === day && !defaultedProps.required) {
@@ -306,26 +322,23 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       case 'range':
         setValue((value) => {
           // TODO: Fix after type narrowing
-          const newValue = value as { from: Date; to: Date } | null
+          const newValue = value as { from: Date | null; to: Date | null }
 
-          if (newValue === null) {
-            return { from: day, to: day }
+          if (newValue.from === null) {
+            return { from: day, to: null }
           }
-          if (
-            isSameDay(day, newValue.from) &&
-            isSameDay(day, newValue.to) &&
-            !defaultedProps.required
-          ) {
-            return null
+          if (newValue.to === null) {
+            if (day < newValue.from) {
+              return { from: day, to: newValue.from }
+            }
+            return { from: newValue.from, to: day }
           }
-          if (isSameDay(day, newValue.from) || isSameDay(day, newValue.to)) {
-            return { from: day, to: day }
+          if (isSameDay(day, newValue.from) && !defaultedProps.required) {
+            return { from: null, to: null }
           }
-          if (day < newValue.from) {
-            return { from: day, to: newValue.to }
-          }
-          return { from: newValue.from, to: day }
+          return { from: day, to: null }
         })
+        break
     }
   }
 
@@ -344,9 +357,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           // @ts-expect-error: TODO: Type narrowing
           isSameDay(_value.from, date) ||
           // @ts-expect-error: TODO: Type narrowing
-          (_value.from < date &&
+          (isSameDayOrAfter(_value.from, date) &&
             // @ts-expect-error: TODO: Type narrowing
-            (_value.to > date || isSameDay(_value.to, date)))
+            isSameDayOrBefore(_value.to, date))
         )
     }
   }

@@ -9,7 +9,12 @@ import {
 } from 'solid-js'
 import { callEventHandler, type ElementOf, type Ref } from '@corvu/utils/dom'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
-import { isSameDay, modifyDate } from '@src/utils'
+import {
+  isSameDay,
+  isSameDayOrAfter,
+  isSameDayOrBefore,
+  modifyDate,
+} from '@src/utils'
 import { createEffect } from 'solid-js'
 import { dataIf } from '@corvu/utils'
 import { mergeRefs } from '@corvu/utils/reactivity'
@@ -178,23 +183,23 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       data-disabled={dataIf(
         context().isDisabled(localProps.value, localProps.month),
       )}
-      data-today={dataIf(isSameDay(new Date(), localProps.value))}
+      data-today={dataIf(isSameDay(localProps.value, new Date()))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() === localProps.value.getTime(),
+          isSameDay(localProps.value, context().value().from),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() === localProps.value.getTime(),
+          isSameDay(localProps.value, context().value().to),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() <= localProps.value.getTime() &&
+          isSameDayOrAfter(localProps.value, context().value().from) &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() >= localProps.value.getTime(),
+          isSameDayOrBefore(localProps.value, context().value().to),
       )}
       data-corvu-calendar-celltrigger=""
       {...otherProps}

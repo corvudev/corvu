@@ -1,7 +1,7 @@
 import { createMemo, splitProps, type ValidComponent } from 'solid-js'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
+import { isSameDay, isSameDayOrAfter, isSameDayOrBefore } from '@src/utils'
 import { dataIf } from '@corvu/utils'
-import { isSameDay } from '@src/utils'
 import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarCellCorvuProps = {
@@ -53,23 +53,23 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
       data-disabled={dataIf(
         context().isDisabled(localProps.value, localProps.month),
       )}
-      data-today={dataIf(isSameDay(new Date(), localProps.value))}
+      data-today={dataIf(isSameDay(localProps.value, new Date()))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() === localProps.day.getTime(),
+          isSameDay(localProps.value, context().value().from),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() === localProps.day.getTime(),
+          isSameDay(localProps.value, context().value().to),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.from.getTime() <= localProps.day.getTime() &&
+          isSameDayOrAfter(localProps.value, context().value().from) &&
           // @ts-expect-error: TODO: Type narrowing
-          context().value()?.to.getTime() >= localProps.day.getTime(),
+          isSameDayOrBefore(localProps.value, context().value().to),
       )}
       data-corvu-calendar-cell=""
       {...otherProps}
