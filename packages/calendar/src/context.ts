@@ -23,6 +23,7 @@ export type CalendarContextValue = {
   min: Accessor<number | null>
   max: Accessor<number | null>
   weekdays: Accessor<Date[]>
+  excludeDisabled: Accessor<boolean>
   months: () => { month: Date; weeks: Date[][] }[]
   weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
   navigate: (

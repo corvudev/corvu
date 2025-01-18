@@ -51,6 +51,8 @@ export type CalendarRootProps = {
   numberOfMonths?: number
   disableOutsideDays?: boolean
   disabled?: (date: Date) => boolean
+  // Reset range selection if a disabled date gets included
+  excludeDisabled?: boolean
   fixedWeeks?: boolean
   // TODO: multiple mode only
   min?: number | null
@@ -87,6 +89,7 @@ export type CalendarRootChildrenProps = {
   fixedWeeks: boolean
   min: number | null
   max: number | null
+  excludeDisabled: boolean
   weekdays: Date[]
   months: () => { month: Date; weeks: Date[][] }[]
   weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
@@ -118,6 +121,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       min: null,
       max: null,
       disabled: () => false,
+      excludeDisabled: false,
     },
     props,
   )
@@ -328,10 +332,24 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             return { from: day, to: null }
           }
           if (newValue.to === null) {
-            if (day < newValue.from) {
-              return { from: day, to: newValue.from }
+            let from = newValue.from
+            let to = day
+            if (day < from) {
+              to = from
+              from = day
             }
-            return { from: newValue.from, to: day }
+            if (defaultedProps.excludeDisabled) {
+              for (
+                let date = new Date(from);
+                date < to;
+                date.setDate(date.getDate() + 1)
+              ) {
+                if (defaultedProps.disabled(date)) {
+                  return { from: day, to: null }
+                }
+              }
+            }
+            return { from, to }
           }
           if (isSameDay(day, newValue.from) && !defaultedProps.required) {
             return { from: null, to: null }
@@ -416,6 +434,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get max() {
       return defaultedProps.max
     },
+    get excludeDisabled() {
+      return defaultedProps.excludeDisabled
+    },
     get labelId() {
       return labelId()
     },
@@ -462,6 +483,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           fixedWeeks: () => defaultedProps.fixedWeeks,
           min: () => defaultedProps.min,
           max: () => defaultedProps.max,
+          excludeDisabled: () => defaultedProps.excludeDisabled,
           weekdays,
           months,
           weeks,
@@ -487,6 +509,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             fixedWeeks: () => defaultedProps.fixedWeeks,
             min: () => defaultedProps.min,
             max: () => defaultedProps.max,
+            excludeDisabled: () => defaultedProps.excludeDisabled,
             weekdays,
             months,
             weeks,
