@@ -73,6 +73,7 @@ type InternalCalendarContextValue = CalendarContextValue & {
   isDisabled: (date: Date, month?: Date) => boolean
   isFocusing: Accessor<boolean>
   setIsFocusing: Setter<boolean>
+  disabled: (day: Date) => boolean
 }
 
 const InternalCalendarContext = createContext<InternalCalendarContextValue>()

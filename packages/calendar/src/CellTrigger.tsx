@@ -13,7 +13,7 @@ import {
   isSameDay,
   isSameDayOrAfter,
   isSameDayOrBefore,
-  modifyDate,
+  modifyFocusedDate,
 } from '@src/utils'
 import { createEffect } from 'solid-js'
 import { dataIf } from '@corvu/utils'
@@ -101,56 +101,114 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
         (event.key === 'ArrowRight' && context().textDirection() === 'rtl')
       ) {
         context().setIsFocusing(true)
-        context().setFocusedDate(modifyDate(localProps.value, { day: -1 }))
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          { day: -1 },
+          context().disabled,
+        )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (
         (event.key === 'ArrowRight' && context().textDirection() === 'ltr') ||
         (event.key === 'ArrowLeft' && context().textDirection() === 'rtl')
       ) {
         context().setIsFocusing(true)
-        context().setFocusedDate(modifyDate(localProps.value, { day: 1 }))
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          { day: 1 },
+          context().disabled,
+        )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (event.key === 'ArrowUp') {
         context().setIsFocusing(true)
-        context().setFocusedDate(modifyDate(localProps.value, { day: -7 }))
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          { day: -7 },
+          context().disabled,
+        )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (event.key === 'ArrowDown') {
         context().setIsFocusing(true)
-        context().setFocusedDate(modifyDate(localProps.value, { day: 7 }))
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          { day: 7 },
+          context().disabled,
+        )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (
         (event.key === 'Home' && context().textDirection() === 'ltr') ||
         (event.key === 'End' && context().textDirection() === 'rtl')
       ) {
         context().setIsFocusing(true)
-        context().setFocusedDate(
-          modifyDate(localProps.value, {
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          {
             day: -(
               (localProps.value.getDay() - context().startOfWeek() + 7) %
               7
             ),
-          }),
+          },
+          context().disabled,
+          false,
         )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (
         (event.key === 'End' && context().textDirection() === 'ltr') ||
         (event.key === 'Home' && context().textDirection() === 'rtl')
       ) {
         context().setIsFocusing(true)
-        context().setFocusedDate(
-          modifyDate(localProps.value, {
+        const newFocusedDate = modifyFocusedDate(
+          localProps.value,
+          {
             day:
               (context().startOfWeek() + 6 - localProps.value.getDay() + 7) % 7,
-          }),
+          },
+          context().disabled,
+          false,
         )
+        if (newFocusedDate === null) return
+        context().setFocusedDate(newFocusedDate)
       } else if (event.key === 'PageUp') {
         context().setIsFocusing(true)
         if (event.shiftKey) {
-          context().setFocusedDate(modifyDate(localProps.value, { year: -1 }))
+          const newFocusedDate = modifyFocusedDate(
+            localProps.value,
+            { year: -1 },
+            context().disabled,
+          )
+          if (newFocusedDate === null) return
+          context().setFocusedDate(newFocusedDate)
         } else {
-          context().setFocusedDate(modifyDate(localProps.value, { month: -1 }))
+          const newFocusedDate = modifyFocusedDate(
+            localProps.value,
+            { month: -1 },
+            context().disabled,
+          )
+          if (newFocusedDate === null) return
+          context().setFocusedDate(newFocusedDate)
         }
       } else if (event.key === 'PageDown') {
         context().setIsFocusing(true)
         if (event.shiftKey) {
-          context().setFocusedDate(modifyDate(localProps.value, { year: 1 }))
+          const newFocusedDate = modifyFocusedDate(
+            localProps.value,
+            { year: 1 },
+            context().disabled,
+          )
+          if (newFocusedDate === null) return
+          context().setFocusedDate(newFocusedDate)
         } else {
-          context().setFocusedDate(modifyDate(localProps.value, { month: 1 }))
+          const newFocusedDate = modifyFocusedDate(
+            localProps.value,
+            { month: 1 },
+            context().disabled,
+          )
+          if (newFocusedDate === null) return
+          context().setFocusedDate(newFocusedDate)
         }
       }
     })

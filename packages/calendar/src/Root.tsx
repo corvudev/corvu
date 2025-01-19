@@ -15,10 +15,11 @@ import {
 } from '@src/context'
 import {
   dateIsInRange,
+  findAvailableDayInMonth,
   isSameDay,
   isSameDayOrAfter,
   isSameDayOrBefore,
-  modifyDate,
+  modifyMonth,
 } from '@src/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
@@ -114,7 +115,10 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             ? []
             : { from: null, to: null },
       initialMonth: new Date(),
-      initialFocusedDate: new Date(),
+      initialFocusedDate: findAvailableDayInMonth(
+        new Date(),
+        props.disabled ?? (() => true),
+      ),
       required: false,
       startOfWeek: 1,
       numberOfMonths: 1,
@@ -170,13 +174,15 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             defaultedProps.numberOfMonths,
           )
         ) {
-          setFocusedDateInternal(
-            (focusedDate) =>
+          setFocusedDateInternal((focusedDate) =>
+            findAvailableDayInMonth(
               new Date(
                 nextValue.getFullYear(),
                 nextValue.getMonth(),
                 focusedDate.getDate(),
               ),
+              defaultedProps.disabled,
+            ),
           )
         }
       })
@@ -196,16 +202,12 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       batch(() => {
         setFocusedDateInternal(nextValue as Date)
         if (!dateIsInRange(nextValue, month(), defaultedProps.numberOfMonths)) {
-          const isBefore = nextValue < month()
           const newMonth = new Date(
             month().getFullYear(),
-            isBefore
-              ? month().getMonth() - defaultedProps.numberOfMonths
-              : month().getMonth() + defaultedProps.numberOfMonths,
+            month().getMonth() +
+              defaultedProps.numberOfMonths * (nextValue < month() ? -1 : 1),
           )
-          if (month().getTime() !== newMonth.getTime()) {
-            setMonthInternal(newMonth)
-          }
+          setMonthInternal(newMonth)
         }
       })
       return nextValue
@@ -278,16 +280,16 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     }
     switch (action) {
       case 'prev-month':
-        setMonth((month) => modifyDate(month, { month: -1 }))
+        setMonth((month) => modifyMonth(month, { month: -1 }))
         break
       case 'next-month':
-        setMonth((month) => modifyDate(month, { month: 1 }))
+        setMonth((month) => modifyMonth(month, { month: 1 }))
         break
       case 'prev-year':
-        setMonth((month) => modifyDate(month, { year: -1 }))
+        setMonth((month) => modifyMonth(month, { year: -1 }))
         break
       case 'next-year':
-        setMonth((month) => modifyDate(month, { year: 1 }))
+        setMonth((month) => modifyMonth(month, { year: 1 }))
         break
     }
   }
@@ -516,6 +518,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             isDisabled,
             isFocusing,
             setIsFocusing,
+            disabled: defaultedProps.disabled,
           }}
         >
           {untrack(() => resolveChildren())}
