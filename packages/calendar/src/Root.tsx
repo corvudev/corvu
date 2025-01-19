@@ -44,11 +44,12 @@ export type CalendarRootProps = {
   initialFocusedDate?: Date
   required?: boolean
   startOfWeek?: number
-  // Number of months to be rendered. Is used for keyboard navigation. Default: 1
+  // Number of months to be rendered. Default: 1
   numberOfMonths?: number
   disableOutsideDays?: boolean
-  disabled?: (date: Date) => boolean
+  disabled?: (day: Date) => boolean
   // Reset range selection if a disabled date gets included
+  // TODO: multiple mode only
   excludeDisabled?: boolean
   fixedWeeks?: boolean
   // TODO: multiple mode only
