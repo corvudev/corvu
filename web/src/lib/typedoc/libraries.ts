@@ -263,9 +263,6 @@ const Calendar: Library = {
         'labelId',
       ],
     },
-    DateValue: {
-      kind: 'simple',
-    },
   },
 }
 

@@ -10,10 +10,13 @@ const { format: formatWeekdayShort } = new Intl.DateTimeFormat('en', {
 })
 
 export default () => {
+  const context = Calendar.useContext<'single'>()
+  context.value()
+
   return (
     <div class="flex h-full items-center justify-center">
       <Calendar
-        mode="range"
+        mode="single"
         fixedWeeks
         numberOfMonths={2}
         disabled={(day) => day.getDate() > 1 && day.getDate() < 25}

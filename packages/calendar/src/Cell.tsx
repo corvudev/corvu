@@ -5,8 +5,13 @@ import { dataIf } from '@corvu/utils'
 import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarCellCorvuProps = {
-  value: Date
-  // The month that this cell belongs to. Used to determine if the cell is outside the current month and should be disabled.
+  /*
+   * The day that this cell represents. Used to handle selection and focus.
+   */
+  day: Date
+  /**
+   * The month that this cell belongs to. Is optional as it's not required if only one month is rendered.
+   */
   month?: Date
   /**
    * The `id` of the calendar context to use.
@@ -22,12 +27,19 @@ export type CalendarCellSharedElementProps<
 
 export type CalendarCellElementProps = CalendarCellSharedElementProps & {
   role: 'presentation'
+  'data-selected': '' | undefined
+  'data-disabled': '' | undefined
+  'data-today': '' | undefined
+  'data-range-start': '' | undefined
+  'data-range-end': '' | undefined
+  'data-in-range': '' | undefined
+  'data-corvu-calendar-cell': '' | null
 }
 
 export type CalendarCellProps<T extends ValidComponent = 'td'> =
   CalendarCellCorvuProps & Partial<CalendarCellSharedElementProps<T>>
 
-/** TODO
+/** Calendar cell element.
  *
  * @data `data-corvu-calendar-cell` - Present on every calendar cell element.
  */
@@ -35,7 +47,7 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
   props: DynamicProps<T, CalendarCellProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as CalendarCellProps, [
-    'value',
+    'day',
     'month',
     'contextId',
   ])
@@ -49,27 +61,27 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
       as="td"
       // === ElementProps ===
       role="presentation"
-      data-selected={dataIf(context().isSelected(localProps.value))}
+      data-selected={dataIf(context().isSelected(localProps.day))}
       data-disabled={dataIf(
-        context().isDisabled(localProps.value, localProps.month),
+        context().isDisabled(localProps.day, localProps.month),
       )}
-      data-today={dataIf(isSameDay(localProps.value, new Date()))}
+      data-today={dataIf(isSameDay(localProps.day, new Date()))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Type narrowing
-          isSameDay(localProps.value, context().value().from),
+          // @ts-expect-error: TODO: Fix types
+          isSameDay(localProps.day, context().value().from),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Type narrowing
-          isSameDay(localProps.value, context().value().to),
+          // @ts-expect-error: TODO: Fix types
+          isSameDay(localProps.day, context().value().to),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Type narrowing
-          isSameDayOrAfter(localProps.value, context().value().from) &&
-          // @ts-expect-error: TODO: Type narrowing
-          isSameDayOrBefore(localProps.value, context().value().to),
+          // @ts-expect-error: TODO: Fix types
+          isSameDayOrAfter(localProps.day, context().value().from) &&
+          // @ts-expect-error: TODO: Fix types
+          isSameDayOrBefore(localProps.day, context().value().to),
       )}
       data-corvu-calendar-cell=""
       {...otherProps}

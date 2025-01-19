@@ -26,39 +26,157 @@ import createOnce from '@corvu/utils/create/once'
 import createRegister from '@corvu/utils/create/register'
 import { isFunction } from '@corvu/utils'
 
-export type DateValue =
-  | Date
-  | Date[]
-  | { from: Date | null; to: Date | null }
-  | null
+export type CalendarRootProps =
+  | CalendarRootSingleProps
+  | CalendarRootMultipleProps
+  | CalendarRootRangeProps
 
-export type CalendarRootProps = {
-  mode: 'single' | 'multiple' | 'range'
-  value?: DateValue
-  onValueChange?: (value: DateValue) => void
-  initialValue?: DateValue
-  month?: Date
-  onMonthChange?: (month: Date) => void
-  initialMonth?: Date
-  focusedDate?: Date
-  onFocusedDateChange?: (focusedDate: Date) => void
-  initialFocusedDate?: Date
-  required?: boolean
-  startOfWeek?: number
-  // Number of months to be rendered. Default: 1
-  numberOfMonths?: number
-  disableOutsideDays?: boolean
-  disabled?: (day: Date) => boolean
-  // Reset range selection if a disabled date gets included
-  // TODO: multiple mode only
-  excludeDisabled?: boolean
-  fixedWeeks?: boolean
-  // TODO: multiple mode only
+export type CalendarRootSingleProps = {
+  /**
+   * The mode of the calendar.
+   */
+  mode: 'single'
+  /**
+   * The value of the calendar.
+   */
+  value?: Date | null
+  /**
+   * Callback fired when the value changes.
+   */
+  onValueChange?: (value: Date | null) => void
+  /**
+   * The initial value of the calendar.
+   * @defaultValue `null`
+   */
+  initialValue?: Date | null
+  /** @hidden */
+  children:
+    | JSX.Element
+    | ((props: CalendarRootChildrenSingleProps) => JSX.Element)
+} & CalendarRootBaseProps
+
+export type CalendarRootMultipleProps = {
+  /**
+   * The mode of the calendar.
+   */
+  mode: 'multiple'
+  /**
+   * The value of the calendar.
+   */
+  value?: Date[]
+  /**
+   * Callback fired when the value changes.
+   */
+  onValueChange?: (value: Date[]) => void
+  /**
+   * The initial value of the calendar.
+   * @defaultValue `[]`
+   */
+  initialValue?: Date[]
+  /** @hidden */
+  children:
+    | JSX.Element
+    | ((props: CalendarRootChildrenMultipleProps) => JSX.Element)
+} & CalendarRootBaseProps
+
+export type CalendarRootRangeProps = {
+  /**
+   * The mode of the calendar.
+   */
+  mode: 'range'
+  /**
+   * The value of the calendar.
+   */
+  value?: { from: Date | null; to: Date | null }
+  /**
+   * Callback fired when the value changes.
+   */
+  onValueChange?: (value: { from: Date | null; to: Date | null }) => void
+  /**
+   * The initial value of the calendar.
+   * @defaultValue `{ from: null, to: null }`
+   */
+  initialValue?: { from: Date | null; to: Date | null }
+  /**
+   * The minimum number of days that have to be selected.
+   * @defaultValue `null`
+   */
   min?: number | null
-  // TODO: multiple mode only
+  /**
+   * The maximum number of days that can be selected.
+   * @defaultValue `null`
+   */
   max?: number | null
   /**
-   * The text direction of the accordion.
+   * Whether to reset the range selection if a disabled day is included in the range.
+   * @defaultValue `false`
+   */
+  excludeDisabled?: boolean
+  /** @hidden */
+  children:
+    | JSX.Element
+    | ((props: CalendarRootChildrenRangeProps) => JSX.Element)
+} & CalendarRootBaseProps
+
+export type CalendarRootBaseProps = {
+  /**
+   * The month to display in the calendar. Is always the first month if multiple months are displayed.
+   */
+  month?: Date
+  /**
+   * Callback fired when the month changes.
+   */
+  onMonthChange?: (month: Date) => void
+  /**
+   * The initial month to display in the calendar.
+   * @defaultValue `new Date()`
+   */
+  initialMonth?: Date
+  /**
+   * The date that is currently focused in the calendar grid.
+   */
+  focusedDate?: Date
+  /**
+   * Callback fired when the focused date changes.
+   */
+  onFocusedDateChange?: (focusedDate: Date) => void
+  /**
+   * The initial date that should be focused in the calendar grid.
+   * @defaultValue `new Date()`
+   */
+  initialFocusedDate?: Date
+  /**
+   * The first day of the week. (0-6, 0 is Sunday)
+   * @defaultValue `1`
+   */
+  startOfWeek?: number
+  /**
+   * Whether the value is required. Prevents unselecting the value.
+   * @defaultValue `false`
+   */
+  required?: boolean
+  /**
+   * Callback to determine if any given day is disabled.
+   * @defaultValue `() => false`
+   */
+  disabled?: (day: Date) => boolean
+  /**
+   * The number of months to display in the calendar.
+   * @defaultValue `1`
+   */
+  numberOfMonths?: number
+  /**
+   * Whether to disable outside days (Days falling in the previous or next month).
+   * @defaultValue `true`
+   */
+  disableOutsideDays?: boolean
+  /**
+   * Whether to always display 6 weeks in a month.
+   * @defaultValue `false`
+   */
+  fixedWeeks?: boolean
+  /**
+   * The text direction of the calendar.
    * @defaultValue `ltr`
    */
   textDirection?: 'ltr' | 'rtl'
@@ -71,32 +189,75 @@ export type CalendarRootProps = {
    * The `id` of the calendar context. Useful if you have nested calendars and want to create components that belong to a calendar higher up in the tree.
    */
   contextId?: string
-  /** @hidden */
-  children: JSX.Element | ((props: CalendarRootChildrenProps) => JSX.Element)
 }
 
 /** Props that are passed to the Root component children callback. */
-export type CalendarRootChildrenProps = {
-  mode: 'single' | 'multiple' | 'range'
-  value: DateValue
-  setValue: Setter<DateValue>
-  month: Date
-  setMonth: Setter<Date>
-  focusedDate: Date
-  setFocusedDate: Setter<Date>
-  required: boolean
-  startOfWeek: number
-  numberOfMonths: number
-  disableOutsideDays: boolean
-  fixedWeeks: boolean
+export type CalendarRootChildrenProps =
+  | CalendarRootChildrenSingleProps
+  | CalendarRootChildrenMultipleProps
+  | CalendarRootChildrenRangeProps
+
+export type CalendarRootChildrenSingleProps = {
+  /** The mode of the calendar. */
+  mode: 'single'
+  /** The value of the calendar. */
+  value: Date | null
+  /** Setter to change the value of the calendar. */
+  setValue: Setter<Date | null>
+} & CalendarRootChildrenBaseProps
+
+export type CalendarRootChildrenMultipleProps = {
+  /** The mode of the calendar. */
+  mode: 'multiple'
+  /** The value of the calendar. */
+  value: Date[]
+  /** Setter to change the value of the calendar. */
+  setValue: Setter<Date[]>
+} & CalendarRootChildrenBaseProps
+
+export type CalendarRootChildrenRangeProps = {
+  /** The mode of the calendar. */
+  mode: 'range'
+  /** The value of the calendar. */
+  value: { from: Date | null; to: Date | null }
+  /** Setter to change the value of the calendar. */
+  setValue: Setter<{ from: Date | null; to: Date | null }>
+  /** The minimum number of days that have to be selected. */
   min: number | null
+  /** The maximum number of days that can be selected. */
   max: number | null
-  /** The text direction of the accordion. */
-  textDirection: 'ltr' | 'rtl'
+  /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: boolean
+} & CalendarRootChildrenBaseProps
+
+export type CalendarRootChildrenBaseProps = {
+  /** The month to display in the calendar. Is always the first month if multiple months are displayed. */
+  month: Date
+  /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDate to be within the visible range. */
+  setMonth: Setter<Date>
+  /** The date that is currently focused in the calendar grid. */
+  focusedDate: Date
+  /** Setter to change the focused date in the calendar grid. Automatically adjusts the month to ensure the focused date is visible. */
+  setFocusedDate: Setter<Date>
+  /** The first day of the week. (0-6, 0 is Sunday) */
+  startOfWeek: number
+  /** Whether the value is required. Prevents unselecting the value. */
+  required: boolean
+  /** The number of months to display in the calendar. */
+  numberOfMonths: number
+  /** Whether to disable outside days (Days falling in the previous or next month). */
+  disableOutsideDays: boolean
+  /** Whether to always display 6 weeks in a month. */
+  fixedWeeks: boolean
+  /** The text direction of the calendar. */
+  textDirection: 'ltr' | 'rtl'
+  /** Array of weekdays starting from the first day of the week. */
   weekdays: Date[]
-  months: () => { month: Date; weeks: Date[][] }[]
+  /** Array of the currently displayed months. */
+  months: { month: Date; weeks: Date[][] }[]
+  /** Function to get the weeks of a given month. */
   weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
+  /** Function to navigate the calendar. */
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
@@ -119,16 +280,16 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         new Date(),
         props.disabled ?? (() => true),
       ),
-      required: false,
       startOfWeek: 1,
+      required: false,
+      disabled: () => false,
       numberOfMonths: 1,
       disableOutsideDays: true,
       fixedWeeks: false,
-      min: null,
-      max: null,
-      disabled: () => false,
-      excludeDisabled: false,
       textDirection: 'ltr' as const,
+      min: null as number | null,
+      max: null as number | null,
+      excludeDisabled: false,
     },
     props,
   )
@@ -136,7 +297,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const [value, setValue] = createControllableSignal({
     value: () => defaultedProps.value,
     initialValue: defaultedProps.initialValue,
-    onChange: defaultedProps.onValueChange,
+    onChange: props.onValueChange as (
+      value: (Date | null) | Date[] | { from: Date | null; to: Date | null },
+    ) => void,
   })
 
   const [month, setMonthInternal] = createControllableSignal({
@@ -306,7 +469,6 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         break
       case 'multiple':
         setValue((value) => {
-          // TODO: Fix after type narrowing
           value = value as Date[]
           const isSelected = value.includes(day)
           if (
@@ -324,14 +486,12 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         break
       case 'range':
         setValue((value) => {
-          // TODO: Fix after type narrowing
-          const newValue = value as { from: Date | null; to: Date | null }
-
-          if (newValue.from === null) {
+          value = value as { from: Date | null; to: Date | null }
+          if (value.from === null) {
             return { from: day, to: null }
           }
-          if (newValue.to === null) {
-            let from = newValue.from
+          if (value.to === null) {
+            let from = value.from
             let to = day
             if (day < from) {
               to = from
@@ -350,7 +510,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             }
             return { from, to }
           }
-          if (isSameDay(day, newValue.from) && !defaultedProps.required) {
+          if (isSameDay(day, value.from) && !defaultedProps.required) {
             return { from: null, to: null }
           }
           return { from: day, to: null }
@@ -360,22 +520,17 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   }
 
   const isSelected = (date: Date) => {
-    const _value = value()
-    if (_value === null) return false
+    let _value = value()
     switch (defaultedProps.mode) {
       case 'single':
-        // @ts-expect-error: TODO: Type narrowing
-        return isSameDay(_value, date)
+        return isSameDay(_value as Date | null, date)
       case 'multiple':
-        // @ts-expect-error: TODO: Type narrowing
-        return _value.some((value) => isSameDay(value, date))
+        return (_value as Date[]).some((value) => isSameDay(value, date))
       case 'range':
+        _value = _value as { from: Date | null; to: Date | null }
         return (
-          // @ts-expect-error: TODO: Type narrowing
           isSameDay(_value.from, date) ||
-          // @ts-expect-error: TODO: Type narrowing
           (isSameDayOrAfter(_value.from, date) &&
-            // @ts-expect-error: TODO: Type narrowing
             isSameDayOrBefore(_value.to, date))
         )
     }
@@ -399,6 +554,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get value() {
       return value()
     },
+    // @ts-expect-error: TODO: Fix types
     setValue,
     get month() {
       return month()
@@ -441,7 +597,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get weekdays() {
       return weekdays()
     },
-    months,
+    get months() {
+      return months()
+    },
     weeks,
     navigate,
   }
@@ -451,6 +609,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const resolveChildren = () => {
     const children = memoizedChildren()()
     if (isFunction(children)) {
+      // @ts-expect-error: TODO: Fix types
       return children(childrenProps)
     }
     return children
@@ -465,8 +624,11 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     return (
       <CalendarContext.Provider
         value={{
+          // @ts-expect-error: TODO: Fix types
           mode: () => defaultedProps.mode,
+          // @ts-expect-error: TODO: Fix types
           value,
+          // @ts-expect-error: TODO: Fix types
           setValue,
           month,
           setMonth,
@@ -490,8 +652,11 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       >
         <InternalCalendarContext.Provider
           value={{
+            // @ts-expect-error: TODO: Fix types
             mode: () => defaultedProps.mode,
+            // @ts-expect-error: TODO: Fix types
             value,
+            // @ts-expect-error: TODO: Fix types
             setValue,
             month,
             setMonth,

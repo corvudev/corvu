@@ -20,7 +20,7 @@ export type CalendarHeadCellElementProps =
 export type CalendarHeadCellProps<T extends ValidComponent = 'th'> =
   CalendarHeadCellCorvuProps & Partial<CalendarHeadCellSharedElementProps<T>>
 
-/** TODO
+/** Calendar column header cell.
  *
  * @data `data-corvu-calendar-headcell` - Present on every calendar headcell element.
  */

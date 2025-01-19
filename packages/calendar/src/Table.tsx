@@ -26,7 +26,7 @@ export type CalendarTableElementProps = CalendarTableSharedElementProps & {
 export type CalendarTableProps<T extends ValidComponent = 'table'> =
   CalendarTableCorvuProps & Partial<CalendarTableSharedElementProps<T>>
 
-/** Conditionally rendered container for calendar tables.
+/** Table element for the calendar grid.
  *
  * @data `data-corvu-calendar-table` - Present on every calendar table element.
  */

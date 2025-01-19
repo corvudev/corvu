@@ -35,7 +35,6 @@ import Nav, {
 import Root, {
   type CalendarRootChildrenProps,
   type CalendarRootProps,
-  type DateValue,
 } from '@src/Root'
 import Table, {
   type CalendarTableCorvuProps as TableCorvuProps,
@@ -73,11 +72,10 @@ export type {
   CellTriggerElementProps,
   CellTriggerProps,
   CalendarContextValue as ContextValue,
-  DateValue,
   DynamicProps,
 }
 
-export { Root, useContext }
+export { Root, Label, Nav, Table, HeadCell, Cell, CellTrigger, useContext }
 
 const Calendar = Object.assign(Root, {
   Label,

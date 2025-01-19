@@ -15,6 +15,9 @@ import {
 import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarNavCorvuProps = {
+  /**
+   * The action to perform when pressing this navigation button.
+   */
   action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date)
   /**
    * The `id` of the calendar context to use.
@@ -36,7 +39,7 @@ export type CalendarNavProps<T extends ValidComponent = 'button'> =
 
 /** Button to navigate the calendar.
  *
- * @data `data-corvu-calendar-nav` - Present on every calendar navigation element.
+ * @data `data-corvu-calendar-nav` - Present on every calendar nav element.
  */
 const CalendarNav = <T extends ValidComponent = 'button'>(
   props: DynamicProps<T, CalendarNavProps<T>>,
@@ -44,7 +47,6 @@ const CalendarNav = <T extends ValidComponent = 'button'>(
   const [localProps, otherProps] = splitProps(props as CalendarNavProps, [
     'action',
     'contextId',
-    'ref',
     'onClick',
   ])
 
