@@ -361,11 +361,15 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       batch(() => {
         setFocusedDayInternal(nextValue as Date)
         if (!dayIsInMonth(nextValue, month(), defaultedProps.numberOfMonths)) {
-          // TODO: Doesn't work if we skip more than one month. Add some check
+          const delta =
+            (nextValue.getFullYear() - month().getFullYear()) * 12 +
+            (nextValue.getMonth() - month().getMonth())
+
           const newMonth = new Date(
             month().getFullYear(),
             month().getMonth() +
-              defaultedProps.numberOfMonths * (nextValue < month() ? -1 : 1),
+              Math.sign(delta) *
+                Math.max(defaultedProps.numberOfMonths, Math.abs(delta)),
           )
           setMonthInternal(newMonth)
         }
