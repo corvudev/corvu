@@ -83,4 +83,62 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
   </Calendar>
 `} lang="tsx" copyButton />
 
+### Keyboard navigation
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Space',
+    behavior: 'Selects the focused day.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'Selects the focused day.'
+  },
+  {
+    key: 'ArrowLeft',
+    behavior: 'Moves focus to the previous day.'
+  },
+  {
+    key: 'ArrowRight',
+    behavior: 'Moves focus to the next day.'
+  },
+  {
+    key: 'ArrowUp',
+    behavior: 'Moves focus to the same day of the previous week.'
+  },
+  {
+    key: 'ArrowDown',
+    behavior: 'Moves focus to the same day of the next week.'
+  },
+  {
+    key: 'Home',
+    behavior: 'Moves focus to the first day of the week.'
+  },
+  {
+    key: 'End',
+    behavior: 'Moves focus to the last day of the week.'
+  }
+  {
+    key: 'PageUp',
+    behavior: 'Moves focus to the same day of the previous month.'
+  },
+  {
+    key: 'PageDown',
+    behavior: 'Moves focus to the same day of the next month.'
+  }
+  {
+    key: 'Shift + PageUp',
+    behavior: 'Moves focus to the same day of the previous year.'
+  },
+  {
+    key: 'Shift + PageDown',
+    behavior: 'Moves focus to the same day of the next year.'
+  }
+]} />
+
+## Accessibility
+Adheres to the calendar part of the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/" newTab>Date Picker Dialog WAI-ARIA design pattern</Link>.
+
+## API reference
+
 <ApiReference library={Calendar} />
