@@ -62,12 +62,12 @@ export type CalendarContextRangeValue = {
 export type CalendarContextBaseValue = {
   /** The month to display in the calendar. Is always the first month if multiple months are displayed. */
   month: Accessor<Date>
-  /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDate to be within the visible range. */
+  /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDay to be within the visible range. */
   setMonth: Setter<Date>
-  /** The date that is currently focused in the calendar grid. */
-  focusedDate: Accessor<Date>
-  /** Setter to change the focused date in the calendar grid. Automatically adjusts the month to ensure the focused date is visible. */
-  setFocusedDate: Setter<Date>
+  /** The day that is currently focused in the calendar grid. */
+  focusedDay: Accessor<Date>
+  /** Setter to change the focused day in the calendar grid. Automatically adjusts the month to ensure the focused day is visible. */
+  setFocusedDay: Setter<Date>
   /** The first day of the week. (0-6, 0 is Sunday) */
   startOfWeek: Accessor<number>
   /** Whether the value is required. Prevents unselecting the value. */

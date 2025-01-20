@@ -13,7 +13,7 @@ import {
   isSameDay,
   isSameDayOrAfter,
   isSameDayOrBefore,
-  modifyFocusedDate,
+  modifyFocusedDay,
 } from '@src/utils'
 import { createEffect } from 'solid-js'
 import { dataIf } from '@corvu/utils'
@@ -83,11 +83,11 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
 
   createEffect(
     on(
-      [context().focusedDate, () => localProps.day, () => localProps.month],
-      ([focusedDate, day, month]) => {
+      [context().focusedDay, () => localProps.day, () => localProps.month],
+      ([focusedDay, day, month]) => {
         if (!context().isFocusing()) return
         if (context().isDisabled(day, month)) return
-        if (isSameDay(focusedDate, day)) {
+        if (isSameDay(focusedDay, day)) {
           ref()?.focus()
           context().setIsFocusing(false)
         }
@@ -105,12 +105,12 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
   ) => {
     if (callEventHandler(localProps.onKeyDown, event)) return
 
-    let focusedDate: Date | null = null
+    let focusedDay: Date | null = null
     if (
       (event.key === 'ArrowLeft' && context().textDirection() === 'ltr') ||
       (event.key === 'ArrowRight' && context().textDirection() === 'rtl')
     ) {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         { day: -1 },
         context().disabled,
@@ -119,19 +119,19 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'ArrowRight' && context().textDirection() === 'ltr') ||
       (event.key === 'ArrowLeft' && context().textDirection() === 'rtl')
     ) {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         { day: 1 },
         context().disabled,
       )
     } else if (event.key === 'ArrowUp') {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         { day: -7 },
         context().disabled,
       )
     } else if (event.key === 'ArrowDown') {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         { day: 7 },
         context().disabled,
@@ -140,7 +140,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'Home' && context().textDirection() === 'ltr') ||
       (event.key === 'End' && context().textDirection() === 'rtl')
     ) {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         {
           day: -((localProps.day.getDay() - context().startOfWeek() + 7) % 7),
@@ -152,7 +152,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'End' && context().textDirection() === 'ltr') ||
       (event.key === 'Home' && context().textDirection() === 'rtl')
     ) {
-      focusedDate = modifyFocusedDate(
+      focusedDay = modifyFocusedDay(
         localProps.day,
         {
           day: (context().startOfWeek() + 6 - localProps.day.getDay() + 7) % 7,
@@ -162,13 +162,13 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       )
     } else if (event.key === 'PageUp') {
       if (event.shiftKey) {
-        focusedDate = modifyFocusedDate(
+        focusedDay = modifyFocusedDay(
           localProps.day,
           { year: -1 },
           context().disabled,
         )
       } else {
-        focusedDate = modifyFocusedDate(
+        focusedDay = modifyFocusedDay(
           localProps.day,
           { month: -1 },
           context().disabled,
@@ -176,13 +176,13 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       }
     } else if (event.key === 'PageDown') {
       if (event.shiftKey) {
-        focusedDate = modifyFocusedDate(
+        focusedDay = modifyFocusedDay(
           localProps.day,
           { year: 1 },
           context().disabled,
         )
       } else {
-        focusedDate = modifyFocusedDate(
+        focusedDay = modifyFocusedDay(
           localProps.day,
           { month: 1 },
           context().disabled,
@@ -190,10 +190,10 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       }
     }
 
-    if (focusedDate === null) return
+    if (focusedDay === null) return
     batch(() => {
       context().setIsFocusing(true)
-      context().setFocusedDate(focusedDate)
+      context().setFocusedDay(focusedDay)
     })
   }
 
@@ -211,7 +211,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       }
       // === ElementProps ===
       role="gridcell"
-      tabIndex={isSameDay(context().focusedDate(), localProps.day) ? 0 : -1}
+      tabIndex={isSameDay(context().focusedDay(), localProps.day) ? 0 : -1}
       aria-selected={
         context().isSelected(localProps.day)
           ? 'true'
