@@ -11,9 +11,11 @@ import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
 import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
+import Link from '@components/docs/Link.astro'
 import Code from '@components/docs/code/Code.astro'
 import Features from '@components/docs/Features.astro'
 import PackageInfo from '@components/docs/PackageInfo.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -117,7 +119,7 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
   {
     key: 'End',
     behavior: 'Moves focus to the last day of the week.'
-  }
+  },
   {
     key: 'PageUp',
     behavior: 'Moves focus to the same day of the previous month.'
@@ -125,7 +127,7 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
   {
     key: 'PageDown',
     behavior: 'Moves focus to the same day of the next month.'
-  }
+  },
   {
     key: 'Shift + PageUp',
     behavior: 'Moves focus to the same day of the previous year.'
