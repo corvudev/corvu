@@ -1,8 +1,12 @@
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { splitProps, type ValidComponent } from 'solid-js'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export type CalendarHeadCellCorvuProps = {}
+export type CalendarHeadCellCorvuProps = {
+  /**
+   * The `id` of the calendar context to use.
+   */
+  contextId?: string
+}
 
 export type CalendarHeadCellSharedElementProps<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,6 +32,7 @@ const CalendarHeadCell = <T extends ValidComponent = 'th'>(
   props: DynamicProps<T, CalendarHeadCellProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as CalendarHeadCellProps, [
+    'contextId',
     'abbr',
   ])
 

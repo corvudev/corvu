@@ -133,6 +133,7 @@ export type Type =
   | ArrayType
   | QueryType
   | TupleType
+  | ConditionalType
 
 export type UnionType = {
   type: 'union'
@@ -198,4 +199,12 @@ export type QueryType = {
 export type TupleType = {
   type: 'tuple'
   elements: Type[]
+}
+
+export type ConditionalType = {
+  type: 'conditional'
+  checkType: Type
+  extendsType: Type
+  trueType: Type
+  falseType: Type
 }

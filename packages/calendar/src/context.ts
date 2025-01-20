@@ -16,35 +16,35 @@ export type CalendarContextValue<
     | 'multiple'
     | 'range',
 > = Mode extends 'single'
-  ? CalendarContextValueSingle
+  ? CalendarContextSingleValue
   : Mode extends 'multiple'
-    ? CalendarContextValueMultiple
+    ? CalendarContextMultipleValue
     : Mode extends 'range'
-      ? CalendarContextValueRange
+      ? CalendarContextRangeValue
       :
-          | CalendarContextValueSingle
-          | CalendarContextValueMultiple
-          | CalendarContextValueRange
+          | CalendarContextSingleValue
+          | CalendarContextMultipleValue
+          | CalendarContextRangeValue
 
-export type CalendarContextValueSingle = {
+export type CalendarContextSingleValue = {
   /** The mode of the calendar. */
   mode: Accessor<'single'>
   /** The value of the calendar. */
   value: Accessor<Date | null>
   /** Setter to change the value of the calendar. */
   setValue: Setter<Date | null>
-} & CalendarContextValueBase
+} & CalendarContextBaseValue
 
-export type CalendarContextValueMultiple = {
+export type CalendarContextMultipleValue = {
   /** The mode of the calendar. */
   mode: Accessor<'multiple'>
   /** The value of the calendar. */
   value: Accessor<Date[]>
   /** Setter to change the value of the calendar. */
   setValue: Setter<Date[]>
-} & CalendarContextValueBase
+} & CalendarContextBaseValue
 
-export type CalendarContextValueRange = {
+export type CalendarContextRangeValue = {
   /** The mode of the calendar. */
   mode: Accessor<'range'>
   /** The value of the calendar. */
@@ -57,9 +57,9 @@ export type CalendarContextValueRange = {
   max: Accessor<number | null>
   /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: Accessor<boolean>
-} & CalendarContextValueBase
+} & CalendarContextBaseValue
 
-export type CalendarContextValueBase = {
+export type CalendarContextBaseValue = {
   /** The month to display in the calendar. Is always the first month if multiple months are displayed. */
   month: Accessor<Date>
   /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDate to be within the visible range. */

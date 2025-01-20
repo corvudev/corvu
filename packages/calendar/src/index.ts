@@ -1,4 +1,8 @@
 import {
+  type CalendarContextBaseValue,
+  type CalendarContextMultipleValue,
+  type CalendarContextRangeValue,
+  type CalendarContextSingleValue,
   type CalendarContextValue,
   useCalendarContext as useContext,
 } from '@src/context'
@@ -33,8 +37,16 @@ import Nav, {
   type CalendarNavSharedElementProps as NavSharedElementProps,
 } from '@src/Nav'
 import Root, {
+  type CalendarRootBaseProps,
+  type CalendarRootChildrenBaseProps,
+  type CalendarRootChildrenMultipleProps,
   type CalendarRootChildrenProps,
+  type CalendarRootChildrenRangeProps,
+  type CalendarRootChildrenSingleProps,
+  type CalendarRootMultipleProps,
   type CalendarRootProps,
+  type CalendarRootRangeProps,
+  type CalendarRootSingleProps,
 } from '@src/Root'
 import Table, {
   type CalendarTableCorvuProps as TableCorvuProps,
@@ -46,7 +58,15 @@ import type { DynamicProps } from '@corvu/utils/dynamic'
 
 export type {
   CalendarRootProps as RootProps,
+  CalendarRootSingleProps as RootSingleProps,
+  CalendarRootMultipleProps as RootMultipleProps,
+  CalendarRootRangeProps as RootRangeProps,
+  CalendarRootBaseProps as RootBaseProps,
   CalendarRootChildrenProps as RootChildrenProps,
+  CalendarRootChildrenSingleProps as RootChildrenSingleProps,
+  CalendarRootChildrenMultipleProps as RootChildrenMultipleProps,
+  CalendarRootChildrenRangeProps as RootChildrenRangeProps,
+  CalendarRootChildrenBaseProps as RootChildrenBaseProps,
   LabelCorvuProps,
   LabelSharedElementProps,
   LabelElementProps,
@@ -72,6 +92,10 @@ export type {
   CellTriggerElementProps,
   CellTriggerProps,
   CalendarContextValue as ContextValue,
+  CalendarContextSingleValue as ContextSingleValue,
+  CalendarContextMultipleValue as ContextMultipleValue,
+  CalendarContextRangeValue as ContextRangeValue,
+  CalendarContextBaseValue as ContextBaseValue,
   DynamicProps,
 }
 
