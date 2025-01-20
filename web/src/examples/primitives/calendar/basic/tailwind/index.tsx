@@ -21,6 +21,7 @@ const CalendarExample: VoidComponent = () => {
           <div class="flex items-center justify-between gap-4">
             <Calendar.Nav
               action="prev-month"
+              aria-label="Go to previous month"
               class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
             >
               <CaretLeft size="18" />
@@ -30,6 +31,7 @@ const CalendarExample: VoidComponent = () => {
             </Calendar.Label>
             <Calendar.Nav
               action="next-month"
+              aria-label="Go to next month"
               class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
             >
               <CaretRight size="18" />

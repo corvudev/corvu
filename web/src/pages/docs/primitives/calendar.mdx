@@ -89,6 +89,18 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
 
 Adheres to the calendar part of the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/" newTab>Date Picker Dialog WAI-ARIA design pattern</Link>.
 
+### Accessible nav buttons
+Make sure to describe the purpose of the navigation buttons using the `aria-label` attribute if they only contain non-text elements:
+
+<Code code={`
+  <Calendar.Nav
+    action="prev-month"
+    aria-label="Go to previous month"
+  >
+    <CaretLeft size="18" />
+  </Calendar.Nav>
+`} lang="tsx" copyButton />
+
 ### Keyboard navigation
 
 <KeyboardNavigation keys={[
