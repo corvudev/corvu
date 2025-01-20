@@ -116,6 +116,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'ArrowLeft' && context().textDirection() === 'ltr') ||
       (event.key === 'ArrowRight' && context().textDirection() === 'rtl')
     ) {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         { day: -1 },
@@ -125,18 +126,21 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'ArrowRight' && context().textDirection() === 'ltr') ||
       (event.key === 'ArrowLeft' && context().textDirection() === 'rtl')
     ) {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         { day: 1 },
         context().disabled,
       )
     } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         { day: -7 },
         context().disabled,
       )
     } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         { day: 7 },
@@ -146,6 +150,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'Home' && context().textDirection() === 'ltr') ||
       (event.key === 'End' && context().textDirection() === 'rtl')
     ) {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         {
@@ -158,6 +163,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       (event.key === 'End' && context().textDirection() === 'ltr') ||
       (event.key === 'Home' && context().textDirection() === 'rtl')
     ) {
+      event.preventDefault()
       focusedDay = modifyFocusedDay(
         localProps.day,
         {
@@ -167,6 +173,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
         false,
       )
     } else if (event.key === 'PageUp') {
+      event.preventDefault()
       if (event.shiftKey) {
         focusedDay = modifyFocusedDay(
           localProps.day,
@@ -181,6 +188,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
         )
       }
     } else if (event.key === 'PageDown') {
+      event.preventDefault()
       if (event.shiftKey) {
         focusedDay = modifyFocusedDay(
           localProps.day,

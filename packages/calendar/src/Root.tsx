@@ -255,8 +255,8 @@ export type CalendarRootChildrenBaseProps = {
   weekdays: Date[]
   /** Array of the currently displayed months. */
   months: { month: Date; weeks: Date[][] }[]
-  /** Function to get the weeks of a given month. */
-  weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
+  /** Weeks of the current month. Useful if only one month is being rendered. */
+  weeks: Date[][]
   /** Function to navigate the calendar. */
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
@@ -361,6 +361,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       batch(() => {
         setFocusedDayInternal(nextValue as Date)
         if (!dayIsInMonth(nextValue, month(), defaultedProps.numberOfMonths)) {
+          // TODO: Doesn't work if we skip more than one month. Add some check
           const newMonth = new Date(
             month().getFullYear(),
             month().getMonth() +
@@ -384,7 +385,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const months = () => {
     const months = []
     for (let i = 0; i < defaultedProps.numberOfMonths; i++) {
-      months.push(weeks(i))
+      months.push({ month: modifyDate(month(), { month: i }), weeks: weeks(i) })
     }
     return months
   }
@@ -426,7 +427,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       calendar.push(week)
     }
 
-    return { month: adjustedMonth, weeks: calendar }
+    return calendar
   }
 
   const navigate = (
@@ -596,7 +597,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get months() {
       return months()
     },
-    weeks,
+    get weeks() {
+      return weeks()
+    },
     navigate,
   }
 

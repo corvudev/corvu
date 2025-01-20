@@ -4,9 +4,76 @@ title: SolidJS Calendar/Date Picker
 description: A customizable, unstyled and accessible calendar component for SolidJS
 image: https://corvu.dev/primitives/calendar.jpg
 ---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/calendar/basic/tailwind/index'
+import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
 
 # Calendar
+
+<PackageInfo packageName="@corvu/calendar" />
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} height="heading" client:idle>
+  <BasicExample client:idle />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Supports single, multiple and range selection',
+]} />
+
+## Installation
+
+<Code code={`
+  npm install @corvu/calendar
+`} lang="bash" copyButton />
+
+The calendar is also included in the main `corvu` package under `corvu/calendar`.
+
+## Usage
+<Code code={`
+  import Calendar from '@corvu/calendar' // 'corvu/calendar'
+  // or
+  // import { Root, Nav, ... } from '@corvu/calendar'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+  <Dialog>
+    <Dialog.Trigger />
+    <Dialog.Portal>
+      <Dialog.Overlay />
+      <Dialog.Content>
+        <Dialog.Close />
+        <Dialog.Label />
+        <Dialog.Description />
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog>
+`} lang="tsx" copyButton />
 
 <ApiReference library={Calendar} />

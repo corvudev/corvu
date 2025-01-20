@@ -84,8 +84,8 @@ export type CalendarContextBaseValue = {
   weekdays: Accessor<Date[]>
   /** Array of the currently displayed months. */
   months: Accessor<{ month: Date; weeks: Date[][] }[]>
-  /** Function to get the weeks of a given month. */
-  weeks: (monthOffset?: number) => { month: Date; weeks: Date[][] }
+  /** Function to get the weeks of the current month. Useful if only one month is being rendered. */
+  weeks: Accessor<Date[][]>
   /** Function to navigate the calendar. */
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
