@@ -439,16 +439,16 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     }
     switch (action) {
       case 'prev-month':
-        setMonth((month) => modifyDay(month, { month: -1 }))
+        setMonth((month) => modifyDate(month, { month: -1 }))
         break
       case 'next-month':
-        setMonth((month) => modifyDay(month, { month: 1 }))
+        setMonth((month) => modifyDate(month, { month: 1 }))
         break
       case 'prev-year':
-        setMonth((month) => modifyDay(month, { year: -1 }))
+        setMonth((month) => modifyDate(month, { year: -1 }))
         break
       case 'next-year':
-        setMonth((month) => modifyDay(month, { year: 1 }))
+        setMonth((month) => modifyDate(month, { year: 1 }))
         break
     }
   }
