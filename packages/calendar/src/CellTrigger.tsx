@@ -65,6 +65,12 @@ export type CalendarCellTriggerProps<T extends ValidComponent = 'button'> =
 
 /** Button that selectes a day in the calendar.
  *
+ * @data `data-selected` - Present on selected calendar cell triggers.
+ * @data `data-disabled` - Present on disabled calendar cell triggers.
+ * @data `data-today` - Present on today's calendar cell trigger.
+ * @data `data-range-start` - Present on the start of a day range. (Only present in range mode)
+ * @data `data-range-end` - Present on the end of a day range. (Only present in range mode)
+ * @data `data-in-range` - Present on calendar cell trigger elements that are within a day range. (Including start and end, only present in range mode)
  * @data `data-corvu-calendar-celltrigger` - Present on every calendar celltrigger element.
  */
 const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
@@ -231,20 +237,28 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       data-today={dataIf(isSameDay(localProps.day, new Date()))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDay(localProps.day, context().value().from),
+          isSameDay(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).from,
+          ),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDay(localProps.day, context().value().to),
+          isSameDay(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).to,
+          ),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDayOrAfter(localProps.day, context().value().from) &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDayOrBefore(localProps.day, context().value().to),
+          isSameDayOrAfter(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).from,
+          ) &&
+          isSameDayOrBefore(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).to,
+          ),
       )}
       data-corvu-calendar-celltrigger=""
       {...otherProps}

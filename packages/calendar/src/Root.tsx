@@ -550,7 +550,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get value() {
       return value()
     },
-    // @ts-expect-error: TODO: Fix types
+    // @ts-expect-error: Union type shenanigans
     setValue,
     get month() {
       return month()
@@ -605,7 +605,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const resolveChildren = () => {
     const children = memoizedChildren()()
     if (isFunction(children)) {
-      // @ts-expect-error: TODO: Fix types
+      // @ts-expect-error: Union type shenanigans
       return children(childrenProps)
     }
     return children
@@ -620,11 +620,11 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     return (
       <CalendarContext.Provider
         value={{
-          // @ts-expect-error: TODO: Fix types
+          // @ts-expect-error: Union type shenanigans
           mode: () => defaultedProps.mode,
-          // @ts-expect-error: TODO: Fix types
+          // @ts-expect-error: Union type shenanigans
           value,
-          // @ts-expect-error: TODO: Fix types
+          // @ts-expect-error: Union type shenanigans
           setValue,
           month,
           setMonth,
@@ -648,11 +648,11 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       >
         <InternalCalendarContext.Provider
           value={{
-            // @ts-expect-error: TODO: Fix types
+            // @ts-expect-error: Union type shenanigans
             mode: () => defaultedProps.mode,
-            // @ts-expect-error: TODO: Fix types
+            // @ts-expect-error: Union type shenanigans
             value,
-            // @ts-expect-error: TODO: Fix types
+            // @ts-expect-error: Union type shenanigans
             setValue,
             month,
             setMonth,

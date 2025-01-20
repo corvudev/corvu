@@ -41,6 +41,12 @@ export type CalendarCellProps<T extends ValidComponent = 'td'> =
 
 /** Calendar cell element.
  *
+ * @data `data-selected` - Present on selected calendar cells.
+ * @data `data-disabled` - Present on disabled calendar cells.
+ * @data `data-today` - Present on today's calendar cell.
+ * @data `data-range-start` - Present on the start of a day range. (Only present in range mode)
+ * @data `data-range-end` - Present on the end of a day range. (Only present in range mode)
+ * @data `data-in-range` - Present on calendar cell elements that are within a day range. (Including start and end, only present in range mode)
  * @data `data-corvu-calendar-cell` - Present on every calendar cell element.
  */
 const CalendarCell = <T extends ValidComponent = 'td'>(
@@ -68,20 +74,28 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
       data-today={dataIf(isSameDay(localProps.day, new Date()))}
       data-range-start={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDay(localProps.day, context().value().from),
+          isSameDay(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).from,
+          ),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDay(localProps.day, context().value().to),
+          isSameDay(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).to,
+          ),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDayOrAfter(localProps.day, context().value().from) &&
-          // @ts-expect-error: TODO: Fix types
-          isSameDayOrBefore(localProps.day, context().value().to),
+          isSameDayOrAfter(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).from,
+          ) &&
+          isSameDayOrBefore(
+            localProps.day,
+            (context().value() as { from: Date | null; to: Date | null }).to,
+          ),
       )}
       data-corvu-calendar-cell=""
       {...otherProps}
