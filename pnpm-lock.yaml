@@ -17,9 +17,6 @@ importers:
 
   dev:
     dependencies:
-      '@corvu/calendar':
-        specifier: workspace:*
-        version: link:../packages/calendar
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
