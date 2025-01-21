@@ -37,7 +37,7 @@ export const components = { h2: H2, h3: H3 }
     }
   ]
 }]} height="heading" client:idle>
-  <BasicExample client:idle />
+  <BasicExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>

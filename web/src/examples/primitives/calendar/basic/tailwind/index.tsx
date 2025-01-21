@@ -37,7 +37,7 @@ const CalendarExample: VoidComponent = () => {
               <CaretRight size="18" />
             </Calendar.Nav>
           </div>
-          <Calendar.Table class="mt-4">
+          <Calendar.Table class="mt-3">
             <thead>
               <tr>
                 <For each={props.weekdays}>
@@ -61,7 +61,7 @@ const CalendarExample: VoidComponent = () => {
                         <Calendar.Cell day={day()}>
                           <Calendar.CellTrigger
                             day={day()}
-                            class="inline-flex size-8 items-center justify-center rounded-md text-sm hover:bg-corvu-200/80 focus:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:bg-corvu-300 corvu-today:bg-corvu-200/80"
+                            class="inline-flex size-8 items-center justify-center rounded-md text-sm hover:bg-corvu-200/80 focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50"
                           >
                             {day().getDate()}
                           </Calendar.CellTrigger>
