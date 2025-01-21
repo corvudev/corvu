@@ -67,7 +67,7 @@ export type CalendarCellTriggerProps<T extends ValidComponent = 'button'> =
  *
  * @data `data-selected` - Present on selected calendar cell triggers.
  * @data `data-disabled` - Present on disabled calendar cell triggers.
- * @data `data-today` - Present on today's calendar cell trigger.
+ * @data `data-today` - Present on today's calendar cell trigger. Only rendered on the client to avoid hydration mismatches
  * @data `data-range-start` - Present on the start of a day range. (Only present in range mode)
  * @data `data-range-end` - Present on the end of a day range. (Only present in range mode)
  * @data `data-in-range` - Present on calendar cell trigger elements that are within a day range. (Including start and end, only present in range mode)
@@ -82,6 +82,9 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
   )
 
   const [ref, setRef] = createSignal<HTMLButtonElement | null>(null)
+
+  const [isToday, setIsToday] = createSignal(false)
+  createEffect(() => setIsToday(isSameDay(localProps.day, new Date())))
 
   const context = createMemo(() =>
     useInternalCalendarContext(localProps.contextId),
@@ -242,7 +245,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       data-disabled={dataIf(
         context().isDisabled(localProps.day, localProps.month),
       )}
-      data-today={dataIf(isSameDay(localProps.day, new Date()))}
+      data-today={dataIf(isToday())}
       data-range-start={dataIf(
         context().mode() === 'range' &&
           isSameDay(

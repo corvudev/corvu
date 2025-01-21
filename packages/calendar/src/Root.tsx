@@ -275,9 +275,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           : props.mode === 'multiple'
             ? []
             : { from: null, to: null },
-      initialMonth: new Date(),
+      initialMonth: props.initialFocusedDay ?? new Date(),
       initialFocusedDay: findAvailableDayInMonth(
-        new Date(),
+        props.initialMonth ?? new Date(),
         props.disabled ?? (() => true),
       ),
       startOfWeek: 1,

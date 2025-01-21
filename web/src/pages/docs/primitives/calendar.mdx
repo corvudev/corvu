@@ -45,6 +45,8 @@ export const components = { h2: H2, h3: H3 }
 ## Features
 <Features features={[
   'Supports single, multiple and range selection',
+  'Full keyboard navigation',
+  'Focus on simplicity and being lightweight',
 ]} />
 
 ## Installation
@@ -97,6 +99,16 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
     </Calendar.Table>
   </Calendar>
 `} lang="tsx" copyButton />
+
+### Philosophy
+
+This calendar is designed to be simple and lightweight. It handles functionality and accessibility to cover the common use cases but leaves things like internationalization and more individual behavior up to the user to implement. If you feel like a crucial functionality or feature is missing that is difficult or impossible to implement in userland, feel free to open an <Link href="https://github.com/corvudev/corvu/issues/new?title=%5BCalendar%5D%20" newTab>issue</Link> in the corvu Github repository.
+
+### Usage with SSR/SSG
+
+It is important to be aware of potential hydration mismatches when rendering the calendar on the server.
+
+Make sure to set `initialFocusedDay` and `initialMonth` manually to avoid using `new Date()` as default, as this can lead to hydration errors due to different timezones (or even due to the delay between server and client).
 
 ## Accessibility
 

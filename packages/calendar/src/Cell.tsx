@@ -1,4 +1,10 @@
-import { createMemo, splitProps, type ValidComponent } from 'solid-js'
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  splitProps,
+  type ValidComponent,
+} from 'solid-js'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import { isSameDay, isSameDayOrAfter, isSameDayOrBefore } from '@src/utils'
 import { dataIf } from '@corvu/utils'
@@ -43,7 +49,7 @@ export type CalendarCellProps<T extends ValidComponent = 'td'> =
  *
  * @data `data-selected` - Present on selected calendar cells.
  * @data `data-disabled` - Present on disabled calendar cells.
- * @data `data-today` - Present on today's calendar cell.
+ * @data `data-today` - Present on today's calendar cell trigger. Only rendered on the client to avoid hydration mismatches
  * @data `data-range-start` - Present on the start of a day range. (Only present in range mode)
  * @data `data-range-end` - Present on the end of a day range. (Only present in range mode)
  * @data `data-in-range` - Present on calendar cell elements that are within a day range. (Including start and end, only present in range mode)
@@ -58,6 +64,9 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
     'contextId',
   ])
 
+  const [isToday, setIsToday] = createSignal(false)
+  createEffect(() => setIsToday(isSameDay(localProps.day, new Date())))
+
   const context = createMemo(() =>
     useInternalCalendarContext(localProps.contextId),
   )
@@ -71,7 +80,7 @@ const CalendarCell = <T extends ValidComponent = 'td'>(
       data-disabled={dataIf(
         context().isDisabled(localProps.day, localProps.month),
       )}
-      data-today={dataIf(isSameDay(localProps.day, new Date()))}
+      data-today={dataIf(isToday())}
       data-range-start={dataIf(
         context().mode() === 'range' &&
           isSameDay(
