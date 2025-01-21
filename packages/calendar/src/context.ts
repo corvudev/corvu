@@ -42,6 +42,10 @@ export type CalendarContextMultipleValue = {
   value: Accessor<Date[]>
   /** Setter to change the value of the calendar. */
   setValue: Setter<Date[]>
+  /** The minimum number of days that have to be selected. */
+  min: Accessor<number | null>
+  /** The maximum number of days that can be selected. */
+  max: Accessor<number | null>
 } & CalendarContextBaseValue
 
 export type CalendarContextRangeValue = {
@@ -51,10 +55,6 @@ export type CalendarContextRangeValue = {
   value: Accessor<{ from: Date | null; to: Date | null }>
   /** Setter to change the value of the calendar. */
   setValue: Setter<{ from: Date | null; to: Date | null }>
-  /** The minimum number of days that have to be selected. */
-  min: Accessor<number | null>
-  /** The maximum number of days that can be selected. */
-  max: Accessor<number | null>
   /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: Accessor<boolean>
 } & CalendarContextBaseValue

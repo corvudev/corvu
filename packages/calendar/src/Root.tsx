@@ -73,6 +73,16 @@ export type CalendarRootMultipleProps = {
    * @defaultValue `[]`
    */
   initialValue?: Date[]
+  /**
+   * The minimum number of days that have to be selected.
+   * @defaultValue `null`
+   */
+  min?: number | null
+  /**
+   * The maximum number of days that can be selected.
+   * @defaultValue `null`
+   */
+  max?: number | null
   /** @hidden */
   children:
     | JSX.Element
@@ -97,16 +107,6 @@ export type CalendarRootRangeProps = {
    * @defaultValue `{ from: null, to: null }`
    */
   initialValue?: { from: Date | null; to: Date | null }
-  /**
-   * The minimum number of days that have to be selected.
-   * @defaultValue `null`
-   */
-  min?: number | null
-  /**
-   * The maximum number of days that can be selected.
-   * @defaultValue `null`
-   */
-  max?: number | null
   /**
    * Whether to reset the range selection if a disabled day is included in the range.
    * @defaultValue `false`
@@ -213,6 +213,10 @@ export type CalendarRootChildrenMultipleProps = {
   value: Date[]
   /** Setter to change the value of the calendar. */
   setValue: Setter<Date[]>
+  /** The minimum number of days that have to be selected. */
+  min: number | null
+  /** The maximum number of days that can be selected. */
+  max: number | null
 } & CalendarRootChildrenBaseProps
 
 export type CalendarRootChildrenRangeProps = {
@@ -222,10 +226,6 @@ export type CalendarRootChildrenRangeProps = {
   value: { from: Date | null; to: Date | null }
   /** Setter to change the value of the calendar. */
   setValue: Setter<{ from: Date | null; to: Date | null }>
-  /** The minimum number of days that have to be selected. */
-  min: number | null
-  /** The maximum number of days that can be selected. */
-  max: number | null
   /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: boolean
 } & CalendarRootChildrenBaseProps
