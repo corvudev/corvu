@@ -1,17 +1,7 @@
 import { CaretLeft, CaretRight } from '@examples/primitives/calendar/icons'
-import { For, Index } from 'solid-js'
 import Calendar from '@corvu/calendar'
+import { Index } from 'solid-js'
 import type { VoidComponent } from 'solid-js'
-
-const { format: formatWeekdayLong } = new Intl.DateTimeFormat('en', {
-  weekday: 'long',
-})
-const { format: formatWeekdayShort } = new Intl.DateTimeFormat('en', {
-  weekday: 'short',
-})
-const { format: formatMonth } = new Intl.DateTimeFormat('en', {
-  month: 'long',
-})
 
 const CalendarExample: VoidComponent = () => {
   return (
@@ -40,16 +30,16 @@ const CalendarExample: VoidComponent = () => {
           <Calendar.Table class="mt-3">
             <thead>
               <tr>
-                <For each={props.weekdays}>
+                <Index each={props.weekdays}>
                   {(weekday) => (
                     <Calendar.HeadCell
-                      abbr={formatWeekdayLong(weekday)}
+                      abbr={formatWeekdayLong(weekday())}
                       class="w-8 flex-1 pb-1 text-xs font-normal opacity-50"
                     >
-                      {formatWeekdayShort(weekday)}
+                      {formatWeekdayShort(weekday())}
                     </Calendar.HeadCell>
                   )}
-                </For>
+                </Index>
               </tr>
             </thead>
             <tbody>
@@ -78,5 +68,15 @@ const CalendarExample: VoidComponent = () => {
     </Calendar>
   )
 }
+
+const { format: formatWeekdayLong } = new Intl.DateTimeFormat('en', {
+  weekday: 'long',
+})
+const { format: formatWeekdayShort } = new Intl.DateTimeFormat('en', {
+  weekday: 'short',
+})
+const { format: formatMonth } = new Intl.DateTimeFormat('en', {
+  month: 'long',
+})
 
 export default CalendarExample

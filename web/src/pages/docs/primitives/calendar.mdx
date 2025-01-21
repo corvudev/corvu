@@ -66,20 +66,33 @@ The calendar is also included in the main `corvu` package under `corvu/calendar`
 
 <Code code={`
   <Calendar>
-    <Calendar.Nav />
+    <Calendar.Nav action="prev-month" />
     <Calendar.Label />
+    <Calendar.Nav action="next-month" />
     <Calendar.Table>
       <thead>
         <tr>
-          <Calendar.HeadCell />
+          <Index each={props.weekdays}>
+            {(weekday) => (
+              <Calendar.HeadCell />
+            )}
+          </Index>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <Calendar.Cell>
-            <Calendar.CellTrigger />
-          </Calendar.Cell>
-        </tr>
+        <Index each={props.weeks}>
+          {(week) => (
+            <tr>
+              <Index each={week()}>
+                  {(day) => (
+                    <Calendar.Cell day={day()}>
+                      <Calendar.CellTrigger day={day()} />
+                    </Calendar.Cell>
+                  )}
+                </Index>
+              </tr>
+            )}
+        </Index>
       </tbody>
     </Calendar.Table>
   </Calendar>
