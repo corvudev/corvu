@@ -207,13 +207,13 @@ const Calendar: Library = {
         'min',
         'max',
         'excludeDisabled',
-        'labelId',
+        'labelIds',
         'contextId',
       ],
     },
     Label: {
       kind: 'component',
-      sorting: ['as', 'contextId'],
+      sorting: ['index', 'as', 'contextId'],
     },
     Nav: {
       kind: 'component',
@@ -221,15 +221,15 @@ const Calendar: Library = {
     },
     Table: {
       kind: 'component',
-      sorting: ['as', 'contextId'],
+      sorting: ['index', 'as', 'contextId'],
     },
     HeadCell: {
       kind: 'component',
-      sorting: ['as', 'contextId'],
+      sorting: ['as'],
     },
     Cell: {
       kind: 'component',
-      sorting: ['day', 'month', 'as', 'contextId'],
+      sorting: ['as'],
     },
     CellTrigger: {
       kind: 'component',
@@ -258,7 +258,7 @@ const Calendar: Library = {
         'min',
         'max',
         'excludeDisabled',
-        'labelId',
+        'labelIds',
       ],
     },
     RootChildrenProps: {
@@ -284,7 +284,7 @@ const Calendar: Library = {
         'min',
         'max',
         'excludeDisabled',
-        'labelId',
+        'labelIds',
       ],
     },
   },

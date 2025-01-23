@@ -49,10 +49,10 @@ const CalendarExample: VoidComponent = () => {
                     <tr>
                       <Index each={week()}>
                         {(day) => (
-                          <Calendar.Cell day={day()}>
+                          <Calendar.Cell class="p-0">
                             <Calendar.CellTrigger
                               day={day()}
-                              class="inline-flex size-8 items-center justify-center rounded-md text-sm hover:bg-corvu-200/80 focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50"
+                              class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
                             >
                               {day().getDate()}
                             </Calendar.CellTrigger>

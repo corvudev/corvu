@@ -94,9 +94,18 @@ const resolveComponentProps = (component: DeclarationVariant) => {
   const propsDeclaration = resolveReferenceType(propsType)
 
   if (typeof propsDeclaration === 'string') {
-    throw new Error(
-      `Expected parameter type to be a reference: ${component.name}`,
-    )
+    if (isDynamicComponent) {
+      const defaultAs = resolveDefaultDynamicAs(component)
+      const asProps: PropType = {
+        name: 'as',
+        type: 'ValidComponent',
+        defaultHtml: `<code>${defaultAs}</code>`,
+        descriptionHtml: 'Component to render the dynamic component as.',
+        isFunction: false,
+      }
+      return [asProps]
+    }
+    return []
   }
 
   if (!propsDeclaration.type) {
@@ -135,8 +144,8 @@ const resolveComponentProps = (component: DeclarationVariant) => {
 
   const propTypes = getTypeProps(type)
 
-  const defaultAs = resolveDefaultDynamicAs(component)
   if (isDynamicComponent) {
+    const defaultAs = resolveDefaultDynamicAs(component)
     const asProps: PropType = {
       name: 'as',
       type: 'ValidComponent',

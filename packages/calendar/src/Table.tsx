@@ -4,6 +4,10 @@ import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarTableCorvuProps = {
   /**
+   * The index of this calendar table. Is optional as it's not required if only one month is rendered.
+   */
+  index?: number
+  /**
    * The `id` of the calendar context to use.
    */
   contextId?: string
@@ -34,6 +38,7 @@ const CalendarTable = <T extends ValidComponent = 'table'>(
   props: DynamicProps<T, CalendarTableProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as CalendarTableProps, [
+    'index',
     'contextId',
   ])
 
@@ -46,7 +51,7 @@ const CalendarTable = <T extends ValidComponent = 'table'>(
       as="table"
       // === ElementProps ===
       role="grid"
-      aria-labelledby={context().labelId()}
+      aria-labelledby={context().labelIds()[localProps.index ?? 0]?.()}
       aria-multiselectable={
         context().mode() === 'multiple' || context().mode() === 'range'
           ? 'true'

@@ -91,7 +91,8 @@ export type CalendarContextBaseValue = {
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
   /** The `id` attribute of the calendar label element. Is undefined if no `Calendar.Label` is present. */
-  labelId: Accessor<string | undefined>
+  /** The `id` attributes of the calendar label elements. Can be undefined if no `Calendar.Label` is present for the given month index. */
+  labelIds: Accessor<Accessor<string | undefined>[]>
 }
 
 const CalendarContext = createContext<CalendarContextValue>()
@@ -138,8 +139,8 @@ export const useCalendarContext = <
 }
 
 type InternalCalendarContextValue = CalendarContextValue & {
-  registerLabelId: () => void
-  unregisterLabelId: () => void
+  registerLabelId: (index: number) => void
+  unregisterLabelId: (index: number) => void
   onDaySelect: (day: Date) => void
   isSelected: (date: Date) => boolean
   isDisabled: (date: Date, month?: Date) => boolean

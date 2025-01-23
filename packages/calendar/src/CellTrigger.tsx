@@ -22,11 +22,11 @@ import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarCellTriggerCorvuProps = {
   /*
-   * The day that this cell represents. Used to handle selection and focus.
+   * The day that this cell trigger represents. Used to handle selection and focus.
    */
   day: Date
   /**
-   * The month that this cell belongs to. Is optional as it's not required if only one month is rendered.
+   * The month that this cell trigger belongs to. Is optional as it's not required if only one month is rendered.
    */
   month?: Date
   /**

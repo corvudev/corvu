@@ -1,4 +1,5 @@
 import {
+  type Accessor,
   batch,
   type Component,
   createMemo,
@@ -181,10 +182,10 @@ export type CalendarRootBaseProps = {
    */
   textDirection?: 'ltr' | 'rtl'
   /**
-   * The `id` attribute of the calendar label element.
+   * The `id` attribute of the calendar label element(s). There can be multiple labels for each month that is being displayed.
    * @defaultValue `createUniqueId()`
    */
-  labelId?: string
+  labelIds?: string[]
   /**
    * The `id` of the calendar context. Useful if you have nested calendars and want to create components that belong to a calendar higher up in the tree.
    */
@@ -261,8 +262,8 @@ export type CalendarRootChildrenBaseProps = {
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
-  /** The `id` attribute of the calendar label element. Is undefined if no `Calendar.Label` is present. */
-  labelId: string | undefined
+  /** The `id` attributes of the calendar label elements. Can be undefined if no `Calendar.Label` is present for the given month index. */
+  labelIds: (string | undefined)[]
 }
 
 /** Context wrapper for the calendar. Is required for every calendar you create. */
@@ -287,6 +288,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       disableOutsideDays: true,
       fixedWeeks: false,
       textDirection: 'ltr' as const,
+      labelIds: [],
       min: null as number | null,
       max: null as number | null,
       excludeDisabled: false,
@@ -314,8 +316,30 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     onChange: defaultedProps.onFocusedDayChange,
   })
 
-  const [labelId, registerLabelId, unregisterLabelId] = createRegister({
-    value: () => defaultedProps.labelId ?? createUniqueId(),
+  const registerMemo = createMemo<
+    [
+      Accessor<string | undefined>[],
+      (index: number) => void,
+      (index: number) => void,
+    ]
+  >(() => {
+    const registers = Array.from(
+      { length: defaultedProps.numberOfMonths },
+      (_, index) =>
+        createRegister({
+          value: () => defaultedProps.labelIds[index] ?? createUniqueId(),
+        }),
+    )
+
+    const labelIds = registers.map((register) => register[0])
+    const registerLabelId = (index: number) => {
+      registers[index]?.[1]()
+    }
+    const unregisterLabelId = (index: number) => {
+      registers[index]?.[2]()
+    }
+
+    return [labelIds, registerLabelId, unregisterLabelId] as const
   })
 
   const [isFocusing, setIsFocusing] = createSignal(false)
@@ -524,15 +548,15 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     let _value = value()
     switch (defaultedProps.mode) {
       case 'single':
-        return isSameDay(_value as Date | null, day)
+        return isSameDay(day, _value as Date | null)
       case 'multiple':
-        return (_value as Date[]).some((value) => isSameDay(value, day))
+        return (_value as Date[]).some((value) => isSameDay(day, value))
       case 'range':
         _value = _value as { from: Date | null; to: Date | null }
         return (
-          isSameDay(_value.from, day) ||
-          (isSameDayOrAfter(_value.from, day) &&
-            isSameDayOrBefore(_value.to, day))
+          isSameDay(day, _value.from) ||
+          (isSameDayOrAfter(day, _value.from) &&
+            isSameDayOrBefore(day, _value.to))
         )
     }
   }
@@ -592,8 +616,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get textDirection() {
       return defaultedProps.textDirection
     },
-    get labelId() {
-      return labelId()
+    get labelIds() {
+      return registerMemo()[0].map((labelId) => labelId())
     },
     get weekdays() {
       return weekdays()
@@ -650,7 +674,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           weeks,
           navigate,
           textDirection: () => defaultedProps.textDirection,
-          labelId,
+          labelIds: () => registerMemo()[0],
         }}
       >
         <InternalCalendarContext.Provider
@@ -679,9 +703,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             navigate,
             onDaySelect,
             textDirection: () => defaultedProps.textDirection,
-            labelId,
-            registerLabelId,
-            unregisterLabelId,
+            labelIds: () => registerMemo()[0],
+            registerLabelId: (index: number) => registerMemo()[1](index),
+            unregisterLabelId: (index: number) => registerMemo()[2](index),
             isSelected,
             isDisabled,
             isFocusing,

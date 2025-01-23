@@ -10,6 +10,10 @@ import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarLabelCorvuProps = {
   /**
+   * The index of the calendar table that this label is describing. Is optional as it's not required if only one month is rendered.
+   */
+  index?: number
+  /**
    * The `id` of the calendar context to use.
    */
   contextId?: string
@@ -37,6 +41,7 @@ const CalendarLabel = <T extends ValidComponent = 'h2'>(
   props: DynamicProps<T, CalendarLabelProps<T>>,
 ) => {
   const [localProps, otherProps] = splitProps(props as CalendarLabelProps, [
+    'index',
     'contextId',
   ])
 
@@ -46,15 +51,15 @@ const CalendarLabel = <T extends ValidComponent = 'h2'>(
 
   createEffect(() => {
     const _context = context()
-    _context.registerLabelId()
-    onCleanup(() => _context.unregisterLabelId())
+    _context.registerLabelId(localProps.index ?? 0)
+    onCleanup(() => _context.unregisterLabelId(localProps.index ?? 0))
   })
 
   return (
     <Dynamic<CalendarLabelElementProps>
       as="h2"
       // === ElementProps ===
-      id={context().labelId()}
+      id={context().labelIds()[localProps.index ?? 0]?.()}
       aria-live="polite"
       data-corvu-calendar-label=""
       {...otherProps}

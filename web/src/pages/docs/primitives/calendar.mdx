@@ -1,13 +1,15 @@
 ---
 layout: '@layouts/Docs.astro'
-title: SolidJS Calendar/Date Picker
+title: SolidJS Calendar/Day Picker
 description: A customizable, unstyled and accessible calendar component for SolidJS
 image: https://corvu.dev/primitives/calendar.jpg
 ---
 import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/calendar/basic/tailwind/index'
+import RangeExample from '@examples/primitives/calendar/range/tailwind/index'
 import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
+import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
 import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
@@ -109,6 +111,30 @@ This calendar is designed to be simple and lightweight. It handles functionality
 It is important to be aware of potential hydration mismatches when rendering the calendar on the server.
 
 Make sure to set `initialFocusedDay` and `initialMonth` manually to avoid using `new Date()` as default, as this can lead to hydration errors due to different timezones (or even due to the delay between server and client).
+
+## Examples
+
+### Range selection
+
+Use `mode="range"` to set the selection mode to range. By defining `numberOfMonths={2}` we can display two months at once:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} height="heading" client:visible>
+  <RangeExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={RangeTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
 
 ## Accessibility
 
