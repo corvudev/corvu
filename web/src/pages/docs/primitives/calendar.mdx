@@ -142,7 +142,9 @@ Use `mode="range"` to set the selection mode to range. By defining `numberOfMont
 
 ### Disabling dates
 
-You can disable specific dates by passing a callback to the `disabled` prop. This function receives the date as an argument and should return a boolean:
+You can disable specific dates by passing a callback to the `disabled` prop. This function receives the date as an argument and should return a boolean.
+
+This function is reactive, meaning you can access signals and it will update the calendar when any of it's dependencies change.
 
 <Code code={`
   <Calendar
