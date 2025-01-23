@@ -8,8 +8,10 @@ import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/calendar/basic/tailwind/index'
 import RangeExample from '@examples/primitives/calendar/range/tailwind/index'
+import DisabledExample from '@examples/primitives/calendar/disabled/tailwind/index'
 import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
 import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
+import DisabledTailwindTsx from '@examples/primitives/calendar/disabled/tailwind/index?raw'
 import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
@@ -130,9 +132,38 @@ Use `mode="range"` to set the selection mode to range. By defining `numberOfMont
       slotName: 'tailwindConfig',
     }
   ]
-}]} height="heading" client:visible>
+}]} client:visible>
   <RangeExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={RangeTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Disabling dates
+
+You can disable specific dates by passing a callback to the `disabled` prop. This function receives the date as an argument and should return a boolean:
+
+<Code code={`
+  <Calendar
+    // Disable weekends
+    disabled={(date) => date.getDay() === 0 || date.getDay() === 6}
+  />
+`} lang="tsx" copyButton />
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <DisabledExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={DisabledTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 
