@@ -486,22 +486,27 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     setFocusedDay(day)
     switch (defaultedProps.mode) {
       case 'single':
-        if (value() === day && !defaultedProps.required) {
-          setValue(null)
-        } else {
-          setValue(day)
-        }
+        setValue((value) => {
+          if (
+            isSameDay(day, value as Date | null) &&
+            !defaultedProps.required
+          ) {
+            return null
+          } else {
+            return day
+          }
+        })
         break
       case 'multiple':
         setValue((value) => {
           value = value as Date[]
-          const isSelected = value.includes(day)
+          const isSelected = value.some((d) => isSameDay(day, d))
           if (
             isSelected &&
             value.length !== defaultedProps.min &&
             !(value.length === 1 && defaultedProps.required)
           ) {
-            return value.filter((d) => d !== day)
+            return value.filter((d) => !isSameDay(day, d))
           }
           if (!isSelected && value.length !== defaultedProps.max) {
             return [...value, day]
