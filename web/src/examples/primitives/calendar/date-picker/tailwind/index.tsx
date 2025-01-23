@@ -3,14 +3,16 @@ import {
   CaretLeft,
   CaretRight,
 } from '@examples/primitives/calendar/icons'
-import { Index, Show } from 'solid-js'
+import { createUniqueId, Index, Show } from 'solid-js'
 import Calendar from '@corvu/calendar'
 import Popover from '@corvu/popover'
 import type { VoidComponent } from 'solid-js'
 
 const CalendarExample: VoidComponent = () => {
+  const labelId = createUniqueId()
+
   return (
-    <Calendar mode="single">
+    <Calendar mode="single" labelIds={[labelId]}>
       {(props) => (
         <Popover
           placement="bottom-start"
@@ -18,6 +20,7 @@ const CalendarExample: VoidComponent = () => {
             offset: 5,
             flip: true,
           }}
+          labelId={labelId}
         >
           <Popover.Trigger class="my-auto flex w-56 items-center space-x-2 rounded-md bg-corvu-100 px-3 py-2 transition-all duration-100 hover:bg-corvu-200">
             <CalendarBlank size="20" />
