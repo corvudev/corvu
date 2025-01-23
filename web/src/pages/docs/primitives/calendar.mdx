@@ -9,9 +9,11 @@ import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/calendar/basic/tailwind/index'
 import RangeExample from '@examples/primitives/calendar/range/tailwind/index'
 import DisabledExample from '@examples/primitives/calendar/disabled/tailwind/index'
+import DatePickerExample from '@examples/primitives/calendar/date-picker/tailwind/index'
 import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
 import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
 import DisabledTailwindTsx from '@examples/primitives/calendar/disabled/tailwind/index?raw'
+import DatePickerTailwindTsx from '@examples/primitives/calendar/date-picker/tailwind/index?raw'
 import TailwindConfig from '@examples/primitives/tailwind.js?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
@@ -164,6 +166,28 @@ You can disable specific dates by passing a callback to the `disabled` prop. Thi
 }]} client:visible>
   <DisabledExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={DisabledTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Date Picker
+
+We can combine the calendar with the [Popover](/docs/primitives/popover) primitive to create a date picker:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <DatePickerExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={DatePickerTailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
 </ExampleWrapper>
 
