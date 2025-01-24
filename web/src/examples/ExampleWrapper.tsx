@@ -83,16 +83,14 @@ const ExampleWrapper: FlowComponent<{
       <Show when={!viewCode()}>
         <div
           class={clsx(
-            'relative rounded-b-xl bg-corvu-400 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
+            'relative grid grid-cols-1 rounded-b-xl bg-corvu-400 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
             {
-              'h-[300px] @xl:h-[400px]': props.height === 'heading',
-              'h-[200px]': !props.height,
+              'min-h-[300px] @xl:min-h-[400px]': props.height === 'heading',
+              'min-h-[200px]': !props.height,
             },
           )}
         >
-          <div class="relative z-10 flex size-full flex-col items-center">
-            {props.children}
-          </div>
+          <div class="relative z-10 flex justify-center">{props.children}</div>
         </div>
       </Show>
       <Show when={viewCode()}>

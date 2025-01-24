@@ -23,6 +23,7 @@
     "@astrojs/solid-js": "^5.0.4",
     "@astrojs/tailwind": "^5.1.5",
     "@corvu/accordion": "workspace:*",
+    "@corvu/calendar": "workspace:*",
     "@corvu/dialog": "workspace:*",
     "@corvu/disclosure": "workspace:*",
     "@corvu/drawer": "workspace:*",

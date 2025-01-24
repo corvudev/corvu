@@ -13,6 +13,11 @@ const dataStates = [
   'disabled',
   'active',
   'dragging',
+  'selected',
+  'today',
+  'range-start',
+  'range-end',
+  'in-range',
 ]
 
 const variants = dataStates.join('|')
