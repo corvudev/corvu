@@ -1,5 +1,12 @@
 # @corvu/tailwind
 
+## [0.1.6](https://github.com/corvudev/corvu/compare/@corvu/tailwind@0.1.5...@corvu/tailwind@0.1.6) (2025-01-24)
+
+
+### Features
+
+* calendar primitive ([#70](https://github.com/corvudev/corvu/issues/70)) ([db7232a](https://github.com/corvudev/corvu/commit/db7232ac19975c7a0d185494fdb3c7cdf35bfcdc))
+
 ## [0.1.5](https://github.com/corvudev/corvu/compare/@corvu/tailwind@0.1.4...@corvu/tailwind@0.1.5) (2024-05-13)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@corvu/unocss",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "UnoCSS preset for corvu, the unstyled, accessible and customizable UI primitive library for SolidJS",
   "keywords": [
