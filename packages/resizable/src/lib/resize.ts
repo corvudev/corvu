@@ -119,6 +119,8 @@ const distributePercentage = (props: {
   collapsible: boolean
   rootSize: number
 }): [number, number[], boolean] => {
+  props.desiredPercentage = fixToPrecision(props.desiredPercentage)
+
   const resizeDirection = getResizeDirection({
     side: props.side,
     desiredPercentage: props.desiredPercentage,
@@ -142,7 +144,9 @@ const distributePercentage = (props: {
     )
     if (panel.data.collapsible && panelSize === collapsedSize) continue
 
-    const availablePercentage = props.desiredPercentage - distributedPercentage
+    const availablePercentage = fixToPrecision(
+      props.desiredPercentage - distributedPercentage,
+    )
     if (availablePercentage === 0) break
 
     switch (resizeDirection) {
@@ -173,6 +177,8 @@ const distributePercentage = (props: {
     }
   }
 
+  distributedPercentage = fixToPrecision(distributedPercentage)
+
   if (!props.collapsible || distributedPercentage === props.desiredPercentage) {
     return [distributedPercentage, distributedSizes, false]
   }
@@ -183,25 +189,29 @@ const distributePercentage = (props: {
     return [distributedPercentage, distributedSizes, false]
   }
 
-  const availablePercentage = props.desiredPercentage - distributedPercentage
+  const availablePercentage = fixToPrecision(
+    props.desiredPercentage - distributedPercentage,
+  )
   let collapsed = false
 
   const panelSize =
     props.initialSizes[panelIndex + props.initialSizesStartIndex]!
+
+  const minSize = resolveSize(panel.data.minSize, props.rootSize)
   const collapsedSize = resolveSize(
     panel.data.collapsedSize ?? 0,
     props.rootSize,
   )
-  const collapseThreshold = resolveSize(
-    panel.data.collapseThreshold ?? 0,
-    props.rootSize,
+  const collapseThreshold = Math.min(
+    resolveSize(panel.data.collapseThreshold ?? 0, props.rootSize),
+    minSize - collapsedSize,
   )
   const isCollapsed = panelSize === collapsedSize
 
   if (
     resizeDirection === 'precedingDecreasing' &&
     !isCollapsed &&
-    Math.abs(availablePercentage) > collapseThreshold
+    Math.abs(availablePercentage) >= collapseThreshold
   ) {
     distributedPercentage -= distributedSizes[panelIndex]! - panelSize
     distributedSizes[panelIndex] = collapsedSize
@@ -210,11 +220,11 @@ const distributePercentage = (props: {
   } else if (
     resizeDirection === 'precedingIncreasing' &&
     isCollapsed &&
-    Math.abs(availablePercentage) > collapseThreshold
+    Math.abs(availablePercentage) >= collapseThreshold
   ) {
     const minSize = resolveSize(panel.data.minSize, props.rootSize)
     distributedSizes[panelIndex] = minSize
-    if (Math.abs(availablePercentage) > minSize - collapsedSize) {
+    if (Math.abs(availablePercentage) >= minSize - collapsedSize) {
       const maxSize = resolveSize(panel.data.maxSize, props.rootSize)
       distributedSizes[panelIndex] = Math.min(
         maxSize,
@@ -227,7 +237,7 @@ const distributePercentage = (props: {
   } else if (
     resizeDirection === 'followingDecreasing' &&
     !isCollapsed &&
-    Math.abs(availablePercentage) > collapseThreshold
+    Math.abs(availablePercentage) >= collapseThreshold
   ) {
     distributedPercentage += distributedSizes[panelIndex]! - panelSize
     distributedSizes[panelIndex] = collapsedSize
@@ -236,12 +246,12 @@ const distributePercentage = (props: {
   } else if (
     resizeDirection === 'followingIncreasing' &&
     isCollapsed &&
-    Math.abs(availablePercentage) > collapseThreshold
+    Math.abs(availablePercentage) >= collapseThreshold
   ) {
     const minSize = resolveSize(panel.data.minSize, props.rootSize)
     distributedSizes[panelIndex] = minSize
 
-    if (Math.abs(availablePercentage) > minSize - collapsedSize) {
+    if (Math.abs(availablePercentage) >= minSize - collapsedSize) {
       const maxSize = resolveSize(panel.data.maxSize, props.rootSize)
       distributedSizes[panelIndex] = Math.min(
         maxSize,
