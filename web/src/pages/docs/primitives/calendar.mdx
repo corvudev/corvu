@@ -1,0 +1,267 @@
+---
+layout: '@layouts/Docs.astro'
+title: SolidJS Calendar/Day Picker
+description: A customizable, unstyled and accessible calendar component for SolidJS
+image: https://corvu.dev/primitives/calendar.jpg
+---
+import RawCode from '@components/docs/code/RawCode.astro'
+import ExampleWrapper from '@examples/ExampleWrapper'
+import BasicExample from '@examples/primitives/calendar/basic/tailwind/index'
+import RangeExample from '@examples/primitives/calendar/range/tailwind/index'
+import DisabledExample from '@examples/primitives/calendar/disabled/tailwind/index'
+import DatePickerExample from '@examples/primitives/calendar/date-picker/tailwind/index'
+import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
+import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
+import DisabledTailwindTsx from '@examples/primitives/calendar/disabled/tailwind/index?raw'
+import DatePickerTailwindTsx from '@examples/primitives/calendar/date-picker/tailwind/index?raw'
+import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import ApiReference from '@components/docs/api/ApiReference.astro'
+import { Calendar } from '@lib/typedoc/libraries'
+import Link from '@components/docs/Link.astro'
+import Code from '@components/docs/code/Code.astro'
+import Features from '@components/docs/Features.astro'
+import PackageInfo from '@components/docs/PackageInfo.astro'
+import KeyboardNavigation from '@components/docs/KeyboardNavigation.astro'
+import H2 from '@components/docs/headings/H2.astro'
+import H3 from '@components/docs/headings/H3.astro'
+export const components = { h2: H2, h3: H3 }
+
+# Calendar
+
+<PackageInfo packageName="@corvu/calendar" />
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} height="heading" client:idle>
+  <BasicExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+## Features
+<Features features={[
+  'Supports single, multiple and range selection',
+  'Full keyboard navigation',
+  'Focus management of the calendar cells'
+]} />
+
+## Installation
+
+<Code code={`
+  npm install @corvu/calendar
+`} lang="bash" copyButton />
+
+The calendar is also included in the main `corvu` package under `corvu/calendar`.
+
+## Usage
+<Code code={`
+  import Calendar from '@corvu/calendar' // 'corvu/calendar'
+  // or
+  // import { Root, Nav, ... } from '@corvu/calendar'
+`} lang="tsx" copyButton />
+
+### Anatomy
+
+<Code code={`
+  <Calendar>
+    <Calendar.Nav action="prev-month" />
+    <Calendar.Label />
+    <Calendar.Nav action="next-month" />
+    <Calendar.Table>
+      <thead>
+        <tr>
+          <Index each={props.weekdays}>
+            {(weekday) => (
+              <Calendar.HeadCell />
+            )}
+          </Index>
+        </tr>
+      </thead>
+      <tbody>
+        <Index each={props.weeks}>
+          {(week) => (
+            <tr>
+              <Index each={week()}>
+                  {(day) => (
+                    <Calendar.Cell day={day()}>
+                      <Calendar.CellTrigger day={day()} />
+                    </Calendar.Cell>
+                  )}
+                </Index>
+              </tr>
+            )}
+        </Index>
+      </tbody>
+    </Calendar.Table>
+  </Calendar>
+`} lang="tsx" copyButton />
+
+### Philosophy
+
+This calendar is designed to be simple and lightweight. It handles functionality and accessibility to cover the common use cases but leaves things like internationalization and more individual behavior up to the user to implement. If you feel like a crucial functionality or feature is missing that is difficult or impossible to implement in userland, feel free to open an <Link href="https://github.com/corvudev/corvu/issues/new?title=%5BCalendar%5D%20" newTab>issue</Link> in the corvu Github repository.
+
+### Usage with SSR/SSG
+
+It is important to be aware of potential hydration mismatches when rendering the calendar on the server.
+
+Make sure to set `initialFocusedDay` and `initialMonth` manually to avoid using `new Date()` as default, as this can lead to hydration errors due to different timezones (or even due to the delay between server and client).
+
+## Examples
+
+### Range selection
+
+Use `mode="range"` to set the selection mode to range. By defining `numberOfMonths={2}` we can display two months at once:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <RangeExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={RangeTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Disabling dates
+
+You can disable specific dates by passing a callback to the `disabled` prop. This function receives the date as an argument and should return a boolean.
+
+This function is reactive, meaning you can access signals and it will update the calendar when any of it's dependencies change.
+
+<Code code={`
+  <Calendar
+    // Disable weekends
+    disabled={(date) => date.getDay() === 0 || date.getDay() === 6}
+  />
+`} lang="tsx" copyButton />
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <DisabledExample client:only="solid-js" />
+  <RawCode slot="tailwindTsx" code={DisabledTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+### Date Picker
+
+We can combine the calendar with the [Popover](/docs/primitives/popover/) primitive to create a date picker:
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.config.js',
+      slotName: 'tailwindConfig',
+    }
+  ]
+}]} client:visible>
+  <DatePickerExample client:visible />
+  <RawCode slot="tailwindTsx" code={DatePickerTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+</ExampleWrapper>
+
+## Accessibility
+
+Adheres to the calendar part of the <Link href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/" newTab>Date Picker Dialog WAI-ARIA design pattern</Link>.
+
+### Accessible nav buttons
+Make sure to describe the purpose of the navigation buttons using the `aria-label` attribute if they only contain non-text elements:
+
+<Code code={`
+  <Calendar.Nav
+    action="prev-month"
+    aria-label="Go to previous month"
+  >
+    <CaretLeft size="18" />
+  </Calendar.Nav>
+`} lang="tsx" copyButton />
+
+### Keyboard navigation
+
+<KeyboardNavigation keys={[
+  {
+    key: 'Space',
+    behavior: 'Selects the focused day.'
+  },
+  {
+    key: 'Enter',
+    behavior: 'Selects the focused day.'
+  },
+  {
+    key: 'ArrowRight',
+    behavior: 'Moves focus to the previous day.'
+  },
+  {
+    key: 'ArrowLeft',
+    behavior: 'Moves focus to the next day.'
+  },
+  {
+    key: 'ArrowUp',
+    behavior: 'Moves focus to the same day of the previous week.'
+  },
+  {
+    key: 'ArrowDown',
+    behavior: 'Moves focus to the same day of the next week.'
+  },
+  {
+    key: 'Home',
+    behavior: 'Moves focus to the first day of the week.'
+  },
+  {
+    key: 'End',
+    behavior: 'Moves focus to the last day of the week.'
+  },
+  {
+    key: 'PageUp',
+    behavior: 'Moves focus to the same day of the previous month.'
+  },
+  {
+    key: 'PageDown',
+    behavior: 'Moves focus to the same day of the next month.'
+  },
+  {
+    key: 'Shift + PageUp',
+    behavior: 'Moves focus to the same day of the previous year.'
+  },
+  {
+    key: 'Shift + PageDown',
+    behavior: 'Moves focus to the same day of the next year.'
+  }
+]} />
+
+## API reference
+
+<ApiReference library={Calendar} />

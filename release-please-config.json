@@ -10,6 +10,10 @@
     "packages/accordion": {
       "component": "@corvu/accordion"
     },
+    "packages/calendar": {
+      "component": "@corvu/calendar",
+      "release-as": "0.1.0"
+    },
     "packages/corvu": {
       "component": "corvu"
     },

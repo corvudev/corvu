@@ -20,7 +20,7 @@ import {
 } from '@lib/typedoc/resolve/lib'
 import type { ComponentTypeSpecification } from '@lib/typedoc/types/specifications'
 
-const inheritAllowList = ['CreateDismissibleProps']
+const inheritAllowList = ['CreateDismissibleProps', 'CalendarRootBaseProps']
 
 const resolveComponent = (
   api: ApiDeclaration,
@@ -94,9 +94,18 @@ const resolveComponentProps = (component: DeclarationVariant) => {
   const propsDeclaration = resolveReferenceType(propsType)
 
   if (typeof propsDeclaration === 'string') {
-    throw new Error(
-      `Expected parameter type to be a reference: ${component.name}`,
-    )
+    if (isDynamicComponent) {
+      const defaultAs = resolveDefaultDynamicAs(component)
+      const asProps: PropType = {
+        name: 'as',
+        type: 'ValidComponent',
+        defaultHtml: `<code>${defaultAs}</code>`,
+        descriptionHtml: 'Component to render the dynamic component as.',
+        isFunction: false,
+      }
+      return [asProps]
+    }
+    return []
   }
 
   if (!propsDeclaration.type) {
@@ -126,14 +135,17 @@ const resolveComponentProps = (component: DeclarationVariant) => {
     case 'intersection':
       type = propsDeclaration.type
       break
+    case 'union':
+      type = propsDeclaration.type
+      break
     default:
       throw new Error(`Unexpected type ${propsDeclaration.type.type}`)
   }
 
   const propTypes = getTypeProps(type)
 
-  const defaultAs = resolveDefaultDynamicAs(component)
   if (isDynamicComponent) {
+    const defaultAs = resolveDefaultDynamicAs(component)
     const asProps: PropType = {
       name: 'as',
       type: 'ValidComponent',
@@ -208,16 +220,31 @@ const getReflectionProps = (type: ReflectionType) => {
         isFunction: true,
       })
     } else if (prop.type?.type === 'reflection') {
-      const signature = prop.type.declaration.signatures![0]
+      if (prop.type.declaration.signatures) {
+        const signature = prop.type.declaration.signatures[0]
 
-      const type = resolveTypeTopLevel(signature.type, 1, signature.parameters)
-      propTypes.push({
-        name: prop.name,
-        defaultHtml: getDefaultValue(signature.comment),
-        type,
-        descriptionHtml: formatText(prop.comment?.summary),
-        isFunction: true,
-      })
+        const type = resolveTypeTopLevel(
+          signature.type,
+          1,
+          signature.parameters,
+        )
+        propTypes.push({
+          name: prop.name,
+          defaultHtml: getDefaultValue(signature.comment),
+          type,
+          descriptionHtml: formatText(prop.comment?.summary),
+          isFunction: true,
+        })
+      } else {
+        const type = resolveTypeTopLevel(prop.type, 1)
+        propTypes.push({
+          name: prop.name,
+          defaultHtml: getDefaultValue(prop.comment),
+          type,
+          descriptionHtml: formatText(prop.comment?.summary),
+          isFunction: true,
+        })
+      }
     } else {
       if (!prop.type) {
         throw new Error(`Missing type for the ${prop.name} prop`)
@@ -240,9 +267,7 @@ const getReflectionProps = (type: ReflectionType) => {
   return propTypes
 }
 
-const getTypeProps = (type: Type): PropType[] => {
-  const propTypes: PropType[] = []
-
+const getTypeProps = (type: Type, propTypes: PropType[] = []): PropType[] => {
   switch (type.type) {
     case 'reference':
       if (type.name === 'Omit') {
@@ -283,6 +308,27 @@ const getTypeProps = (type: Type): PropType[] => {
           propTypes.push(...getTypeProps(inheritType))
         }
       }
+      break
+    case 'union':
+      for (const unionType of type.types) {
+        getTypeProps(unionType, propTypes)
+      }
+
+      // TODO find props that only exist in one of the union types and set description "(Only available in ``"
+      const mergedProps: PropType[] = []
+      for (const prop of propTypes) {
+        const existingProp = mergedProps.find((p) => p.name === prop.name)
+        if (existingProp) {
+          if (existingProp.type !== prop.type) {
+            existingProp.type = `${existingProp.type} | ${prop.type}`
+          }
+        } else {
+          mergedProps.push(prop)
+        }
+      }
+
+      propTypes = mergedProps
+
       break
     default:
       throw new Error(`Unknown type ${type.type}`)

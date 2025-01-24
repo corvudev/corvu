@@ -1,5 +1,6 @@
 import accordionTypedoc from '../../../../packages/accordion/api.json'
 import type { ApiDeclaration } from '@lib/typedoc/types/typedoc'
+import calendarTypedoc from '../../../../packages/calendar/api.json'
 import dialogTypedoc from '../../../../packages/dialog/api.json'
 import disclosureTypedoc from '../../../../packages/disclosure/api.json'
 import dismissibleTypedoc from '../../../../packages/solid-dismissible/api.json'
@@ -19,6 +20,7 @@ import utilsTypedoc from '../../../../packages/utils/api.json'
 
 export const Typedoc: { [key: string]: ApiDeclaration } = {
   '@corvu/accordion': accordionTypedoc as ApiDeclaration,
+  '@corvu/calendar': calendarTypedoc as ApiDeclaration,
   '@corvu/dialog': dialogTypedoc as ApiDeclaration,
   '@corvu/disclosure': disclosureTypedoc as ApiDeclaration,
   '@corvu/drawer': drawerTypedoc as ApiDeclaration,
@@ -85,6 +87,7 @@ const Disclosure: Library = {
     },
   },
 }
+
 const Accordion: Library = {
   api: Typedoc['@corvu/accordion'],
   name: 'Accordion',
@@ -173,6 +176,116 @@ const Accordion: Library = {
         library: Disclosure,
         name: 'RootChildrenProps',
       },
+    },
+  },
+}
+
+const Calendar: Library = {
+  api: Typedoc['@corvu/calendar'],
+  name: 'Calendar',
+  items: {
+    Root: {
+      kind: 'component',
+      sorting: [
+        'mode',
+        'value',
+        'onValueChange',
+        'initialValue',
+        'month',
+        'onMonthChange',
+        'initialMonth',
+        'focusedDay',
+        'onFocusedDayChange',
+        'initialFocusedDay',
+        'startOfWeek',
+        'required',
+        'disabled',
+        'numberOfMonths',
+        'disableOutsideDays',
+        'fixedWeeks',
+        'textDirection',
+        'min',
+        'max',
+        'excludeDisabled',
+        'labelIds',
+        'contextId',
+      ],
+    },
+    Label: {
+      kind: 'component',
+      sorting: ['index', 'as', 'contextId'],
+    },
+    Nav: {
+      kind: 'component',
+      sorting: ['action', 'as', 'contextId'],
+    },
+    Table: {
+      kind: 'component',
+      sorting: ['index', 'as', 'contextId'],
+    },
+    HeadCell: {
+      kind: 'component',
+      sorting: ['as'],
+    },
+    Cell: {
+      kind: 'component',
+      sorting: ['as'],
+    },
+    CellTrigger: {
+      kind: 'component',
+      sorting: ['day', 'month', 'as', 'contextId'],
+    },
+    useContext: {
+      kind: 'context',
+      sorting: [
+        'mode',
+        'value',
+        'setValue',
+        'month',
+        'setMonth',
+        'focusedDay',
+        'setFocusedDay',
+        'startOfWeek',
+        'required',
+        'numberOfMonths',
+        'disableOutsideDays',
+        'fixedWeeks',
+        'textDirection',
+        'weekdays',
+        'months',
+        'weeks',
+        'navigate',
+        'min',
+        'max',
+        'excludeDisabled',
+        'labelIds',
+      ],
+    },
+    RootChildrenProps: {
+      kind: 'childrenProps',
+      sorting: [
+        'mode',
+        'value',
+        'setValue',
+        'month',
+        'setMonth',
+        'focusedDay',
+        'setFocusedDay',
+        'startOfWeek',
+        'required',
+        'numberOfMonths',
+        'disableOutsideDays',
+        'fixedWeeks',
+        'textDirection',
+        'weekdays',
+        'months',
+        'weeks',
+        'navigate',
+        'min',
+        'max',
+        'excludeDisabled',
+        'labelIds',
+      ],
     },
   },
 }
@@ -969,6 +1082,7 @@ const TransitionSize: Library = {
 
 export {
   Accordion,
+  Calendar,
   Dialog,
   Disclosure,
   Drawer,
@@ -987,6 +1101,7 @@ export {
 
 export default [
   Accordion,
+  Calendar,
   Dialog,
   Disclosure,
   Drawer,
