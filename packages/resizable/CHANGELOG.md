@@ -1,5 +1,12 @@
 # @corvu/resizable
 
+## [0.2.4](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.3...@corvu/resizable@0.2.4) (2025-01-24)
+
+
+### Bug Fixes
+
+* prevent floating point precision errors and collapseThreshold being to high ([2fb3783](https://github.com/corvudev/corvu/commit/2fb37835a26aef89734fb95536ad6869cbbd005c))
+
 ## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.2...@corvu/resizable@0.2.3) (2024-07-17)
 
 
