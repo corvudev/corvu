@@ -11,6 +11,8 @@ import RangeExample from '@examples/primitives/calendar/range/tailwind/index'
 import DisabledExample from '@examples/primitives/calendar/disabled/tailwind/index'
 import DatePickerExample from '@examples/primitives/calendar/date-picker/tailwind/index'
 import TailwindTsx from '@examples/primitives/calendar/basic/tailwind/index?raw'
+import CssTsx from '@examples/primitives/calendar/basic/css/index?raw'
+import CssStyle from '@examples/primitives/calendar/basic/css/index.css?raw'
 import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
 import DisabledTailwindTsx from '@examples/primitives/calendar/disabled/tailwind/index?raw'
 import DatePickerTailwindTsx from '@examples/primitives/calendar/date-picker/tailwind/index?raw'
@@ -42,10 +44,24 @@ export const components = { h2: H2, h3: H3 }
       slotName: 'tailwindConfig',
     }
   ]
+},{
+  name: 'CSS',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'cssTsx',
+    },
+    {
+      fileName: 'index.css',
+      slotName: 'cssStyle',
+    }
+  ]
 }]} height="heading" client:idle>
   <BasicExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
   <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
+  <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
 
 ## Features

@@ -1,0 +1,87 @@
+.wrapper {
+  padding: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background-color: hsl(249, 87%, 94%);
+  border-radius: 0.375rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+[data-corvu-calendar-nav] {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.25rem;
+  background-color: hsl(249, 87%, 94% / 0.5);
+  padding: 5px;
+}
+
+[data-corvu-calendar-name]:hover {
+  background-color: hsl(249, 87%, 94%);
+}
+
+[data-corvu-calendar-label] {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+[data-corvu-calendar-table] {
+  margin-top: 0.75rem;
+}
+
+[data-corvu-calendar-headcell] {
+  opacity: 0.5;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-bottom: 0.25rem;
+  width: 2rem;
+}
+
+[data-corvu-calendar-cell] {
+  padding: 0rem;
+}
+
+[data-corvu-calendar-celltrigger] {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: 0.375rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+[data-corvu-calendar-celltrigger]:focus-visible {
+  background-color: hsl(249, 87%, 94% / 0.8);
+}
+
+[data-corvu-calendar-celltrigger]:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+[data-corvu-calendar-celltrigger][data-selected] {
+  background-color: hsl(253 80% 82%);
+}
+
+[data-corvu-calendar-celltrigger][data-today] {
+  background-color: hsl(249, 87%, 94% / 0.5);
+}
+
+
+@media (min-width: 1024px) {
+  [data-corvu-calendar-headcell]:hover {
+    background-color: hsl(249, 87%, 94% / 0.8);
+  }
+}

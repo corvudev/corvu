@@ -8,35 +8,27 @@ const CalendarExample: VoidComponent = () => {
     <div>
       <Calendar mode="single">
         {(props) => (
-          <div class="my-4 rounded-md bg-corvu-100 p-3 shadow-md md:my-8">
-            <div class="flex items-center justify-between">
+          <div class="wrapper">
+            <div class="header">
               <Calendar.Nav
                 action="prev-month"
                 aria-label="Go to previous month"
-                class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
               >
                 <CaretLeft size="18" />
               </Calendar.Nav>
-              <Calendar.Label class="text-sm">
+              <Calendar.Label>
                 {formatMonth(props.month)} {props.month.getFullYear()}
               </Calendar.Label>
-              <Calendar.Nav
-                action="next-month"
-                aria-label="Go to next month"
-                class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
-              >
+              <Calendar.Nav action="next-month" aria-label="Go to next month">
                 <CaretRight size="18" />
               </Calendar.Nav>
             </div>
-            <Calendar.Table class="mt-3">
+            <Calendar.Table>
               <thead>
                 <tr>
                   <Index each={props.weekdays}>
                     {(weekday) => (
-                      <Calendar.HeadCell
-                        abbr={formatWeekdayLong(weekday())}
-                        class="w-8 pb-1 text-xs font-normal opacity-50"
-                      >
+                      <Calendar.HeadCell abbr={formatWeekdayLong(weekday())}>
                         {formatWeekdayShort(weekday())}
                       </Calendar.HeadCell>
                     )}
@@ -49,11 +41,8 @@ const CalendarExample: VoidComponent = () => {
                     <tr>
                       <Index each={week()}>
                         {(day) => (
-                          <Calendar.Cell class="p-0">
-                            <Calendar.CellTrigger
-                              day={day()}
-                              class="size-8 rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
-                            >
+                          <Calendar.Cell>
+                            <Calendar.CellTrigger day={day()}>
                               {day().getDate()}
                             </Calendar.CellTrigger>
                           </Calendar.Cell>
