@@ -54,11 +54,11 @@ const CalendarExample: VoidComponent = () => {
                             <tr>
                               <Index each={week()}>
                                 {(day) => (
-                                  <Calendar.Cell class="p-0">
+                                  <Calendar.Cell class="p-0 has-[[data-range-end]]:rounded-r-md has-[[data-range-start]]:rounded-l-md has-[[data-in-range]]:bg-corvu-200/70 has-[[disabled]]:opacity-40 has-[[data-in-range]]:first:rounded-l-md has-[[data-in-range]]:last:rounded-r-md">
                                     <Calendar.CellTrigger
                                       day={day()}
                                       month={month().month}
-                                      class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
+                                      class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none corvu-today:bg-corvu-200/50 corvu-range-start:!bg-corvu-300 corvu-range-end:!bg-corvu-300 lg:hover:bg-corvu-200/80"
                                     >
                                       {day().getDate()}
                                     </Calendar.CellTrigger>
