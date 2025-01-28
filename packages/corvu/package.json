@@ -46,7 +46,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "cp ../../README.md . && tsup",
     "clean": "rm -rf .turbo dist node_modules",
     "dev": "tsup --watch",
     "lint": "eslint --max-warnings=0 ."

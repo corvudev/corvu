@@ -84,7 +84,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "cp ../../README.md . && tsup",
     "clean": "rm -rf .turbo dist node_modules api.json",
     "lint": "eslint --max-warnings=0 .",
     "typedoc": "typedoc --json api.json --entryPoints ./src/index.ts --entryPoints ./src/components/*.tsx --entryPoints ./src/create/*.ts --entryPoints ./src/*/index.ts"

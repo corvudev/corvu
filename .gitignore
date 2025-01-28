@@ -3,5 +3,9 @@
 .turbo
 dist
 node_modules
+packages/*/README.md
+!packages/tailwind/README.md
+!packages/unocss/README.md
+!packages/solid-*/README.md
 packages/*/api.json
 tsup.config.*.mjs
