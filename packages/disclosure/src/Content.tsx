@@ -33,8 +33,8 @@ export type DisclosureContentSharedElementProps<
 export type DisclosureContentElementProps =
   DisclosureContentSharedElementProps & {
     id: string
-    'data-collapsed': '' | undefined
     'data-expanded': '' | undefined
+    'data-collapsed': '' | undefined
     'data-corvu-disclosure-content': '' | null
   }
 
@@ -80,60 +80,29 @@ const DisclosureContent = <T extends ValidComponent = 'div'>(
     return contentSize ? contentSize[1] : undefined
   })
 
-  const memoizedDisclosureContent = createMemo(() => {
-    const collapseBehavior = context().collapseBehavior()
-
-    switch (collapseBehavior) {
-      case 'hide':
-        return (
-          <Dynamic<DisclosureContentElementProps>
-            as="div"
-            // === SharedElementProps ===
-            ref={mergeRefs(context().setContentRef, localProps.ref)}
-            style={combineStyle(
-              {
-                display: !show() ? 'none' : undefined,
-                '--corvu-disclosure-content-width': `${contentWidth()}px`,
-                '--corvu-disclosure-content-height': `${contentHeight()}px`,
-              },
-              localProps.style,
-            )}
-            // === ElementProps ===
-            id={context().disclosureId()}
-            data-collapsed={dataIf(!context().expanded())}
-            data-expanded={dataIf(context().expanded())}
-            data-corvu-disclosure-content=""
-            {...otherProps}
-          />
-        )
-      case 'remove':
-        return (
-          <Show when={show()}>
-            <Dynamic<DisclosureContentElementProps>
-              as="div"
-              // === SharedElementProps ===
-              ref={mergeRefs(context().setContentRef, localProps.ref)}
-              style={combineStyle(
-                {
-                  display: !show() ? 'none' : undefined,
-                  '--corvu-disclosure-content-width': `${contentWidth()}px`,
-                  '--corvu-disclosure-content-height': `${contentHeight()}px`,
-                },
-                localProps.style,
-              )}
-              // === ElementProps ===
-              id={context().disclosureId()}
-              data-expanded={dataIf(context().expanded())}
-              data-collapsed={dataIf(!context().expanded())}
-              data-corvu-disclosure-content=""
-              {...otherProps}
-            />
-          </Show>
-        )
-    }
-  })
-
-  return memoizedDisclosureContent as unknown as JSX.Element
+  return (
+    <Show when={show() || context().collapseBehavior() === 'hide'}>
+      <Dynamic<DisclosureContentElementProps>
+        as="div"
+        // === SharedElementProps ===
+        ref={mergeRefs(context().setContentRef, localProps.ref)}
+        style={combineStyle(
+          {
+            display: !show() ? 'none' : undefined,
+            '--corvu-disclosure-content-width': `${contentWidth()}px`,
+            '--corvu-disclosure-content-height': `${contentHeight()}px`,
+          },
+          localProps.style,
+        )}
+        // === ElementProps ===
+        id={context().disclosureId()}
+        data-expanded={dataIf(context().expanded())}
+        data-collapsed={dataIf(!context().expanded())}
+        data-corvu-disclosure-content=""
+        {...otherProps}
+      />
+    </Show>
+  )
 }
 
 export default DisclosureContent
