@@ -6,11 +6,10 @@
 <br />
 <div align="center">
 
-[![NPM Version](https://img.shields.io/npm/v/corvu)](https://www.npmjs.com/package/corvu)
-[![NPM Downloads](https://img.shields.io/npm/dm/corvu)](https://www.npmjs.com/package/corvu)
-[![License](https://img.shields.io/github/license/corvudev/corvu)](https://github.com/corvudev/corvu/blob/main/LICENSE)
+![NPM Downloads](https://img.shields.io/endpoint?color=a888f1&label=downloads&url=https://combined-npm-downloads.deno.dev/@corvu/accordion,@corvu/calendar,@corvu/dialog,@corvu/disclosure,@corvu/drawer,@corvu/otp-field,@corvu/popover,@corvu/resizable,@corvu/tooltip)
+[![License](https://img.shields.io/github/license/corvudev/corvu?color=a888f1)](https://github.com/corvudev/corvu/blob/main/LICENSE)
 
-**[Documentation](https://corvu.dev/) • [Discussions](https://github.com/corvudev/corvu/discussions) • [Discord](https://discord.com/invite/solidjs)**
+**[Documentation](https://corvu.dev/) • [Discussion](https://github.com/corvudev/corvu/discussions) • [Discord](https://discord.com/invite/solidjs)**
 </div>
 
 ## About
@@ -20,7 +19,7 @@ corvu is a collection of open source UI primitives for SolidJS. It offers:
 - ♿ Accessible primitives
 - 🪄 High customizability
 - 🌟 Delightful developer experience
-- 📝 A good documentation
+- 📝 Good documentation
 - ✅ SSR Support
 
 Read more at [corvu.dev](https://corvu.dev).
