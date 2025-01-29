@@ -77,7 +77,7 @@ const createPresence = (props: {
     })
 
     return show
-  })
+  }, access(props.show))
 
   createEffect(() => {
     const element = access(props.element)
