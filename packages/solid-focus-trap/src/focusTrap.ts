@@ -140,11 +140,24 @@ const createFocusTrap = (props: {
   })
 
   const loadFocusTrap = (container: HTMLElement) => {
-    setFocusableElements(
+    const focusableElements = (
       Array.from(
         container.querySelectorAll(focusableElementSelector),
-      ) as HTMLElement[],
+      ) as HTMLElement[]
     )
+      .map((element, domIndex) => ({
+        element,
+        domIndex,
+        tabIndex: element.tabIndex,
+      }))
+      .sort((a, b) => {
+        if (a.tabIndex === b.tabIndex) {
+          return a.domIndex - b.domIndex
+        }
+        return a.tabIndex - b.tabIndex
+      })
+
+    setFocusableElements(focusableElements.map(({ element }) => element))
   }
 
   const initialFocus = (container: HTMLElement) => {
