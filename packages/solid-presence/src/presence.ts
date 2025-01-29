@@ -5,7 +5,6 @@ import {
   createMemo,
   createSignal,
   onCleanup,
-  type Setter,
   untrack,
 } from 'solid-js'
 
@@ -14,20 +13,20 @@ import {
  *
  * @param props.show - Whether the presence is showing.
  * @param props.element - The element which animations should be tracked.
+ * @param props.onStateChange - Callback fired when the presence state changes.
  * @returns ```typescript
  * {
  *   present: Accessor<boolean>
- *   state: Accessor<'present' | 'hiding' | 'hidden'>
  * }
  * ```
  */
 const createPresence = (props: {
   show: MaybeAccessor<boolean>
   element: MaybeAccessor<HTMLElement | null>
+  onStateChange?: (state: 'present' | 'hiding' | 'hidden') => void
 }): {
   present: Accessor<boolean>
   state: Accessor<'present' | 'hiding' | 'hidden'>
-  setState: Setter<'present' | 'hiding' | 'hidden'>
 } => {
   const refStyles = createMemo(() => {
     const element = access(props.element)
@@ -39,9 +38,14 @@ const createPresence = (props: {
     return refStyles()?.animationName ?? 'none'
   }
 
-  const [presentState, setPresentState] = createSignal<
+  const [presentState, setPresentStateInternal] = createSignal<
     'present' | 'hiding' | 'hidden'
   >(access(props.show) ? 'present' : 'hidden')
+
+  const setPresentState = (state: 'present' | 'hiding' | 'hidden') => {
+    setPresentStateInternal(state)
+    props.onStateChange?.(state)
+  }
 
   let animationName = 'none'
 
@@ -114,7 +118,6 @@ const createPresence = (props: {
   return {
     present: () => presentState() === 'present' || presentState() === 'hiding',
     state: presentState,
-    setState: setPresentState,
   }
 }
 

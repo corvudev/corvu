@@ -1041,8 +1041,8 @@ const Presence: Library = {
     createPresence: {
       isDefaultExport: true,
       kind: 'function',
-      propsSorting: ['show', 'element'],
-      returnsSorting: ['present', 'state', 'setState'],
+      propsSorting: ['show', 'element', 'onStateChange'],
+      returnsSorting: ['present', 'state'],
     },
   },
 }
