@@ -4,6 +4,7 @@ import {
   createSignal,
   type JSX,
   on,
+  onCleanup,
   splitProps,
   type ValidComponent,
 } from 'solid-js'
@@ -103,6 +104,15 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       },
     ),
   )
+
+  createEffect(() => {
+    if (isSameDay(localProps.day, context().focusedDay())) {
+      context().setFocusedDayRef(ref())
+      onCleanup(() => {
+        context().setFocusedDayRef(null)
+      })
+    }
+  })
 
   const onClick: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (e) => {
     !callEventHandler(localProps.onClick, e) &&

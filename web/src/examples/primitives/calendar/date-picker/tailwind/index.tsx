@@ -20,6 +20,7 @@ const CalendarExample: VoidComponent = () => {
             offset: 5,
             flip: true,
           }}
+          initialFocusEl={props.focusedDayRef ?? undefined}
           labelId={labelId}
         >
           <Popover.Trigger class="my-auto flex w-56 items-center space-x-2 rounded-md bg-corvu-100 px-3 py-2 transition-all duration-100 hover:bg-corvu-200">

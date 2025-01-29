@@ -262,6 +262,8 @@ export type CalendarRootChildrenBaseProps = {
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
+  /** The ref of the currently focused calendar cell trigger. */
+  focusedDayRef: HTMLElement | null
   /** The `id` attributes of the calendar label elements. Can be undefined if no `Calendar.Label` is present for the given month index. */
   labelIds: (string | undefined)[]
 }
@@ -341,6 +343,10 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
 
     return [labelIds, registerLabelId, unregisterLabelId] as const
   })
+
+  const [focusedDayRef, setFocusedDayRef] = createSignal<HTMLElement | null>(
+    null,
+  )
 
   const [isFocusing, setIsFocusing] = createSignal(false)
 
@@ -594,14 +600,14 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       return focusedDay()
     },
     setFocusedDay,
+    get startOfWeek() {
+      return defaultedProps.startOfWeek
+    },
     get required() {
       return defaultedProps.required
     },
     get numberOfMonths() {
       return defaultedProps.numberOfMonths
-    },
-    get startOfWeek() {
-      return defaultedProps.startOfWeek
     },
     get disableOutsideDays() {
       return defaultedProps.disableOutsideDays
@@ -609,20 +615,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     get fixedWeeks() {
       return defaultedProps.fixedWeeks
     },
-    get min() {
-      return defaultedProps.min
-    },
-    get max() {
-      return defaultedProps.max
-    },
-    get excludeDisabled() {
-      return defaultedProps.excludeDisabled
-    },
     get textDirection() {
       return defaultedProps.textDirection
-    },
-    get labelIds() {
-      return registerMemo()[0].map((labelId) => labelId())
     },
     get weekdays() {
       return weekdays()
@@ -634,6 +628,21 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       return weeks()
     },
     navigate,
+    get focusedDayRef() {
+      return focusedDayRef()
+    },
+    get min() {
+      return defaultedProps.min
+    },
+    get max() {
+      return defaultedProps.max
+    },
+    get excludeDisabled() {
+      return defaultedProps.excludeDisabled
+    },
+    get labelIds() {
+      return registerMemo()[0].map((labelId) => labelId())
+    },
   }
 
   const memoizedChildren = createOnce(() => defaultedProps.children)
@@ -666,19 +675,20 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           setMonth,
           focusedDay,
           setFocusedDay,
-          required: () => defaultedProps.required,
           startOfWeek: () => defaultedProps.startOfWeek,
+          required: () => defaultedProps.required,
           numberOfMonths: () => defaultedProps.numberOfMonths,
           disableOutsideDays: () => defaultedProps.disableOutsideDays,
           fixedWeeks: () => defaultedProps.fixedWeeks,
-          min: () => defaultedProps.min,
-          max: () => defaultedProps.max,
-          excludeDisabled: () => defaultedProps.excludeDisabled,
+          textDirection: () => defaultedProps.textDirection,
           weekdays,
           months,
           weeks,
           navigate,
-          textDirection: () => defaultedProps.textDirection,
+          focusedDayRef,
+          min: () => defaultedProps.min,
+          max: () => defaultedProps.max,
+          excludeDisabled: () => defaultedProps.excludeDisabled,
           labelIds: () => registerMemo()[0],
         }}
       >
@@ -694,28 +704,30 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             setMonth,
             focusedDay,
             setFocusedDay,
-            required: () => defaultedProps.required,
             startOfWeek: () => defaultedProps.startOfWeek,
+            required: () => defaultedProps.required,
             numberOfMonths: () => defaultedProps.numberOfMonths,
             disableOutsideDays: () => defaultedProps.disableOutsideDays,
             fixedWeeks: () => defaultedProps.fixedWeeks,
-            min: () => defaultedProps.min,
-            max: () => defaultedProps.max,
-            excludeDisabled: () => defaultedProps.excludeDisabled,
+            textDirection: () => defaultedProps.textDirection,
             weekdays,
             months,
             weeks,
             navigate,
-            onDaySelect,
-            textDirection: () => defaultedProps.textDirection,
+            focusedDayRef,
+            min: () => defaultedProps.min,
+            max: () => defaultedProps.max,
+            excludeDisabled: () => defaultedProps.excludeDisabled,
             labelIds: () => registerMemo()[0],
             registerLabelId: (index: number) => registerMemo()[1](index),
             unregisterLabelId: (index: number) => registerMemo()[2](index),
+            onDaySelect,
             isSelected,
             isDisabled,
             isFocusing,
             setIsFocusing,
             disabled: defaultedProps.disabled,
+            setFocusedDayRef,
           }}
         >
           {untrack(() => resolveChildren())}

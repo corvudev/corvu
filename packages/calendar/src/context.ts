@@ -90,7 +90,8 @@ export type CalendarContextBaseValue = {
   navigate: (
     action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
   ) => void
-  /** The `id` attribute of the calendar label element. Is undefined if no `Calendar.Label` is present. */
+  /** The ref of the currently focused calendar cell trigger. */
+  focusedDayRef: Accessor<HTMLElement | null>
   /** The `id` attributes of the calendar label elements. Can be undefined if no `Calendar.Label` is present for the given month index. */
   labelIds: Accessor<Accessor<string | undefined>[]>
 }
@@ -147,6 +148,7 @@ type InternalCalendarContextValue = CalendarContextValue & {
   isFocusing: Accessor<boolean>
   setIsFocusing: Setter<boolean>
   disabled: (day: Date) => boolean
+  setFocusedDayRef: Setter<HTMLElement | null>
 }
 
 const InternalCalendarContext = createContext<InternalCalendarContextValue>()
