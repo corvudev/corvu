@@ -39,6 +39,10 @@ export type DisclosureRootProps = {
    */
   collapseBehavior?: 'remove' | 'hide'
   /**
+   * Callback fired when the disclosure content present state changes.
+   */
+  onContentPresentChange?: (present: boolean) => void
+  /**
    * The `id` attribute of the disclosure content element.
    * @defaultValue `createUniqueId()`
    */
@@ -128,6 +132,13 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
   const { present: contentPresent } = createPresence({
     show: expanded,
     element: contentRef,
+    onStateChange: (state) => {
+      if (state === 'present') {
+        defaultedProps.onContentPresentChange?.(true)
+      } else if (state === 'hidden') {
+        defaultedProps.onContentPresentChange?.(false)
+      }
+    },
   })
 
   const childrenProps: DisclosureRootChildrenProps = {

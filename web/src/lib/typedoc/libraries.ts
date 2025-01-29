@@ -49,6 +49,7 @@ const Disclosure: Library = {
         'onExpandedChange',
         'initialExpanded',
         'collapseBehavior',
+        'onContentPresentChange',
         'disclosureId',
         'contextId',
       ],
