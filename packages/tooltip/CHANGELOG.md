@@ -1,5 +1,13 @@
 # @corvu/tooltip
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/tooltip@0.2.1...@corvu/tooltip@0.2.2) (2025-01-29)
+
+
+### Features
+
+* add onContentPresentChange ([2e5302e](https://github.com/corvudev/corvu/commit/2e5302e7c1427a1350f81125b1d51fd57f3d3be4))
+* expose `closeOnScroll` in children callback and context ([ce5c7c4](https://github.com/corvudev/corvu/commit/ce5c7c40186683329f82b4dc3546eeb323bc0cd2))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/tooltip@0.2.0...@corvu/tooltip@0.2.1) (2024-08-03)
 
 
