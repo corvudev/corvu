@@ -180,6 +180,8 @@ export type TooltipRootChildrenProps = {
   closeOnEscapeKeyDown: boolean
   /** Whether the tooltip should close when the user presses on the trigger. */
   closeOnPointerDown: boolean
+  /** Whether the tooltip should close when the user scrolls. */
+  closeOnScroll: boolean
   /** Whether the tooltip content is present in the DOM. */
   contentPresent: boolean
   /** The tooltip content element. */
@@ -368,6 +370,9 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
     get closeOnPointerDown() {
       return defaultedProps.closeOnPointerDown
     },
+    get closeOnScroll() {
+      return defaultedProps.closeOnScroll
+    },
     get contentPresent() {
       return contentPresent()
     },
@@ -413,6 +418,7 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
           openOnHover: () => defaultedProps.openOnHover,
           closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
           closeOnPointerDown: () => defaultedProps.closeOnPointerDown,
+          closeOnScroll: () => defaultedProps.closeOnScroll,
           contentPresent,
           contentRef,
           tooltipId: () => defaultedProps.tooltipId,
@@ -435,6 +441,7 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
             openOnHover: () => defaultedProps.openOnHover,
             closeOnEscapeKeyDown: () => defaultedProps.closeOnEscapeKeyDown,
             closeOnPointerDown: () => defaultedProps.closeOnPointerDown,
+            closeOnScroll: () => defaultedProps.closeOnScroll,
             contentPresent,
             contentRef,
             tooltipId: () => defaultedProps.tooltipId,

@@ -40,6 +40,8 @@ export type TooltipContextValue = {
   closeOnEscapeKeyDown: Accessor<boolean>
   /** Whether the tooltip should close when the user presses on the trigger. */
   closeOnPointerDown: Accessor<boolean>
+  /** Whether the tooltip should close when the user scrolls. */
+  closeOnScroll: Accessor<boolean>
   /** Whether the tooltip content is present in the DOM. */
   contentPresent: Accessor<boolean>
   /** The tooltip content element. */
