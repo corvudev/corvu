@@ -132,6 +132,10 @@ export type TooltipRootProps = {
    */
   onScroll?: (event: Event) => void
   /**
+   * Callback fired when the tooltip content present state changes.
+   */
+  onContentPresentChange?: (present: boolean) => void
+  /**
    * The `id` attribute of the tooltip element.
    * @defaultValue `createUniqueId()`
    */
@@ -224,6 +228,13 @@ const TooltipRoot: Component<TooltipRootProps> = (props) => {
   const { present: contentPresent } = createPresence({
     show: open,
     element: contentRef,
+    onStateChange: (state) => {
+      if (state === 'present') {
+        defaultedProps.onContentPresentChange?.(true)
+      } else if (state === 'hidden') {
+        defaultedProps.onContentPresentChange?.(false)
+      }
+    },
   })
 
   const floatingState = createFloating({

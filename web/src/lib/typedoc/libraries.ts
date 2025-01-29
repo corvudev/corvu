@@ -840,6 +840,7 @@ const Tooltip: Library = {
         'onPointerDown',
         'closeOnScroll',
         'onScroll',
+        'onContentPresentChange',
         'tooltipId',
         'contextId',
       ],
