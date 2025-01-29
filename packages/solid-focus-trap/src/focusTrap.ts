@@ -148,25 +148,27 @@ const createFocusTrap = (props: {
   }
 
   const initialFocus = (container: HTMLElement) => {
-    const initialFocusElement =
-      access(defaultedProps.initialFocusElement) ??
-      firstFocusElement() ??
-      container
-    const onInitialFocus = defaultedProps.onInitialFocus
+    afterPaint(() => {
+      const initialFocusElement =
+        access(defaultedProps.initialFocusElement) ??
+        firstFocusElement() ??
+        container
+      const onInitialFocus = defaultedProps.onInitialFocus
 
-    let event: CustomEvent | undefined
-    if (onInitialFocus) {
-      event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
-      container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
-      container.dispatchEvent(event)
-      container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
-    }
+      let event: CustomEvent | undefined
+      if (onInitialFocus) {
+        event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
+        container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+        container.dispatchEvent(event)
+        container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+      }
 
-    if (event?.defaultPrevented === true) {
-      return
-    }
+      if (event?.defaultPrevented === true) {
+        return
+      }
 
-    afterPaint(() => initialFocusElement.focus())
+      initialFocusElement.focus()
+    })
   }
 
   const onFirstFocusElementKeyDown = (event: KeyboardEvent) => {
@@ -190,30 +192,32 @@ const createFocusTrap = (props: {
   }
 
   const restoreFocus = (container: HTMLElement) => {
-    const restoreFocus = access(defaultedProps.restoreFocus)
-    if (!restoreFocus) return
+    afterPaint(() => {
+      const restoreFocus = access(defaultedProps.restoreFocus)
+      if (!restoreFocus) return
 
-    const finalFocusElement =
-      access(defaultedProps.finalFocusElement) ?? originalFocusedElement
+      const finalFocusElement =
+        access(defaultedProps.finalFocusElement) ?? originalFocusedElement
 
-    if (!finalFocusElement) {
-      return
-    }
+      if (!finalFocusElement) {
+        return
+      }
 
-    let event: CustomEvent | undefined
-    const onFinalFocus = defaultedProps.onFinalFocus
-    if (onFinalFocus) {
-      event = new CustomEvent(EVENT_FINAL_FOCUS, EVENT_OPTIONS)
-      container.addEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
-      container.dispatchEvent(event)
-      container.removeEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
-    }
+      let event: CustomEvent | undefined
+      const onFinalFocus = defaultedProps.onFinalFocus
+      if (onFinalFocus) {
+        event = new CustomEvent(EVENT_FINAL_FOCUS, EVENT_OPTIONS)
+        container.addEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
+        container.dispatchEvent(event)
+        container.removeEventListener(EVENT_FINAL_FOCUS, onFinalFocus)
+      }
 
-    if (event?.defaultPrevented === true) {
-      return
-    }
+      if (event?.defaultPrevented === true) {
+        return
+      }
 
-    afterPaint(() => finalFocusElement.focus())
+      finalFocusElement.focus()
+    })
   }
 }
 
