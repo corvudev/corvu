@@ -1,5 +1,12 @@
 # @corvu/dialog
 
+## [0.2.4](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.3...@corvu/dialog@0.2.4) (2025-01-29)
+
+
+### Features
+
+* add onContentPresentChange and onOverlayPresentChange ([61bff8a](https://github.com/corvudev/corvu/commit/61bff8a6e7a2442c12f371c874e85a6ec5e2cb88))
+
 ## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/dialog@0.2.2...@corvu/dialog@0.2.3) (2024-08-13)
 
 

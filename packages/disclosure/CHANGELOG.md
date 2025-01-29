@@ -1,5 +1,12 @@
 # @corvu/disclosure
 
+## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/disclosure@0.2.0...@corvu/disclosure@0.2.1) (2025-01-29)
+
+
+### Features
+
+* add onContentPresentChange ([9984e2c](https://github.com/corvudev/corvu/commit/9984e2c019e971955f571309cd8890c0ae9fa29a))
+
 ## [0.2.0](https://github.com/corvudev/corvu/compare/@corvu/disclosure@0.1.0...@corvu/disclosure@0.2.0) (2024-05-21)
 
 

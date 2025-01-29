@@ -1,5 +1,21 @@
 # solid-presence
 
+## [0.2.0](https://github.com/corvudev/corvu/compare/solid-presence@0.1.8...solid-presence@0.2.0) (2025-01-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove exposed setState, accept onStateChange callback
+
+### Features
+
+* remove exposed setState, accept onStateChange callback ([9435db6](https://github.com/corvudev/corvu/commit/9435db681426c76341bf754ad93a3b40ba3d35c2))
+
+
+### Bug Fixes
+
+* provide initial value to createEffect to avoid initial state change ([8ad1f72](https://github.com/corvudev/corvu/commit/8ad1f725fb0a7542126226bceb6d1d99557a3cce))
+
 ## [0.1.8](https://github.com/corvudev/corvu/compare/solid-presence@0.1.7...solid-presence@0.1.8) (2024-08-03)
 
 

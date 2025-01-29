@@ -1,5 +1,13 @@
 # solid-focus-trap
 
+## [0.1.8](https://github.com/corvudev/corvu/compare/solid-focus-trap@0.1.7...solid-focus-trap@0.1.8) (2025-01-29)
+
+
+### Bug Fixes
+
+* properly defer initial and restore focus to work with dynamic elements ([ea5c667](https://github.com/corvudev/corvu/commit/ea5c6675c6aeb3bff1f52f31c8e1d0a5f8e36938))
+* respect tabIndex when sorting focusable elements ([be63cc7](https://github.com/corvudev/corvu/commit/be63cc7fcf5fdb5fa6db1667f0814586b1f3472b))
+
 ## [0.1.7](https://github.com/corvudev/corvu/compare/solid-focus-trap@0.1.6...solid-focus-trap@0.1.7) (2024-06-19)
 
 
