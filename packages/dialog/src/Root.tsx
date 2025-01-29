@@ -136,6 +136,14 @@ export type DialogRootProps = {
    */
   onFinalFocus?: (event: Event) => void
   /**
+   * Callback fired when the dialog content present state changes.
+   */
+  onContentPresentChange?: (present: boolean) => void
+  /**
+   * Callback fired when the dialog overlay present state changes.
+   */
+  onOverlayPresentChange?: (present: boolean) => void
+  /**
    * The `id` attribute of the dialog element.
    * @defaultValue `createUniqueId()`
    */
@@ -262,10 +270,24 @@ const DialogRoot: Component<DialogRootProps> = (props) => {
   const { present: contentPresent } = createPresence({
     show: open,
     element: contentRef,
+    onStateChange: (state) => {
+      if (state === 'present') {
+        defaultedProps.onContentPresentChange?.(true)
+      } else if (state === 'hidden') {
+        defaultedProps.onContentPresentChange?.(false)
+      }
+    },
   })
   const { present: overlayPresent } = createPresence({
     show: open,
     element: overlayRef,
+    onStateChange: (state) => {
+      if (state === 'present') {
+        defaultedProps.onOverlayPresentChange?.(true)
+      } else if (state === 'hidden') {
+        defaultedProps.onOverlayPresentChange?.(false)
+      }
+    },
   })
 
   createFocusTrap({

@@ -323,6 +323,8 @@ const Dialog: Library = {
         'onInitialFocus',
         'finalFocusEl',
         'onFinalFocus',
+        'onContentPresentChange',
+        'onOverlayPresentChange',
         'dialogId',
         'labelId',
         'descriptionId',
