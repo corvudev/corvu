@@ -35,7 +35,7 @@ const CalendarExample: VoidComponent = () => {
                     {(weekday) => (
                       <Calendar.HeadCell
                         abbr={formatWeekdayLong(weekday())}
-                        class="w-8 pb-1 text-xs font-normal opacity-50"
+                        class="w-8 pb-1 text-xs font-normal opacity-65"
                       >
                         {formatWeekdayShort(weekday())}
                       </Calendar.HeadCell>
