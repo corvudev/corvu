@@ -1,5 +1,12 @@
 # @corvu/calendar
 
+## [0.1.2](https://github.com/corvudev/corvu/compare/@corvu/calendar@0.1.1...@corvu/calendar@0.1.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* don't set disabled cell triggers as the focusedDayRef ([6e741f3](https://github.com/corvudev/corvu/commit/6e741f317e4c878f31bcc4889766bb979ad7341e))
+
 ## [0.1.1](https://github.com/corvudev/corvu/compare/@corvu/calendar@0.1.0...@corvu/calendar@0.1.1) (2025-01-29)
 
 
