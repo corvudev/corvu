@@ -106,6 +106,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
   )
 
   createEffect(() => {
+    if (context().isDisabled(localProps.day, localProps.month)) return
     if (isSameDay(localProps.day, context().focusedDay())) {
       context().setFocusedDayRef(ref())
       onCleanup(() => {
