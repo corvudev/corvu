@@ -1,5 +1,12 @@
 # @corvu/drawer
 
+## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.2.2...@corvu/drawer@0.2.3) (2025-01-31)
+
+
+### Bug Fixes
+
+* only handle transition end events dispatched from the drawer content ([cc83674](https://github.com/corvudev/corvu/commit/cc83674b704ccd8835064be5292a1cc4aa4d6ae2))
+
 ## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/drawer@0.2.1...@corvu/drawer@0.2.2) (2024-07-04)
 
 
