@@ -2,7 +2,7 @@ import createPersistent from 'solid-persistent'
 import Drawer from '@corvu/drawer'
 import type { VoidComponent } from 'solid-js'
 
-const DrawerNoDragExample: VoidComponent = () => {
+const DrawerPersistentExample: VoidComponent = () => {
   const persistedContent = createPersistent(DrawerContent)
 
   return (
@@ -11,7 +11,7 @@ const DrawerNoDragExample: VoidComponent = () => {
         <>
           <div class="my-auto flex flex-col items-center">
             <p class="mb-2 rounded-lg bg-corvu-300 px-2 py-1 font-bold">
-              No drag example
+              Persistent content example
             </p>
             <Drawer.Trigger class="my-auto rounded-lg bg-corvu-100 px-4 py-3 text-lg font-medium transition-all duration-100 hover:bg-corvu-200 active:translate-y-0.5">
               Open Drawer
@@ -55,4 +55,4 @@ const DrawerContent = () => (
   </>
 )
 
-export default DrawerNoDragExample
+export default DrawerPersistentExample
