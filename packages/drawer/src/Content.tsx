@@ -347,7 +347,8 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
         if (e.touches.length !== 1) return
         dragStartPos = null
       }}
-      onTransitionEnd={() => {
+      onTransitionEnd={(e) => {
+        if (e.target !== dialogContext().contentRef()) return
         batch(() => {
           if (drawerContext().transitionState() === 'closing') {
             drawerContext().closeDrawer()
