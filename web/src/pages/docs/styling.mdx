@@ -11,7 +11,7 @@ export const components = { h2: H2, h3: H3 }
 
 # Styling
 
-corvu leaves the styling up to you. You can use TailwindCSS, any CSS-in-JS library or just plain old CSS to style primitives.
+corvu leaves the styling up to you. You can use Tailwind CSS, any CSS-in-JS library or just plain old CSS to style primitives.
 
 ## Data attributes
 
@@ -56,7 +56,7 @@ You can use it to style all components of the same kind at once:
 
 Additionally, corvu provides plugins for these CSS frameworks:
 
-- [TailwindCSS plugin](/docs/installation/#tailwindcss-plugin)
+- [Tailwind CSS plugin](/docs/installation/#tailwind-css-plugin)
 - [UnoCSS preset](/docs/installation/#unocss-preset)
 
 They make it easy to style components based on their current state using modifiers.
@@ -75,6 +75,11 @@ They make it easy to style components based on their current state using modifie
 - `corvu-disabled` -> `&[data-disabled]`
 - `corvu-active` -> `&[data-active]`
 - `corvu-dragging` -> `&[data-dragging]`
+- `corvu-selected` -> `&[data-selected]`
+- `corvu-today` -> `&[data-today]`
+- `corvu-range-start` -> `&[data-range-start]`
+- `corvu-range-end` -> `&[data-range-end]`
+- `corvu-in-range` -> `&[data-in-range]`
 
 These two CSS framework use similar syntax. You can style components like this:
 

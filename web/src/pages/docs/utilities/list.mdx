@@ -13,7 +13,7 @@ import MultiExample from '@examples/utilities/list/multi'
 import MultiTailwindTsx from '@examples/utilities/list/multi?raw'
 import PackageInfo from '@components/docs/PackageInfo.astro'
 import RawCode from '@components/docs/code/RawCode.astro'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import H2 from '@components/docs/headings/H2.astro'
 import H3 from '@components/docs/headings/H3.astro'
 export const components = { h2: H2, h3: H3 }
@@ -85,14 +85,14 @@ A tabbable multi select list with keyboard navigation and selection.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} height="dynamic" client:idle>
   <MultiExample client:idle />
   <RawCode slot="tailwindTsx" code={MultiTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ## API reference

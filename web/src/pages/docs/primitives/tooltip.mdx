@@ -8,7 +8,7 @@ import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/tooltip/basic/tailwind/index'
 import TailwindTsx from '@examples/primitives/tooltip/basic/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import CssTsx from '@examples/primitives/tooltip/basic/css/index?raw'
 import CssStyle from '@examples/primitives/tooltip/basic/css/index.css?raw'
 import Code from '@components/docs/code/Code.astro'
@@ -36,8 +36,8 @@ A popup that displays information when its trigger receives keyboard focus or th
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -55,7 +55,7 @@ A popup that displays information when its trigger receives keyboard focus or th
 }]} height="heading" client:idle>
   <BasicExample client:idle />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>

@@ -8,7 +8,7 @@ import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/resizable/basic/tailwind/index'
 import TailwindTsx from '@examples/primitives/resizable/basic/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import CssTsx from '@examples/primitives/resizable/basic/css/index?raw'
 import CssStyle from '@examples/primitives/resizable/basic/css/index.css?raw'
 import AltKeyExample from '@examples/primitives/resizable/altKey/tailwind/index'
@@ -46,8 +46,8 @@ SolidJS components for building resizable panels and splitters.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -65,7 +65,7 @@ SolidJS components for building resizable panels and splitters.
 }]} height="heading" client:idle>
   <BasicExample client:idle />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
@@ -134,14 +134,14 @@ Resizing while holding down the Alt key changes the size of a panel from both si
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <AltKeyExample client:visible />
   <RawCode slot="tailwindTsx" code={AltKeyTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 You can also disable this behavior by setting `altKey={false}` on the `<Handle />` component. Or you can make this the default and only way to resize on a Handle by setting `altKey="only"`.
@@ -158,14 +158,14 @@ You can nest resizables to create more complex layouts. Resize handles automatic
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <NestedExample client:visible />
   <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Persistent layout
@@ -202,14 +202,14 @@ Edit the layout below and refresh the page to see how the panel sizes persist.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <PersistentExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Collapsible panel
@@ -228,14 +228,14 @@ Here, the left Panel is collapsible with `minSize={0.3}` and `collapsedSize={0.1
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <CollapsibleExample client:visible />
   <RawCode slot="tailwindTsx" code={CollapsibleTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Userland
@@ -277,14 +277,14 @@ Here is an example that uses this approach:
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <HoistingExample client:visible />
   <RawCode slot="tailwindTsx" code={HoistingTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 The other approach is to use a signal to hoist the context:

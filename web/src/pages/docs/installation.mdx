@@ -26,7 +26,8 @@ If you want to install all primitives at once you can install the main package. 
 
 You're good to go! Head over to [Usage](/docs/state/) to learn how to use corvu.
 
-## TailwindCSS plugin
+## Tailwind CSS plugin
+
 If you want make use of the tailwind modifiers like `corvu-open:`, install the tailwind plugin:
 
 <Code code={`
@@ -49,6 +50,9 @@ Then add the plugin to your `tailwind.config.js` file:
 `} lang="js" />
 
 Check out the [Styling](/docs/styling/) guide learn how to use the tailwind plugin.
+
+### Tailwind v4.0
+Tailwind CSS v4.0 improved working with data attributes a lot and this plugin isn't considered useful anymore. You can target corvu's data attributes directly (eg. `data-open:` or `group-data-open:`).
 
 ## UnoCSS preset
 We also provide a preset for [UnoCSS](https://unocss.dev/) that adds the same modifiers.

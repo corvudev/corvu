@@ -16,7 +16,7 @@ import CssStyle from '@examples/primitives/calendar/basic/css/index.css?raw'
 import RangeTailwindTsx from '@examples/primitives/calendar/range/tailwind/index?raw'
 import DisabledTailwindTsx from '@examples/primitives/calendar/disabled/tailwind/index?raw'
 import DatePickerTailwindTsx from '@examples/primitives/calendar/date-picker/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import ApiReference from '@components/docs/api/ApiReference.astro'
 import { Calendar } from '@lib/typedoc/libraries'
 import Link from '@components/docs/Link.astro'
@@ -40,8 +40,8 @@ export const components = { h2: H2, h3: H3 }
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -59,7 +59,7 @@ export const components = { h2: H2, h3: H3 }
 }]} height="heading" client:idle>
   <BasicExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
@@ -146,14 +146,14 @@ Use `mode="range"` to set the selection mode to range. By defining `numberOfMont
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <RangeExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={RangeTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Disabling dates
@@ -177,14 +177,14 @@ This function is reactive, meaning you can access signals and it will update the
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <DisabledExample client:only="solid-js" />
   <RawCode slot="tailwindTsx" code={DisabledTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Date Picker
@@ -199,14 +199,14 @@ We can combine the calendar with the [Popover](/docs/primitives/popover/) primit
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <DatePickerExample client:visible />
   <RawCode slot="tailwindTsx" code={DatePickerTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 By passing `focusedDayRef` as the `initialFocusEl` prop to the Popover, we can make it focus the calendar grid when it opens!

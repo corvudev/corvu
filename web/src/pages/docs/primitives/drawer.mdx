@@ -8,7 +8,7 @@ import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/drawer/basic/tailwind/index'
 import TailwindTsx from '@examples/primitives/drawer/basic/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import CssTsx from '@examples/primitives/drawer/basic/css/index?raw'
 import CssStyle from '@examples/primitives/drawer/basic/css/index.css?raw'
 import SnappointsExample from '@examples/primitives/drawer/snappoints/index'
@@ -49,8 +49,8 @@ A drawer is a draggable dialog that is attached to any side of the viewport. It 
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -68,7 +68,7 @@ A drawer is a draggable dialog that is attached to any side of the viewport. It 
 }]} height="heading" client:idle>
   <BasicExample client:idle />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
@@ -185,14 +185,14 @@ Here, the drawer additionally snaps to 50% of its height.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <SnappointsExample client:visible />
   <RawCode slot="tailwindTsx" code={SnappointsTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 Per default, the drawer will snap to the closest snap point. You can change this behavior by providing custom `breakPoints` to the root component:
@@ -213,14 +213,14 @@ Here, the drawer will close when the user drags below 75% of the drawer's height
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <BreakpointsExample client:visible />
   <RawCode slot="tailwindTsx" code={BreakpointsTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Scrollable elements
@@ -234,14 +234,14 @@ Scrollable elements work out of the box. The drawer will check if the user is dr
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <ScrollableExample client:visible />
   <RawCode slot="tailwindTsx" code={ScrollableTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Transitioning the content height
@@ -257,14 +257,14 @@ This is disabled by default and you need to set the `transitionResize` property 
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <TransitionResizeExample client:visible />
   <RawCode slot="tailwindTsx" code={TransitionResizeTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Dynamic content height
@@ -280,14 +280,14 @@ A common example would be a comment section which can be expanded:
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <CommentsExample client:visible />
   <RawCode slot="tailwindTsx" code={CommentsTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 To achieve this, you can use the `props.openPercentage` property and change the height of the drawer accordingly. Make sure to create a wrapper element inside `Drawer.Content` and not apply the height directly to the `Content` component, otherwise the drawer will not be able to calculate the correct height.
@@ -315,14 +315,14 @@ You can disable drag on an element by giving it the `data-corvu-no-drag` attribu
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <NoDragExample client:visible />
   <RawCode slot="tailwindTsx" code={NoDragTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Persistent content
@@ -359,14 +359,14 @@ Give it a try! 🐦‍⬛
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <PersistentExample client:visible />
   <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ## Accessibility

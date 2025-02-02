@@ -12,7 +12,7 @@ import NestedExample from '@examples/primitives/dialog/nested/tailwind/index'
 import NestedTailwindTsx from '@examples/primitives/dialog/nested/tailwind/index?raw'
 import PersistentExample from '@examples/primitives/dialog/persistent/tailwind/index'
 import PersistentTailwindTsx from '@examples/primitives/dialog/persistent/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import CssTsx from '@examples/primitives/dialog/basic/css/index?raw'
 import CssStyle from '@examples/primitives/dialog/basic/css/index.css?raw'
 import Code from '@components/docs/code/Code.astro'
@@ -39,8 +39,8 @@ A window overlaid on either the primary window or another dialog window.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -58,7 +58,7 @@ A window overlaid on either the primary window or another dialog window.
 }]} height="heading" client:idle>
   <BasicExample client:idle />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
@@ -128,14 +128,14 @@ Feel free to nest dialogs however you want. corvu is aware of nested dialogs and
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <NestedExample client:visible />
   <RawCode slot="tailwindTsx" code={NestedTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ### Persistent content
@@ -172,14 +172,14 @@ Give it a try! 🐦‍⬛
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 }]} client:visible>
   <PersistentExample client:visible />
   <RawCode slot="tailwindTsx" code={PersistentTailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
 ## Accessibility

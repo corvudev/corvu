@@ -8,7 +8,7 @@ import RawCode from '@components/docs/code/RawCode.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import BasicExample from '@examples/primitives/otp-field/basic/tailwind/index'
 import TailwindTsx from '@examples/primitives/otp-field/basic/tailwind/index?raw'
-import TailwindConfig from '@examples/primitives/otp-field/tailwind.js?raw'
+import TailwindCss from '@examples/primitives/tailwind.css?raw'
 import CssTsx from '@examples/primitives/otp-field/basic/css/index?raw'
 import CssStyle from '@examples/primitives/otp-field/basic/css/index.css?raw'
 import Code from '@components/docs/code/Code.astro'
@@ -35,8 +35,8 @@ An accessible and customizable OTP Input component for SolidJS.
       slotName: 'tailwindTsx',
     },
     {
-      fileName: 'tailwind.config.js',
-      slotName: 'tailwindConfig',
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
     }
   ]
 },{
@@ -54,7 +54,7 @@ An accessible and customizable OTP Input component for SolidJS.
 }]} height="heading" client:idle>
   <BasicExample client:idle />
   <RawCode slot="tailwindTsx" code={TailwindTsx} lang="tsx" />
-  <RawCode slot="tailwindConfig" code={TailwindConfig} lang="js" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
   <RawCode slot="cssTsx" code={CssTsx} lang="tsx" />
   <RawCode slot="cssStyle" code={CssStyle} lang="css" />
 </ExampleWrapper>
