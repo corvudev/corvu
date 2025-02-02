@@ -21,6 +21,9 @@ import CommentsExample from '@examples/primitives/drawer/comments/index'
 import CommentsTailwindTsx from '@examples/primitives/drawer/comments/index?raw'
 import NoDragExample from '@examples/primitives/drawer/noDrag/index'
 import NoDragTailwindTsx from '@examples/primitives/drawer/noDrag/index?raw'
+import ResponsiveExample from '@examples/primitives/drawer/responsive/index'
+import ResponsiveCreateMediaQuery from '@examples/primitives/drawer/responsive/createMediaQuery?raw'
+import ResponsiveTailwindTsx from '@examples/primitives/drawer/responsive/index?raw'
 import TransitionResizeExample from '@examples/primitives/drawer/transitionResize/index'
 import TransitionResizeTailwindTsx from '@examples/primitives/drawer/transitionResize/index?raw'
 import PersistentExample from '@examples/primitives/drawer/persistent/index'
@@ -165,6 +168,8 @@ You can also use the `openPercentage` property returned by the `Drawer.useContex
     )}
   </Drawer>
 `} lang="tsx" copyButton />
+
+## Examples
 
 ### Snap- and breakpoints
 The drawer root accepts a `snapPoints` array to customize the points to snap to. Valid values are either percentages or pixel values. The drawer will snap to the closest snap point when the user stops dragging (With the `velocityFunction` in mind. See the [API Reference](#api-reference) for more information)
@@ -322,6 +327,32 @@ You can disable drag on an element by giving it the `data-corvu-no-drag` attribu
 }]} client:visible>
   <NoDragExample client:visible />
   <RawCode slot="tailwindTsx" code={NoDragTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
+</ExampleWrapper>
+
+### Responsive drawer/dialog
+You can combine the drawer and dialog primitives to create a responsive component that renders a drawer on mobile and a dialog on desktop. The `createMediaQuery` primitive accepts a media query and returns a boolean signal indicating whether the query currently matches or not.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'createMediaQuery.ts',
+      slotName: 'createMediaQuery',
+    },
+    {
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
+    }
+  ]
+}]} client:visible>
+  <ResponsiveExample client:visible />
+  <RawCode slot="tailwindTsx" code={ResponsiveTailwindTsx} lang="tsx" />
+  <RawCode slot="createMediaQuery" code={ResponsiveCreateMediaQuery} lang="ts" />
   <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
 </ExampleWrapper>
 
