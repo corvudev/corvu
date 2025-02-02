@@ -22,14 +22,12 @@
     "solid-js": "^1.9.4"
   },
   "devDependencies": {
-    "@corvu/tailwind": "workspace:*",
     "@tailwindcss/vite": "^4.0.3",
     "@typescript-eslint/parser": "^8.22.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-solid": "^0.14.5",
-    "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "tailwindcss": "^4.0.3",
     "typescript-eslint": "^8.22.0",
