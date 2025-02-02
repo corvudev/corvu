@@ -14,9 +14,9 @@ const ResizableAltKeyExample: VoidComponent = () => {
         />
         <Resizable.Handle
           aria-label="Resize Handle"
-          class="group basis-3 px-[3px]"
+          class="group basis-3 px-0.75"
         >
-          <div class="size-full rounded transition-colors corvu-group-active:bg-corvu-300 corvu-group-dragging:bg-corvu-100" />
+          <div class="size-full rounded-sm transition-colors group-data-active:bg-corvu-300 group-data-dragging:bg-corvu-100" />
         </Resizable.Handle>
         <Resizable.Panel
           initialSize={0.4}
@@ -36,9 +36,9 @@ const ResizableAltKeyExample: VoidComponent = () => {
         </Resizable.Panel>
         <Resizable.Handle
           aria-label="Resize Handle"
-          class="group basis-3 px-[3px]"
+          class="group basis-3 px-0.75"
         >
-          <div class="size-full rounded transition-colors corvu-group-active:bg-corvu-300 corvu-group-dragging:bg-corvu-100" />
+          <div class="size-full rounded-sm transition-colors group-data-active:bg-corvu-300 group-data-dragging:bg-corvu-100" />
         </Resizable.Handle>
         <Resizable.Panel
           initialSize={0.3}

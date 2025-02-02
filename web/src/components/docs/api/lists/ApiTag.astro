@@ -31,7 +31,7 @@ const { kind, componentName, tags } = Astro.props
     )
   }
   <div class="overflow-y-auto">
-    <table class="mt-3 w-full min-w-[600px] text-left md:min-w-0">
+    <table class="mt-3 w-full min-w-150 text-left md:min-w-0">
       <tr class="not-prose border-b border-corvu-100">
         <th class="w-1/2 pb-3">Property</th>
         <th class="w-1/2 pb-3">Description</th>
@@ -40,7 +40,7 @@ const { kind, componentName, tags } = Astro.props
         tags.map((prop) => (
           <tr tabindex="0" class="border-b border-corvu-100">
             <td class="not-prose py-5 pr-5 align-top text-sm">
-              <p class="inline whitespace-nowrap rounded bg-corvu-pink px-1.5 pb-0.5 pt-1.5 font-mono">
+              <p class="inline whitespace-nowrap rounded-sm bg-corvu-pink px-1.5 pb-0.5 pt-1.5 font-mono">
                 {prop.name}
               </p>
             </td>

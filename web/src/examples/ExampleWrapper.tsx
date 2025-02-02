@@ -41,7 +41,7 @@ const ExampleWrapper: FlowComponent<{
                 setActiveExample(parseInt(e.currentTarget.value, 10))
                 setActiveTab(0)
               }}
-              class="cursor-pointer rounded-lg border-2 border-corvu-400 bg-corvu-bg !bg-caret-dark bg-[length:16px_16px] pb-1 pl-3 pr-10 pt-[7px] text-sm dark:!bg-caret-light"
+              class="rounded-lg border-2 border-corvu-400 bg-corvu-bg bg-caret-dark! bg-[length:16px_16px] pb-1 pl-3 pr-10 pt-[7px] text-sm dark:bg-caret-light!"
               aria-label="Select template"
             >
               <For each={props.codeSnippets}>
@@ -53,7 +53,7 @@ const ExampleWrapper: FlowComponent<{
           </div>
         </Show>
         <button
-          class={clsx('rounded p-2 hover:bg-corvu-400', {
+          class={clsx('rounded-sm p-2 hover:bg-corvu-400', {
             'bg-corvu-400 text-corvu-dark': viewCode(),
           })}
           onClick={() => setViewCode((viewCode) => !viewCode)}
@@ -85,8 +85,8 @@ const ExampleWrapper: FlowComponent<{
           class={clsx(
             'relative grid grid-cols-1 rounded-b-xl bg-corvu-400 after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_center,_#7250AE20_2px,_transparent_0)] after:bg-[length:24px_24px]',
             {
-              'min-h-[300px] @xl:min-h-[400px]': props.height === 'heading',
-              'min-h-[200px]': !props.height,
+              'min-h-75 @xl:min-h-100': props.height === 'heading',
+              'min-h-50': !props.height,
             },
           )}
         >
@@ -111,7 +111,7 @@ const ExampleWrapper: FlowComponent<{
             )}
           </For>
         </div>
-        <div class="overflow-hidden rounded-b-xl border-4 border-corvu-400 text-sm [&>astro-slot>div>pre]:max-h-[655px] [&>astro-slot]:grid">
+        <div class="overflow-hidden rounded-b-xl border-4 border-corvu-400 text-sm [&>astro-slot>div>pre]:max-h-163 [&>astro-slot]:grid">
           {
             props[
               props.codeSnippets[activeExample()].files[activeTab()].slotName

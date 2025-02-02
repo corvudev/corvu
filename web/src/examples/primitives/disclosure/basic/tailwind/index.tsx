@@ -28,7 +28,7 @@ const DisclosureExample: VoidComponent = () => {
               </Disclosure.Trigger>
             </div>
             <div class="rounded-lg bg-corvu-100 px-3 py-2">corvudev/corvu</div>
-            <Disclosure.Content class="mt-1 space-y-1 overflow-hidden corvu-expanded:animate-expand corvu-collapsed:animate-collapse">
+            <Disclosure.Content class="mt-1 space-y-1 overflow-hidden data-expanded:animate-expand data-collapsed:animate-collapse">
               <div class="rounded-lg bg-corvu-100 px-3 py-2">solidjs/solid</div>
               <div class="rounded-lg bg-corvu-100 px-3 py-2">
                 nitropage/nitropage

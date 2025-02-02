@@ -1,31 +1,185 @@
-html {
-  --corvu-text-dark: 267 40% 10%;
-  --corvu-text: 267 40% 10%;
-  --corvu-bg: 249 88% 97%;
-  --corvu-100: 249 87% 94%;
-  --corvu-200: 251 86% 89%;
-  --corvu-300: 253 80% 82%;
-  --corvu-400: 258 79% 74%;
-  --corvu-blue: 203 80% 82%;
-  --corvu-pink: 303 80% 82%;
-  --corvu-link: 258 49% 54%;
-  --corvu-link-hover: 258 59% 44%;
+@import 'tailwindcss';
 
-  scrollbar-color: hsl(var(--corvu-300)) hsl(var(--corvu-100));
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Rubik Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: 'Mona Space', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  --color-corvu-text: var(--corvu-text);
+  --color-corvu-text-dark: var(--corvu-text-dark);
+  --color-corvu-bg: var(--corvu-bg);
+  --color-corvu-100: var(--corvu-100);
+  --color-corvu-200: var(--corvu-200);
+  --color-corvu-300: var(--corvu-300);
+  --color-corvu-400: var(--corvu-400);
+  --color-corvu-blue: var(--corvu-blue);
+  --color-corvu-pink: var(--corvu-pink);
+  --color-corvu-link: var(--corvu-link);
+  --color-corvu-link-hover: var(--corvu-link-hover);
+
+  --background-image-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='20' height='20'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='%23f2f0fe' stroke-linecap='round' stroke-linejoin='round' stroke-width='24' d='m208 96-80 80-80-80'/%3E%3C/svg%3E");
+  --background-image-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='20' height='20'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='%23180f23' stroke-linecap='round' stroke-linejoin='round' stroke-width='24' d='m208 96-80 80-80-80'/%3E%3C/svg%3E");
+
+  --animate-expand: expand 250ms cubic-bezier(0.32,0.72,0,0.75);
+  --animate-collapse: collapse 250ms cubic-bezier(0.32,0.72,0,0.75);
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  --animate-in: enter 150ms ease;
+  --animate-out: exit 150ms ease;
+
+  @keyframes expand {
+    0% {
+      height: 0px;
+    }
+    100% {
+      height: var(--corvu-disclosure-content-height);
+    }
+  }
+
+  @keyframes collapse {
+    0% {
+      height: var(--corvu-disclosure-content-height);
+    }
+    100% {
+      height: 0px;
+    }
+  }
+
+  @keyframes caret-blink {
+    0%, 70%, 100% {
+      opacity: 0;
+    }
+    20%, 50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes enter {
+    from {
+      opacity: var(--tw-enter-opacity, 1);
+      transform: translate3d(
+          var(--tw-enter-translate-x, 0),
+          var(--tw-enter-translate-y, 0),
+          0
+        )
+        scale3d(
+          var(--tw-enter-scale, 1),
+          var(--tw-enter-scale, 1),
+          var(--tw-enter-scale, 1)
+        )
+    }
+  }
+
+  @keyframes exit {
+    to {
+      opacity: var(--tw-exit-opacity, 1);
+      transform: translate3d(
+          var(--tw-exit-translate-x, 0),
+          var(--tw-exit-translate-y, 0),
+          0
+        )
+        scale3d(
+          var(--tw-exit-scale, 1),
+          var(--tw-exit-scale, 1),
+          var(--tw-exit-scale, 1)
+        )
+    }
+  }
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@utility fade-in-* {
+  --tw-enter-opacity: --value(percentage, ratio);
+}
+@utility fade-out-* {
+  --tw-exit-opacity: --value(percentage, ratio);
+}
+
+@utility zoom-in-* {
+  --tw-enter-scale: --value(percentage, ratio);
+}
+@utility zoom-out-* {
+  --tw-exit-scale: --value(percentage, ratio);
+}
+
+@utility slide-in-from-top-* {
+  --tw-enter-translate-y: calc(--value(percentage) * -1);
+  --tw-enter-translate-y: calc(--value(ratio) * -100%);
+  --tw-enter-translate-y: calc(--value(integer) * var(--spacing) * -1);
+}
+@utility slide-in-from-bottom-* {
+  --tw-enter-translate-y: --value(percentage);
+  --tw-enter-translate-y: calc(--value(ratio) * 100%);
+  --tw-enter-translate-y: calc(--value(integer) * var(--spacing));
+}
+@utility slide-in-from-left-* {
+  --tw-enter-translate-x: calc(--value(percentage) * -1);
+  --tw-enter-translate-x: calc(--value(ratio) * -100%);
+  --tw-enter-translate-x: calc(--value(integer) * var(--spacing) * -1);
+}
+@utility slide-in-from-right-* {
+  --tw-enter-translate-x: --value(percentage);
+  --tw-enter-translate-x: calc(--value(ratio) * 100%);
+  --tw-enter-translate-x: calc(--value(integer) * var(--spacing));
+}
+
+@utility slide-out-to-top-* {
+  --tw-exit-translate-y: calc(--value(percentage) * -1);
+  --tw-exit-translate-y: calc(--value(ratio) * -100%);
+  --tw-exit-translate-y: calc(--value(integer) * var(--spacing) * -1);
+}
+@utility slide-out-to-bottom-* {
+  --tw-exit-translate-y: --value(percentage);
+  --tw-exit-translate-y: calc(--value(ratio) * 100%);
+  --tw-exit-translate-y: calc(--value(integer) * var(--spacing));
+}
+@utility slide-out-to-left-* {
+  --tw-exit-translate-x: calc(--value(percentage) * -1);
+  --tw-exit-translate-x: calc(--value(ratio) * -100%);
+  --tw-exit-translate-x: calc(--value(integer) * var(--spacing) * -1);
+}
+@utility slide-out-to-right-* {
+  --tw-exit-translate-x: --value(percentage);
+  --tw-exit-translate-x: calc(--value(ratio) * 100%);
+  --tw-exit-translate-x: calc(--value(integer) * var(--spacing));
+}
+
+@plugin '@tailwindcss/aspect-ratio';
+@plugin '@tailwindcss/forms';
+
+@config '../../tailwind.config.js';
+
+html {
+  --corvu-text-dark: #180F23;
+  --corvu-text: #180F23;
+  --corvu-bg: #F2F0FE;
+  --corvu-100: #E6E2FD;
+  --corvu-200: #D4CBFB;
+  --corvu-300: #BCACF6;
+  --corvu-400: #A888F1;
+  --corvu-blue: #ABCAF5;
+  --corvu-pink: #D3ABF5;
+  --corvu-link: #7250C3;
+  --corvu-link-hover: #562EB2;
+
+  scrollbar-color: var(--corvu-300) var(--corvu-100);
 }
 
 html.dark {
   color-scheme: dark;
-  --corvu-text: 266 41% 90%;
-  --corvu-bg: 262 22% 10%;
-  --corvu-100: 253 26% 17%;
-  --corvu-200: 263 39% 30%;
-  --corvu-300: 260 44% 40%;
-  --corvu-400: 258 39% 64%;
-  --corvu-blue: 210 54% 30%;
-  --corvu-pink: 310 44% 40%;
-  --corvu-link: 258 55% 69%;
-  --corvu-link-hover: 258 45% 76%;
+  --corvu-text: #E4DBF0;
+  --corvu-bg: #18141F;
+  --corvu-100: #252037;
+  --corvu-200: #462F6A;
+  --corvu-300: #573993;
+  --corvu-400: #957FC7;
+  --corvu-blue: #234C76;
+  --corvu-pink: #933984;
+  --corvu-link: #9F84DB;
+  --corvu-link-hover: #B7A6DD;
 }
 
 .changing-theme,

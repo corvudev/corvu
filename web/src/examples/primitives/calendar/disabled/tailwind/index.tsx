@@ -16,7 +16,7 @@ const CalendarExample: VoidComponent = () => {
               <Calendar.Nav
                 action="prev-month"
                 aria-label="Go to previous month"
-                class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
+                class="size-7 rounded-sm bg-corvu-200/50 p-1.25 hover:bg-corvu-200"
               >
                 <CaretLeft size="18" />
               </Calendar.Nav>
@@ -26,7 +26,7 @@ const CalendarExample: VoidComponent = () => {
               <Calendar.Nav
                 action="next-month"
                 aria-label="Go to next month"
-                class="size-7 rounded bg-corvu-200/50 p-[5px] hover:bg-corvu-200"
+                class="size-7 rounded-sm bg-corvu-200/50 p-1.25 hover:bg-corvu-200"
               >
                 <CaretRight size="18" />
               </Calendar.Nav>
@@ -55,7 +55,7 @@ const CalendarExample: VoidComponent = () => {
                           <Calendar.Cell class="p-0">
                             <Calendar.CellTrigger
                               day={day()}
-                              class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 corvu-selected:!bg-corvu-300 corvu-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
+                              class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 data-selected:bg-corvu-300! data-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
                             >
                               {day().getDate()}
                             </Calendar.CellTrigger>

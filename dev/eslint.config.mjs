@@ -1,6 +1,5 @@
 import pluginPrettier from 'eslint-plugin-prettier/recommended'
 import pluginSolid from 'eslint-plugin-solid'
-import pluginTailwind from 'eslint-plugin-tailwindcss'
 import pluginTypescript from 'typescript-eslint'
 import tsParser from '@typescript-eslint/parser'
 
@@ -9,7 +8,6 @@ export default [
     ignores: ['dist/'],
   },
   ...pluginTypescript.configs.recommended,
-  ...pluginTailwind.configs['flat/recommended'],
   pluginPrettier,
   {
     files: ['**/*.{ts,tsx}'],
@@ -64,12 +62,6 @@ export default [
           semi: false,
         },
       ],
-
-      'tailwindcss/classnames-order': 'error',
-      'tailwindcss/enforces-negative-arbitrary-values': 'error',
-      'tailwindcss/enforces-shorthand': 'error',
-      'tailwindcss/migration-from-tailwind-2': 'error',
-      'tailwindcss/no-custom-classname': 'error',
 
       'solid/reactivity': 'off',
     },

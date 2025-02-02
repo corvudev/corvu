@@ -2,7 +2,7 @@ import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap'
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import solid from '@astrojs/solid-js'
-import tailwind from '@astrojs/tailwind'
+import tailwind from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +20,6 @@ export default defineConfig({
         return item
       },
     }),
-    tailwind(),
     solid(),
   ],
   prefetch: {
@@ -53,4 +52,7 @@ export default defineConfig({
   },
   site: 'https://corvu.dev',
   trailingSlash: 'always',
+  vite: {
+    plugins: [tailwind()],
+  },
 })

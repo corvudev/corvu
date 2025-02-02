@@ -16,23 +16,23 @@ const DrawerCommentsExample: VoidComponent = () => {
           </div>
           <Drawer.Portal>
             <Drawer.Overlay
-              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              class="fixed inset-0 z-50 data-transitioning:transition-colors data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
                 'background-color': `rgb(0 0 0 / ${
                   0.5 * props.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 h-full max-h-[95%] rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
+            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 h-full max-h-[95%] rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit data-transitioning:transition-transform data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
               <div
-                class="flex flex-col corvu-group-transitioning:transition-[height] corvu-group-transitioning:duration-500 corvu-group-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+                class="flex flex-col group-data-transitioning:transition-[height] group-data-transitioning:duration-500 group-data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
                 style={{
                   height: `${
                     props.openPercentage < 0.7 ? 70 : props.openPercentage * 100
                   }%`,
                 }}
               >
-                <div class="h-1 w-10 self-center rounded-full bg-corvu-400" />
+                <div class="h-1 w-10 shrink-0 self-center rounded-full bg-corvu-400" />
                 <Drawer.Label class="border-b-2 border-corvu-400 py-2 text-center text-xl font-bold">
                   Comments
                 </Drawer.Label>

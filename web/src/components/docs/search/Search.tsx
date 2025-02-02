@@ -114,7 +114,7 @@ const Search = (props: {
           role="searchbox"
           spellcheck={false}
           value={props.searchValue}
-          class="w-full rounded border border-corvu-200 bg-corvu-bg px-3 py-2 ring-2 ring-corvu-400 focus-visible:border focus-visible:border-corvu-200 focus-visible:ring-2 focus-visible:ring-corvu-400"
+          class="w-full rounded-sm border border-corvu-200 bg-corvu-bg px-3 py-2 ring-2 ring-corvu-400 focus-visible:border focus-visible:border-corvu-200 focus-visible:ring-2 focus-visible:ring-corvu-400"
           onInput={(e) =>
             props.setSearchValue((e.target as HTMLInputElement).value)
           }
@@ -160,7 +160,7 @@ const Search = (props: {
           <p class="mt-2 text-center text-sm">
             No results for "<span class="font-bold">{props.searchValue}</span>"
           </p>
-          <p class="!mb-2 !mt-5 text-center text-sm">
+          <p class="mb-2! mt-5! text-center text-sm">
             Believe this query should return results?{' '}
             <a
               href={`https://github.com/corvudev/corvu/issues/new?title=[Docs] Missing+results+for+query+%22${props.searchValue}%22`}

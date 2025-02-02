@@ -20,14 +20,14 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
           </div>
           <Drawer.Portal>
             <Drawer.Overlay
-              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              class="fixed inset-0 z-50 data-transitioning:transition-colors data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
                 'background-color': `rgb(0 0 0 / ${
                   0.5 * props.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit corvu-transitioning:transition-[transform,height] corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
+            <Drawer.Content class="group fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit data-transitioning:transition-[transform,height] data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:select-none">
               <div class="h-1 w-10 self-center rounded-full bg-corvu-400" />
               <Drawer.Label class="mt-2 text-center text-xl font-bold">
                 Dynamic content height example
@@ -48,7 +48,7 @@ const DrawerTransitionResizeExample: VoidComponent = () => {
                 Resize content
               </button>
               <div
-                class="mx-5 mb-5 mt-3 flex items-center justify-center rounded-lg border-2 border-corvu-400 corvu-group-resizing:grow"
+                class="mx-5 mb-5 mt-3 flex items-center justify-center rounded-lg border-2 border-corvu-400 group-data-resizing:grow"
                 style={{
                   height: `${currentHeight()}px`,
                 }}

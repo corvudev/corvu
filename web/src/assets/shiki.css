@@ -1,5 +1,5 @@
 html {
-  --shiki-background: hsl(var(--corvu-100));
+  --shiki-background: var(--corvu-100);
   --shiki-foreground: hsl(249, 87%, 6%);
   --shiki-token-comment: hsl(268, 21%, 45%);
   --shiki-token-constant: hsl(278, 80%, 47%);

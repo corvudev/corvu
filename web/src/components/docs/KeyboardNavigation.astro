@@ -10,7 +10,7 @@ const { keys } = Astro.props
 ---
 
 <div class="not-prose mt-2 overflow-y-auto text-left">
-  <table class="w-full min-w-[500px]">
+  <table class="w-full min-w-125">
     <tr class="border-b border-corvu-100">
       <th class="pb-3 text-sm">Key</th>
       <th>Behavior</th>
@@ -19,7 +19,7 @@ const { keys } = Astro.props
       keys.map((key) => (
         <tr class="border-b border-corvu-100">
           <td class="py-3 pr-2 align-top">
-            <kbd class="whitespace-nowrap rounded border border-corvu-200 bg-corvu-100 px-1.5 pb-0.5 pt-1 text-sm">
+            <kbd class="whitespace-nowrap rounded-sm border border-corvu-200 bg-corvu-100 px-1.5 pb-0.5 pt-1 text-sm">
               {key.key}
             </kbd>
           </td>

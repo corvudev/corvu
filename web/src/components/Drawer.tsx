@@ -33,17 +33,17 @@ const NavDrawer: FlowComponent = (props) => {
           </Drawer.Trigger>
           <Drawer.Portal>
             <Drawer.Overlay
-              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              class="fixed inset-0 z-50 data-transitioning:transition-colors data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
                 'background-color': `rgb(0 0 0 / ${
                   0.6 * drawerProps.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-[230px] flex-col items-start bg-corvu-bg after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-1/2 after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
+            <Drawer.Content class="fixed inset-y-0 left-0 z-50 flex w-57.5 flex-col items-start bg-corvu-bg after:absolute after:inset-y-0 after:right-[calc(100%-1px)] after:w-1/2 after:bg-inherit data-transitioning:transition-transform data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]">
               <a
                 href="/"
-                class="flex h-[72px] w-full shrink-0 items-center rounded-bl-xl border-b-4 border-corvu-200 px-3"
+                class="flex h-18 w-full shrink-0 items-center rounded-bl-xl border-b-4 border-corvu-200 px-3"
               >
                 <span class="sr-only">corvu</span>
                 <img

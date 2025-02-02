@@ -19,14 +19,14 @@ const DrawerPersistentExample: VoidComponent = () => {
           </div>
           <Drawer.Portal>
             <Drawer.Overlay
-              class="fixed inset-0 z-50 corvu-transitioning:transition-colors corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
+              class="fixed inset-0 z-50 data-transitioning:transition-colors data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
                 'background-color': `rgb(0 0 0 / ${
                   0.5 * props.openPercentage
                 })`,
               }}
             />
-            <Drawer.Content class="fixed inset-x-0 bottom-0 z-50 flex h-full max-h-[80%] flex-col items-center rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 px-5 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit corvu-transitioning:transition-transform corvu-transitioning:duration-500 corvu-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:max-h-[500px] md:select-none">
+            <Drawer.Content class="fixed inset-x-0 bottom-0 z-50 flex h-full max-h-4/5 flex-col items-center rounded-t-lg border-t-4 border-corvu-400 bg-corvu-100 px-5 pt-3 after:absolute after:inset-x-0 after:top-[calc(100%-1px)] after:h-1/2 after:bg-inherit data-transitioning:transition-transform data-transitioning:duration-500 data-transitioning:ease-[cubic-bezier(0.32,0.72,0,1)] md:max-h-[500px] md:select-none">
               {persistedContent()}
             </Drawer.Content>
           </Drawer.Portal>
@@ -47,7 +47,7 @@ const DrawerContent = () => (
       <br /> even after it gets unmounted from the DOM.
       <br /> Enter something in the input and reopen the drawer.
     </Drawer.Description>
-    <input class="mt-4 rounded border border-corvu-200 bg-corvu-bg px-3 py-2 ring-2 ring-corvu-400 focus-visible:border focus-visible:border-corvu-200 focus-visible:ring-2 focus-visible:ring-corvu-400" />
+    <input class="mt-4 rounded-sm border border-corvu-200 bg-corvu-bg px-3 py-2 ring-2 ring-corvu-400 focus-visible:border focus-visible:border-corvu-200 focus-visible:ring-2 focus-visible:ring-corvu-400" />
     <p class="mt-3 text-center text-sm">
       💡 I'm an uncontrolled input, preserving my state because I never
       rerender!

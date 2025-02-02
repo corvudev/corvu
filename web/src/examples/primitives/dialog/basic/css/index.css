@@ -60,8 +60,7 @@
   ;
   --tw-enter-translate-y: initial --tw-enter-opacity: 0;
   --tw-enter-scale: .95;
-  --tw-enter-translate-x: -50%;
-  --tw-enter-translate-y: -60%;
+  --tw-enter-translate-y: -10%;
 }
 
 [data-corvu-dialog-content][data-closed] {
@@ -74,8 +73,7 @@
   --tw-exit-translate-y: initial;
   --tw-exit-opacity: 0;
   --tw-exit-scale: .95;
-  --tw-exit-translate-x: -50%;
-  --tw-exit-translate-y: -60%;
+  --tw-exit-translate-y: -10%;
 }
 
 @keyframes enter {
