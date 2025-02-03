@@ -254,16 +254,17 @@ const formatText = (text?: Text[]) => {
 
   let html = ''
   for (const part of text) {
+    const text = part.text.replace('<', '&lt;').replace('>', '&gt;')
     switch (part.kind) {
       case 'text':
-        const textParts = part.text.split('\n\n')
+        const textParts = text.split('\n\n')
         html += textParts.join('<br />')
         break
       case 'code':
-        if (part.text.startsWith('```ts')) {
-          html += `<code>${part.text.slice(6, -4)}</code>`
+        if (text.startsWith('```ts')) {
+          html += `<code>${text.slice(6, -4)}</code>`
         } else {
-          html += `<code>${part.text.slice(1, -1)}</code>`
+          html += `<code>${text.slice(1, -1)}</code>`
         }
         break
       default:

@@ -60,7 +60,7 @@ const { title, descriptionHtml, props, inherits } = Astro.props
                 <p>-</p>
               ) : (
                 <div
-                  class="prose prose-code:whitespace-normal!"
+                  class="prose-code:whitespace-normal!"
                   set:html={prop.defaultHtml}
                 />
               )}
@@ -70,7 +70,7 @@ const { title, descriptionHtml, props, inherits } = Astro.props
                 {prop.type}
               </p>
               <div
-                class="prose mt-3 prose-code:border-none prose-code:bg-transparent prose-code:p-0!"
+                class="mt-3 prose-code:border-none prose-code:bg-transparent prose-code:p-0!"
                 set:html={prop.descriptionHtml}
               />
             </td>

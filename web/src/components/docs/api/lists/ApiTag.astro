@@ -45,7 +45,7 @@ const { kind, componentName, tags } = Astro.props
               </p>
             </td>
             <td class="py-5 pr-5 align-top text-sm">
-              <div class="prose" set:html={prop.descriptionHtml} />
+              <div set:html={prop.descriptionHtml} />
             </td>
           </tr>
         ))

@@ -147,10 +147,20 @@
   --tw-exit-translate-x: calc(--value(integer) * var(--spacing));
 }
 
-@plugin '@tailwindcss/aspect-ratio';
-@plugin '@tailwindcss/forms';
+@custom-variant prose-headings (:where(h1,h2,h3,h4):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-h1 (:where(h1):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-h2 (:where(h2):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-h3 (:where(h3):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-h4 (:where(h4):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-p (:where(p):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-a (:where(a):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-blockquote (:where(blockquote):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-code (:where(code):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-ol (:where(ol):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-ul (:where(ul):not(:where([class~=not-prose],[class~=not-prose] *)));
+@custom-variant prose-li (:where(li):not(:where([class~=not-prose],[class~=not-prose] *)));
 
-@config '../../tailwind.config.js';
+@plugin '@tailwindcss/forms';
 
 html {
   --corvu-text-dark: #180F23;
