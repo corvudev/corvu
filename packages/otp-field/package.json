@@ -60,7 +60,7 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^8.23.0",
     "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^9.19.0",
+    "eslint": "^9.20.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-solid": "^0.14.5",
