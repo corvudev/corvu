@@ -6,6 +6,7 @@ import Background from '@components/Background'
 import getApiReferenceHeadings from '@lib/typedoc/headings'
 import Head from '@components/Head.astro'
 import Navigation from '@components/docs/nav/Navigation.astro'
+import PlatformScript from '@components/PlatformScript.astro'
 import rubikWoff2 from '@fontsource-variable/rubik/files/rubik-latin-wght-normal.woff2?url'
 import TableOfContents from '@components/docs/TableOfContents'
 import ThemeScript from '@components/ThemeScript.astro'
@@ -51,6 +52,7 @@ const { frontmatter, headings } = Astro.props
       crossorigin="anonymous"
     />
     <ThemeScript />
+    <PlatformScript />
     <script
       defer
       data-domain="corvu.dev"

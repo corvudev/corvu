@@ -3,8 +3,7 @@ import Drawer from '@components/Drawer'
 import HeaderLogoDark from '@assets/header_logo_dark.svg'
 import HeaderLogoLight from '@assets/header_logo_light.svg'
 import Navigation from '@components/docs/nav/Navigation.astro'
-import SearchDialog from './docs/search/SearchDialog'
-import SearchDrawer from './docs/search/SearchDrawer'
+import Search from './docs/search/Search'
 import ThemeSelect from '@components/ThemeSelect'
 
 interface Props {
@@ -48,14 +47,7 @@ const { inDocs } = Astro.props
       />
     </a>
     <div class="flex items-center lg:pointer-events-auto">
-      {
-        inDocs === true && (
-          <>
-            <SearchDialog client:media="(min-width: 768px)" />
-            <SearchDrawer client:media="(max-width: 767px)" />
-          </>
-        )
-      }
+      <Search client:idle />
       <ThemeSelect client:idle />
       <a href="https://github.com/corvudev/corvu/" target="_blank" class="p-2">
         <span class="sr-only">GitHub repository</span>
