@@ -69,10 +69,7 @@ const { title, descriptionHtml, props, inherits } = Astro.props
               <p class="not-prose inline rounded-sm border border-corvu-200 bg-corvu-100 px-1.5 pb-0.5 pt-1 font-mono text-sm">
                 {prop.type}
               </p>
-              <div
-                class="mt-3 prose-code:border-none prose-code:bg-transparent prose-code:p-0!"
-                set:html={prop.descriptionHtml}
-              />
+              <div class="mt-3 not-prose" set:html={prop.descriptionHtml} />
             </td>
           </tr>
         ))

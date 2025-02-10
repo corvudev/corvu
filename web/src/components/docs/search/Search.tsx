@@ -160,7 +160,7 @@ const Search = (props: {
           <p class="mt-2 text-center text-sm">
             No results for "<span class="font-bold">{props.searchValue}</span>"
           </p>
-          <p class="mb-2! mt-5! text-center text-sm">
+          <p class="pb-2 pt-5 text-center text-sm">
             Believe this query should return results?{' '}
             <a
               href={`https://github.com/corvudev/corvu/issues/new?title=[Docs] Missing+results+for+query+%22${props.searchValue}%22`}

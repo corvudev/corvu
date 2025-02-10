@@ -58,7 +58,7 @@ const CalendarExample: VoidComponent = () => {
                                     <Calendar.CellTrigger
                                       day={day()}
                                       month={month().month}
-                                      class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none data-today:bg-corvu-200/50 data-range-start:bg-corvu-300! data-range-end:bg-corvu-300! lg:hover:bg-corvu-200/80"
+                                      class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none data-today:bg-corvu-200/50 data-range-start:bg-corvu-300 data-range-end:bg-corvu-300 lg:hover:not-data-range-start:not-data-range-end:bg-corvu-200/80"
                                     >
                                       {day().getDate()}
                                     </Calendar.CellTrigger>
