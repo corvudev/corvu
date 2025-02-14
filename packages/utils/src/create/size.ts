@@ -1,5 +1,5 @@
 import { access, type MaybeAccessor } from '@src/reactivity'
-import { createEffect, createSignal, onCleanup } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 
 const createSize = (props: {
   element: MaybeAccessor<HTMLElement | null>
@@ -7,18 +7,20 @@ const createSize = (props: {
 }) => {
   const [size, setSize] = createSignal(0)
 
-  createEffect(() => {
-    const element = access(props.element)
-    if (!element) return
+  createEffect(
+    () => [access(props.element)],
+    ([element]) => {
+      if (!element) return
 
-    syncSize(element)
+      syncSize(element)
 
-    const observer = new ResizeObserver(resizeObserverCallback)
-    observer.observe(element)
-    onCleanup(() => {
-      observer.disconnect()
-    })
-  })
+      const observer = new ResizeObserver(resizeObserverCallback)
+      observer.observe(element)
+      return () => {
+        observer.disconnect()
+      }
+    },
+  )
 
   const resizeObserverCallback = ([entry]: ResizeObserverEntry[]) => {
     syncSize(entry!.target as HTMLElement)

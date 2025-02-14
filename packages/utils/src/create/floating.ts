@@ -22,8 +22,7 @@ import {
   size,
   type Strategy,
 } from '@floating-ui/dom'
-import { createSignal, onCleanup } from 'solid-js'
-import { createEffect } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { mergeProps } from '@solidjs/web'
 
 export type FloatingOptions = {
@@ -84,16 +83,18 @@ const createFloating = (props: {
   })
 
   createEffect(
-    () => [access(defaultedProps.enabled)],
-    ([enabled]) => {
-      if (!enabled) return
-
-      const reference = access(defaultedProps.reference)
-      const floating = access(defaultedProps.floating)
-      if (!reference || !floating) return
+    () =>
+      [
+        access(defaultedProps.enabled),
+        access(defaultedProps.reference),
+        access(defaultedProps.floating),
+        access(defaultedProps.options),
+        access(defaultedProps.arrow),
+      ] as const,
+    ([enabled, reference, floating, options, arrowElement]) => {
+      if (!enabled || !reference || !floating) return
 
       const middleware: Middleware[] = []
-      const options = access(defaultedProps.options)
 
       if (options?.offset !== undefined) {
         middleware.push(offset(options.offset))
@@ -102,7 +103,6 @@ const createFloating = (props: {
         const shiftOptions = options.shift === true ? undefined : options.shift
         middleware.push(shift(shiftOptions))
       }
-      const arrowElement = access(defaultedProps.arrow)
       if (arrowElement) {
         middleware.push(
           arrow({
@@ -181,7 +181,7 @@ const createFloating = (props: {
         middleware.push(inline(inlineOptions))
       }
 
-      const cleanup = autoUpdate(reference, floating, () => {
+      return autoUpdate(reference, floating, () => {
         computePosition(reference, floating, {
           placement: access(defaultedProps.placement),
           strategy: access(defaultedProps.strategy),
@@ -199,8 +199,6 @@ const createFloating = (props: {
           }
         })
       })
-
-      onCleanup(cleanup)
     },
   )
 

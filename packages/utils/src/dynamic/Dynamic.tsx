@@ -1,7 +1,7 @@
 import {
   createMemo,
   type JSX,
-  splitProps,
+  omit,
   untrack,
   type ValidComponent,
 } from 'solid-js'
@@ -12,10 +12,10 @@ import { Dynamic as SolidDynamic } from '@solidjs/web'
 const Dynamic = <ElementProps,>(
   props: DynamicAttributes<ValidComponent> & ElementProps,
 ) => {
-  const [localProps, otherProps] = splitProps(props, ['as'])
+  const otherProps = omit(props, 'as')
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  const cached = createMemo<Function | string>(() => localProps.as ?? 'div')
+  const cached = createMemo<Function | string>(() => props.as ?? 'div')
   const memoizedDynamic = createMemo(() => {
     const component = cached()
     switch (typeof component) {

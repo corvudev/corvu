@@ -1,5 +1,5 @@
 import { access, type MaybeAccessor } from '@src/reactivity'
-import { type Accessor, createEffect, onCleanup, untrack } from 'solid-js'
+import { type Accessor, createEffect } from 'solid-js'
 import { afterPaint } from '@src/dom'
 
 type Point = { x: number; y: number }
@@ -103,88 +103,94 @@ const createTooltip = (props: {
     return tooltipGroups.get(group)!.skipDelayTimeout
   }
 
-  createEffect(() => {
-    const group = access(props.group)
-    const id = access(props.id)
-    if (group === null) return
-    registerTooltip(group, id, () => {
-      tooltipState = null
-      props.close()
-    })
-    onCleanup(() => {
-      unregisterTooltip(group, id)
-    })
-  })
+  createEffect(
+    () => [access(props.group), access(props.id)] as const,
+    ([group, id]) => {
+      if (group === null) return
+      registerTooltip(group, id, () => {
+        tooltipState = null
+        props.close()
+      })
+      return () => {
+        unregisterTooltip(group, id)
+      }
+    },
+  )
 
-  createEffect(() => {
-    if (!props.open()) return
-    untrack(() => {
+  createEffect(
+    () => [props.open()] as const,
+    ([open]) => {
+      if (!open) return
+
       const group = access(props.group)
       if (group === null) return
       closeTooltipGroup(group, access(props.id))
-    })
-  })
+    },
+  )
 
-  createEffect(() => {
-    if (!access(props.openOnHover)) return
-    const trigger = access(props.trigger)
-    if (!trigger) return
+  createEffect(
+    () => [access(props.openOnHover), access(props.trigger)] as const,
+    ([openOnHover, trigger]) => {
+      if (!openOnHover) return
+      if (!trigger) return
 
-    const onPointerEnter = (event: PointerEvent) =>
-      afterPaint(() => openTooltip('hover', event))
-    const onPointerDown = (event: PointerEvent) => {
-      clickedTrigger = true
-      closeTooltip('click', event)
-    }
-    const onPointerLeave = (event: PointerEvent) => {
-      if (tooltipState === 'hover') return
-      closeTooltip('leave', event)
-    }
+      const onPointerEnter = (event: PointerEvent) =>
+        afterPaint(() => openTooltip('hover', event))
+      const onPointerDown = (event: PointerEvent) => {
+        clickedTrigger = true
+        closeTooltip('click', event)
+      }
+      const onPointerLeave = (event: PointerEvent) => {
+        if (tooltipState === 'hover') return
+        closeTooltip('leave', event)
+      }
 
-    trigger.addEventListener('pointerenter', onPointerEnter)
-    trigger.addEventListener('pointerdown', onPointerDown)
-    trigger.addEventListener('pointerleave', onPointerLeave)
+      trigger.addEventListener('pointerenter', onPointerEnter)
+      trigger.addEventListener('pointerdown', onPointerDown)
+      trigger.addEventListener('pointerleave', onPointerLeave)
 
-    onCleanup(() => {
-      trigger.removeEventListener('pointerenter', onPointerEnter)
-      trigger.removeEventListener('pointerdown', onPointerDown)
-      trigger.removeEventListener('pointerleave', onPointerLeave)
-    })
-  })
+      return () => {
+        trigger.removeEventListener('pointerenter', onPointerEnter)
+        trigger.removeEventListener('pointerdown', onPointerDown)
+        trigger.removeEventListener('pointerleave', onPointerLeave)
+      }
+    },
+  )
 
-  createEffect(() => {
-    if (!access(props.openOnFocus)) return
-    const trigger = access(props.trigger)
-    if (!trigger) return
+  createEffect(
+    () => [access(props.openOnFocus), access(props.trigger)] as const,
+    ([openOnFocus, trigger]) => {
+      if (!openOnFocus || !trigger) return
 
-    const onFocus = (event: FocusEvent) => openTooltip('focus', event)
+      const onFocus = (event: FocusEvent) => openTooltip('focus', event)
+      const onBlur = (event: FocusEvent) => closeTooltip('blur', event)
 
-    const onBlur = (event: FocusEvent) => closeTooltip('blur', event)
+      trigger.addEventListener('focus', onFocus)
+      trigger.addEventListener('blur', onBlur)
+      return () => {
+        trigger.removeEventListener('focus', onFocus)
+        trigger.removeEventListener('blur', onBlur)
+      }
+    },
+  )
 
-    trigger.addEventListener('focus', onFocus)
-    trigger.addEventListener('blur', onBlur)
-    onCleanup(() => {
-      trigger.removeEventListener('focus', onFocus)
-      trigger.removeEventListener('blur', onBlur)
-    })
-  })
+  createEffect(
+    () => [access(props.hoverableContent), access(props.content)] as const,
+    ([hoverableContent, content]) => {
+      if (!hoverableContent || !content) return
 
-  createEffect(() => {
-    if (!access(props.hoverableContent)) return
-    const content = access(props.content)
-    if (!content) return
+      const onPointerDown = (event: PointerEvent) => {
+        if (event.pointerType === 'touch') return
+        if (tooltipState !== 'focus') return
+        tooltipState = 'hover'
+      }
 
-    const onPointerDown = (event: PointerEvent) => {
-      if (event.pointerType === 'touch') return
-      if (tooltipState !== 'focus') return
-      tooltipState = 'hover'
-    }
-
-    content.addEventListener('pointerdown', onPointerDown)
-    onCleanup(() => {
-      content.removeEventListener('pointerdown', onPointerDown)
-    })
-  })
+      content.addEventListener('pointerdown', onPointerDown)
+      return () => {
+        content.removeEventListener('pointerdown', onPointerDown)
+      }
+    },
+  )
 
   const openTooltip = (
     reason: 'focus' | 'hover',

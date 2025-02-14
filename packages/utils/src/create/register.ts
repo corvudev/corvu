@@ -1,5 +1,6 @@
 import { access, type MaybeAccessor } from '@src/reactivity'
-import { createMemo, createSignal, mergeProps } from 'solid-js'
+import { createMemo, createSignal } from 'solid-js'
+import { mergeProps } from '@solidjs/web'
 
 /**
  * Creates a memo which can be registered/unregistered with the returned `register` and `unregister` functions.
