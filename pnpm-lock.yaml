@@ -17,12 +17,15 @@ importers:
 
   dev:
     dependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.0.5
@@ -56,7 +59,7 @@ importers:
         version: 6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0)
       vite-plugin-solid:
         specifier: ^2.11.1
-        version: 2.11.1(solid-js@1.9.4)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
+        version: 2.11.1(solid-js@2.0.0-experimental.1)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.7.3)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
@@ -78,7 +81,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -95,8 +98,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -121,7 +124,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -138,8 +141,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -188,7 +191,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -205,8 +208,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -235,12 +238,15 @@ importers:
         specifier: workspace:~
         version: link:../solid-prevent-scroll
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -257,8 +263,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -286,7 +292,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -303,8 +309,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -328,7 +334,7 @@ importers:
         version: link:../utils
       '@solid-primitives/memo':
         specifier: ^1.4.0
-        version: 1.4.0(solid-js@1.9.4)
+        version: 1.4.0(solid-js@2.0.0-experimental.1)
       solid-transition-size:
         specifier: workspace:~
         version: link:../solid-transition-size
@@ -338,7 +344,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -355,8 +361,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -376,12 +382,15 @@ importers:
         specifier: workspace:~
         version: link:../utils
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -398,8 +407,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -430,7 +439,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -447,8 +456,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -473,7 +482,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -490,8 +499,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -516,7 +525,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -533,8 +542,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -559,7 +568,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -576,8 +585,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -602,7 +611,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -619,8 +628,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -641,7 +650,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -658,8 +667,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -684,7 +693,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -701,8 +710,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -727,7 +736,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -744,8 +753,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -770,7 +779,7 @@ importers:
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -787,8 +796,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -847,12 +856,15 @@ importers:
         specifier: workspace:~
         version: link:../solid-presence
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -869,8 +881,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -921,12 +933,15 @@ importers:
         specifier: ^1.6.13
         version: 1.6.13
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       esbuild-plugin-solid:
         specifier: ^0.6.0
-        version: 0.6.0(esbuild@0.24.2)(solid-js@1.9.4)
+        version: 0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1)
       eslint:
         specifier: ^9.20.0
         version: 9.20.0(jiti@2.4.2)
@@ -943,8 +958,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.1)(typescript@5.7.3)(yaml@2.7.0)
@@ -968,7 +983,7 @@ importers:
         version: 3.2.1
       '@astrojs/solid-js':
         specifier: ^5.0.4
-        version: 5.0.4(jiti@2.4.2)(lightningcss@1.29.1)(solid-js@1.9.4)(yaml@2.7.0)
+        version: 5.0.4(jiti@2.4.2)(lightningcss@1.29.1)(solid-js@2.0.0-experimental.1)(yaml@2.7.0)
       '@corvu/accordion':
         specifier: workspace:*
         version: link:../packages/accordion
@@ -1001,7 +1016,7 @@ importers:
         version: 5.1.1
       '@solid-primitives/storage':
         specifier: ^4.3.1
-        version: 4.3.1(solid-js@1.9.4)
+        version: 4.3.1(solid-js@2.0.0-experimental.1)
       '@tailwindcss/forms':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@4.0.5)
@@ -1048,8 +1063,8 @@ importers:
         specifier: ^2.3.2
         version: 2.3.2
       solid-js:
-        specifier: ^1.9.4
-        version: 1.9.4
+        specifier: 2.0.0-experimental.1
+        version: 2.0.0-experimental.1
       solid-list:
         specifier: workspace:*
         version: link:../packages/solid-list
@@ -1864,6 +1879,14 @@ packages:
     resolution: {integrity: sha512-e7hTlJ1Ywh2+g/Qug+n4L1mpfxsikoIS4/sHE2EK9WatQt8UJqop/vE6bsLnXlU1xuhb/jo94Ah5Y27rd4wP7A==}
     peerDependencies:
       solid-js: ^1.6.12
+
+  '@solidjs/signals@0.1.0':
+    resolution: {integrity: sha512-zaQqvbW/tHc/6pZhqqxJRcKSCq6BP/QTdPujaTH9Cr1wB0u3oEE3mWKsYWhLT9EAVC+QM/lMB8gcmmyoxQfDIw==}
+
+  '@solidjs/web@2.0.0-experimental.0':
+    resolution: {integrity: sha512-bGtCTQr0mHxK11c+g/XmdSIIoHYagdRxK6yzbOoURblTsKiBrFGPtoqR7lDJ+dWcvP96KzW8R/r4k3nVNgLdpQ==}
+    peerDependencies:
+      solid-js: ^2.0.0-experimental.0
 
   '@tailwindcss/forms@0.5.10':
     resolution: {integrity: sha512-utI1ONF6uf/pPNO68kmN1b8rEwNXv3czukalo8VtJH8ksIkZXr3Q3VYudZLkCsDd4Wku120uF02hYK25XGPorw==}
@@ -3895,8 +3918,8 @@ packages:
     resolution: {integrity: sha512-tEYNll18pPKHroYSmLLrksq233j021G0giwW7P3D24jC54pQ5W5BXMsQ/Mvw1OJCmEYDgY+lrzT+3nNUtoNfXQ==}
     engines: {node: '>= 18'}
 
-  solid-js@1.9.4:
-    resolution: {integrity: sha512-ipQl8FJ31bFUoBNScDQTG3BjN6+9Rg+Q+f10bUbnO6EOTTf5NGerJeHc7wyu5I4RMHEl/WwZwUmy/PTRgxxZ8g==}
+  solid-js@2.0.0-experimental.1:
+    resolution: {integrity: sha512-IV7xHaJ3OQeloVDrAnMdrOltslPPRJ9rqpu1C1fVD59StVNd1gLLmZ/DPGi5HkCfGOY8fpyNM/0eGHiqMQl9Rg==}
 
   solid-refresh@0.6.3:
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
@@ -4576,11 +4599,11 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.24.1
 
-  '@astrojs/solid-js@5.0.4(jiti@2.4.2)(lightningcss@1.29.1)(solid-js@1.9.4)(yaml@2.7.0)':
+  '@astrojs/solid-js@5.0.4(jiti@2.4.2)(lightningcss@1.29.1)(solid-js@2.0.0-experimental.1)(yaml@2.7.0)':
     dependencies:
-      solid-js: 1.9.4
+      solid-js: 2.0.0-experimental.1
       vite: 6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0)
-      vite-plugin-solid: 2.11.1(solid-js@1.9.4)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
+      vite-plugin-solid: 2.11.1(solid-js@2.0.0-experimental.1)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
       - '@types/node'
@@ -5342,24 +5365,32 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.1': {}
 
-  '@solid-primitives/memo@1.4.0(solid-js@1.9.4)':
+  '@solid-primitives/memo@1.4.0(solid-js@2.0.0-experimental.1)':
     dependencies:
-      '@solid-primitives/scheduled': 1.5.0(solid-js@1.9.4)
-      '@solid-primitives/utils': 6.3.0(solid-js@1.9.4)
-      solid-js: 1.9.4
+      '@solid-primitives/scheduled': 1.5.0(solid-js@2.0.0-experimental.1)
+      '@solid-primitives/utils': 6.3.0(solid-js@2.0.0-experimental.1)
+      solid-js: 2.0.0-experimental.1
 
-  '@solid-primitives/scheduled@1.5.0(solid-js@1.9.4)':
+  '@solid-primitives/scheduled@1.5.0(solid-js@2.0.0-experimental.1)':
     dependencies:
-      solid-js: 1.9.4
+      solid-js: 2.0.0-experimental.1
 
-  '@solid-primitives/storage@4.3.1(solid-js@1.9.4)':
+  '@solid-primitives/storage@4.3.1(solid-js@2.0.0-experimental.1)':
     dependencies:
-      '@solid-primitives/utils': 6.3.0(solid-js@1.9.4)
-      solid-js: 1.9.4
+      '@solid-primitives/utils': 6.3.0(solid-js@2.0.0-experimental.1)
+      solid-js: 2.0.0-experimental.1
 
-  '@solid-primitives/utils@6.3.0(solid-js@1.9.4)':
+  '@solid-primitives/utils@6.3.0(solid-js@2.0.0-experimental.1)':
     dependencies:
-      solid-js: 1.9.4
+      solid-js: 2.0.0-experimental.1
+
+  '@solidjs/signals@0.1.0': {}
+
+  '@solidjs/web@2.0.0-experimental.0(solid-js@2.0.0-experimental.1)':
+    dependencies:
+      seroval: 1.2.1
+      seroval-plugins: 1.2.1(seroval@1.2.1)
+      solid-js: 2.0.0-experimental.1
 
   '@tailwindcss/forms@0.5.10(tailwindcss@4.0.5)':
     dependencies:
@@ -6106,13 +6137,13 @@ snapshots:
       esast-util-from-estree: 2.0.0
       vfile-message: 4.0.2
 
-  esbuild-plugin-solid@0.6.0(esbuild@0.24.2)(solid-js@1.9.4):
+  esbuild-plugin-solid@0.6.0(esbuild@0.24.2)(solid-js@2.0.0-experimental.1):
     dependencies:
       '@babel/core': 7.26.8
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.8)
       babel-preset-solid: 1.9.3(@babel/core@7.26.8)
       esbuild: 0.24.2
-      solid-js: 1.9.4
+      solid-js: 2.0.0-experimental.1
     transitivePeerDependencies:
       - supports-color
 
@@ -7966,18 +7997,17 @@ snapshots:
 
   smol-toml@1.3.1: {}
 
-  solid-js@1.9.4:
+  solid-js@2.0.0-experimental.1:
     dependencies:
+      '@solidjs/signals': 0.1.0
       csstype: 3.1.3
-      seroval: 1.2.1
-      seroval-plugins: 1.2.1(seroval@1.2.1)
 
-  solid-refresh@0.6.3(solid-js@1.9.4):
+  solid-refresh@0.6.3(solid-js@2.0.0-experimental.1):
     dependencies:
       '@babel/generator': 7.26.8
       '@babel/helper-module-imports': 7.25.9
       '@babel/types': 7.26.8
-      solid-js: 1.9.4
+      solid-js: 2.0.0-experimental.1
     transitivePeerDependencies:
       - supports-color
 
@@ -8352,14 +8382,14 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-plugin-solid@2.11.1(solid-js@1.9.4)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0)):
+  vite-plugin-solid@2.11.1(solid-js@2.0.0-experimental.1)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0)):
     dependencies:
       '@babel/core': 7.26.8
       '@types/babel__core': 7.20.5
       babel-preset-solid: 1.9.3(@babel/core@7.26.8)
       merge-anything: 5.1.7
-      solid-js: 1.9.4
-      solid-refresh: 0.6.3(solid-js@1.9.4)
+      solid-js: 2.0.0-experimental.1
+      solid-refresh: 0.6.3(solid-js@2.0.0-experimental.1)
       vite: 6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0)
       vitefu: 1.0.5(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1)(yaml@2.7.0))
     transitivePeerDependencies:

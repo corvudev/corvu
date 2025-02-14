@@ -1,5 +1,5 @@
 import { type ComponentProps, createMemo, Show, splitProps } from 'solid-js'
-import { Portal } from 'solid-js/web'
+import { Portal } from '@solidjs/web'
 import { some } from '@corvu/utils/reactivity'
 import { useInternalTooltipContext } from '@src/context'
 

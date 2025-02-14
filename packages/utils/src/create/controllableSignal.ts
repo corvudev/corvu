@@ -15,20 +15,12 @@ import {
  * [state: Accessor<T>, setState: Setter<T>]
  * ```
  */
-function createControllableSignal<T>(props: {
+const createControllableSignal = <T>(props: {
   value?: Accessor<T | undefined>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  initialValue: Exclude<T, Function>
   onChange?: (value: T) => void
-}): Signal<T | undefined>
-function createControllableSignal<T>(props: {
-  value?: Accessor<T | undefined>
-  initialValue: T
-  onChange?: (value: T) => void
-}): Signal<T>
-function createControllableSignal<T>(props: {
-  value?: Accessor<T | undefined>
-  initialValue?: T
-  onChange?: (value: T) => void
-}): Signal<T | undefined> {
+}): Signal<T | undefined> => {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
     props.initialValue,
   )

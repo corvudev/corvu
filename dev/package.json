@@ -18,8 +18,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solidjs/web": "2.0.0-experimental.0",
     "clsx": "^2.1.1",
-    "solid-js": "^1.9.4"
+    "solid-js": "2.0.0-experimental.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.5",

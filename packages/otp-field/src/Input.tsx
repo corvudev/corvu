@@ -18,7 +18,7 @@ import {
 } from 'solid-js'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import createOtpFieldStyleElement from '@src/lib/style'
-import { isServer } from 'solid-js/web'
+import { isServer } from '@solidjs/web'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalOtpFieldContext } from '@src/context'
 

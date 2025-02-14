@@ -19,7 +19,7 @@ const createPersistent = (component: () => JSX.Element) => {
   return () => {
     if (!memoizedComponent) {
       const currentOwner = getOwner()
-      if (currentOwner) owner = { ...currentOwner }
+      if (currentOwner) owner = currentOwner
       memoizedComponent = createMemo(() => runWithOwner(owner, component))
     }
     return memoizedComponent()
