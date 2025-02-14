@@ -731,6 +731,9 @@ importers:
         specifier: workspace:~
         version: link:../utils
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
@@ -774,6 +777,9 @@ importers:
         specifier: workspace:~
         version: link:../utils
     devDependencies:
+      '@solidjs/web':
+        specifier: 2.0.0-experimental.0
+        version: 2.0.0-experimental.0(solid-js@2.0.0-experimental.1)
       '@typescript-eslint/parser':
         specifier: ^8.23.0
         version: 8.23.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)

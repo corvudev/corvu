@@ -57,6 +57,7 @@
     "@corvu/utils": "workspace:~"
   },
   "devDependencies": {
+    "@solidjs/web": "2.0.0-experimental.0",
     "@typescript-eslint/parser": "^8.23.0",
     "esbuild-plugin-solid": "^0.6.0",
     "eslint": "^9.20.0",
@@ -71,6 +72,7 @@
     "typescript-eslint": "^8.23.0"
   },
   "peerDependencies": {
+    "@solidjs/web": "2.0.0-experimental.0",
     "solid-js": "2.0.0-experimental.1"
   }
 }

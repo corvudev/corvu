@@ -1,13 +1,7 @@
 import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
-import {
-  type Accessor,
-  batch,
-  createEffect,
-  createSignal,
-  mergeProps,
-  onCleanup,
-} from 'solid-js'
+import { type Accessor, createEffect, createSignal } from 'solid-js'
 import { afterPaint } from '@corvu/utils/dom'
+import { mergeProps } from '@solidjs/web'
 
 /**
  * Utility that uses a `ResizeObserver` to provide the size of an element before and after resize. Used to transition the width/height of elements that don't have a fixed size applied.
@@ -61,21 +55,23 @@ function createTransitionSize(props: {
 
   let startSize: [number, number] | null = null
 
-  createEffect(() => {
-    const element = access(defaultedProps.element)
-    const enabled = access(defaultedProps.enabled)
-    if (!element || !enabled) return
+  createEffect(
+    () =>
+      [access(defaultedProps.element), access(defaultedProps.enabled)] as const,
+    ([element, enabled]) => {
+      if (!element || !enabled) return
 
-    const observer = new ResizeObserver(resizeObserverCallback)
-    observer.observe(element)
+      const observer = new ResizeObserver(resizeObserverCallback)
+      observer.observe(element)
 
-    element.addEventListener('transitionend', reset)
-    onCleanup(() => {
-      observer.disconnect()
-      element.removeEventListener('transitionend', reset)
-      reset()
-    })
-  })
+      element.addEventListener('transitionend', reset)
+      return () => {
+        observer.disconnect()
+        element.removeEventListener('transitionend', reset)
+        reset()
+      }
+    },
+  )
 
   const resizeObserverCallback = ([entry]: ResizeObserverEntry[]) => {
     if (transitioning()) return
@@ -92,10 +88,8 @@ function createTransitionSize(props: {
         startSize[0] !== currentSize[0] &&
         startSize[1] !== currentSize[1]
       ) {
-        batch(() => {
-          setTransitionSize(startSize)
-          setTransitioning(true)
-        })
+        setTransitionSize(startSize)
+        setTransitioning(true)
         afterPaint(() => {
           setTransitionSize(currentSize)
           const transitionDuration = parseFloat(
@@ -113,10 +107,8 @@ function createTransitionSize(props: {
         getSizeOfDimension(dimension, startSize) !==
         getSizeOfDimension(dimension, currentSize)
       ) {
-        batch(() => {
-          setTransitionSize(getSizeOfDimension(dimension, startSize!))
-          setTransitioning(true)
-        })
+        setTransitionSize(getSizeOfDimension(dimension, startSize!))
+        setTransitioning(true)
         afterPaint(() => {
           setTransitionSize(getSizeOfDimension(dimension, currentSize))
           const transitionDuration = parseFloat(
@@ -138,10 +130,8 @@ function createTransitionSize(props: {
     } else {
       startSize = null
     }
-    batch(() => {
-      setTransitioning(false)
-      setTransitionSize(null)
-    })
+    setTransitioning(false)
+    setTransitionSize(null)
   }
 
   return {

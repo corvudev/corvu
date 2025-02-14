@@ -6,17 +6,12 @@
  */
 
 import { access, type MaybeAccessor } from '@corvu/utils/reactivity'
-import {
-  createEffect,
-  createSignal,
-  createUniqueId,
-  mergeProps,
-  onCleanup,
-} from 'solid-js'
+import { createEffect, createSignal, createUniqueId } from 'solid-js'
 import type { Axis } from '@corvu/utils'
 import { contains } from '@corvu/utils/dom'
 import createStyle from '@corvu/utils/create/style'
 import { getScrollAtLocation } from '@corvu/utils/scroll'
+import { mergeProps } from '@solidjs/web'
 
 const [preventScrollStack, setPreventScrollStack] = createSignal<string[]>([])
 const isActive = (id: string) =>
@@ -61,80 +56,93 @@ const createPreventScroll = (props: {
   let currentTouchStartAxis: Axis | null = null
   let currentTouchStartDelta: number | null = null
 
-  createEffect(() => {
-    if (!access(defaultedProps.enabled)) return
+  createEffect(
+    () => [access(defaultedProps.enabled)] as const,
+    ([enabled]) => {
+      if (!enabled) return
 
-    setPreventScrollStack((stack) => [...stack, preventScrollId])
+      setPreventScrollStack((stack) => [...stack, preventScrollId])
 
-    onCleanup(() => {
-      setPreventScrollStack((stack) =>
-        stack.filter((id) => id !== preventScrollId),
-      )
-    })
-  })
+      return () => {
+        setPreventScrollStack((stack) =>
+          stack.filter((id) => id !== preventScrollId),
+        )
+      }
+    },
+  )
 
-  createEffect(() => {
-    if (
-      !access(defaultedProps.enabled) ||
-      !access(defaultedProps.hideScrollbar)
-    )
-      return
+  createEffect(
+    () =>
+      [
+        access(defaultedProps.enabled),
+        access(defaultedProps.hideScrollbar),
+        access(defaultedProps.preventScrollbarShift),
+        access(defaultedProps.preventScrollbarShiftMode),
+      ] as const,
+    ([
+      enabled,
+      hideScrollbar,
+      preventScrollbarShift,
+      preventScrollbarShiftMode,
+    ]) => {
+      if (!enabled || !hideScrollbar) return
 
-    const { body } = document
+      const { body } = document
 
-    const scrollbarWidth = window.innerWidth - body.offsetWidth
+      const scrollbarWidth = window.innerWidth - body.offsetWidth
 
-    if (access(defaultedProps.preventScrollbarShift)) {
-      const style: Partial<CSSStyleDeclaration> = { overflow: 'hidden' }
-      const properties: { key: string; value: string }[] = []
+      if (preventScrollbarShift) {
+        const style: Partial<CSSStyleDeclaration> = { overflow: 'hidden' }
+        const properties: { key: string; value: string }[] = []
 
-      if (scrollbarWidth > 0) {
-        if (access(defaultedProps.preventScrollbarShiftMode) === 'padding') {
-          style.paddingRight = `calc(${
-            window.getComputedStyle(body).paddingRight
-          } + ${scrollbarWidth}px)`
-        } else {
-          style.marginRight = `calc(${
-            window.getComputedStyle(body).marginRight
-          } + ${scrollbarWidth}px)`
+        if (scrollbarWidth > 0) {
+          if (preventScrollbarShiftMode === 'padding') {
+            style.paddingRight = `calc(${
+              window.getComputedStyle(body).paddingRight
+            } + ${scrollbarWidth}px)`
+          } else {
+            style.marginRight = `calc(${
+              window.getComputedStyle(body).marginRight
+            } + ${scrollbarWidth}px)`
+          }
+
+          properties.push({
+            key: '--scrollbar-width',
+            value: `${scrollbarWidth}px`,
+          })
         }
 
-        properties.push({
-          key: '--scrollbar-width',
-          value: `${scrollbarWidth}px`,
+        const offsetTop = window.scrollY
+        const offsetLeft = window.scrollX
+
+        createStyle({
+          key: 'prevent-scroll',
+          element: body,
+          style,
+          properties,
+          cleanup: () => {
+            if (
+              access(defaultedProps.restoreScrollPosition) &&
+              scrollbarWidth > 0
+            ) {
+              window.scrollTo(offsetLeft, offsetTop)
+            }
+          },
+        })
+      } else {
+        createStyle({
+          key: 'prevent-scroll',
+          element: body,
+          style: {
+            overflow: 'hidden',
+          },
         })
       }
+    },
+  )
 
-      const offsetTop = window.scrollY
-      const offsetLeft = window.scrollX
-
-      createStyle({
-        key: 'prevent-scroll',
-        element: body,
-        style,
-        properties,
-        cleanup: () => {
-          if (
-            access(defaultedProps.restoreScrollPosition) &&
-            scrollbarWidth > 0
-          ) {
-            window.scrollTo(offsetLeft, offsetTop)
-          }
-        },
-      })
-    } else {
-      createStyle({
-        key: 'prevent-scroll',
-        element: body,
-        style: {
-          overflow: 'hidden',
-        },
-      })
-    }
-  })
-
-  createEffect(() => {
-    if (!isActive(preventScrollId) || !access(defaultedProps.enabled)) return
+  createEffect(() => [isActive(preventScrollId), access(defaultedProps.enabled)],([isActive,enabled]) => {
+    if (!isActive || !enabled) return
 
     document.addEventListener('wheel', maybePreventWheel, {
       passive: false,
@@ -146,11 +154,11 @@ const createPreventScroll = (props: {
       passive: false,
     })
 
-    onCleanup(() => {
+    return () => {
       document.removeEventListener('wheel', maybePreventWheel)
       document.removeEventListener('touchstart', logTouchStart)
       document.removeEventListener('touchmove', maybePreventTouch)
-    })
+    }
   })
 
   const logTouchStart = (event: TouchEvent) => {
