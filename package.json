@@ -20,8 +20,8 @@
     "rp": "release-please"
   },
   "devDependencies": {
-    "release-please": "^16.17.0",
-    "turbo": "^2.4.2"
+    "release-please": "^16.18.0",
+    "turbo": "^2.4.4"
   },
   "packageManager": "pnpm@10.0.0"
 }

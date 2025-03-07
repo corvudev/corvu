@@ -9,7 +9,8 @@ import { type Accessor } from 'solid-js'
 
 const access = <T extends MaybeAccessor<unknown>>(
   v: T,
-): MaybeAccessorValue<T> => (typeof v === 'function' ? v() : v)
+): MaybeAccessorValue<T> =>
+  typeof v === 'function' ? v() : (v as MaybeAccessorValue<T>)
 
 const chain = <Args extends [] | unknown[]>(callbacks: {
   [Symbol.iterator]: () => IterableIterator<
