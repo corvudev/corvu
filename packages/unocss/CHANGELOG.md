@@ -1,5 +1,12 @@
 # @corvu/unocss
 
+## [0.1.2](https://github.com/corvudev/corvu/compare/@corvu/unocss@0.1.1...@corvu/unocss@0.1.2) (2025-03-07)
+
+
+### Bug Fixes
+
+* use correct selector ([ca900c2](https://github.com/corvudev/corvu/commit/ca900c2fed9a2cc4f3ba453cafcb990fa388d657))
+
 ## [0.1.1](https://github.com/corvudev/corvu/compare/@corvu/unocss@0.1.0...@corvu/unocss@0.1.1) (2025-01-24)
 
 
