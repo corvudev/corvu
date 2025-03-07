@@ -39,11 +39,9 @@ export default definePreset(
 
             if (!match) return matcher
 
-            const attribute = `[${prefix}-${match[1]}]`
             return {
               matcher: matcher.slice(match[0].length),
-              selector: (s: string) =>
-                `${s}${attribute},:where(${attribute}) ${s}`,
+              selector: (s: string) => `${s}[data-${match[1]}]`,
             }
           },
           autocomplete: [`${prefix}-(${variants})(:|-)`],
