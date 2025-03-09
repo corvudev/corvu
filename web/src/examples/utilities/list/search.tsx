@@ -10,7 +10,7 @@ const SearchListExample = () => {
 
   const filteredCrows = () =>
     ITEMS.filter((crow) =>
-      crow.toLowerCase().includes(searchValue().toLowerCase()),
+      crow.toLowerCase().startsWith(searchValue().toLowerCase()),
     )
 
   const { active, setActive, onKeyDown } = createList({
