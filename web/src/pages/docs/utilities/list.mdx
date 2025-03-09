@@ -9,6 +9,8 @@ import ApiReference from '@components/docs/api/ApiReference.astro'
 import Code from '@components/docs/code/Code.astro'
 import ExampleWrapper from '@examples/ExampleWrapper'
 import Features from '@components/docs/Features.astro'
+import SearchExample from '@examples/utilities/list/search'
+import SearchTailwindTsx from '@examples/utilities/list/search?raw'
 import MultiExample from '@examples/utilities/list/multi'
 import MultiTailwindTsx from '@examples/utilities/list/multi?raw'
 import PackageInfo from '@components/docs/PackageInfo.astro'
@@ -65,13 +67,37 @@ A small utility to create accessible, keyboard navigable lists like search resul
         <input onKeyDown={onKeyDown} />
         <For each={result}>
           {(item, index) => (
-              <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
+            <a href={result.href} aria-selected={active() === index()}>{result.name}<a>
           )}
         </For>
       </>
     )
   }
   `} lang="tsx" copyButton />
+
+## Examples
+
+### Search
+
+A single select list combined with a search input to filter items. Use the arrow keys to navigate and press enter to select.
+
+<ExampleWrapper codeSnippets={[{
+  name: 'Tailwind',
+  files: [
+    {
+      fileName: 'index.tsx',
+      slotName: 'tailwindTsx',
+    },
+    {
+      fileName: 'tailwind.css',
+      slotName: 'tailwindCss',
+    }
+  ]
+}]} height="dynamic" client:idle>
+  <SearchExample client:idle />
+  <RawCode slot="tailwindTsx" code={SearchTailwindTsx} lang="tsx" />
+  <RawCode slot="tailwindCss" code={TailwindCss} lang="css" />
+</ExampleWrapper>
 
 ### Multi select list
 
