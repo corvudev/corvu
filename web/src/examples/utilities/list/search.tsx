@@ -1,27 +1,21 @@
-import { createEffect, createSignal, For, Show } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import clsx from 'clsx'
 import { createList } from 'solid-list'
 
 const ITEMS = ['Rook', 'Chough', 'Raven', 'Jackdaw', 'Magpie', 'Jay']
 
 const SearchListExample = () => {
-  const [crows, setCrows] = createSignal<string[]>(ITEMS)
   const [searchValue, setSearchValue] = createSignal<string>('')
+  const [selectedCrow, setSelectedCrow] = createSignal<string | null>(null)
+
+  const filteredCrows = () =>
+    ITEMS.filter((crow) =>
+      crow.toLowerCase().includes(searchValue().toLowerCase()),
+    )
 
   const { active, setActive, onKeyDown } = createList({
-    items: crows,
-  })
-
-  const alertSelected = (value: string): void => {
-    alert(`Select "${value}"`)
-  }
-
-  createEffect(() => {
-    setCrows(
-      ITEMS.filter((crow) =>
-        crow.toLowerCase().includes(searchValue().toLowerCase()),
-      ),
-    )
+    items: () => [...Array(filteredCrows().length).keys()],
+    handleTab: false,
   })
 
   return (
@@ -34,34 +28,29 @@ const SearchListExample = () => {
             role="searchbox"
             spellcheck={false}
             value={searchValue()}
-            class="w-full rounded-md border-0 bg-corvu-100 px-3 py-2 transition-all placeholder:text-corvu-400 focus-visible:ring-2 focus-visible:ring-corvu-text"
+            class="w-full rounded-md border-0 bg-corvu-bg px-3 py-2 transition-all focus-visible:ring-2 focus-visible:ring-corvu-text"
             onInput={(event) => {
               setSearchValue((event.target as HTMLInputElement).value)
-              setActive(crows().at(0) ?? null)
+              setActive(0)
+              setSelectedCrow(null)
             }}
-            onFocus={() => setActive(crows().at(0) ?? null)}
+            onFocus={() => setActive(0)}
             onBlur={() => setActive(null)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                const crow = active()
-                if (crow !== null) {
-                  alertSelected(crow)
-                }
-                return
-              }
-              if (event.key === 'Escape') {
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                const selectedCrow = active()
+                if (selectedCrow === null) return
+                setSelectedCrow(filteredCrows()[selectedCrow])
+              } else if (e.key === 'Escape') {
                 setSearchValue('')
-                setActive(crows().at(0) ?? null)
-                return
+              } else {
+                onKeyDown(e)
               }
-
-              onKeyDown(event)
             }}
           />
-
           <Show when={searchValue()}>
             <button
-              class="absolute inset-y-0 right-0 px-3 py-2"
+              class="absolute inset-y-0 right-0 p-2"
               onClick={() => setSearchValue('')}
             >
               <svg
@@ -75,9 +64,8 @@ const SearchListExample = () => {
             </button>
           </Show>
         </div>
-
         <Show
-          when={crows().length}
+          when={filteredCrows().length}
           fallback={
             <p class="px-3 py-2 text-center text-corvu-text-dark">
               No results for "<span class="font-bold">{searchValue()}</span>"
@@ -85,23 +73,28 @@ const SearchListExample = () => {
           }
         >
           <ul role="listbox" class="rounded-md overflow-hidden">
-            <For each={crows()}>
-              {(crow) => (
+            <For each={filteredCrows()}>
+              {(crow, index) => (
                 <li
                   role="option"
-                  aria-selected={active() === crow}
-                  onMouseMove={() => setActive(crow)}
-                  onClick={() => alertSelected(crow)}
-                  class={clsx('block cursor-pointer px-3 py-2', {
-                    'bg-corvu-bg': active() !== crow,
-                    'bg-corvu-200': active() === crow,
+                  aria-selected={active() === index()}
+                  onMouseMove={() => setActive(index())}
+                  onClick={() => setSelectedCrow(crow)}
+                  class={clsx('px-3 py-2', {
+                    'bg-corvu-bg': active() !== index(),
+                    'bg-corvu-200': active() === index(),
                   })}
                 >
-                  <span class="block">{crow}</span>
+                  {crow}
                 </li>
               )}
             </For>
           </ul>
+        </Show>
+        <Show when={selectedCrow()}>
+          <p class="px-3 py-2 text-center text-corvu-text-dark">
+            Selected: <span class="font-bold">{selectedCrow()}</span>
+          </p>
         </Show>
       </div>
     </div>
