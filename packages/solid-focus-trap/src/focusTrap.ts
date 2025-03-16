@@ -64,13 +64,15 @@ const createFocusTrap = (props: {
   let originalFocusedElement: HTMLElement | null = null
 
   const mutationObserverCallback = () => {
-    loadFocusTrap(access(defaultedProps.element)!)
-    if (
-      document.activeElement === null ||
-      document.activeElement === document.body
-    ) {
-      initialFocus(access(defaultedProps.element)!)
-    }
+    afterPaint(() => {
+      loadFocusTrap(access(defaultedProps.element)!)
+      if (
+        document.activeElement === null ||
+        document.activeElement === document.body
+      ) {
+        initialFocus(access(defaultedProps.element)!)
+      }
+    })
   }
 
   createEffect(() => {
