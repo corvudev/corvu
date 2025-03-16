@@ -63,9 +63,9 @@
     "@corvu/tooltip": "workspace:~"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.1",
     "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-solid": "^0.14.5",
@@ -73,7 +73,7 @@
     "solid-js": "^1.9.5",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.1"
   },
   "peerDependencies": {
     "solid-js": "^1.8"

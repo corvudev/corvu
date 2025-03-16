@@ -56,16 +56,16 @@
     "lint": "eslint --max-warnings=0 ."
   },
   "dependencies": {
-    "@unocss/core": "66.1.0-beta.3"
+    "@unocss/core": "66.1.0-beta.5"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.26.0",
-    "eslint": "^9.21.0",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.5.3",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.1"
   }
 }
