@@ -1,5 +1,12 @@
 # solid-focus-trap
 
+## [0.1.9](https://github.com/corvudev/corvu/compare/solid-focus-trap@0.1.8...solid-focus-trap@0.1.9) (2025-03-16)
+
+
+### Bug Fixes
+
+* evalute DOM mutations after paint ([5fd442e](https://github.com/corvudev/corvu/commit/5fd442e208091c17211256feafc7125dedd8fff1))
+
 ## [0.1.8](https://github.com/corvudev/corvu/compare/solid-focus-trap@0.1.7...solid-focus-trap@0.1.8) (2025-01-29)
 
 

@@ -8,7 +8,7 @@
   "packages/popover": "0.2.0",
   "packages/resizable": "0.2.4",
   "packages/solid-dismissible": "0.1.1",
-  "packages/solid-focus-trap": "0.1.8",
+  "packages/solid-focus-trap": "0.1.9",
   "packages/solid-list": "0.3.0",
   "packages/solid-persistent": "0.1.0",
   "packages/solid-presence": "0.2.0",
