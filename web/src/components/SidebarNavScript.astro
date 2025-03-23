@@ -1,0 +1,22 @@
+<script>
+  ;(() => {
+    try {
+      const sidebarNavElement = document.getElementById('sidebar-nav')
+      if (!sidebarNavElement) return
+
+      const state = sessionStorage.getItem('sidebar-nav-state')
+      if (state) sidebarNavElement.scrollTop = parseInt(state)
+
+      const syncState = () => {
+        sessionStorage.setItem(
+          'sidebar-nav-state',
+          sidebarNavElement.scrollTop.toString(),
+        )
+      }
+      addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') syncState()
+      })
+      addEventListener('pageHide', syncState)
+    } catch {}
+  })()
+</script>
