@@ -1,5 +1,12 @@
 # @corvu/accordion
 
+## [0.2.4](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.3...@corvu/accordion@0.2.4) (2025-03-23)
+
+
+### Bug Fixes
+
+* do not handle tab in the accordion list ([c9ee695](https://github.com/corvudev/corvu/commit/c9ee695001a844ead04afc10a9cc039e17ec5235))
+
 ## [0.2.3](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.2...@corvu/accordion@0.2.3) (2024-07-17)
 
 
