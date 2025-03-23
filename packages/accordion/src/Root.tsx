@@ -161,6 +161,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
     orientation: () => defaultedProps.orientation,
     loop: () => defaultedProps.loop,
     textDirection: () => defaultedProps.textDirection,
+    handleTab: false,
     onActiveChange: (index) => {
       if (index === null) return
       const trigger = selectableTriggers()[index]
