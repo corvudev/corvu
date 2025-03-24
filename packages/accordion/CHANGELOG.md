@@ -1,5 +1,17 @@
 # @corvu/accordion
 
+## [0.2.5](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.4...@corvu/accordion@0.2.5) (2025-03-24)
+
+
+### Features
+
+* add preventInitialContentAnimation prop ([416df84](https://github.com/corvudev/corvu/commit/416df8418905b24015a2be2175e1d4317331c9bb))
+
+
+### Bug Fixes
+
+* observe disabled changes on accordion triggers ([3ff6434](https://github.com/corvudev/corvu/commit/3ff6434dbd919f21091476fa77e662083cd4b18a))
+
 ## [0.2.4](https://github.com/corvudev/corvu/compare/@corvu/accordion@0.2.3...@corvu/accordion@0.2.4) (2025-03-23)
 
 

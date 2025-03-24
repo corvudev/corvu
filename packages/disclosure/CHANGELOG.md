@@ -1,5 +1,12 @@
 # @corvu/disclosure
 
+## [0.2.2](https://github.com/corvudev/corvu/compare/@corvu/disclosure@0.2.1...@corvu/disclosure@0.2.2) (2025-03-24)
+
+
+### Features
+
+* add preventInitialContentAnimation prop ([416df84](https://github.com/corvudev/corvu/commit/416df8418905b24015a2be2175e1d4317331c9bb))
+
 ## [0.2.1](https://github.com/corvudev/corvu/compare/@corvu/disclosure@0.2.0...@corvu/disclosure@0.2.1) (2025-01-29)
 
 
