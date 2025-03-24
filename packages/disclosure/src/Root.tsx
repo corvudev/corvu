@@ -39,6 +39,11 @@ export type DisclosureRootProps = {
    */
   collapseBehavior?: 'remove' | 'hide'
   /**
+   * Whether the initial open animation of the disclosure content should be prevented.
+   * @defaultValue `false`
+   */
+  preventInitialContentAnimation?: boolean
+  /**
    * Callback fired when the disclosure content present state changes.
    */
   onContentPresentChange?: (present: boolean) => void
@@ -63,6 +68,8 @@ export type DisclosureRootChildrenProps = {
   setExpanded: Setter<boolean>
   /** Whether the disclosure content should be removed or hidden when collapsed. */
   collapseBehavior: 'remove' | 'hide'
+  /** Whether the initial open animation of the disclosure content should be prevented. */
+  preventInitialContentAnimation: boolean
   /** The `id` attribute of the disclosure content element. */
   disclosureId: string
   /** Whether the disclosure content is present. This differes from `expanded` as it tracks pending animations. */
@@ -79,6 +86,7 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
     {
       initialExpanded: false,
       collapseBehavior: 'remove' as const,
+      preventInitialContentAnimation: false,
       disclosureId: createUniqueId(),
     },
     props,
@@ -96,18 +104,44 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
     null,
   )
 
+  const { present: contentPresent } = createPresence({
+    show: expanded,
+    element: contentRef,
+    onStateChange: (state) => {
+      if (state === 'present') {
+        defaultedProps.onContentPresentChange?.(true)
+      } else if (state === 'hidden') {
+        defaultedProps.onContentPresentChange?.(false)
+      }
+    },
+  })
+
+  let initialOpen = defaultedProps.preventInitialContentAnimation && expanded()
+
+  createEffect<string | undefined>((animationName) => {
+    expanded()
+    const element = contentRef()
+    if (!element) return
+    if (initialOpen) {
+      const origionalAnimationName = element.style.animationName
+      element.style.animationName = 'none'
+      initialOpen = false
+      return origionalAnimationName
+    }
+    if (animationName === undefined) return
+    element.style.animationName = animationName
+  })
+
   // Updates the content size on every expanded change.
   createEffect(
-    on([contentRef, expanded], ([element]) => {
+    on([contentRef, contentPresent], ([element]) => {
       if (!element) {
         setContentSize(null)
         return
       }
 
       untrack(() => {
-        const originalStyles = {
-          animationName: element.style.animationName,
-        }
+        const origionalAnimationName = element.style.animationName
 
         element.style.animationName = 'none'
 
@@ -124,22 +158,10 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
           setContentSize([element.offsetWidth, element.offsetHeight])
         }
 
-        element.style.animationName = originalStyles.animationName
+        element.style.animationName = origionalAnimationName
       })
     }),
   )
-
-  const { present: contentPresent } = createPresence({
-    show: expanded,
-    element: contentRef,
-    onStateChange: (state) => {
-      if (state === 'present') {
-        defaultedProps.onContentPresentChange?.(true)
-      } else if (state === 'hidden') {
-        defaultedProps.onContentPresentChange?.(false)
-      }
-    },
-  })
 
   const childrenProps: DisclosureRootChildrenProps = {
     get expanded() {
@@ -148,6 +170,9 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
     setExpanded,
     get collapseBehavior() {
       return defaultedProps.collapseBehavior
+    },
+    get preventInitialContentAnimation() {
+      return defaultedProps.preventInitialContentAnimation
     },
     get disclosureId() {
       return defaultedProps.disclosureId
@@ -185,6 +210,8 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
           expanded,
           setExpanded,
           collapseBehavior: () => defaultedProps.collapseBehavior,
+          preventInitialContentAnimation: () =>
+            defaultedProps.preventInitialContentAnimation,
           disclosureId: () => defaultedProps.disclosureId,
           contentPresent,
           contentRef,
@@ -196,6 +223,8 @@ const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
             expanded,
             setExpanded,
             collapseBehavior: () => defaultedProps.collapseBehavior,
+            preventInitialContentAnimation: () =>
+              defaultedProps.preventInitialContentAnimation,
             disclosureId: () => defaultedProps.disclosureId,
             contentPresent,
             contentRef,

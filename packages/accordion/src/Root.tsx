@@ -68,6 +68,11 @@ export type AccordionRootProps = {
    */
   collapseBehavior?: 'remove' | 'hide'
   /**
+   * Whether the initial open animation of the disclosure content should be prevented.
+   * @defaultValue `false`
+   */
+  preventInitialContentAnimation?: boolean
+  /**
    * The `id` of the accordion context. Useful if you have nested accordions and want to create components that belong to a accordion higher up in the tree.
    */
   contextId?: string
@@ -95,6 +100,8 @@ export type AccordionRootChildrenProps = {
   textDirection: 'ltr' | 'rtl'
   /** Whether the accordion content should be removed or hidden when collapsed. */
   collapseBehavior: 'remove' | 'hide'
+  /** Whether the initial open animation of the disclosure content should be prevented. */
+  preventInitialContentAnimation: boolean
 }
 
 /** Context wrapper for the accordion. Is required for every accordion you create. */
@@ -109,6 +116,7 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
       loop: true,
       textDirection: 'ltr' as const,
       collapseBehavior: 'remove' as const,
+      preventInitialContentAnimation: false,
     },
     props,
   )
@@ -217,6 +225,9 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
     get collapseBehavior() {
       return defaultedProps.collapseBehavior
     },
+    get preventInitialContentAnimation() {
+      return defaultedProps.preventInitialContentAnimation
+    },
   }
 
   const memoizedChildren = createOnce(() => defaultedProps.children)
@@ -247,6 +258,8 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
           loop: () => defaultedProps.loop,
           textDirection: () => defaultedProps.textDirection,
           collapseBehavior: () => defaultedProps.collapseBehavior,
+          preventInitialContentAnimation: () =>
+            defaultedProps.preventInitialContentAnimation,
         }}
       >
         <InternalAccordionContext.Provider
@@ -260,6 +273,8 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
             loop: () => defaultedProps.loop,
             textDirection: () => defaultedProps.textDirection,
             collapseBehavior: () => defaultedProps.collapseBehavior,
+            preventInitialContentAnimation: () =>
+              defaultedProps.preventInitialContentAnimation,
             internalValue,
             toggleValue,
             registerTrigger: (trigger) =>

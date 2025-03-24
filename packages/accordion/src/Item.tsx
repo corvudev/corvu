@@ -90,6 +90,7 @@ const AccordionItem = <T extends ValidComponent = typeof Fragment>(
       'value',
       'disabled',
       'collapseBehavior',
+      'preventInitialContentAnimation',
       'triggerId',
       'contextId',
       'children',
@@ -112,6 +113,11 @@ const AccordionItem = <T extends ValidComponent = typeof Fragment>(
   )
   const collapseBehavior = createMemo(
     () => localProps.collapseBehavior ?? context().collapseBehavior(),
+  )
+  const preventInitialContentAnimation = createMemo(
+    () =>
+      localProps.preventInitialContentAnimation ??
+      context().preventInitialContentAnimation(),
   )
 
   const childrenProps: AccordionItemChildrenProps = {
@@ -177,6 +183,7 @@ const AccordionItem = <T extends ValidComponent = typeof Fragment>(
                 context().toggleValue(value())
               }}
               collapseBehavior={collapseBehavior()}
+              preventInitialContentAnimation={preventInitialContentAnimation()}
               contextId={localProps.contextId}
               {...otherProps}
             >

@@ -23,6 +23,8 @@ export type AccordionContextValue = {
   textDirection: Accessor<'ltr' | 'rtl'>
   /** Whether the accordion item content should be removed or hidden when collapsed. */
   collapseBehavior: Accessor<'remove' | 'hide'>
+  /** Whether the initial open animation of the disclosure content should be prevented. */
+  preventInitialContentAnimation: Accessor<boolean>
 }
 
 const AccordionContext = createContext<AccordionContextValue>()

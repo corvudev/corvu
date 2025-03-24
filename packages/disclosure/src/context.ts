@@ -11,6 +11,8 @@ export type DisclosureContextValue = {
   setExpanded: Setter<boolean>
   /** Whether the disclosure content should be removed or hidden when collapsed. */
   collapseBehavior: Accessor<'remove' | 'hide'>
+  /** Whether the initial open animation of the disclosure content should be prevented. */
+  preventInitialContentAnimation: Accessor<boolean>
   /** The `id` attribute of the disclosure content element. */
   disclosureId: Accessor<string>
   /** Whether the disclosure content is present. This differes from `expanded` as it tracks pending animations. */
