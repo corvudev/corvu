@@ -1,5 +1,6 @@
 import {
   type Component,
+  createEffect,
   createMemo,
   createSignal,
   type JSX,
@@ -150,11 +151,31 @@ const AccordionRoot: Component<AccordionRootProps> = (props) => {
   }
 
   const [triggers, setTriggers] = createSignal<HTMLElement[]>([])
-  const selectableTriggers = createMemo(() => {
-    return triggers()
-      .filter((element) => !element.hasAttribute('disabled'))
-      .sort(sortByDocumentPosition)
+  const [selectableTriggers, setSelectableTriggers] = createSignal<
+    HTMLElement[]
+  >([])
+
+  createEffect(() => {
+    const observer = new MutationObserver(updateSelectableTriggers)
+    triggers().forEach((trigger) => {
+      observer.observe(trigger, {
+        attributes: true,
+        attributeFilter: ['disabled'],
+      })
+    })
+
+    updateSelectableTriggers()
+
+    return observer.disconnect
   })
+
+  const updateSelectableTriggers = () => {
+    setSelectableTriggers(
+      triggers()
+        .filter((trigger) => !trigger.hasAttribute('disabled'))
+        .sort(sortByDocumentPosition),
+    )
+  }
 
   const { setActive, onKeyDown: onTriggerKeyDown } = createList({
     items: () => [...Array(selectableTriggers().length).keys()],
