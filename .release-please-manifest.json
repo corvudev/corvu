@@ -1,8 +1,8 @@
 {
-  "packages/accordion": "0.2.4",
+  "packages/accordion": "0.2.5",
   "packages/corvu": "0.7.2",
   "packages/dialog": "0.2.4",
-  "packages/disclosure": "0.2.1",
+  "packages/disclosure": "0.2.2",
   "packages/drawer": "0.2.3",
   "packages/otp-field": "0.1.4",
   "packages/popover": "0.2.0",
