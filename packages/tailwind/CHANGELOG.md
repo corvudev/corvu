@@ -1,5 +1,12 @@
 # @corvu/tailwind
 
+## [0.1.7](https://github.com/corvudev/corvu/compare/@corvu/tailwind@0.1.6...@corvu/tailwind@0.1.7) (2025-04-08)
+
+
+### Features
+
+* add data-side to drawer content and overlay ([9948a92](https://github.com/corvudev/corvu/commit/9948a923364618cd47649eff3775cc0d72438f34))
+
 ## [0.1.6](https://github.com/corvudev/corvu/compare/@corvu/tailwind@0.1.5...@corvu/tailwind@0.1.6) (2025-01-24)
 
 

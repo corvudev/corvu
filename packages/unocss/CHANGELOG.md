@@ -1,5 +1,12 @@
 # @corvu/unocss
 
+## [0.1.3](https://github.com/corvudev/corvu/compare/@corvu/unocss@0.1.2...@corvu/unocss@0.1.3) (2025-04-08)
+
+
+### Features
+
+* add data-side to drawer content and overlay ([9948a92](https://github.com/corvudev/corvu/commit/9948a923364618cd47649eff3775cc0d72438f34))
+
 ## [0.1.2](https://github.com/corvudev/corvu/compare/@corvu/unocss@0.1.1...@corvu/unocss@0.1.2) (2025-03-07)
 
 
