@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 
-const dataStates = [
+const booleanStates = [
   'open',
   'closed',
   'expanded',
@@ -20,6 +20,13 @@ const dataStates = [
   'in-range',
 ]
 
+const stringStates = [
+  {
+    name: 'side',
+    states: ['top', 'right', 'bottom', 'left'],
+  },
+]
+
 export type PluginOptions = {
   prefix?: string
 }
@@ -27,7 +34,7 @@ export type PluginOptions = {
 export default plugin.withOptions<PluginOptions>(
   ({ prefix = 'corvu' } = {}) => {
     return ({ addVariant }) => {
-      for (const state of dataStates) {
+      for (const state of booleanStates) {
         addVariant(`${prefix}-${state}`, [`&[data-${state}]`])
         addVariant(
           `${prefix}-group-${state}`,
@@ -37,6 +44,22 @@ export default plugin.withOptions<PluginOptions>(
           `${prefix}-peer-${state}`,
           `:merge(.peer)[data-${state}] ~ &`,
         )
+      }
+      for (const stringState of stringStates) {
+        const { name, states } = stringState
+        for (const state of states) {
+          addVariant(`${prefix}-${name}-${state}`, [
+            `&[data-${name}='${state}']`,
+          ])
+          addVariant(
+            `${prefix}-group-${name}-${state}`,
+            `:merge(.group)[data-${name}='${state}'] &`,
+          )
+          addVariant(
+            `${prefix}-peer-${name}-${state}`,
+            `:merge(.peer)[data-${name}='${state}'] ~ &`,
+          )
+        }
       }
     }
   },

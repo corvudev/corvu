@@ -1,4 +1,4 @@
-import { type Axis, dataIf } from '@corvu/utils'
+import { type Axis, dataIf, type Side } from '@corvu/utils'
 import {
   batch,
   type Component,
@@ -34,11 +34,12 @@ export type DrawerContentElementProps = DrawerContentSharedElementProps & {
   onPointerDown: JSX.EventHandlerUnion<HTMLElement, PointerEvent>
   onTouchStart: JSX.EventHandlerUnion<HTMLElement, TouchEvent>
   onTransitionEnd: JSX.EventHandlerUnion<HTMLElement, TransitionEvent>
+  'data-side': Side
   'data-opening': '' | undefined
   'data-closing': '' | undefined
-  'data-resizing': '' | undefined
   'data-snapping': '' | undefined
   'data-transitioning': '' | undefined
+  'data-resizing': '' | undefined
   'data-corvu-drawer-content': ''
 } & DialogContentElementProps
 
@@ -50,10 +51,11 @@ export type DrawerContentProps<T extends ValidComponent = 'div'> =
  * @data `data-corvu-drawer-content` - Present on every drawer content element.
  * @data `data-open` - Present when the drawer is open.
  * @data `data-closed` - Present when the drawer is closed.
- * @data `data-transitioning` - Present when the drawer is transitioning (opening, closing or snapping).
+ * @data `data-side` - The side that the drawer attached on.
  * @data `data-opening` - Present when the drawer is in the open transition.
  * @data `data-closing` - Present when the drawer is in the close transition.
  * @data `data-snapping` - Present when the drawer is transitioning after the user stops dragging.
+ * @data `data-transitioning` - Present when the drawer is transitioning (opening, closing or snapping).
  * @data `data-resizing` - Present when the drawer is transitioning after the size (width/height) changes. Only present if `transitionResize` is set to `true`.
  */
 const DrawerContent = <T extends ValidComponent = 'div'>(
@@ -358,11 +360,12 @@ const DrawerContent = <T extends ValidComponent = 'div'>(
           }
         })
       }}
-      data-closing={dataIf(drawerContext().transitionState() === 'closing')}
+      data-side={drawerContext().side()}
       data-opening={dataIf(drawerContext().transitionState() === 'opening')}
-      data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
+      data-closing={dataIf(drawerContext().transitionState() === 'closing')}
       data-snapping={dataIf(drawerContext().transitionState() === 'snapping')}
       data-transitioning={dataIf(drawerContext().isTransitioning())}
+      data-resizing={dataIf(drawerContext().transitionState() === 'resizing')}
       data-corvu-drawer-content=""
       // === Misc ===
       data-corvu-dialog-content={null}
