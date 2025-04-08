@@ -56,15 +56,15 @@
     "lint": "eslint --max-warnings=0 ."
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.26.1",
-    "eslint": "^9.22.0",
+    "@typescript-eslint/parser": "^8.29.1",
+    "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-prettier": "^5.2.6",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.0.14",
+    "tailwindcss": "^4.1.3",
     "tsup": "^8.4.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.1"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1"
   },
   "peerDependencies": {
     "tailwindcss": "^3"

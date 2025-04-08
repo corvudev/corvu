@@ -61,18 +61,18 @@
     "solid-transition-size": "workspace:~"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.26.1",
+    "@typescript-eslint/parser": "^8.29.1",
     "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^9.22.0",
+    "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-solid": "^0.14.5",
     "prettier": "^3.5.3",
     "solid-js": "^1.9.5",
     "tsup": "^8.4.0",
     "typedoc": "^0.27.9",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.1"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1"
   },
   "peerDependencies": {
     "solid-js": "^1.8"
