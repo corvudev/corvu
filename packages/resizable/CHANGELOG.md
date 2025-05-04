@@ -1,5 +1,12 @@
 # @corvu/resizable
 
+## [0.2.5](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.4...@corvu/resizable@0.2.5) (2025-05-04)
+
+
+### Features
+
+* use setPointerCapture to improve iframe support ([dabea93](https://github.com/corvudev/corvu/commit/dabea938d9f6eb8a98b993ac367d258bc68b5f1a))
+
 ## [0.2.4](https://github.com/corvudev/corvu/compare/@corvu/resizable@0.2.3...@corvu/resizable@0.2.4) (2025-01-24)
 
 
