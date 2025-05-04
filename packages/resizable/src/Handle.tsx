@@ -302,6 +302,8 @@ const ResizableHandle = <T extends ValidComponent = 'button'>(
     if (callEventHandler(localProps.onPointerDown, e)) return
     if (callEventHandler(localProps.onHandleDragStart, e)) return
     const targetElement = e.target as HTMLElement
+    targetElement.setPointerCapture(e.pointerId)
+
     let target: DragTarget = 'handle'
     if (
       targetElement.hasAttribute(
