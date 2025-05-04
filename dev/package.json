@@ -19,19 +19,19 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "solid-js": "^1.9.5"
+    "solid-js": "^1.9.6"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.3",
-    "@typescript-eslint/parser": "^8.29.1",
-    "eslint": "^9.24.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.6",
+    "@tailwindcss/vite": "^4.1.5",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.3.1",
     "eslint-plugin-solid": "^0.14.5",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.3",
-    "typescript-eslint": "^8.29.1",
-    "vite": "^6.2.5",
+    "tailwindcss": "^4.1.5",
+    "typescript-eslint": "^8.31.1",
+    "vite": "^6.3.4",
     "vite-plugin-solid": "^2.11.6",
     "vite-tsconfig-paths": "^5.1.4"
   }

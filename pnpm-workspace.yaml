@@ -1,4 +1,7 @@
 packages:
-  - 'packages/*'
-  - 'web'
-  - 'dev'
+  - packages/*
+  - web
+  - dev
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
