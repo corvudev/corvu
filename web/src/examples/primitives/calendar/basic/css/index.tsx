@@ -17,7 +17,12 @@ const CalendarExample: VoidComponent = () => {
                 <CaretLeft size="18" />
               </Calendar.Nav>
               <Calendar.Label>
-                {formatMonth(props.month)} {props.month.getFullYear()}
+                {formatMonth(
+                  props.month.toDate(
+                    Intl.DateTimeFormat().resolvedOptions().timeZone,
+                  ),
+                )}{' '}
+                {props.month.year}
               </Calendar.Label>
               <Calendar.Nav action="next-month" aria-label="Go to next month">
                 <CaretRight size="18" />
@@ -28,8 +33,18 @@ const CalendarExample: VoidComponent = () => {
                 <tr>
                   <Index each={props.weekdays}>
                     {(weekday) => (
-                      <Calendar.HeadCell abbr={formatWeekdayLong(weekday())}>
-                        {formatWeekdayShort(weekday())}
+                      <Calendar.HeadCell
+                        abbr={formatWeekdayLong(
+                          weekday().toDate(
+                            Intl.DateTimeFormat().resolvedOptions().timeZone,
+                          ),
+                        )}
+                      >
+                        {formatWeekdayShort(
+                          weekday().toDate(
+                            Intl.DateTimeFormat().resolvedOptions().timeZone,
+                          ),
+                        )}
                       </Calendar.HeadCell>
                     )}
                   </Index>
@@ -43,7 +58,7 @@ const CalendarExample: VoidComponent = () => {
                         {(day) => (
                           <Calendar.Cell>
                             <Calendar.CellTrigger day={day()}>
-                              {day().getDate()}
+                              {day().day}
                             </Calendar.CellTrigger>
                           </Calendar.Cell>
                         )}

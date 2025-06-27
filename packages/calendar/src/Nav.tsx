@@ -12,13 +12,16 @@ import {
   type DynamicButtonSharedElementProps,
   type DynamicProps,
 } from '@corvu/utils/dynamic'
+import type { DateValue } from '@internationalized/date'
 import { useInternalCalendarContext } from '@src/context'
 
 export type CalendarNavCorvuProps = {
   /**
    * The action to perform when pressing this navigation button.
    */
-  action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date)
+  action:
+    | `${'prev' | 'next'}-${'month' | 'year'}`
+    | ((date: DateValue) => DateValue)
   /**
    * The `id` of the calendar context to use.
    */

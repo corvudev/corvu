@@ -29,8 +29,12 @@ const CalendarExample: VoidComponent = () => {
                   <div>
                     <div class="flex h-7 items-center justify-center">
                       <Calendar.Label index={index} class="text-sm">
-                        {formatMonth(month().month)}{' '}
-                        {month().month.getFullYear()}
+                        {formatMonth(
+                          month().month.toDate(
+                            Intl.DateTimeFormat().resolvedOptions().timeZone,
+                          ),
+                        )}{' '}
+                        {month().month.year}
                       </Calendar.Label>
                     </div>
                     <Calendar.Table index={index} class="mt-3">
@@ -39,10 +43,20 @@ const CalendarExample: VoidComponent = () => {
                           <Index each={props.weekdays}>
                             {(weekday) => (
                               <Calendar.HeadCell
-                                abbr={formatWeekdayLong(weekday())}
+                                abbr={formatWeekdayLong(
+                                  weekday().toDate(
+                                    Intl.DateTimeFormat().resolvedOptions()
+                                      .timeZone,
+                                  ),
+                                )}
                                 class="w-8 flex-1 pb-1 text-xs font-normal opacity-65"
                               >
-                                {formatWeekdayShort(weekday())}
+                                {formatWeekdayShort(
+                                  weekday().toDate(
+                                    Intl.DateTimeFormat().resolvedOptions()
+                                      .timeZone,
+                                  ),
+                                )}
                               </Calendar.HeadCell>
                             )}
                           </Index>
@@ -60,7 +74,7 @@ const CalendarExample: VoidComponent = () => {
                                       month={month().month}
                                       class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none data-today:bg-corvu-200/50 data-range-start:bg-corvu-300 data-range-end:bg-corvu-300 lg:hover:not-data-range-start:not-data-range-end:bg-corvu-200/80"
                                     >
-                                      {day().getDate()}
+                                      {day().day}
                                     </Calendar.CellTrigger>
                                   </Calendar.Cell>
                                 )}

@@ -163,6 +163,7 @@ export type ReferenceType = {
     | '@floating-ui/dom'
     | '@floating-ui/core'
     | 'corvu'
+    | '@internationalized/date'
 }
 
 export type LiteralType = {

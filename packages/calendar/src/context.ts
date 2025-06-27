@@ -9,6 +9,7 @@ import {
   createKeyedContext,
   useKeyedContext,
 } from '@corvu/utils/create/keyedContext'
+import type { DateValue } from '@internationalized/date'
 
 export type CalendarContextValue<
   Mode extends 'single' | 'multiple' | 'range' =
@@ -30,18 +31,18 @@ export type CalendarContextSingleValue = {
   /** The mode of the calendar. */
   mode: Accessor<'single'>
   /** The value of the calendar. */
-  value: Accessor<Date | null>
+  value: Accessor<DateValue | null>
   /** Setter to change the value of the calendar. */
-  setValue: Setter<Date | null>
+  setValue: Setter<DateValue | null>
 } & CalendarContextBaseValue
 
 export type CalendarContextMultipleValue = {
   /** The mode of the calendar. */
   mode: Accessor<'multiple'>
   /** The value of the calendar. */
-  value: Accessor<Date[]>
+  value: Accessor<DateValue[]>
   /** Setter to change the value of the calendar. */
-  setValue: Setter<Date[]>
+  setValue: Setter<DateValue[]>
   /** The minimum number of days that have to be selected. */
   min: Accessor<number | null>
   /** The maximum number of days that can be selected. */
@@ -52,22 +53,22 @@ export type CalendarContextRangeValue = {
   /** The mode of the calendar. */
   mode: Accessor<'range'>
   /** The value of the calendar. */
-  value: Accessor<{ from: Date | null; to: Date | null }>
+  value: Accessor<{ from: DateValue | null; to: DateValue | null }>
   /** Setter to change the value of the calendar. */
-  setValue: Setter<{ from: Date | null; to: Date | null }>
+  setValue: Setter<{ from: DateValue | null; to: DateValue | null }>
   /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: Accessor<boolean>
 } & CalendarContextBaseValue
 
 export type CalendarContextBaseValue = {
   /** The month to display in the calendar. Is always the first month if multiple months are displayed. */
-  month: Accessor<Date>
+  month: Accessor<DateValue>
   /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDay to be within the visible range. */
-  setMonth: Setter<Date>
+  setMonth: Setter<DateValue>
   /** The day that is currently focused in the calendar grid. */
-  focusedDay: Accessor<Date>
+  focusedDay: Accessor<DateValue>
   /** Setter to change the focused day in the calendar grid. Automatically adjusts the month to ensure the focused day is visible. */
-  setFocusedDay: Setter<Date>
+  setFocusedDay: Setter<DateValue>
   /** The first day of the week. (0-6, 0 is Sunday) */
   startOfWeek: Accessor<number>
   /** Whether the value is required. Prevents unselecting the value. */
@@ -81,14 +82,16 @@ export type CalendarContextBaseValue = {
   /** The text direction of the calendar. */
   textDirection: Accessor<'ltr' | 'rtl'>
   /** Array of weekdays starting from the first day of the week. */
-  weekdays: Accessor<Date[]>
+  weekdays: Accessor<DateValue[]>
   /** Array of the currently displayed months. */
-  months: Accessor<{ month: Date; weeks: Date[][] }[]>
+  months: Accessor<{ month: DateValue; weeks: DateValue[][] }[]>
   /** Function to get the weeks of the current month. Useful if only one month is being rendered. */
-  weeks: Accessor<Date[][]>
+  weeks: Accessor<DateValue[][]>
   /** Function to navigate the calendar. */
   navigate: (
-    action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
+    action:
+      | `${'prev' | 'next'}-${'month' | 'year'}`
+      | ((date: DateValue) => DateValue),
   ) => void
   /** The ref of the currently focused calendar cell trigger. */
   focusedDayRef: Accessor<HTMLElement | null>
@@ -142,13 +145,14 @@ export const useCalendarContext = <
 type InternalCalendarContextValue = CalendarContextValue & {
   registerLabelId: (index: number) => void
   unregisterLabelId: (index: number) => void
-  onDaySelect: (day: Date) => void
-  isSelected: (date: Date) => boolean
-  isDisabled: (date: Date, month?: Date) => boolean
+  onDaySelect: (day: DateValue) => void
+  isSelected: (date: DateValue) => boolean
+  isDisabled: (date: DateValue, month?: DateValue) => boolean
   isFocusing: Accessor<boolean>
   setIsFocusing: Setter<boolean>
-  disabled: (day: Date) => boolean
+  disabled: (day: DateValue) => boolean
   setFocusedDayRef: Setter<HTMLElement | null>
+  timeZone: string
 }
 
 const InternalCalendarContext = createContext<InternalCalendarContextValue>()

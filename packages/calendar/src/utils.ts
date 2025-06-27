@@ -1,44 +1,41 @@
-const isSameDay = (a: Date | null, b: Date | null) => {
+import {
+  type DateValue,
+  endOfMonth,
+  isEqualDay,
+  isToday,
+  startOfMonth,
+} from '@internationalized/date'
+
+const isSameDay = (a: DateValue | null, b: DateValue | null) => {
   if (!a || !b) return false
-  if (a.getDate() !== b.getDate()) return false
-  if (a.getMonth() !== b.getMonth()) return false
-  if (a.getFullYear() !== b.getFullYear()) return false
-  return true
+  return isEqualDay(a, b)
 }
 
-const isSameDayOrBefore = (a: Date | null, b: Date | null) => {
+const isSameDayOrBefore = (a: DateValue | null, b: DateValue | null) => {
   if (!a || !b) return false
-  if (isSameDay(a, b)) return true
-  if (a.getTime() < b.getTime()) return true
-  return false
+  return a.compare(b) <= 0
 }
 
-const isSameDayOrAfter = (a: Date | null, b: Date | null) => {
+const isSameDayOrAfter = (a: DateValue | null, b: DateValue | null) => {
   if (!a || !b) return false
-  if (isSameDay(a, b)) return true
-  if (a.getTime() > b.getTime()) return true
-  return false
+  return a.compare(b) >= 0
 }
 
 const modifyDate = (
-  date: Date,
+  date: DateValue,
   modify: { year?: number; month?: number; day?: number },
 ) => {
-  const newYear = date.getFullYear() + (modify.year ?? 0)
-  const newMonth = date.getMonth() + (modify.month ?? 0)
-  let newDay = date.getDate() + (modify.day ?? 0)
-  // Prevent day falling into the next month because the month has fewer days
-  if (modify.month !== undefined && modify.month !== 0) {
-    newDay = Math.min(new Date(newYear, newMonth + 1, 0).getDate(), newDay)
-  }
-
-  return new Date(newYear, newMonth, newDay)
+  return date.add({
+    days: modify.day,
+    years: modify.year,
+    months: modify.month,
+  })
 }
 
 const modifyFocusedDay = (
-  date: Date,
+  date: DateValue,
   modify: { year?: number; month?: number; day?: number },
-  disabled: (day: Date) => boolean,
+  disabled: (day: DateValue) => boolean,
   retry = true,
   iteration = 0,
 ) => {
@@ -53,40 +50,34 @@ const modifyFocusedDay = (
 }
 
 const dayIsInMonth = (
-  focusedDay: Date,
-  month: Date,
+  focusedDay: DateValue,
+  month: DateValue,
   numberOfMonths: number,
 ) => {
-  const firstDay = new Date(month.getFullYear(), month.getMonth(), 1)
-  const lastDay = new Date(
-    month.getFullYear(),
-    month.getMonth() + numberOfMonths,
-    0,
-  )
-  return (
-    focusedDay.getTime() >= firstDay.getTime() &&
-    focusedDay.getTime() <= lastDay.getTime()
-  )
+  const firstDay = startOfMonth(month)
+  const lastDay = firstDay.add({ months: numberOfMonths })
+
+  const isAfterOrEquerToFirst = focusedDay.compare(firstDay) >= 0
+  const isBeforeOrEquerToLast = focusedDay.compare(lastDay) <= 0
+
+  return isAfterOrEquerToFirst && isBeforeOrEquerToLast
 }
 
 const findAvailableDayInMonth = (
-  start: Date,
-  disabled: (day: Date) => boolean,
+  start: DateValue,
+  disabled: (day: DateValue) => boolean,
 ) => {
-  const lastDayOfMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0)
-  const month = start.getMonth()
+  const lastDayOfMonth = endOfMonth(start)
+  const month = start.month
 
   let shift = 0
-  const maxShift = Math.max(
-    start.getDate() - 1,
-    lastDayOfMonth.getDate() - start.getDate(),
-  )
+  const maxShift = Math.max(start.day - 1, lastDayOfMonth.day - start.day)
 
   while (shift <= maxShift) {
-    start.setDate(start.getDate() + shift)
-    if (start.getMonth() === month && !disabled(start)) return start
-    start.setDate(start.getDate() - shift)
-    if (start.getMonth() === month && !disabled(start)) return start
+    start.add({ days: shift })
+    if (start.month === month && !disabled(start)) return start
+    start.subtract({ days: shift })
+    if (start.month === month && !disabled(start)) return start
     shift++
   }
 
@@ -102,4 +93,5 @@ export {
   modifyFocusedDay,
   dayIsInMonth,
   findAvailableDayInMonth,
+  isToday,
 }

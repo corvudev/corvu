@@ -26,7 +26,13 @@ const CalendarExample: VoidComponent = () => {
           <Popover.Trigger class="my-auto flex w-56 items-center space-x-2 rounded-md bg-corvu-100 px-3 py-2 transition-all duration-100 hover:bg-corvu-200">
             <CalendarBlank size="20" />
             <Show when={props.value} fallback={<span>Pick a date</span>}>
-              <span>{formatTrigger(props.value!)}</span>
+              <span>
+                {formatTrigger(
+                  props.value!.toDate(
+                    Intl.DateTimeFormat().resolvedOptions().timeZone,
+                  ),
+                )}
+              </span>
             </Show>
           </Popover.Trigger>
           <Popover.Portal>
@@ -41,7 +47,12 @@ const CalendarExample: VoidComponent = () => {
                     <CaretLeft size="18" />
                   </Calendar.Nav>
                   <Calendar.Label as={Popover.Label} class="text-sm">
-                    {formatMonth(props.month)} {props.month.getFullYear()}
+                    {formatMonth(
+                      props.month.toDate(
+                        Intl.DateTimeFormat().resolvedOptions().timeZone,
+                      ),
+                    )}{' '}
+                    {props.month.year}
                   </Calendar.Label>
                   <Calendar.Nav
                     action="next-month"
@@ -57,10 +68,20 @@ const CalendarExample: VoidComponent = () => {
                       <Index each={props.weekdays}>
                         {(weekday) => (
                           <Calendar.HeadCell
-                            abbr={formatWeekdayLong(weekday())}
+                            abbr={formatWeekdayLong(
+                              weekday().toDate(
+                                Intl.DateTimeFormat().resolvedOptions()
+                                  .timeZone,
+                              ),
+                            )}
                             class="w-8 flex-1 pb-1 text-xs font-normal opacity-65"
                           >
-                            {formatWeekdayShort(weekday())}
+                            {formatWeekdayShort(
+                              weekday().toDate(
+                                Intl.DateTimeFormat().resolvedOptions()
+                                  .timeZone,
+                              ),
+                            )}
                           </Calendar.HeadCell>
                         )}
                       </Index>
@@ -77,7 +98,7 @@ const CalendarExample: VoidComponent = () => {
                                   day={day()}
                                   class="inline-flex size-8 items-center justify-center rounded-md text-sm focus-visible:bg-corvu-200/80 disabled:pointer-events-none disabled:opacity-40 data-selected:bg-corvu-300! data-today:bg-corvu-200/50 lg:hover:bg-corvu-200/80"
                                 >
-                                  {day().getDate()}
+                                  {day().day}
                                 </Calendar.CellTrigger>
                               </Calendar.Cell>
                             )}

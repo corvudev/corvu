@@ -11,6 +11,7 @@ import {
 import { callEventHandler, type ElementOf, type Ref } from '@corvu/utils/dom'
 import { Dynamic, type DynamicProps } from '@corvu/utils/dynamic'
 import {
+  isToday as getIsToday,
   isSameDay,
   isSameDayOrAfter,
   isSameDayOrBefore,
@@ -18,6 +19,7 @@ import {
 } from '@src/utils'
 import { createEffect } from 'solid-js'
 import { dataIf } from '@corvu/utils'
+import type { DateValue } from '@internationalized/date'
 import { mergeRefs } from '@corvu/utils/reactivity'
 import { useInternalCalendarContext } from '@src/context'
 
@@ -25,11 +27,11 @@ export type CalendarCellTriggerCorvuProps = {
   /*
    * The day that this cell trigger represents. Used to handle selection and focus.
    */
-  day: Date
+  day: DateValue
   /**
    * The month that this cell trigger belongs to. Is optional as it's not required if only one month is rendered.
    */
-  month?: Date
+  month?: DateValue
   /**
    * The `id` of the calendar context to use.
    */
@@ -84,12 +86,12 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
 
   const [ref, setRef] = createSignal<HTMLButtonElement | null>(null)
 
-  const [isToday, setIsToday] = createSignal(false)
-  createEffect(() => setIsToday(isSameDay(localProps.day, new Date())))
-
   const context = createMemo(() =>
     useInternalCalendarContext(localProps.contextId),
   )
+
+  const [isToday, setIsToday] = createSignal(false)
+  createEffect(() => setIsToday(getIsToday(localProps.day, context().timeZone)))
 
   createEffect(
     on(
@@ -125,7 +127,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
   ) => {
     if (callEventHandler(localProps.onKeyDown, event)) return
 
-    let focusedDay: Date | null = null
+    let focusedDay: DateValue | null = null
     if (
       (event.key === 'ArrowLeft' && context().textDirection() === 'ltr') ||
       (event.key === 'ArrowRight' && context().textDirection() === 'rtl')
@@ -168,7 +170,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       focusedDay = modifyFocusedDay(
         localProps.day,
         {
-          day: -((localProps.day.getDay() - context().startOfWeek() + 7) % 7),
+          day: -((localProps.day.day - context().startOfWeek() + 7) % 7),
         },
         context().disabled,
         false,
@@ -181,7 +183,7 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
       focusedDay = modifyFocusedDay(
         localProps.day,
         {
-          day: (context().startOfWeek() + 6 - localProps.day.getDay() + 7) % 7,
+          day: (context().startOfWeek() + 6 - localProps.day.day + 7) % 7,
         },
         context().disabled,
         false,
@@ -261,25 +263,45 @@ const CalendarCellTrigger = <T extends ValidComponent = 'button'>(
         context().mode() === 'range' &&
           isSameDay(
             localProps.day,
-            (context().value() as { from: Date | null; to: Date | null }).from,
+            (
+              context().value() as {
+                from: DateValue | null
+                to: DateValue | null
+              }
+            ).from,
           ),
       )}
       data-range-end={dataIf(
         context().mode() === 'range' &&
           isSameDay(
             localProps.day,
-            (context().value() as { from: Date | null; to: Date | null }).to,
+            (
+              context().value() as {
+                from: DateValue | null
+                to: DateValue | null
+              }
+            ).to,
           ),
       )}
       data-in-range={dataIf(
         context().mode() === 'range' &&
           isSameDayOrAfter(
             localProps.day,
-            (context().value() as { from: Date | null; to: Date | null }).from,
+            (
+              context().value() as {
+                from: DateValue | null
+                to: DateValue | null
+              }
+            ).from,
           ) &&
           isSameDayOrBefore(
             localProps.day,
-            (context().value() as { from: Date | null; to: Date | null }).to,
+            (
+              context().value() as {
+                from: DateValue | null
+                to: DateValue | null
+              }
+            ).to,
           ),
       )}
       data-corvu-calendar-celltrigger=""

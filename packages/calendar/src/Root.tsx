@@ -11,6 +11,14 @@ import {
   untrack,
 } from 'solid-js'
 import {
+  CalendarDate,
+  endOfMonth,
+  getDayOfWeek,
+  getLocalTimeZone,
+  now,
+  startOfMonth,
+} from '@internationalized/date'
+import {
   createCalendarContext,
   createInternalCalendarContext,
 } from '@src/context'
@@ -20,11 +28,11 @@ import {
   isSameDay,
   isSameDayOrAfter,
   isSameDayOrBefore,
-  modifyDate,
 } from '@src/utils'
 import createControllableSignal from '@corvu/utils/create/controllableSignal'
 import createOnce from '@corvu/utils/create/once'
 import createRegister from '@corvu/utils/create/register'
+import type { DateValue } from '@internationalized/date'
 import { isFunction } from '@corvu/utils'
 
 export type CalendarRootProps =
@@ -40,16 +48,16 @@ export type CalendarRootSingleProps = {
   /**
    * The value of the calendar.
    */
-  value?: Date | null
+  value?: DateValue | null
   /**
    * Callback fired when the value changes.
    */
-  onValueChange?: (value: Date | null) => void
+  onValueChange?: (value: DateValue | null) => void
   /**
    * The initial value of the calendar.
    * @defaultValue `null`
    */
-  initialValue?: Date | null
+  initialValue?: DateValue | null
   /** @hidden */
   children:
     | JSX.Element
@@ -64,16 +72,16 @@ export type CalendarRootMultipleProps = {
   /**
    * The value of the calendar.
    */
-  value?: Date[]
+  value?: DateValue[]
   /**
    * Callback fired when the value changes.
    */
-  onValueChange?: (value: Date[]) => void
+  onValueChange?: (value: DateValue[]) => void
   /**
    * The initial value of the calendar.
    * @defaultValue `[]`
    */
-  initialValue?: Date[]
+  initialValue?: DateValue[]
   /**
    * The minimum number of days that have to be selected.
    * @defaultValue `null`
@@ -98,16 +106,19 @@ export type CalendarRootRangeProps = {
   /**
    * The value of the calendar.
    */
-  value?: { from: Date | null; to: Date | null }
+  value?: { from: DateValue | null; to: DateValue | null }
   /**
    * Callback fired when the value changes.
    */
-  onValueChange?: (value: { from: Date | null; to: Date | null }) => void
+  onValueChange?: (value: {
+    from: DateValue | null
+    to: DateValue | null
+  }) => void
   /**
    * The initial value of the calendar.
    * @defaultValue `{ from: null, to: null }`
    */
-  initialValue?: { from: Date | null; to: Date | null }
+  initialValue?: { from: DateValue | null; to: DateValue | null }
   /**
    * Whether to reset the range selection if a disabled day is included in the range.
    * @defaultValue `false`
@@ -123,29 +134,29 @@ export type CalendarRootBaseProps = {
   /**
    * The month to display in the calendar. Is always the first month if multiple months are displayed.
    */
-  month?: Date
+  month?: DateValue
   /**
    * Callback fired when the month changes.
    */
-  onMonthChange?: (month: Date) => void
+  onMonthChange?: (month: DateValue) => void
   /**
    * The initial month to display in the calendar.
-   * @defaultValue `new Date()`
+   * @defaultValue `new ZonedDateTime()`
    */
-  initialMonth?: Date
+  initialMonth?: DateValue
   /**
    * The day that is currently focused in the calendar grid.
    */
-  focusedDay?: Date
+  focusedDay?: DateValue
   /**
    * Callback fired when the focused day changes.
    */
-  onFocusedDayChange?: (focusedDay: Date) => void
+  onFocusedDayChange?: (focusedDay: DateValue) => void
   /**
    * The initial date that should be focused in the calendar grid.
-   * @defaultValue `new Date()`
+   * @defaultValue `new ZonedDateTime()`
    */
-  initialFocusedDay?: Date
+  initialFocusedDay?: DateValue
   /**
    * The first day of the week. (0-6, 0 is Sunday)
    * @defaultValue `1`
@@ -160,7 +171,7 @@ export type CalendarRootBaseProps = {
    * Callback to determine if any given day is disabled.
    * @defaultValue `() => false`
    */
-  disabled?: (day: Date) => boolean
+  disabled?: (day: DateValue) => boolean
   /**
    * The number of months to display in the calendar.
    * @defaultValue `1`
@@ -190,6 +201,14 @@ export type CalendarRootBaseProps = {
    * The `id` of the calendar context. Useful if you have nested calendars and want to create components that belong to a calendar higher up in the tree.
    */
   contextId?: string
+  /**
+   * The `timeZone` of the calendar
+   */
+  timeZone?: string
+  /**
+   * The `locale` of the current user
+   */
+  locale?: string
 }
 
 /** Props that are passed to the Root component children callback. */
@@ -202,18 +221,18 @@ export type CalendarRootChildrenSingleProps = {
   /** The mode of the calendar. */
   mode: 'single'
   /** The value of the calendar. */
-  value: Date | null
+  value: DateValue | null
   /** Setter to change the value of the calendar. */
-  setValue: Setter<Date | null>
+  setValue: Setter<DateValue | null>
 } & CalendarRootChildrenBaseProps
 
 export type CalendarRootChildrenMultipleProps = {
   /** The mode of the calendar. */
   mode: 'multiple'
   /** The value of the calendar. */
-  value: Date[]
+  value: DateValue[]
   /** Setter to change the value of the calendar. */
-  setValue: Setter<Date[]>
+  setValue: Setter<DateValue[]>
   /** The minimum number of days that have to be selected. */
   min: number | null
   /** The maximum number of days that can be selected. */
@@ -224,22 +243,22 @@ export type CalendarRootChildrenRangeProps = {
   /** The mode of the calendar. */
   mode: 'range'
   /** The value of the calendar. */
-  value: { from: Date | null; to: Date | null }
+  value: { from: DateValue | null; to: DateValue | null }
   /** Setter to change the value of the calendar. */
-  setValue: Setter<{ from: Date | null; to: Date | null }>
+  setValue: Setter<{ from: DateValue | null; to: DateValue | null }>
   /** Whether to reset the range selection if a disabled day is included in the range. */
   excludeDisabled: boolean
 } & CalendarRootChildrenBaseProps
 
 export type CalendarRootChildrenBaseProps = {
   /** The month to display in the calendar. Is always the first month if multiple months are displayed. */
-  month: Date
+  month: DateValue
   /** Setter to change the month to display in the calendar. Automatically adjusts the focusedDay to be within the visible range. */
-  setMonth: Setter<Date>
+  setMonth: Setter<DateValue>
   /** The day that is currently focused in the calendar grid. */
-  focusedDay: Date
+  focusedDay: DateValue
   /** Setter to change the focused day in the calendar grid. Automatically adjusts the month to ensure the focused day is visible. */
-  setFocusedDay: Setter<Date>
+  setFocusedDay: Setter<DateValue>
   /** The first day of the week. (0-6, 0 is Sunday) */
   startOfWeek: number
   /** Whether the value is required. Prevents unselecting the value. */
@@ -253,14 +272,16 @@ export type CalendarRootChildrenBaseProps = {
   /** The text direction of the calendar. */
   textDirection: 'ltr' | 'rtl'
   /** Array of weekdays starting from the first day of the week. */
-  weekdays: Date[]
+  weekdays: DateValue[]
   /** Array of the currently displayed months. */
-  months: { month: Date; weeks: Date[][] }[]
+  months: { month: DateValue; weeks: DateValue[][] }[]
   /** Weeks of the current month. Useful if only one month is being rendered. */
-  weeks: Date[][]
+  weeks: DateValue[][]
   /** Function to navigate the calendar. */
   navigate: (
-    action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
+    action:
+      | `${'prev' | 'next'}-${'month' | 'year'}`
+      | ((date: DateValue) => DateValue),
   ) => void
   /** The ref of the currently focused calendar cell trigger. */
   focusedDayRef: HTMLElement | null
@@ -278,9 +299,10 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           : props.mode === 'multiple'
             ? []
             : { from: null, to: null },
-      initialMonth: props.initialFocusedDay ?? new Date(),
+      initialMonth:
+        props.initialFocusedDay ?? now(props.timeZone ?? getLocalTimeZone()),
       initialFocusedDay: findAvailableDayInMonth(
-        props.initialMonth ?? new Date(),
+        props.initialMonth ?? now(props.timeZone ?? getLocalTimeZone()),
         props.disabled ?? (() => true),
       ),
       startOfWeek: 1,
@@ -294,6 +316,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       min: null as number | null,
       max: null as number | null,
       excludeDisabled: false,
+      timeZone: getLocalTimeZone(),
+      locale: Intl.NumberFormat().resolvedOptions().locale,
     },
     props,
   )
@@ -302,7 +326,10 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     value: () => defaultedProps.value,
     initialValue: defaultedProps.initialValue,
     onChange: props.onValueChange as (
-      value: (Date | null) | Date[] | { from: Date | null; to: Date | null },
+      value:
+        | (DateValue | null)
+        | DateValue[]
+        | { from: DateValue | null; to: DateValue | null },
     ) => void,
   })
 
@@ -350,7 +377,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
 
   const [isFocusing, setIsFocusing] = createSignal(false)
 
-  const setMonth: Setter<Date> = (next) => {
+  const setMonth: Setter<DateValue> = (next) => {
     return untrack(() => {
       let nextValue
       if (typeof next === 'function') {
@@ -359,17 +386,13 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         nextValue = next
       }
       batch(() => {
-        setMonthInternal(nextValue as Date)
+        setMonthInternal(nextValue as DateValue)
         if (
           !dayIsInMonth(focusedDay(), nextValue, defaultedProps.numberOfMonths)
         ) {
           setFocusedDayInternal((focusedDay) =>
             findAvailableDayInMonth(
-              new Date(
-                nextValue.getFullYear(),
-                nextValue.getMonth(),
-                focusedDay.getDate(),
-              ),
+              new CalendarDate(nextValue.year, nextValue.month, focusedDay.day),
               defaultedProps.disabled,
             ),
           )
@@ -379,7 +402,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     })
   }
 
-  const setFocusedDay: Setter<Date> = (next) => {
+  const setFocusedDay: Setter<DateValue> = (next) => {
     return untrack(() => {
       let nextValue
       if (typeof next === 'function') {
@@ -389,17 +412,18 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       }
       if (defaultedProps.disabled(nextValue)) return
       batch(() => {
-        setFocusedDayInternal(nextValue as Date)
+        setFocusedDayInternal(nextValue as DateValue)
         if (!dayIsInMonth(nextValue, month(), defaultedProps.numberOfMonths)) {
           const delta =
-            (nextValue.getFullYear() - month().getFullYear()) * 12 +
-            (nextValue.getMonth() - month().getMonth())
+            (nextValue.year - month().year) * 12 +
+            (nextValue.month - month().month)
 
-          const newMonth = new Date(
-            month().getFullYear(),
-            month().getMonth() +
+          const newMonth = new CalendarDate(
+            month().year,
+            month().month +
               Math.sign(delta) *
                 Math.max(defaultedProps.numberOfMonths, Math.abs(delta)),
+            1,
           )
           setMonthInternal(newMonth)
         }
@@ -412,51 +436,49 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     const startOfWeek = defaultedProps.startOfWeek
     return Array.from({ length: 7 }, (_, i) => {
       const day = ((i + startOfWeek) % 7) + 4
-      return new Date(1970, 0, day)
+      return new CalendarDate(1970, 1, day)
     })
   }
 
   const months = () => {
     const months = []
     for (let i = 0; i < defaultedProps.numberOfMonths; i++) {
-      months.push({ month: modifyDate(month(), { month: i }), weeks: weeks(i) })
+      months.push({
+        month: month().add({ months: i }),
+        weeks: weeks(i),
+      })
     }
     return months
   }
 
   const weeks = (monthOffset = 0) => {
-    const adjustedMonth = new Date(
-      month().getFullYear(),
-      month().getMonth() + monthOffset,
-    )
+    const adjustedMonth = month().add({ months: monthOffset })
     const calendar = []
 
-    const firstDayOfMonth = new Date(
-      adjustedMonth.getFullYear(),
-      adjustedMonth.getMonth(),
-      1,
-    )
-    const lastDayOfMonth = new Date(
-      adjustedMonth.getFullYear(),
-      adjustedMonth.getMonth() + 1,
-      0,
-    )
+    const firstDayOfMonth = startOfMonth(adjustedMonth)
+    const lastDayOfMonth = endOfMonth(adjustedMonth)
+
     const prefixedDays =
-      (firstDayOfMonth.getDay() - defaultedProps.startOfWeek + 7) % 7
+      (getDayOfWeek(firstDayOfMonth, defaultedProps.locale) -
+        defaultedProps.startOfWeek +
+        7) %
+      7
+
     const weekCount = defaultedProps.fixedWeeks
       ? 6
-      : Math.ceil((lastDayOfMonth.getDate() + prefixedDays) / 7)
+      : Math.ceil((lastDayOfMonth.day + prefixedDays) / 7)
 
-    const currentDay = new Date(
-      adjustedMonth.getFullYear(),
-      adjustedMonth.getMonth(),
-      1 - prefixedDays,
-    )
+    let currentDay = new CalendarDate(
+      adjustedMonth.year,
+      adjustedMonth.month,
+      1,
+    ).subtract({ days: prefixedDays })
+
     for (let i = 0; i < weekCount; i++) {
       const week = []
       for (let i = 0; i < 7; i++) {
-        week.push(new Date(currentDay))
-        currentDay.setDate(currentDay.getDate() + 1)
+        week.push(currentDay)
+        currentDay = currentDay.add({ days: 1 })
       }
       calendar.push(week)
     }
@@ -465,7 +487,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   }
 
   const navigate = (
-    action: `${'prev' | 'next'}-${'month' | 'year'}` | ((date: Date) => Date),
+    action:
+      | `${'prev' | 'next'}-${'month' | 'year'}`
+      | ((date: DateValue) => DateValue),
   ) => {
     if (typeof action === 'function') {
       const newDate = action(month())
@@ -474,27 +498,27 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     }
     switch (action) {
       case 'prev-month':
-        setMonth((month) => modifyDate(month, { month: -1 }))
+        setMonth((month) => month.subtract({ months: 1 }))
         break
       case 'next-month':
-        setMonth((month) => modifyDate(month, { month: 1 }))
+        setMonth((month) => month.add({ months: 1 }))
         break
       case 'prev-year':
-        setMonth((month) => modifyDate(month, { year: -1 }))
+        setMonth((month) => month.subtract({ years: 1 }))
         break
       case 'next-year':
-        setMonth((month) => modifyDate(month, { year: 1 }))
+        setMonth((month) => month.add({ years: 1 }))
         break
     }
   }
 
-  const onDaySelect = (day: Date) => {
+  const onDaySelect = (day: DateValue) => {
     setFocusedDay(day)
     switch (defaultedProps.mode) {
       case 'single':
         setValue((value) => {
           if (
-            isSameDay(day, value as Date | null) &&
+            isSameDay(day, value as DateValue | null) &&
             !defaultedProps.required
           ) {
             return null
@@ -505,7 +529,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         break
       case 'multiple':
         setValue((value) => {
-          value = value as Date[]
+          value = value as DateValue[]
           const isSelected = value.some((d) => isSameDay(day, d))
           if (
             isSelected &&
@@ -522,22 +546,22 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         break
       case 'range':
         setValue((value) => {
-          value = value as { from: Date | null; to: Date | null }
+          value = value as { from: DateValue | null; to: DateValue | null }
           if (value.from === null) {
             return { from: day, to: null }
           }
           if (value.to === null) {
             let from = value.from
             let to = day
-            if (day < from) {
+            if (day.compare(from) < 0) {
               to = from
               from = day
             }
             if (defaultedProps.excludeDisabled) {
               for (
-                let day = new Date(from);
+                let day = from.copy();
                 day < to;
-                day.setDate(day.getDate() + 1)
+                day = day.add({ days: 1 })
               ) {
                 if (defaultedProps.disabled(day)) {
                   return { from: day, to: null }
@@ -555,15 +579,15 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     }
   }
 
-  const isSelected = (day: Date) => {
+  const isSelected = (day: DateValue) => {
     let _value = value()
     switch (defaultedProps.mode) {
       case 'single':
-        return isSameDay(day, _value as Date | null)
+        return isSameDay(day, _value as DateValue | null)
       case 'multiple':
-        return (_value as Date[]).some((value) => isSameDay(day, value))
+        return (_value as DateValue[]).some((value) => isSameDay(day, value))
       case 'range':
-        _value = _value as { from: Date | null; to: Date | null }
+        _value = _value as { from: DateValue | null; to: DateValue | null }
         return (
           isSameDay(day, _value.from) ||
           (isSameDayOrAfter(day, _value.from) &&
@@ -572,12 +596,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     }
   }
 
-  const isDisabled = (day: Date, _month?: Date) => {
+  const isDisabled = (day: DateValue, _month?: DateValue) => {
     _month = _month ?? month()
-    if (
-      defaultedProps.disableOutsideDays &&
-      day.getMonth() !== _month.getMonth()
-    ) {
+    if (defaultedProps.disableOutsideDays && day.month !== _month.month) {
       return true
     }
     return defaultedProps.disabled(day)
@@ -728,6 +749,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             setIsFocusing,
             disabled: defaultedProps.disabled,
             setFocusedDayRef,
+            timeZone: defaultedProps.timeZone,
           }}
         >
           {untrack(() => resolveChildren())}

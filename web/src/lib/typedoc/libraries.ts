@@ -216,6 +216,8 @@ const Calendar: Library = {
         'excludeDisabled',
         'labelIds',
         'contextId',
+        'timeZone',
+        'locale',
       ],
     },
     Label: {

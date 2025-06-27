@@ -72,6 +72,7 @@
     "typescript-eslint": "^8.31.1"
   },
   "peerDependencies": {
-    "solid-js": "^1.8"
+    "solid-js": "^1.8",
+    "@internationalized/date": ">=3.0.0"
   }
 }

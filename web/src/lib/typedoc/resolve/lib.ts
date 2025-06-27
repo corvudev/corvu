@@ -28,6 +28,8 @@ const resolveReferenceType = (
         return type.name
       case '@floating-ui/core':
         return type.name
+      case '@internationalized/date':
+        return type.name
     }
     const api = Typedoc[type.package]
     const declaration = findDeclarationByName(api.name, api.children)
