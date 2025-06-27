@@ -5,11 +5,11 @@ import {
   type Setter,
   useContext,
 } from 'solid-js'
+import type { Calendar, DateValue } from '@internationalized/date'
 import {
   createKeyedContext,
   useKeyedContext,
 } from '@corvu/utils/create/keyedContext'
-import type { DateValue } from '@internationalized/date'
 
 export type CalendarContextValue<
   Mode extends 'single' | 'multiple' | 'range' =
@@ -97,6 +97,12 @@ export type CalendarContextBaseValue = {
   focusedDayRef: Accessor<HTMLElement | null>
   /** The `id` attributes of the calendar label elements. Can be undefined if no `Calendar.Label` is present for the given month index. */
   labelIds: Accessor<Accessor<string | undefined>[]>
+  /** The `timeZone` of the calendar */
+  timeZone?: string
+  /** The `locale` of the current user */
+  locale?: string
+  /** The calendar type */
+  calendar?: Calendar
 }
 
 const CalendarContext = createContext<CalendarContextValue>()
@@ -153,6 +159,7 @@ type InternalCalendarContextValue = CalendarContextValue & {
   disabled: (day: DateValue) => boolean
   setFocusedDayRef: Setter<HTMLElement | null>
   timeZone: string
+  calendar: Calendar
 }
 
 const InternalCalendarContext = createContext<InternalCalendarContextValue>()

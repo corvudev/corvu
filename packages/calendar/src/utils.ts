@@ -1,6 +1,8 @@
 import {
+  type Calendar,
   type DateValue,
   endOfMonth,
+  GregorianCalendar,
   isEqualDay,
   isToday,
   startOfMonth,
@@ -85,6 +87,8 @@ const findAvailableDayInMonth = (
   return start
 }
 
+const defaultCalendar = new GregorianCalendar() as Calendar
+
 export {
   isSameDay,
   isSameDayOrBefore,
@@ -94,4 +98,5 @@ export {
   dayIsInMonth,
   findAvailableDayInMonth,
   isToday,
+  defaultCalendar,
 }

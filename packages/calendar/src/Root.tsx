@@ -11,12 +11,14 @@ import {
   untrack,
 } from 'solid-js'
 import {
+  type Calendar,
   CalendarDate,
   endOfMonth,
   getDayOfWeek,
   getLocalTimeZone,
   now,
   startOfMonth,
+  toCalendar,
 } from '@internationalized/date'
 import {
   createCalendarContext,
@@ -24,6 +26,7 @@ import {
 } from '@src/context'
 import {
   dayIsInMonth,
+  defaultCalendar,
   findAvailableDayInMonth,
   isSameDay,
   isSameDayOrAfter,
@@ -209,6 +212,11 @@ export type CalendarRootBaseProps = {
    * The `locale` of the current user
    */
   locale?: string
+  /**
+   * The calendar type
+   * @defaultValue `GregorianCalendar`
+   */
+  calendar?: Calendar
 }
 
 /** Props that are passed to the Root component children callback. */
@@ -293,16 +301,22 @@ export type CalendarRootChildrenBaseProps = {
 const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
+      calendar: props.calendar ?? defaultCalendar,
       initialValue:
         props.mode === 'single'
           ? null
           : props.mode === 'multiple'
             ? []
             : { from: null, to: null },
-      initialMonth:
+      initialMonth: toCalendar(
         props.initialFocusedDay ?? now(props.timeZone ?? getLocalTimeZone()),
+        props.calendar ?? defaultCalendar,
+      ),
       initialFocusedDay: findAvailableDayInMonth(
-        props.initialMonth ?? now(props.timeZone ?? getLocalTimeZone()),
+        toCalendar(
+          props.initialMonth ?? now(props.timeZone ?? getLocalTimeZone()),
+          props.calendar ?? defaultCalendar,
+        ),
         props.disabled ?? (() => true),
       ),
       startOfWeek: 1,
@@ -334,14 +348,24 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
   })
 
   const [month, setMonthInternal] = createControllableSignal({
-    value: () => defaultedProps.month,
-    initialValue: defaultedProps.initialMonth,
+    value: () =>
+      defaultedProps.month &&
+      toCalendar(defaultedProps.month, defaultedProps.calendar),
+    initialValue: toCalendar(
+      defaultedProps.initialFocusedDay,
+      defaultedProps.calendar,
+    ),
     onChange: defaultedProps.onMonthChange,
   })
 
   const [focusedDay, setFocusedDayInternal] = createControllableSignal({
-    value: () => defaultedProps.focusedDay,
-    initialValue: defaultedProps.initialFocusedDay,
+    value: () =>
+      defaultedProps.focusedDay &&
+      toCalendar(defaultedProps.focusedDay, defaultedProps.calendar),
+    initialValue: toCalendar(
+      defaultedProps.initialFocusedDay,
+      defaultedProps.calendar,
+    ),
     onChange: defaultedProps.onFocusedDayChange,
   })
 
@@ -392,7 +416,12 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
         ) {
           setFocusedDayInternal((focusedDay) =>
             findAvailableDayInMonth(
-              new CalendarDate(nextValue.year, nextValue.month, focusedDay.day),
+              new CalendarDate(
+                defaultedProps.calendar,
+                nextValue.year,
+                nextValue.month,
+                focusedDay.day,
+              ),
               defaultedProps.disabled,
             ),
           )
@@ -419,6 +448,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             (nextValue.month - month().month)
 
           const newMonth = new CalendarDate(
+            defaultedProps.calendar,
             month().year,
             month().month +
               Math.sign(delta) *
@@ -436,7 +466,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
     const startOfWeek = defaultedProps.startOfWeek
     return Array.from({ length: 7 }, (_, i) => {
       const day = ((i + startOfWeek) % 7) + 4
-      return new CalendarDate(1970, 1, day)
+      return new CalendarDate(defaultedProps.calendar, 1970, 1, day)
     })
   }
 
@@ -469,6 +499,7 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
       : Math.ceil((lastDayOfMonth.day + prefixedDays) / 7)
 
     let currentDay = new CalendarDate(
+      defaultedProps.calendar,
       adjustedMonth.year,
       adjustedMonth.month,
       1,
@@ -711,6 +742,9 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
           max: () => defaultedProps.max,
           excludeDisabled: () => defaultedProps.excludeDisabled,
           labelIds: () => registerMemo()[0],
+          timeZone: defaultedProps.timeZone,
+          locale: defaultedProps.locale,
+          calendar: defaultedProps.calendar,
         }}
       >
         <InternalCalendarContext.Provider
@@ -750,6 +784,8 @@ const CalendarRoot: Component<CalendarRootProps> = (props) => {
             disabled: defaultedProps.disabled,
             setFocusedDayRef,
             timeZone: defaultedProps.timeZone,
+            locale: defaultedProps.locale,
+            calendar: defaultedProps.calendar,
           }}
         >
           {untrack(() => resolveChildren())}
