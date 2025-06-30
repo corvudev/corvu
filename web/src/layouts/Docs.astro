@@ -60,6 +60,18 @@ const { frontmatter, headings } = Astro.props
       data-api="/plausible/api/event/"
       src="/plausible/js/script.js"
       is:inline></script>
+    <script
+      defer
+      data-domain="corvu.dev"
+      data-api="/lythia/a/event/"
+      src="/lythia/a.js"
+      is:inline></script>
+    <script
+      defer
+      data-domain="corvu.dev"
+      data-api="/lythia/m/event/"
+      src="/lythia/m.js"
+      is:inline></script>
   </head>
   <body class="flex flex-col bg-corvu-bg text-corvu-text antialiased">
     <Background type="docs" client:media="(min-width: 768px)" />
