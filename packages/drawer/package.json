@@ -57,22 +57,22 @@
   "dependencies": {
     "@corvu/dialog": "workspace:~",
     "@corvu/utils": "workspace:~",
-    "@solid-primitives/memo": "^1.4.2",
+    "@solid-primitives/memo": "^1.4.3",
     "solid-transition-size": "workspace:~"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.31.1",
+    "@typescript-eslint/parser": "^8.39.0",
     "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^9.26.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.3.1",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-solid": "^0.14.5",
-    "prettier": "^3.5.3",
-    "solid-js": "^1.9.6",
-    "tsup": "^8.4.0",
+    "prettier": "^3.6.2",
+    "solid-js": "^1.9.8",
+    "tsup": "^8.5.0",
     "typedoc": "^0.27.9",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.31.1"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0"
   },
   "peerDependencies": {
     "solid-js": "^1.8"
