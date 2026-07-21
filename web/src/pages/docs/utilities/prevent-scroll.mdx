@@ -23,7 +23,7 @@ Utility that prevents scrolling outside of a given DOM element. Works by prevent
 <Features features={[
   'Supports nested scroll containers',
   'Works both vertically and horizontally',
-  'Removes the body scrollbar without layout shift',
+  'Removes the document scrollbar without layout shift',
 ]} />
 
 ## Installation
@@ -34,9 +34,9 @@ Utility that prevents scrolling outside of a given DOM element. Works by prevent
 
 ## Usage
 
-By default, it also hides the scrollbar of the body element and adds padding to it to prevent the page from jumping. This behavior can be disabled and modified with the `hideScrollbar`, `preventScrollbarShift`, and `preventScrollbarShiftMode` props.
+By default, it also hides the scrollbar of the document element and adds padding to it to prevent the page from jumping. This behavior can be disabled and modified with the `hideScrollbar`, `preventScrollbarShift`, and `preventScrollbarShiftMode` props.
 
-It also adds the CSS variable `--scrollbar-width` to the body element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to fixed elements, like a topbar.
+It also adds the CSS variable `--scrollbar-width` to the document element, indicating the width of the currently removed scrollbar. You can use this variable to add padding to fixed elements, like a topbar.
 
 <Code code={`
   import createPreventScroll from 'solid-prevent-scroll'
