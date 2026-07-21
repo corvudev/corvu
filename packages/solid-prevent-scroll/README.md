@@ -11,7 +11,7 @@ SolidJS utility that prevents scrolling outside of a given DOM element. Works by
 
 - Supports nested scroll containers
 - Works both vertically and horizontally
-- Removes the body scrollbar without layout shift
+- Removes the document scrollbar without layout shift
 
 ## Usage
 
