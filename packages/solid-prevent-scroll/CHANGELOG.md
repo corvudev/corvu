@@ -1,5 +1,12 @@
 # solid-prevent-scroll
 
+## [0.1.11](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.10...solid-prevent-scroll@0.1.11) (2026-07-31)
+
+
+### Bug Fixes
+
+* prevent scroll on document to keep sticky elements ([#107](https://github.com/corvudev/corvu/issues/107)) ([81354d8](https://github.com/corvudev/corvu/commit/81354d8dae2167f2d3e9ddc2223f2e69ff515c62))
+
 ## [0.1.10](https://github.com/corvudev/corvu/compare/solid-prevent-scroll@0.1.9...solid-prevent-scroll@0.1.10) (2024-08-19)
 
 
