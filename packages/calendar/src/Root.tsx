@@ -28,9 +28,7 @@ import createRegister from '@corvu/utils/create/register'
 import { isFunction } from '@corvu/utils'
 
 export type CalendarRootProps =
-  | CalendarRootSingleProps
-  | CalendarRootMultipleProps
-  | CalendarRootRangeProps
+  CalendarRootSingleProps | CalendarRootMultipleProps | CalendarRootRangeProps
 
 export type CalendarRootSingleProps = {
   /**
@@ -52,8 +50,7 @@ export type CalendarRootSingleProps = {
   initialValue?: Date | null
   /** @hidden */
   children:
-    | JSX.Element
-    | ((props: CalendarRootChildrenSingleProps) => JSX.Element)
+    JSX.Element | ((props: CalendarRootChildrenSingleProps) => JSX.Element)
 } & CalendarRootBaseProps
 
 export type CalendarRootMultipleProps = {
@@ -86,8 +83,7 @@ export type CalendarRootMultipleProps = {
   max?: number | null
   /** @hidden */
   children:
-    | JSX.Element
-    | ((props: CalendarRootChildrenMultipleProps) => JSX.Element)
+    JSX.Element | ((props: CalendarRootChildrenMultipleProps) => JSX.Element)
 } & CalendarRootBaseProps
 
 export type CalendarRootRangeProps = {
@@ -115,8 +111,7 @@ export type CalendarRootRangeProps = {
   excludeDisabled?: boolean
   /** @hidden */
   children:
-    | JSX.Element
-    | ((props: CalendarRootChildrenRangeProps) => JSX.Element)
+    JSX.Element | ((props: CalendarRootChildrenRangeProps) => JSX.Element)
 } & CalendarRootBaseProps
 
 export type CalendarRootBaseProps = {

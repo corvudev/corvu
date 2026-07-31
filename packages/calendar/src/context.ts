@@ -12,19 +12,16 @@ import {
 
 export type CalendarContextValue<
   Mode extends 'single' | 'multiple' | 'range' =
-    | 'single'
-    | 'multiple'
-    | 'range',
+    'single' | 'multiple' | 'range',
 > = Mode extends 'single'
   ? CalendarContextSingleValue
   : Mode extends 'multiple'
     ? CalendarContextMultipleValue
     : Mode extends 'range'
       ? CalendarContextRangeValue
-      :
-          | CalendarContextSingleValue
-          | CalendarContextMultipleValue
-          | CalendarContextRangeValue
+      : | CalendarContextSingleValue
+        | CalendarContextMultipleValue
+        | CalendarContextRangeValue
 
 export type CalendarContextSingleValue = {
   /** The mode of the calendar. */
@@ -110,9 +107,7 @@ export const createCalendarContext = (contextId?: string) => {
 /** Context which exposes various properties to interact with the calendar. Optionally provide a contextId to access a keyed context. */
 export const useCalendarContext = <
   Mode extends 'single' | 'multiple' | 'range' =
-    | 'single'
-    | 'multiple'
-    | 'range',
+    'single' | 'multiple' | 'range',
 >(
   contextId?: string,
 ) => {

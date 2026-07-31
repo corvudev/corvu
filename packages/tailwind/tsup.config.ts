@@ -7,7 +7,10 @@ function generateConfig(format: 'esm' | 'cjs'): Options {
     platform: 'browser',
     format,
     clean: true,
-    dts: format === 'esm',
+    dts:
+      format === 'esm'
+        ? { compilerOptions: { ignoreDeprecations: '6.0' } }
+        : false,
     entry: { index: 'src/index.ts' },
     outDir: 'dist/',
     treeshake: { preset: 'smallest' },

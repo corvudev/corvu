@@ -11,23 +11,23 @@ jobs:
     steps:
       - name: release-please
         id: release-please
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
 
       - name: Check out
         if: ${{ steps.release-please.outputs.releases_created == 'true' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install nodejs
         if: ${{ steps.release-please.outputs.releases_created == 'true' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
 
       - name: Install pnpm
         if: ${{ steps.release-please.outputs.releases_created == 'true' }}
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
-          version: 10.8.0
+          version: 11.17.0
           run_install: false
 
       - name: Get pnpm store dir
@@ -38,7 +38,7 @@ jobs:
 
       - name: pnpm cache
         if: ${{ steps.release-please.outputs.releases_created == 'true' }}
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}

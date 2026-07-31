@@ -2,6 +2,17 @@ packages:
   - packages/*
   - web
   - dev
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@shikijs/core@4.4.1'
+  - '@shikijs/engine-javascript@4.4.1'
+  - '@shikijs/engine-oniguruma@4.4.1'
+  - '@shikijs/langs@4.4.1'
+  - '@shikijs/primitive@4.4.1'
+  - '@shikijs/themes@4.4.1'
+  - '@shikijs/types@4.4.1'
+  - shiki@4.4.1
 onlyBuiltDependencies:
   - esbuild
   - sharp

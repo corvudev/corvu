@@ -52,9 +52,6 @@ export default defineConfig({
   },
   site: 'https://corvu.dev',
   trailingSlash: 'always',
-  experimental: {
-    preserveScriptOrder: true,
-  },
   vite: {
     plugins: [tailwind()],
   },

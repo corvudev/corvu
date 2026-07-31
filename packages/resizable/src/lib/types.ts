@@ -55,10 +55,7 @@ export type HandleCallbacks = {
 }
 
 export type HoverState =
-  | 'handle'
-  | 'startIntersection'
-  | 'endIntersection'
-  | null
+  'handle' | 'startIntersection' | 'endIntersection' | null
 export type CursorStyle = 'horizontal' | 'vertical' | 'both' | null
 
 export type ResizeStrategy = 'preceding' | 'following' | 'both'

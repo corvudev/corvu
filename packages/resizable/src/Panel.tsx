@@ -81,8 +81,7 @@ export type ResizablePanelSharedElementProps<T extends ValidComponent = 'div'> =
     ref: Ref<ElementOf<T>>
     style: string | JSX.CSSProperties
     children:
-      | JSX.Element
-      | ((props: ResizablePanelChildrenProps) => JSX.Element)
+      JSX.Element | ((props: ResizablePanelChildrenProps) => JSX.Element)
   }
 
 export type ResizablePanelElementProps = ResizablePanelSharedElementProps & {

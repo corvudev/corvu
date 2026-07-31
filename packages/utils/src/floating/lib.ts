@@ -13,8 +13,7 @@ const getFloatingStyle = (props: {
 
     const side = floatingState.placement.split('-')[0] as Side
     const alignment = floatingState.placement.split('-')[1] as
-      | Alignment
-      | undefined
+      Alignment | undefined
 
     let transformOrigin
     switch (floatingState.placement) {
