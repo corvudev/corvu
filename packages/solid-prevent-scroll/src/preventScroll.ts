@@ -27,8 +27,8 @@ const isActive = (id: string) =>
  *
  * @param props.element - Prevent scroll outside of this element. If the element is `null`, scroll will be prevented on the whole page. *Default = `null`*
  * @param props.enabled - Whether scroll should be prevented. *Default = `true`*
- * @param props.hideScrollbar - Whether the scrollbar of the `<body>` element should be hidden. *Default = `true`*
- * @param props.preventScrollbarShift - Whether padding should be added to the `<body>` element to avoid layout shift. *Default = `true`*
+ * @param props.hideScrollbar - Whether the scrollbar of the document element should be hidden. *Default = `true`*
+ * @param props.preventScrollbarShift - Whether padding should be added to the document element to avoid layout shift. *Default = `true`*
  * @param props.preventScrollbarShiftMode - Whether padding or margin should be used to avoid layout shift. *Default = `'padding'`*
  * @param props.restoreScrollPosition - Whether to restore the `<body>` scroll position with `window.scrollTo` to avoid possible layout shift after disabling the utility. *Default = `true`*
  * @param props.allowPinchZoom - Whether pinch zoom should be allowed. *Default = `false`*
@@ -80,9 +80,9 @@ const createPreventScroll = (props: {
     )
       return
 
-    const { body } = document
+    const { documentElement } = document
 
-    const scrollbarWidth = window.innerWidth - body.offsetWidth
+    const scrollbarWidth = window.innerWidth - documentElement.clientWidth
 
     if (access(defaultedProps.preventScrollbarShift)) {
       const style: Partial<CSSStyleDeclaration> = { overflow: 'hidden' }
@@ -91,11 +91,11 @@ const createPreventScroll = (props: {
       if (scrollbarWidth > 0) {
         if (access(defaultedProps.preventScrollbarShiftMode) === 'padding') {
           style.paddingRight = `calc(${
-            window.getComputedStyle(body).paddingRight
+            window.getComputedStyle(documentElement).paddingRight
           } + ${scrollbarWidth}px)`
         } else {
           style.marginRight = `calc(${
-            window.getComputedStyle(body).marginRight
+            window.getComputedStyle(documentElement).marginRight
           } + ${scrollbarWidth}px)`
         }
 
@@ -110,7 +110,7 @@ const createPreventScroll = (props: {
 
       createStyle({
         key: 'prevent-scroll',
-        element: body,
+        element: documentElement,
         style,
         properties,
         cleanup: () => {
@@ -125,7 +125,7 @@ const createPreventScroll = (props: {
     } else {
       createStyle({
         key: 'prevent-scroll',
-        element: body,
+        element: documentElement,
         style: {
           overflow: 'hidden',
         },
