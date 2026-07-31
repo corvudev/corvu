@@ -12,7 +12,7 @@
   "packages/solid-list": "0.3.0",
   "packages/solid-persistent": "0.1.0",
   "packages/solid-presence": "0.2.0",
-  "packages/solid-prevent-scroll": "0.1.10",
+  "packages/solid-prevent-scroll": "0.1.11",
   "packages/solid-transition-size": "0.1.4",
   "packages/tailwind": "0.1.7",
   "packages/tooltip": "0.2.2",
