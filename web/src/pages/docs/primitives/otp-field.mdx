@@ -132,27 +132,31 @@ A simple usage of the OTP Field, using the context to manage the state of the UI
 
 ### Integration with form libraries
 
-The OTP Field can easily be used with form libraries like <Link href="https://modularforms.dev/" newTab>Modular Forms</Link> as you have full control over the input field:
+The OTP Field can easily be used with form libraries like <Link href="https://formisch.dev/" newTab>Formisch</Link> as you have full control over the input field:
 
 <Code code={`
-  import { createForm, submit } from '@modular-forms/solid'
+  import { createForm, Field, Form, submit } from '@formisch/solid'
   import OtpField from '@corvu/otp-field'
+  import * as v from 'valibot'
+
+  const OtpSchema = v.object({
+    otp: v.pipe(v.string(), v.length(6)),
+  })
 
   function OtpForm() {
-    const [form, { Form, Field }] = createForm<{
-      otp: string
-    }>()
+    const form = createForm({ schema: OtpSchema })
 
     return (
       <Form
-        onSubmit={(values) => {
+        of={form}
+        onSubmit={(output) => {
           // Submit form
         }}
       >
-        <Field name="otp">
-          {(field, props) => (
+        <Field of={form} path={['otp']}>
+          {(field) => (
             <OtpField maxLength={6} onComplete={() => submit(form)}>
-              <OtpField.Input {...props} />
+              <OtpField.Input {...field.props} />
               ...
             </OtpField>
           )}
