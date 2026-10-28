@@ -24,7 +24,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11.17.0
+          version: 12.16.1
           run_install: false
 
       - name: Get pnpm store dir

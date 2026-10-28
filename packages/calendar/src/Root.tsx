@@ -263,7 +263,10 @@ export type CalendarRootChildrenBaseProps = {
   labelIds: (string | undefined)[]
 }
 
-/** Context wrapper for the calendar. Is required for every calendar you create. */
+/**
+ * Context wrapper for the calendar. Is required for every calendar you create.
+ * @function
+ */
 const CalendarRoot: Component<CalendarRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

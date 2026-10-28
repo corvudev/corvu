@@ -80,7 +80,10 @@ export type DisclosureRootChildrenProps = {
   contentSize: [number, number] | null
 }
 
-/** Context wrapper for the disclosure. Is required for every disclosure you create. */
+/**
+ * Context wrapper for the disclosure. Is required for every disclosure you create.
+ * @function
+ */
 const DisclosureRoot: Component<DisclosureRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

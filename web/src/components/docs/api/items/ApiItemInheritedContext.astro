@@ -14,9 +14,8 @@ const { name, inherits } = Astro.props
       class="scroll-mt-20 text-xl font-bold lg:scroll-mt-2"
     >
       {name}
-    </h3><p
-      class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold"
-    >
+    </h3>
+    <p class="rounded-md border-2 border-corvu-200 bg-corvu-100 px-1.5 py-0.5 text-sm font-bold">
       Context
     </p>
     <a
@@ -36,24 +35,31 @@ const { name, inherits } = Astro.props
           stroke="currentColor"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke-width="24"></path>
+          stroke-width="24"
+        ></path>
         <path
           d="M128.12,60l5.94-5.94a48,48,0,0,1,67.88,67.88l-24.11,24.11A48,48,0,0,1,112,148"
           fill="none"
           stroke="currentColor"
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke-width="24"></path>
+          stroke-width="24"
+        ></path>
       </svg>
       <span class="sr-only">Section titled {name}</span>
     </a>
   </div>
   <div class="mb-4 mt-3 border-b border-corvu-100 pb-3">
     <p>
-      Inherited from <Link
+      Inherited from{' '}
+      <Link
         href={`/docs/primitives/${inherits.library.name.toLowerCase()}/#${inherits.name}`}
-        ><code>&lt;{inherits.library.name}.{inherits.name} /&gt;</code></Link
-      >.
+      >
+        <code>
+          &lt;{inherits.library.name}.{inherits.name} /&gt;
+        </code>
+      </Link>
+      .
     </p>
   </div>
 </div>

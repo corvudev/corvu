@@ -3,7 +3,9 @@ const props = Astro.props
 ---
 
 <h3 {...props} class="group flex items-center space-x-1">
-  <span><slot /></span>
+  <span>
+    <slot />
+  </span>
   <a
     href={`#${props.id}`}
     class="not-prose transition-opacity hover:text-corvu-400 group-hover:opacity-100 md:opacity-0"
@@ -21,15 +23,19 @@ const props = Astro.props
         stroke="currentColor"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="24"></path>
+        stroke-width="24"
+      ></path>
       <path
         d="M128.12,60l5.94-5.94a48,48,0,0,1,67.88,67.88l-24.11,24.11A48,48,0,0,1,112,148"
         fill="none"
         stroke="currentColor"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="24"></path>
+        stroke-width="24"
+      ></path>
     </svg>
-    <span class="sr-only">Section titled <slot /></span>
+    <span class="sr-only">
+      Section titled <slot />
+    </span>
   </a>
 </h3>

@@ -3,7 +3,6 @@ import type {
   DeclarationVariant,
   LiteralType,
   ReferenceType,
-  ReflectionType,
   Type,
 } from '@lib/typedoc/types/typedoc'
 import type { ApiReference, PropType } from '@lib/typedoc/types/apiReferences'
@@ -48,7 +47,10 @@ const resolveContext = (
   return {
     name,
     kind: 'context',
-    descriptionHtml: formatText(contextDeclaration.comment?.summary),
+    // Function-like declarations carry their comment on the signature
+    descriptionHtml: formatText(
+      contextDeclaration.signatures![0].comment?.summary,
+    ),
     returns,
   }
 }
@@ -70,16 +72,14 @@ const resolveContextReturns = (context: DeclarationVariant) => {
     )
   }
 
+  // Object literal type aliases have no type but carry their members as children
   if (!returnsDeclaration.type) {
-    throw new Error(`Missing type for the ${context.name} component`)
+    return getChildrenProps(returnsDeclaration.children)
   }
 
   let type: Type | null = null
 
   switch (returnsDeclaration.type.type) {
-    case 'reflection':
-      type = returnsDeclaration.type
-      break
     case 'conditional':
       // Conditional type is currently only used for the calendar context
       // The last type is the fallback union and the type we want to use here
@@ -101,8 +101,7 @@ const resolveContextReturns = (context: DeclarationVariant) => {
   return propTypes
 }
 
-const getReflectionProps = (type: ReflectionType) => {
-  const props = type.declaration.children
+const getChildrenProps = (props?: DeclarationVariant['children']) => {
   if (!props) {
     throw new Error(`Missing props while trying to resolve reflection props`)
   }
@@ -174,12 +173,12 @@ const getTypeProps = (type: Type, propTypes: PropType[] = []): PropType[] => {
   switch (type.type) {
     case 'reference':
       if (type.name === 'Omit') {
-        const allProps = getReflectionProps(
+        const allProps = getChildrenProps(
           (
             resolveReferenceType(
               type.typeArguments![0] as ReferenceType,
             ) as DeclarationVariant
-          ).type as ReflectionType,
+          ).children,
         )
         const omittedProps =
           type.typeArguments![1].type === 'union'
@@ -193,13 +192,18 @@ const getTypeProps = (type: Type, propTypes: PropType[] = []): PropType[] => {
         break
       }
       const propDeclaration = resolveReferenceType(type)
-      if (typeof propDeclaration === 'string' || !propDeclaration.type) {
+      if (typeof propDeclaration === 'string') {
         throw new Error(`Missing props for ${type.name}`)
       }
-      propTypes.push(...getTypeProps(propDeclaration.type))
+      // Object literal type aliases have no type but carry their members as children
+      propTypes.push(
+        ...(propDeclaration.type
+          ? getTypeProps(propDeclaration.type)
+          : getChildrenProps(propDeclaration.children)),
+      )
       break
     case 'reflection':
-      propTypes.push(...getReflectionProps(type))
+      propTypes.push(...getChildrenProps(type.declaration.children))
       break
     case 'intersection':
       for (const intersectionType of type.types) {

@@ -3,7 +3,6 @@ import type {
   DeclarationVariant,
   LiteralType,
   ReferenceType,
-  ReflectionType,
   Type,
 } from '@lib/typedoc/types/typedoc'
 import type { ApiReference, PropType } from '@lib/typedoc/types/apiReferences'
@@ -113,8 +112,7 @@ const resolveFunctionReturns = (functionDeclaration: DeclarationVariant) => {
   return propTypes
 }
 
-const getReflectionProps = (type: ReflectionType) => {
-  const props = type.declaration.children
+const getChildrenProps = (props?: DeclarationVariant['children']) => {
   if (!props) {
     throw new Error(`Missing props while trying to resolve reflection props`)
   }
@@ -183,12 +181,12 @@ const getTypeProps = (type: Type): PropType[] => {
   switch (type.type) {
     case 'reference':
       if (type.name === 'Omit') {
-        const allProps = getReflectionProps(
+        const allProps = getChildrenProps(
           (
             resolveReferenceType(
               type.typeArguments![0] as ReferenceType,
             ) as DeclarationVariant
-          ).type as ReflectionType,
+          ).children,
         )
         const omittedProps =
           type.typeArguments![1].type === 'union'
@@ -202,17 +200,13 @@ const getTypeProps = (type: Type): PropType[] => {
         break
       }
       const propDeclaration = resolveReferenceType(type)
-      if (
-        typeof propDeclaration === 'string' ||
-        !propDeclaration.type ||
-        propDeclaration.type.type !== 'reflection'
-      ) {
+      if (typeof propDeclaration === 'string' || !propDeclaration.children) {
         throw new Error(`Missing props for ${type.name}`)
       }
-      propTypes.push(...getReflectionProps(propDeclaration.type))
+      propTypes.push(...getChildrenProps(propDeclaration.children))
       break
     case 'reflection':
-      propTypes.push(...getReflectionProps(type))
+      propTypes.push(...getChildrenProps(type.declaration.children))
       break
     case 'intersection':
       for (const intersectionType of type.types) {

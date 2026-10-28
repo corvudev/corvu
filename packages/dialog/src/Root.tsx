@@ -224,7 +224,10 @@ export type DialogRootChildrenProps = {
 
 const DEFAULT_MODAL = true
 
-/** Context wrapper for the dialog. Is required for every dialog you create. */
+/**
+ * Context wrapper for the dialog. Is required for every dialog you create.
+ * @function
+ */
 const DialogRoot: Component<DialogRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

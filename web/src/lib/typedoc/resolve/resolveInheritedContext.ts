@@ -15,7 +15,10 @@ const resolveInheritedContext = (
   return {
     name,
     kind: 'inherited-context',
-    descriptionHtml: formatText(contextDeclaration.comment?.summary),
+    // Function-like declarations carry their comment on the signature
+    descriptionHtml: formatText(
+      contextDeclaration.signatures![0].comment?.summary,
+    ),
     inherits: inheritedContext.inherits,
   }
 }

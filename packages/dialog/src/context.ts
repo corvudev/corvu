@@ -68,7 +68,10 @@ export const createDialogContext = (contextId?: string) => {
   return context
 }
 
-/** Context which exposes various properties to interact with the dialog. Optionally provide a contextId to access a keyed context. */
+/**
+ * Context which exposes various properties to interact with the dialog. Optionally provide a contextId to access a keyed context.
+ * @function
+ */
 export const useDialogContext = (contextId?: string) => {
   if (contextId === undefined) {
     const context = useContext(DialogContext)

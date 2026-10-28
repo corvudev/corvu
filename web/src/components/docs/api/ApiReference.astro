@@ -19,29 +19,25 @@ const apiReferences = resolveLibrary(library)
 ---
 
 <div class="space-y-14">
-  {
-    apiReferences.map((apiReference) => (
-      <>
-        {apiReference.kind === 'component' && (
-          <ApiItemComponent {...apiReference} />
-        )}
-        {apiReference.kind === 'inherited-component' && (
-          <ApiItemInheritedComponent {...apiReference} />
-        )}
-        {apiReference.kind === 'context' && (
-          <ApiItemContext {...apiReference} />
-        )}
-        {apiReference.kind === 'inherited-context' && (
-          <ApiItemInheritedContext {...apiReference} />
-        )}
-        {apiReference.kind === 'childrenProps' && (
-          <ApiItemChildrenProps {...apiReference} />
-        )}
-        {apiReference.kind === 'simple' && <ApiItemSimple {...apiReference} />}
-        {apiReference.kind === 'function' && (
-          <ApiItemFunction {...apiReference} />
-        )}
-      </>
-    ))
-  }
+  {apiReferences.map((apiReference) => (
+    <>
+      {apiReference.kind === 'component' && (
+        <ApiItemComponent {...apiReference} />
+      )}
+      {apiReference.kind === 'inherited-component' && (
+        <ApiItemInheritedComponent {...apiReference} />
+      )}
+      {apiReference.kind === 'context' && <ApiItemContext {...apiReference} />}
+      {apiReference.kind === 'inherited-context' && (
+        <ApiItemInheritedContext {...apiReference} />
+      )}
+      {apiReference.kind === 'childrenProps' && (
+        <ApiItemChildrenProps {...apiReference} />
+      )}
+      {apiReference.kind === 'simple' && <ApiItemSimple {...apiReference} />}
+      {apiReference.kind === 'function' && (
+        <ApiItemFunction {...apiReference} />
+      )}
+    </>
+  ))}
 </div>

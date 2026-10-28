@@ -15,7 +15,10 @@ export type DialogPortalProps = {
   contextId?: string
 }
 
-/** Portals its children at the end of the body element to ensure that the dialog always rendered on top. */
+/**
+ * Portals its children at the end of the body element to ensure that the dialog always rendered on top.
+ * @function
+ */
 const DialogPortal = (
   props: DialogPortalProps & ComponentProps<typeof Portal>,
 ) => {

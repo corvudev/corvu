@@ -123,7 +123,10 @@ export type DrawerRootChildrenProps = {
   transitionResize: boolean
 }
 
-/** Context wrapper for the drawer. Is required for every drawer you create. */
+/**
+ * Context wrapper for the drawer. Is required for every drawer you create.
+ * @function
+ */
 const DrawerRoot: Component<DrawerRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

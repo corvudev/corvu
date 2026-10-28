@@ -9,7 +9,7 @@ function generateConfig(format: 'esm' | 'cjs'): Options {
     clean: true,
     dts:
       format === 'esm'
-        ? { compilerOptions: { ignoreDeprecations: '6.0' } }
+        ? { compilerOptions: { baseUrl: '.', ignoreDeprecations: '6.0' } }
         : false,
     entry: { index: 'src/index.ts' },
     outDir: 'dist/',

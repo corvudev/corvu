@@ -13,9 +13,7 @@ const { code, lang, copyButton } = Astro.props
 const trimmedCode = code.trim()
 ---
 
-<div
-  class="not-prose relative mb-6 mt-4 grid rounded-md border-2 border-corvu-200 overflow-hidden"
->
+<div class="not-prose relative mb-6 mt-4 grid rounded-md border-2 border-corvu-200 overflow-hidden">
   <RawCode code={trimmedCode} lang={lang} />
   {copyButton === true && <CopyToClipboard code={trimmedCode} client:visible />}
 </div>

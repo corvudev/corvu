@@ -104,7 +104,10 @@ export type AccordionRootChildrenProps = {
   preventInitialContentAnimation: boolean
 }
 
-/** Context wrapper for the accordion. Is required for every accordion you create. */
+/**
+ * Context wrapper for the accordion. Is required for every accordion you create.
+ * @function
+ */
 const AccordionRoot: Component<AccordionRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

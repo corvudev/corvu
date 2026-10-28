@@ -61,7 +61,10 @@ export type PopoverRootChildrenProps = {
   floatingState: FloatingState
 }
 
-/** Context wrapper for the popover. Is required for every popover you create. */
+/**
+ * Context wrapper for the popover. Is required for every popover you create.
+ * @function
+ */
 const PopoverRoot: Component<PopoverRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {

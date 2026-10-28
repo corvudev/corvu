@@ -7,4 +7,6 @@ interface Props {
 const { href, newTab } = Astro.props
 ---
 
-<a href={href} target={newTab === true ? '_blank' : undefined}><slot /></a>
+<a href={href} target={newTab === true ? '_blank' : undefined}>
+  <slot />
+</a>

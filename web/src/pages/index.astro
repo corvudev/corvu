@@ -45,19 +45,22 @@ import Topbar from '@components/Topbar.astro'
       data-domain="corvu.dev"
       data-api="/plausible/api/event/"
       src="/plausible/js/script.js"
-      is:inline></script>
+      is:inline
+    ></script>
     <script
       defer
       data-domain="corvu.dev"
       data-api="/lythia/a/event/"
       src="/lythia/a.js"
-      is:inline></script>
+      is:inline
+    ></script>
     <script
       defer
       data-domain="corvu.dev"
       data-api="/lythia/m/event/"
       src="/lythia/m.js"
-      is:inline></script>
+      is:inline
+    ></script>
   </head>
   <body class="flex flex-col bg-corvu-bg text-corvu-text antialiased">
     <Background type="home" client:media="(min-width: 768px)" />
@@ -76,8 +79,8 @@ import Topbar from '@components/Topbar.astro'
             class="hidden h-40 dark:block md:h-52"
           />
           <h1 class="mt-5 text-center text-2xl font-medium md:text-3xl">
-            <span class="text-3xl font-bold md:text-4xl">corvu</span>
-            - powerful UI primitives for SolidJS
+            <span class="text-3xl font-bold md:text-4xl">corvu</span> - powerful
+            UI primitives for SolidJS
           </h1>
           <p class="mt-6 max-w-2xl text-center text-lg font-normal">
             A collection of open source UI primitives that are unstyled,
@@ -87,10 +90,11 @@ import Topbar from '@components/Topbar.astro'
           <a
             href="/docs/"
             class="mt-6 rounded-lg bg-corvu-300 px-4 py-3 text-lg font-medium transition-all duration-100 active:translate-y-0.5"
-            >Get started</a
           >
+            Get started
+          </a>
         </div>
       </div>
     </main>
-  </body></html
->
+  </body>
+</html>

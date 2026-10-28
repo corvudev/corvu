@@ -29,17 +29,10 @@ const resolveReferenceType = (
       case '@floating-ui/core':
         return type.name
     }
-    const api = Typedoc[type.package]
-    const declaration = findDeclarationByName(api.name, api.children)
-
-    if (!declaration) {
-      // TODO: DisclosureRootProps -> RootProps etc.
-      throw new Error(
-        `Declaration with Name ${type.name} not found. Probably shouldn't arrive here as these are inherited props :P`,
-      )
-    }
-
-    return declaration
+    // TODO: DisclosureRootProps -> RootProps etc.
+    throw new Error(
+      `Declaration with Name ${type.name} not found. Probably shouldn't arrive here as these are inherited props :P`,
+    )
   }
   const api = Typedoc[type.package]
   const declaration = findDeclarationById(type.target, api.children)
@@ -48,29 +41,6 @@ const resolveReferenceType = (
   }
 
   return declaration
-}
-
-const findDeclarationByName = (
-  name: string,
-  scope: DeclarationVariant[],
-): DeclarationVariant | undefined => {
-  for (const declaration of scope) {
-    if (declaration.name === name) {
-      return declaration
-    }
-
-    if (declaration.children) {
-      const foundDeclaration = findDeclarationByName(
-        name,
-        declaration.children as DeclarationVariant[],
-      )
-      if (foundDeclaration) {
-        return foundDeclaration
-      }
-    }
-  }
-
-  return undefined
 }
 
 const findDeclarationById = (
@@ -159,15 +129,7 @@ const resolveTypeTopLevel = (
       break
     case 'reflection':
       if (!type.declaration.signatures) {
-        // Yeah, pretty ugly. No signatures = object type
-        typeName += '{\n'
-        for (const child of type.declaration.children!) {
-          if (child.variant !== 'declaration') {
-            throw new Error(`Missing type for the ${child.name} prop`)
-          }
-          typeName += `${'  '.repeat(nestLevel)}${child.name}: ${resolveTypeTopLevel(child.type!, nestLevel + 1)},\n`
-        }
-        typeName += `${'  '.repeat(nestLevel - 1)}}`
+        typeName += resolveObjectType(type.declaration.children!, nestLevel)
         break
       }
       const resolvedType = resolveTypeTopLevel(
@@ -234,6 +196,21 @@ const resolveTypeTopLevel = (
   return typeName
 }
 
+const resolveObjectType = (
+  children: NonNullable<DeclarationVariant['children']>,
+  nestLevel = 1,
+) => {
+  let typeName = '{\n'
+  for (const child of children) {
+    if (child.variant !== 'declaration') {
+      throw new Error(`Missing type for the ${child.name} prop`)
+    }
+    typeName += `${'  '.repeat(nestLevel)}${child.name}: ${resolveTypeTopLevel(child.type!, nestLevel + 1)},\n`
+  }
+  typeName += `${'  '.repeat(nestLevel - 1)}}`
+  return typeName
+}
+
 const getDefaultValue = (comment?: DeclarationVariant['comment']) => {
   if (!comment || !comment.blockTags) {
     return null
@@ -278,6 +255,7 @@ const formatText = (text?: Text[]) => {
 export {
   resolveReferenceType,
   resolveTypeTopLevel,
+  resolveObjectType,
   getDefaultValue,
   formatText,
 }

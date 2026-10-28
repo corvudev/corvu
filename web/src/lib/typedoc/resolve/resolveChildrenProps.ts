@@ -3,7 +3,6 @@ import type {
   DeclarationVariant,
   LiteralType,
   ReferenceType,
-  ReflectionType,
   Type,
 } from '@lib/typedoc/types/typedoc'
 import type { ApiReference, PropType } from '@lib/typedoc/types/apiReferences'
@@ -59,30 +58,19 @@ const resolveChildrenProps = (
 }
 
 const resolveChildrenPropsReturns = (childrenProps: DeclarationVariant) => {
+  // Object literal type aliases have no type but carry their members as children
   if (!childrenProps.type) {
-    throw new Error(`Missing type for the ${childrenProps.name} children props`)
+    return getChildrenProps(childrenProps.children)
   }
 
-  let type: Type | null = null
-
-  switch (childrenProps.type.type) {
-    case 'reflection':
-      type = childrenProps.type
-      break
-    case 'union':
-      type = childrenProps.type
-      break
-    default:
-      throw new Error(`Unexpected type ${childrenProps.type.type}`)
+  if (childrenProps.type.type !== 'union') {
+    throw new Error(`Unexpected type ${childrenProps.type.type}`)
   }
 
-  const propTypes = getTypeProps(type)
-
-  return propTypes
+  return getTypeProps(childrenProps.type)
 }
 
-const getReflectionProps = (type: ReflectionType) => {
-  const props = type.declaration.children
+const getChildrenProps = (props?: DeclarationVariant['children']) => {
   if (!props) {
     throw new Error(`Missing props while trying to resolve reflection props`)
   }
@@ -154,12 +142,12 @@ const getTypeProps = (type: Type, propTypes: PropType[] = []): PropType[] => {
   switch (type.type) {
     case 'reference':
       if (type.name === 'Omit') {
-        const allProps = getReflectionProps(
+        const allProps = getChildrenProps(
           (
             resolveReferenceType(
               type.typeArguments![0] as ReferenceType,
             ) as DeclarationVariant
-          ).type as ReflectionType,
+          ).children,
         )
         const omittedProps =
           type.typeArguments![1].type === 'union'
@@ -173,13 +161,18 @@ const getTypeProps = (type: Type, propTypes: PropType[] = []): PropType[] => {
         break
       }
       const propDeclaration = resolveReferenceType(type)
-      if (typeof propDeclaration === 'string' || !propDeclaration.type) {
+      if (typeof propDeclaration === 'string') {
         throw new Error(`Missing props for ${type.name}`)
       }
-      propTypes.push(...getTypeProps(propDeclaration.type))
+      // Object literal type aliases have no type but carry their members as children
+      propTypes.push(
+        ...(propDeclaration.type
+          ? getTypeProps(propDeclaration.type)
+          : getChildrenProps(propDeclaration.children)),
+      )
       break
     case 'reflection':
-      propTypes.push(...getReflectionProps(type))
+      propTypes.push(...getChildrenProps(type.declaration.children))
       break
     case 'intersection':
       for (const intersectionType of type.types) {

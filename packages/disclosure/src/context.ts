@@ -34,7 +34,10 @@ export const createDisclosureContext = (contextId?: string) => {
   return context
 }
 
-/** Context which exposes various properties to interact with the disclosure. Optionally provide a contextId to access a keyed context. */
+/**
+ * Context which exposes various properties to interact with the disclosure. Optionally provide a contextId to access a keyed context.
+ * @function
+ */
 export const useDisclosureContext = (contextId?: string) => {
   if (contextId === undefined) {
     const context = useContext(DisclosureContext)

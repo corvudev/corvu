@@ -41,7 +41,10 @@ export type DismissibleChildrenProps = {
   isLastLayer: boolean
 }
 
-/** A component that can be dismissed by pressing the escape key or clicking outside of it. Can be nested. */
+/**
+ * A component that can be dismissed by pressing the escape key or clicking outside of it. Can be nested.
+ * @function
+ */
 const Dismissible: Component<DismissibleProps> = (props) => {
   const defaultedProps = mergeProps(
     {

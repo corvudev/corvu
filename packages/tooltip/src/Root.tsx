@@ -190,7 +190,10 @@ export type TooltipRootChildrenProps = {
   tooltipId: string
 }
 
-/** Context wrapper for the tooltip. Is required for every tooltip you create. */
+/**
+ * Context wrapper for the tooltip. Is required for every tooltip you create.
+ * @function
+ */
 const TooltipRoot: Component<TooltipRootProps> = (props) => {
   const defaultedProps = mergeProps(
     {
