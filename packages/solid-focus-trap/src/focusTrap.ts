@@ -65,12 +65,16 @@ const createFocusTrap = (props: {
 
   const mutationObserverCallback = () => {
     afterPaint(() => {
-      loadFocusTrap(access(defaultedProps.element)!)
+      const container = access(defaultedProps.element)!
+      loadFocusTrap(container)
+      // Move focus in the same frame as the check. If the move waited for
+      // another paint, the user could focus an element in between, and the
+      // move would take focus away from it.
       if (
         document.activeElement === null ||
         document.activeElement === document.body
       ) {
-        initialFocus(access(defaultedProps.element)!)
+        focusInitialElement(container)
       }
     })
   }
@@ -163,27 +167,33 @@ const createFocusTrap = (props: {
   }
 
   const initialFocus = (container: HTMLElement) => {
-    afterPaint(() => {
-      const initialFocusElement =
-        access(defaultedProps.initialFocusElement) ??
-        firstFocusElement() ??
-        container
-      const onInitialFocus = defaultedProps.onInitialFocus
+    afterPaint(() => focusInitialElement(container))
+  }
 
-      let event: CustomEvent | undefined
-      if (onInitialFocus) {
-        event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
-        container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
-        container.dispatchEvent(event)
-        container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
-      }
+  const focusInitialElement = (container: HTMLElement) => {
+    // The user, or an `autofocus` attribute, already focused an element inside
+    // the trap.
+    if (container.contains(document.activeElement)) return
 
-      if (event?.defaultPrevented === true) {
-        return
-      }
+    const initialFocusElement =
+      access(defaultedProps.initialFocusElement) ??
+      firstFocusElement() ??
+      container
+    const onInitialFocus = defaultedProps.onInitialFocus
 
-      initialFocusElement.focus()
-    })
+    let event: CustomEvent | undefined
+    if (onInitialFocus) {
+      event = new CustomEvent(EVENT_INITIAL_FOCUS, EVENT_OPTIONS)
+      container.addEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+      container.dispatchEvent(event)
+      container.removeEventListener(EVENT_INITIAL_FOCUS, onInitialFocus)
+    }
+
+    if (event?.defaultPrevented === true) {
+      return
+    }
+
+    initialFocusElement.focus()
   }
 
   const onFirstFocusElementKeyDown = (event: KeyboardEvent) => {
